@@ -1,0 +1,133 @@
+\documentclass[letterpaper,10pt,oneside]{article}
+\usepackage{ucs} %Herramientas de UTF8
+\usepackage[utf8x]{inputenc} %Poner acentos directamente
+\usepackage[T1]{fontenc} %Codificación de fuente
+\usepackage{amsmath} %Simbolos refinados de matemáticas
+\usepackage{graphicx} %Imágenes
+\usepackage{amsfonts}
+%\usepackage[spanish]{babel}
+%Since we are using oneside and i want to shallow the left part
+\usepackage[top=1.5cm, bottom=1.5cm, left=1cm, right=1.5cm]{geometry}
+%Proffesionall looking tables
+\usepackage{booktabs}
+
+\usepackage{enumitem}
+%
+\usepackage{xcolor}
+\usepackage{listings}
+%To use subfigures
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{url}
+\usepackage{bm} %For bold math symbols
+\usepackage{lastpage}
+
+\usepackage{fancyhdr}
+\fancyhf{}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{}
+\fancyhead[C]{Jorge Antonio Garc\'{i}a Galicia}
+\fancyhead[R]{\href{mailto:garci191@purdue.edu}{garci191@purdue.edu}}
+\fancyfoot[R]{Instructor: Dr. Paul A. Asunda}
+\fancyfoot[C]{\thepage\ of \pageref{LastPage}}
+\fancyfoot[L]{IT 507}
+
+
+\usepackage[final,pdftex,unicode,colorlinks=true,citecolor=blue,linkcolor=blue,plainpages=false,urlcolor=blue,
+pdfpagelabels=true,pdfsubject={},pdfauthor={Jorge Garc\'{i}a},pdftitle={IT 507 Lab 4},pdfkeywords={Purdue, IT507, Spring 2015}]{hyperref}
+
+
+%Code formating
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{8} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{8}  % for normal
+
+% Custom colors
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{lightblue}{rgb}{0.5,0.5,0.9}
+\definecolor{tourquise}{rgb}{0.0, 0.6, 0.9}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{lightgray}{rgb}{0.9,0.9,0.9}
+\definecolor{lightorange}{rgb}{1.0,0.64,0.0}
+
+%\usepackage[colorlinks=true, urlcolor=\color{lightblue}]{hyperref}
+
+\usepackage{listings}
+% Python style for highlighting
+\newcommand\sasstyle{\lstset{
+language=SAS,
+basicstyle=\ttm,
+numbers=left,                     % Add line numbers
+numberstyle=\footnotesize,          % Small line numbers
+numbersep=5pt,                    % Number separation from listing
+otherkeywords={self,True,False,None},             % Add keywords here
+keywordstyle=\ttb\color{deepblue},
+%emph={MyClass,__init__},          % Custom highlighting
+emphstyle=\ttb\color{deepred},    % Custom highlighting style
+stringstyle=\color{deepgreen},
+frame=single,                    % Any extra options here%leftline, topline, bottomline, lines
+%frameround=tttt,                  % rounded  corners for frame
+%backgroundcolor=\color{lightgray}, %Color del fondo
+showstringspaces=false,            % 
+rulecolor=\color{tourquise},									%color del marco del codigo
+commentstyle=\color{lightorange}
+}}
+
+% SAS environment
+\lstnewenvironment{SAS}[1][]
+{
+\sasstyle
+\lstset{#1}
+}
+{}
+
+% SAS for external files
+\newcommand\SASexternal[1]{{
+\sasstyle
+\lstinputlisting{#1}}}
+
+% SAS for external files snipets
+\newcommand\SASexternalsnipet[3]{{
+\sasstyle
+\lstinputlisting[firstline=#1,lastline=#2]{#3}
+}}
+
+
+
+% SAS for inline
+\newcommand\SASinline[1]{{\sasstyle\lstinline!#1!}}
+
+\parskip=3mm
+
+
+\newcommand{\comillas}[1]{``#1''}
+\newcommand{\T}{^\mathsf{T}}
+
+\begin{document}
+\setlength{\parindent}{0pt}
+\setlength{\topmargin}{-1.65cm}
+\renewcommand{\headrulewidth}{2pt} 
+\renewcommand{\footrulewidth}{2pt}
+
+\setlength{\parindent}{0cm}
+\setlength{\headsep}{25pt}
+\setlength{\footskip}{15pt}
+\begin{center}
+{\Large IT 507}\\
+{\Large Measurement \& Evaluation in Industry \& Technology} \\
+{\large Spring 2015} \\
+LAB ASSIGNMENT \# 4\\
+{\small Due: April 27th}
+\end{center}
+
+\input{body}
+
+
+\nocite{Groebner2013}
+\bibliographystyle{plain}
+\bibliography{bibliography}
+\end{document}

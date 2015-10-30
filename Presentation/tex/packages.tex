@@ -1,0 +1,64 @@
+%========================================
+%GENERAL PACKAGES
+%========================================
+%\usepackage[usenames, dvipsnames]{color}
+%\usepackage[pdftex]{hyperref}
+%\usepackage[cm]{fullpage}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+%\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{calc}
+\usepackage{url}
+
+%========================================
+%MY COMMANDS WITH ARGUMENTS
+%========================================
+\newcommand{\squareparenthesis}[1]{\left[ #1 \right]}
+\newcommand{\roundparenthesis}[1]{\left( #1 \right)}
+\newcommand{\partialderivative}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\inneproduct}[1]{\langle #1 \rangle}
+\newcommand{\quotes}[1]{``#1''}
+\newcommand{\absval}[1]{\left| #1\right|}
+\newcommand{\keys}[1]{\left\{ #1 \right\}}
+
+%========================================
+%MY COMMANDS WITH NO ARGUMENTS
+%========================================
+\newcommand{\cgray}{\cellcolor[gray]{0.9}}
+%\newcommand{\qed}{\ensuremath{\Box}}
+
+%========================================
+%FOR ADD A CODE
+%========================================
+\lstdefinestyle{code_style}{basicstyle=\footnotesize,
+numbers=left, 
+numberstyle=\footnotesize, 
+stepnumber=2,
+showstringspaces=false, 
+xleftmargin=0.25cm, 
+frame=leftline, 
+rulecolor=\color{green},
+commentstyle=\color{blue}, 
+stringstyle=\color{red},
+backgroundcolor=\color{gris},}
+
+%========================================
+%HYPERLINKS
+%========================================
+%\hypersetup{pdffitwindow=true, 
+%colorlinks=true, 
+%linkcolor=blue, 
+%menucolor=red, 
+%citecolor=blue}
+
+%========================================
+%PAGE PROPERTIES
+%========================================
+%\fancyhf{}
+%\pagestyle{fancy}
+%\fancyfoot[LE,RO]{\thepage}

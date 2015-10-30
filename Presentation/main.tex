@@ -1,0 +1,70 @@
+\documentclass[handout]{beamer}
+\mode<presentation>
+\input{tex/packages}
+\input{tex/beamerinc}
+\begin{document}
+%==============================================================
+%TITLE
+%==============================================================
+\begin{frame}
+\begin{center}
+{\titlepage}
+\end{center}
+\end{frame}
+%==============================================================
+%SLIDE 1
+%==============================================================
+\begin{frame}
+\frametitle{Title of frame}
+\begin{block}
+{Example of block frame}
+Dynamic equation of quantum mechanics
+\begin{align*}
+\squareparenthesis{-\frac{\hbar^2}{2m}\nabla^2 + V\roundparenthesis{\mathbf{r}, t}}\Psi\roundparenthesis{\mathbf{r}, t} = -i\hbar\frac{\partial}{\partial t}\Psi\roundparenthesis{\mathbf{r}, t}
+\end{align*}
+\end{block}
+\end{frame}
+%==============================================================
+%SLIDE 2
+%==============================================================
+\section*{Introduction}
+\begin{frame}
+\frametitle{Introduction}
+\end{frame}
+\subsection*{}
+\begin{frame}
+\frametitle{First part}
+\end{frame}
+\begin{frame}
+\frametitle{Second part}
+\end{frame}
+%==============================================================
+%PENULTIMATE SLIDE
+%==============================================================
+\section*{Results}
+\begin{frame}
+\frametitle{Results}
+\end{frame}
+%==============================================================
+%REFERENECES
+%==============================================================
+\begin{frame}%<handout:1>
+\frametitle{References}
+%\bibliographystyle{plain}
+%\bibliography{references/bib}
+\footnotesize{
+\begin{thebibliography}{99}
+\bibitem[myReference at Beamer Template]{ref:main} Alejandro Guayaquil-Sosa (2012)
+\newblock myBeamer Template. %title
+\newblock \emph{Journal Name} 32(1), 78 -- 86.
+\end{thebibliography}}
+\end{frame}
+%==============================================================
+%TITLE AGAIN
+%==============================================================
+\begin{frame}
+\begin{center}
+\titlepage
+\end{center}
+\end{frame}
+\end{document} 
