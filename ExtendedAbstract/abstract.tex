@@ -1,0 +1,96 @@
+\documentclass[letterpaper,10pt,oneside]{article}
+\usepackage{ucs} %Herramientas de UTF8
+\usepackage[utf8x]{inputenc} %Poner acentos directamente
+\usepackage[T1]{fontenc} %Codificación de fuente
+\usepackage{amsmath} %Simbolos refinados de matemáticas
+\usepackage{graphicx} %Imágenes
+\usepackage{amsfonts}
+%\usepackage[spanish]{babel}
+%Since we are using oneside and i want to shallow the left part
+\usepackage[top=1.5cm, bottom=1.5cm, left=1.5cm, right=1.5cm]{geometry}
+%Proffesionall looking tables
+\usepackage{booktabs}
+
+\usepackage{enumitem}
+%
+\usepackage{xcolor}
+\usepackage{listings}
+%To use subfigures
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{url}
+\usepackage{bm} %For bold math symbols
+\usepackage{lastpage}
+%Control line space
+\usepackage{setspace}
+
+\usepackage[final,pdftex,unicode,colorlinks=true,citecolor=blue,linkcolor=blue,plainpages=false,urlcolor=blue,
+pdfpagelabels=true,pdfsubject={},pdfauthor={Jorge Garc\'{i}a},pdftitle={Extended abstract for thesis},pdfkeywords={Purdue, Spring 2016, Thesis}]{hyperref}
+
+
+%Code formating
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{8} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{8}  % for normal
+
+% Custom colors
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{lightblue}{rgb}{0.5,0.5,0.9}
+\definecolor{tourquise}{rgb}{0.0, 0.6, 0.9}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{lightgray}{rgb}{0.9,0.9,0.9}
+\definecolor{lightorange}{rgb}{1.0,0.64,0.0}
+
+%\usepackage[colorlinks=true, urlcolor=\color{lightblue}]{hyperref}
+
+\usepackage{listings}
+% Python style for highlighting
+\newcommand\sasstyle{\lstset{
+language=SAS,
+basicstyle=\ttm,
+numbers=left,                     % Add line numbers
+numberstyle=\footnotesize,          % Small line numbers
+numbersep=5pt,                    % Number separation from listing
+otherkeywords={self,True,False,None},             % Add keywords here
+keywordstyle=\ttb\color{deepblue},
+%emph={MyClass,__init__},          % Custom highlighting
+emphstyle=\ttb\color{deepred},    % Custom highlighting style
+stringstyle=\color{deepgreen},
+frame=single,                    % Any extra options here%leftline, topline, bottomline, lines
+%frameround=tttt,                  % rounded  corners for frame
+%backgroundcolor=\color{lightgray}, %Color del fondo
+showstringspaces=false,            % 
+rulecolor=\color{tourquise},									%color del marco del codigo
+commentstyle=\color{lightorange}
+}}
+
+\parskip=3mm
+\onehalfspacing
+
+\newcommand{\comillas}[1]{``#1''}
+\newcommand{\T}{^\mathsf{T}}
+
+\begin{document}
+
+
+\setlength{\parindent}{0cm}
+\setlength{\headsep}{25pt}
+\setlength{\footskip}{15pt}
+\begin{center}
+{\Large Extended abstract (for Preliminary Examination)}\\
+{\Large Model improve for 3D printing using perception criteria} \\
+{\large Spring 2016} \\
+{\small Student: Jorge A. Garcia} \\
+{\small Advisor: Bedrich Benes}
+\end{center}
+
+\input{body}
+\cleardoublepage
+
+\nocite{Groebner2013}
+\bibliographystyle{plain}
+\bibliography{bibliography}
+\end{document}
