@@ -2,14 +2,363 @@
 % Encoding: Cp1252
 
 
-@Book{Groebner2013,
-  Title                    = {Business Statistics: A Decision-Making Approach.},
-  Author                   = {David F. Groebner and Patrick W. Shannon and Phillip C. Fry},
-  Editor                   = {Donna Battista},
-  Publisher                = {Pearson},
-  Year                     = {2013},
+@Article{Bacher2014,
+  Title                    = {{Spin-It: Optimizing Moment of Inertia for Spinnable Objects}},
+  Author                   = {B{\"{a}}cher, Moritz and Whiting, Emily and Bickel, Bernd and Sorkine-Hornung, Olga},
+  Journal                  = {ACM Transactions on Graphics (proceedings of ACM SIGGRAPH)},
+  Year                     = {2014},
+  Number                   = {4},
+  Volume                   = {33},
 
-  Owner                    = {jorge},
-  Timestamp                = {2015.03.08}
+  Abstract                 = {Spinning tops and yo-yos have long fascinated cultures around the world with their unexpected, graceful motions that seemingly elude gravity. We present an algorithm to generate designs for spinning objects by optimizing rotational dynamics properties. As input, the user provides a solid 3D model and a desired axis of rotation. Our approach then modifies the mass distribution such that the princi- pal directions of the moment of inertia align with the target rotation frame. We augment the model by creating voids inside its volume, with interior fill represented by an adaptive multi-resolution vox- elization. The discrete voxel fill values are optimized using a con- tinuous, nonlinear formulation. Further, we optimize for rotational stability by maximizing the dominant principal moment. We extend our technique to incorporate deformation and multiple materials for cases where internal voids alone are insufficient. Our method is well-suited for a variety of 3D printed models, ranging from char- acters to abstract shapes. We demonstrate tops and yo-yos that spin surprisingly stably despite their asymmetric appearance. CR},
+  Annote                   = {This makes an optimization of the models to make it able to spin. 
+Is an optimization primarly made in th infill of the object. That is why I belive is relevant for the infills.They also attack the multimaterial fabrication, so thtais why is also a fabrication technique.},
+  Doi                      = {10.1145/2601097.2601157},
+  File                     = {:E$\backslash$:/Work/3DPrintingJorge/LIteratureReview/2014 - Bacher - Spin-it optimizing moment of inertia for spinnable objects.pdf:pdf},
+  ISSN                     = {15577333},
+  Keywords                 = {fabrication,infills,moment of inertia,optimize something,shape optimization,use abstract},
+  Mendeley-tags            = {infills,optimize something,use abstract}
+}
+
+@Article{DeGoes2011,
+  Title                    = {{Exoskeleton: Curve network abstraction for 3D shapes}},
+  Author                   = {{De Goes}, Fernando and Goldenstein, Siome and Desbrun, Mathieu and Velho, Luiz},
+  Journal                  = {Computers and Graphics (Pergamon)},
+  Year                     = {2011},
+  Number                   = {1},
+  Pages                    = {112--121},
+  Volume                   = {35},
+
+  Abstract                 = {In this paper, we introduce the concept of an exoskeleton as a new abstraction of arbitrary shapes that succinctly conveys both the perceptual and the geometric structure of a 3D model. We extract exoskeletons via a principled framework that combines segmentation and shape approximation. Our method starts from a segmentation of the shape into perceptually relevant parts and then constructs the exoskeleton using a novel extension of the Variational Shape Approximation method. Benefits of the exoskeleton abstraction to graphics applications such as simplification and chartification are presented. © 2010 Elsevier Ltd. All rights reserved.},
+  Annote                   = {This is also an absraction paper. It is user assisted, but they create a nice suface joining patches.},
+  Doi                      = {10.1016/j.cag.2010.11.012},
+  File                     = {:E$\backslash$:/Work/3DPrintingJorge/LIteratureReview/2011 - Goes - Exoskeleton Curve network abstraction for 3D shapes.pdf:pdf},
+  ISSN                     = {00978493},
+  Keywords                 = {Segmentation,Shape abstraction,Shape analysis,abstraction,mesh features,use abstract},
+  Mendeley-tags            = {abstraction,mesh features,use abstract},
+  Publisher                = {Elsevier},
+  Url                      = {http://dx.doi.org/10.1016/j.cag.2010.11.012}
+}
+
+@Article{Dumas2014,
+  Title                    = {{Bridging the Gap : Automated Steady Scaffoldings for 3D Printing}},
+  Author                   = {Dumas, J{\'{e}}r{\'{e}}mie and Lorraine, Universit{\'{e}} De and Hergel, Jean and Lefebvre, Sylvain},
+  Journal                  = {Siggraph 2014},
+  Year                     = {2014},
+  Number                   = {4},
+  Pages                    = {98--108},
+  Volume                   = {33},
+
+  Abstract                 = {Existing techniques for support generation fall into two categories: The first allow for very reliable prints by enclosing the bottom of the object in a dense structure, at the expense of increased material usage and build times. The second generate thin hierarchical struc- tures connecting to the surface in a sparse number of points. This uses less material, at the expense of reliability: the part might be- come unstable, the structure itself may become difficult to print, the bottom surface quality degrades. The user therefore has to correct the structure and its parameters for each new object. We propose to exploit the ability of FFF printers to print bridges across gaps. Since bridges are always supported by pillars at their extremities, they are both stronger and more stable than hierarchical tree structures. Our technique first selects the points to support based on overhang and part stability during the entire print process. It then optimizes for a printable scaffolding composed of bridges and vertical pillars, supporting all points. The result is an automated support generation technique using little material while ensuring fine surface quality and stability during the printing process.},
+  Annote                   = {This discusses how to create supports structures that have better mechanical properties. They look like scafolding for a building (hence the name).
+I keep it here as a must cite in case we say thta he was atacking the support generation problem.
+Same as us they try very simple (geometric, not phisical) support generation.},
+  Doi                      = {10.1145/2601097.2601153},
+  File                     = {:E$\backslash$:/Work/3DPrintingJorge/LIteratureReview/2014 - Dumas - Bridging the gap automated steady scaffoldings for 3D printing.pdf:pdf},
+  ISSN                     = {15577333},
+  Keywords                 = {3d printing,fdm,fff,optimize something,scaffoldings,supports,use abstract},
+  Mendeley-tags            = {optimize something,supports,use abstract}
+}
+
+@Article{Echevarria2014,
+  Title                    = {{Capturing and stylizing hair for 3D fabrication}},
+  Author                   = {Echevarria, Jose I. and Bradley, Derek and Gutierrez, Diego and Beeler, Thabo},
+  Journal                  = {ACM Transactions on Graphics},
+  Year                     = {2014},
+  Number                   = {4},
+  Pages                    = {1--11},
+  Volume                   = {33},
+
+  Abstract                 = {Recently, we have seen a growing trend in the design and fabrication of personalized figurines, created by scanning real people and then physically reproducing miniature statues with 3D printers. This is currently a hot topic both in academia and industry, and the printed figurines are gaining more and more realism, especially with state-of-the-art facial scanning technology improving. However, current systems all contain the same limitation - no previous method is able to suitably capture personalized hair-styles for physical reproduction. Typically, the subject's hair is approximated very coarsely or replaced completely with a template model. In this paper we present the first method for stylized hair capture, a technique to reconstruct an individual's actual hair-style in a manner suitable for physical reproduction. Inspired by centuries-old artistic sculptures, our method generates hair as a closed-manifold surface, yet contains the structural and color elements stylized in a way that captures the defining characteristics of the hair-style. The key to our approach is a novel multi-view stylization algorithm, which extends feature-preserving color filtering from 2D images to irregular manifolds in 3D, and introduces abstract geometric details that are coherent with the color stylization. The proposed technique fits naturally in traditional pipelines for figurine reproduction, and we demonstrate the robustness and versatility of our approach by capturing several subjects with widely varying hair-styles.},
+  Annote                   = {It is a little related, but to a several different parts. First is about printing figurines, then is also about percepual aperance and the is stylization (which in this case could be called stylization).},
+  Doi                      = {10.1145/2601097.2601133},
+  File                     = {:E$\backslash$:/Work/3DPrintingJorge/LIteratureReview/2014 - Echevarria - Capturing and stylizing hair for 3D fabrication.pdf:pdf},
+  ISSN                     = {07300301},
+  Keywords                 = {abstraction,hair capture,mesh features,printable figurines,stylization,use abstract},
+  Mendeley-tags            = {abstraction,mesh features,use abstract},
+  Url                      = {http://dl.acm.org/citation.cfm?id=2601097.2601133}
+}
+
+@Article{Gao2015,
+  Title                    = {{The status, challenges, and future of additive manufacturing in engineering}},
+  Author                   = {Gao, Wei and Zhang, Yunbo and Ramanujan, Devarajan and Ramani, Karthik and Chen, Yong and Williams, Christopher B. and Wang, Charlie C.L. and Shin, Yung C. and Zhang, Song and Zavattieri, Pablo D.},
+  Journal                  = {Computer-Aided Design},
+  Year                     = {2015},
+
+  Abstract                 = {Additive manufacturing (AM) is poised to bring about a revolution in the way products are designed, manufactured and distributed to end users. This technology has gained significant academic as well as industry interest due to its ability to create complex geometries with customizable material properties. AM has also inspired the development of the maker movement by democratizing design and manufacturing. Due to the rapid proliferation of a wide variety of technologies associated with AM, there is a lack of a comprehensive set of design principles, manufacturing guidelines, and standardization of best practices. These challenges are compounded by the fact that advancements in multiple technologies (for example materials processing, topology optimization) generate a “positive feedback loop�? effect in advancing AM. In order to advance research interest and investment in AM technologies, some fundamental questions and trends about the dependencies existing in these avenues need highlighting. The goal of our review paper is to organize this body of knowledge surrounding AM, and present current barriers, findings and future trends significantly to the researchers. We also discuss fundamental attributes of AM processes, evolution of the AM industry, and the affordances enabled by the emergence of AM in a variety of areas such as geometry processing, material design and education. We conclude our paper by pointing out future directions such as the “print-it-all�? paradigm, that have the potential to re-imagine current research and spawn completely new avenues for exploration.},
+  Annote                   = {This is a must cite paper. It is a first try organize the literature about 3D printing. Is form Purdue and the cool thing abou it is the ifrst try to give a taxonomy of the body of knledge of 3D printing.
+It is a good starting point for new projects.},
+  Doi                      = {10.1016/j.cad.2015.04.001},
+  File                     = {:E$\backslash$:/Work/3DPrintingJorge/LIteratureReview/2015 - Gao -The status challenges and future of additive manufacturing in engineering.pdf:pdf},
+  ISSN                     = {00104485},
+  Keywords                 = {3D printing,Additive manufacturing,Commercial marketplace,Functionally gradient material,Geometric processing,Heterogeneous material,Intellectual property,Maker movement,Open-source machine,Personal fabrication,Topology optimization,open problems,use abstract},
+  Mendeley-tags            = {open problems,use abstract},
+  Publisher                = {Elsevier Ltd},
+  Url                      = {http://www.sciencedirect.com/science/article/pii/S0010448515000469}
+}
+
+@Proceedings{Hu2016,
+  Title                    = {{Direct Computation of Minimal Rotation for Support Slimming}},
+  Year                     = {2016},
+  Month                    = {Aug. 2015},
+  Organization             = {Automation Science and Engineering (CASE)},
+  Publisher                = {IEEE},
+
+  Abstract                 = {To reduce the usage of supporting structure in additive manufacturing, an orientation-driven shape optimizer was developed in our prior work [Hu et al. 2015] which employs a volumetric mesh enclosing the input 3D models as the domain of computation. The orientation of a model is computed indirectly by surface of the volumetric mesh. In this paper, we extend our indirect computation to an approach that the computation is directly based on the information of input models by an algorithm using incremental linear programming and K-means clustering. The performance of this approach is decoupled from the shape similarity between the volumetric mesh and the input model. As a result, representations obtained from simpler volumetric decomposition such as voxels can be adopted as the domain of computation.},
+  Annote                   = {This is an optimization paper for supports.
+They apporach is to modify the mesh so is relevent to level of detail and to say that we are not the first ones to adress modify the model to improve printabillity (even if is only the support)
+I dont't like that they dont cit our paper even when it was higly relevant for them.},
+  Author                   = {Hu, Kailun and Zhang, Xiaoting and Wang, Charlie C L},
+  File                     = {:E$\backslash$:/Work/3DPrintingJorge/LIteratureReview/2015 - Kailun - Direct Computation of Minimal Rotation for Support Slimming.pdf:pdf},
+  Keywords                 = {optimize something,supports,use abstract},
+  Mendeley-tags            = {optimize something,supports,use abstract}
+}
+
+@Article{Li2015,
+  Title                    = {{Interior structural optimization based on the density-variable shape modeling of 3D printed objects}},
+  Author                   = {Li, Dawei and Dai, Ning and Jiang, Xiaotong and Chen, Xiaosheng},
+  Journal                  = {The International Journal of Advanced Manufacturing Technology},
+  Year                     = {2015},
+
+  Abstract                 = {Physical modeling is a novel theory for 3D print- ing; this approach involves the use of a single material to control physical properties, such as center of mass, totalmass, and moment of inertia. In this work, we present a density- variable shape modeling method to meet the required strength of 3D objects. We estimate a continuous density distribution that satisfies the detected local stress distribution of3Dobjects based on cross-sectional stress analysis.We then utilize a pure mathematical 3D implicit function to generate a porous struc- ture with a gradational interior to represent this density distri- bution.With our method, 3Dobjects with desired sound struc- tures can be fabricated with low material consumption. In addition, the whole design process can be completed easily and interactively. Keywords},
+  Annote                   = {This paper calculates the properties of the infiils to archive a non uniform elasticity ofr 3D printing.
+It defines first the idea of Physical modeling and how the 3D printing community has been using a pure geometrical approach ignorign other phiysical properties.
+The main limitation is thta in certain 3D printers (like powder based, the infills could not be cleaned.
+Their optimization problem design should be interestng. I need to read it more detail.},
+  Doi                      = {10.1007/s00170-015-7704-z},
+  File                     = {:E$\backslash$:/Work/3DPrintingJorge/LIteratureReview/2015 - Li -Interior structural optimization based on the density-variable shape modeling of 3D printed objects.pdf:pdf},
+  ISSN                     = {0268-3768},
+  Keywords                 = {3d printing,geometric modeling,infilling,infills,optimize something,porous structure design,structure optimization,use abstract},
+  Mendeley-tags            = {infills,optimize something,use abstract},
+  Url                      = {http://link.springer.com/10.1007/s00170-015-7704-z}
+}
+
+@Article{Lu2014,
+  Title                    = {{Build-to-Last : Strength to Weight 3D Printed Objects}},
+  Author                   = {Lu, Lin and Sharf, Andrei and Zhao, Haisen and Wei, Yuan and Fan, Qingnan and Chen, Xuelin and Savoye, Yann and Tu, Changhe and Baoquan, Daniel Cohen-or},
+  Journal                  = {ACM Transactions on Graphics},
+  Year                     = {2014},
+  Number                   = {4},
+  Pages                    = {1--10},
+  Volume                   = {33},
+
+  Abstract                 = {The emergence of low-cost 3D printers steers the investigation of new geometric problems that control the quality of the fabricated object. In this paper, we present a method to reduce the material cost and weight of a given object while providing a durable printed model that is resistant to impact and external forces. We introduce a hollowing optimization algorithm based on the concept of honeycomb-cells structure. Honeycombs structures are known to be of minimal material cost while providing strength in tension. We utilize the Voronoi diagram to compute irregular honeycomb-like volume tessellations which define the inner struc- ture. We formulate our problem as a strength–to–weight optimiza- tion and cast it as mutually finding an optimal interior tessellation and its maximal hollowing subject to relieve the interior stress. Thus, our system allows to build-to-last 3D printed objects with large control over their strength-to-weight ratio and easily model various interior structures. We demonstrate our method on a col- lection of 3D objects from different categories. Furthermore, we evaluate our method by printing our hollowed models and measure their stress and weights.},
+  Annote                   = {This paper optimizes the infills of the models using voronoi cell to create a honeycomb like structure.
+The important thinghs, are the optimization function thta uses the strenght to weight ratio as an objective.
+They also measure the stress.},
+  Doi                      = {10.1145/2601097.2601168},
+  File                     = {:E$\backslash$:/Work/3DPrintingJorge/LIteratureReview/2014 - Lu - Build-to-last strength to weight 3D printed objects.pdf:pdf},
+  ISBN                     = {0730-0301},
+  ISSN                     = {15577333},
+  Keywords                 = {3D printing technologies,infills,optimize something,porous structure design,problematic parts detection,solid object hollowing,use abstract,volume-Voronoi shape},
+  Mendeley-tags            = {infills,optimize something,problematic parts detection,use abstract}
+}
+
+@Article{Mehra2009,
+  Title                    = {{Abstraction of Man-Made Shapes}},
+  Author                   = {Mehra, Ravish},
+  Journal                  = {ACM Transactions on Graphics (TOG)},
+  Year                     = {2009},
+  Number                   = {5},
+  Pages                    = {1--10},
+  Volume                   = {28},
+
+  Abstract                 = {Man-made objects are ubiquitous in the real world and in virtual environments. While such objects can be very detailed, capturing every small feature, they are often identified and characterized by a small set of defining curves. Compact, abstracted shape descriptions based on such curves are often visually more appealing than the original models, which can appear to be visually cluttered. We introduce a novel algorithm for abstracting three-dimensional geometric models using characteristic curves or contours as building blocks for the abstraction. Our method robustly handles models with poor connectivity, including the extreme cases of polygon soups, common in models of man-made objects taken from online repositories. In our algorithm, we use a two-step procedure that first approximates the input model using a manifold, closed envelope surface and then extracts from it a hierarchical abstraction curve network along with suitable normal information. The constructed curve networks form a compact, yet powerful, representation for the input shapes, retaining their key shape characteristics while discarding minor details and irregularities.},
+  Annote                   = {This is the beggining of all, the must cite first article.
+It describes a technique to create a new meshs taht resembles visually the input. Furthermore anseures thta the mesh is nice and correctr.
+It is a two step process:
+1) Constructos an initial correct approximation. This part is initializzed with a voxel hull, simillar to the one we already have.
+2) Constructs a network of curves.
+From the network it an interpolate curves anc then sucessfully abstract the mesh.},
+  Doi                      = {10.1145/1618452.1618483},
+  File                     = {:E$\backslash$:/Work/3DPrintingJorge/LIteratureReview/2009 - Mehra - Abstraction of man-made shapes.pdf:pdf},
+  Keywords                 = {NPR,abstraction,curve network,npr,perception,shape analysis,use abstract},
+  Mendeley-tags            = {abstraction,use abstract}
+}
+
+@Article{Oropallo2015,
+  Title                    = {{Ten challenges in 3D printing}},
+  Author                   = {Oropallo, William and Piegl, Les a.},
+  Journal                  = {Engineering with Computers},
+  Year                     = {2015},
+
+  Abstract                 = {Three dimensional printing has gained consid- erable interest lately due to the proliferation of inexpensive devices as well as open source software that drive those devices. Public interest is often followed by media cover- age that tends to sensationalize technology. Based on popu- lar articles, the public may create the impression that 3D printing is the Holy Grail; we are going to print everything as one piece, traditional manufacturing is at the brink of collapse, and exotic applications, such as cloning a human body by 3D bio-printing, are just around the corner. The purpose of this paper is to paint a more realistic picture by identifying ten challenges that clearly illustrate the limita- tions of this technology, which makes it just as vulnerable as anything else that had been touted before as the next game changer.},
+  Annote                   = {This is a survey paper, one of the few thare are.
+It defines ten challenges. I need to read it in detail, becuse has the general knodege about 3D printing. very useful.
+My research focus on the challenges: 
+1 shape optimization
+3 pre and post processing
+8 part orientation
+9 slicing},
+  Doi                      = {10.1007/s00366-015-0407-0},
+  File                     = {:E$\backslash$:/Work/3DPrintingJorge/LIteratureReview/2015 - Oropallo - Ten challenges in 3D printing.pdf:pdf},
+  ISSN                     = {0177-0667},
+  Keywords                 = {3D printing,3d printing,Additive manufacturing,Design for printing,Optimization,Part orientation,additive manufacturing,design for printing,open problems,optimization,part orientation,use abstract},
+  Mendeley-tags            = {open problems,use abstract},
+  Publisher                = {Springer London},
+  Url                      = {http://link.springer.com/10.1007/s00366-015-0407-0}
+}
+
+@Article{Panetta2015,
+  Title                    = {{Elastic Textures for Additive Fabrication}},
+  Author                   = {Panetta, Julian and Malomo, Luigi and Pietroni, Nico and Zorin, Denis and Zhou, Qingnan},
+  Journal                  = {ACM Transactions on Graphics (TOG)},
+  Year                     = {2015},
+  Pages                    = {1--12},
+
+  File                     = {:E$\backslash$:/Work/3DPrintingJorge/LIteratureReview/2015 - Panetta - Elastic textures for additive fabrication.pdf:pdf},
+  ISBN                     = {9781450333313},
+  Keywords                 = {additive fabrication,deformable ob-,goal-based material de-,homogenization,infills,jects,microstructures,shape optimization,use abstract},
+  Mendeley-tags            = {infills,use abstract}
+}
+
+@Article{Schumacher2015,
+  Title                    = {{Microstructures to Control Elasticity in 3D Printing}},
+  Author                   = {Schumacher, Christian and Bickel, Bernd},
+  Journal                  = {ACM Transactions on Graphics},
+  Year                     = {2015},
+  Pages                    = {1--13},
+
+  File                     = {:C$\backslash$:/Users/garci191/Downloads/2015 - Schumacher - Microstructures to Control Elasticity in 3D Printin.pdf:pdf},
+  ISBN                     = {9781450333313},
+  Keywords                 = {3D printing,3d printing,and the material properties,are often inextricably linked,as easy to control,as geometry,can usually,elastic properties are not,fabrication,function,infills,material,since additive manufacturing technologies,to,topology optimization,unfortunately,use abstract},
+  Mendeley-tags            = {infills,use abstract}
+}
+
+@Article{Song2015,
+  Title                    = {{Printing 3D objects with interlocking parts}},
+  Author                   = {Song, Peng and Fu, Zhongqi and Liu, Ligang and Fu, Chi-Wing},
+  Journal                  = {Computer Aided Geometric Design},
+  Year                     = {2015},
+  Pages                    = {137--148},
+  Volume                   = {35-36},
+
+  Abstract                 = {Recent advances in 3D printing technologies bring wide range of applications from fast prototyping to product manufacturing. However, one intrinsic limitation of 3D printing is that we cannot fabricate a single object that is larger than the working volume of a 3D printer. To address this issue, we may partition the given object into 3D parts of manageable sizes for printing, and then assemble the object from the printed 3D parts. Rather than using connectors, glue, or skew, we propose to connect the printed 3D parts by 3D interlocking such that the assembled object can be not only repeatedly disassembled and reassembled, but also strongly connected by the parts' own geometry. To achieve these, we develop a voxelization-based approach to partition a given 3D model into 3D interlocking parts. To guarantee the generated 3D parts to be structurally sound and well-connected by 3D interlocking, we deform the local geometry of the 3D model to avoid voxel fragmentation, employ internal voxels to create initial interlocking parts, and analyze the local shape within voxels to guide the final parts construction. We demonstrate the effectiveness of our approach on 3D models with a variety of shapes, and realize some of them by 3D printing.},
+  Doi                      = {10.1016/j.cagd.2015.03.020},
+  File                     = {:E$\backslash$:/Work/3DPrintingJorge/LIteratureReview/2015 - Song - Printing 3D objects with interlocking parts.pdf:pdf},
+  ISSN                     = {01678396},
+  Keywords                 = {3D printing,Interlocking,Shape partitioning,Voxelization,articulated,use abstract},
+  Mendeley-tags            = {articulated,use abstract},
+  Publisher                = {Elsevier B.V.},
+  Url                      = {http://www.sciencedirect.com/science/article/pii/S0167839615000436}
+}
+
+@Article{Stava2012,
+  Title                    = {{Stress relief}},
+  Author                   = {Stava, Ondrej and Vanek, Juraj and Benes, Bedrich and Carr, Nathan and M{\v{e}}ch, Radom{\'{\i}}r},
+  Journal                  = {ACM Transactions on Graphics},
+  Year                     = {2012},
+  Number                   = {4},
+  Pages                    = {1--11},
+  Volume                   = {31},
+
+  Doi                      = {10.1145/2185520.2335399},
+  File                     = {:E$\backslash$:/Work/3DPrintingJorge/LIteratureReview/2012 - Stava - Stress relief improving structural strength of 3D printable objects.pdf:pdf},
+  ISSN                     = {07300301},
+  Keywords                 = {3D printing,3d printing,physics-based mo,physics-based model-,problematic parts detection,structural analysis,use abstract},
+  Mendeley-tags            = {problematic parts detection,use abstract}
+}
+
+@InCollection{Telea2011,
+  Title                    = {{Voxel-Based Assessment of Printability of 3D}},
+  Author                   = {Telea, Alexandru and Jalba, Andrei},
+  Booktitle                = {Voxel-Based Assessment of Printability of 3D},
+  Publisher                = {Springer Berlin Heidelberg},
+  Year                     = {2011},
+  Pages                    = {393--404},
+
+  Abstract                 = {Printability, the capability of a 3D printer to closely reproduce a 3D model, is a complex decision involving several geometrical attributes like local thickness, shape of the thin regions and their surroundings, and topology with respect to thin regions. We present a method for assessment of 3D shape printability which efficiently and effectively computes such attributes. Our method uses a simple and efficient voxel-based representation and associated computations. Using tools from multi-scale morphology and geodesic analysis, we propose several new metrics for various printability problems. We illustrate our method with results taken from a real-life application.},
+  File                     = {:E$\backslash$:/Work/3DPrintingJorge/LIteratureReview/2011 - Telea - Voxel-based assessment of printability of 3D shapes.pdf:pdf},
+  Keywords                 = {3d printability,geodesic analysis,problematic parts detection,top-hat transform,use abstract},
+  Mendeley-tags            = {problematic parts detection,use abstract}
+}
+
+@Article{Thomaszewski2015,
+  Title                    = {{Design and Fabrication of Flexible Rod Meshes}},
+  Author                   = {Thomaszewski, Bernhard and Coros, Stelian and Bickel, Bernd and Sumner, Robert and Otaduy, Miguel A},
+  Journal                  = {ACM Transactions on Graphics},
+  Year                     = {2015},
+  Pages                    = {1--12},
+
+  File                     = {:E$\backslash$:/Work/3DPrintingJorge/LIteratureReview/2015 - Perez - Design and Fabrication of Flexible Rod Meshes.pdf:pdf},
+  ISBN                     = {9781450333313},
+  Keywords                 = {challenge on computer-aided design,deformable printing tech-,fabrication,geometry,how to,infills,material design,nology poses a grand,object,properties of the target,required the specification of,rods,specify the desired deformation,the,use abstract},
+  Mendeley-tags            = {infills,use abstract}
+}
+
+@Article{Vanek2014,
+  Title                    = {{Clever Support : Efficient Support Structure Generation for Digital Fabrication}},
+  Author                   = {Vanek, J and Galicia, J a G and Benes, B},
+  Journal                  = {Symposium on Geometry Processing},
+  Year                     = {2014},
+  Number                   = {5},
+  Volume                   = {33},
+
+  Doi                      = {10.1111/cgf.12437},
+  File                     = {:E$\backslash$:/Work/3DPrintingJorge/LIteratureReview/2014 - Vanek - Clever Support Efficient Support Structure Generation for Digital Fabrication.pdf:pdf},
+  ISSN                     = {14678659},
+  Keywords                 = {optimize something,supports,use abstract},
+  Mendeley-tags            = {optimize something,supports,use abstract}
+}
+
+@Article{Wang2015,
+  Title                    = {{Saliency-Preserving Slicing Optimization for Effective 3D Printing}},
+  Author                   = {Wang, Weiming and Chao, Haiyuan and Tong, Jing and Yang, Zhouwang and Tong, Xin and Li, Hang and Liu, Xiuping and Liu, Ligang},
+  Journal                  = {Computer Graphics Forum},
+  Year                     = {2015},
+  Number                   = {0},
+  Pages                    = {n/a--n/a},
+  Volume                   = {00},
+
+  Annote                   = {This is the most recent article thta uses a perceptual isuue about 3D printing. 
+They optimize the slicing so the final surface is not jagged.
+They define the saliency as a visual quality metric for printing result.},
+  Doi                      = {10.1111/cgf.12527},
+  File                     = {:E$\backslash$:/Work/3DPrintingJorge/LIteratureReview/2015 - Wang -Saliency-Preserving Slicing Optimization for Effective 3D Printing.pdf:pdf},
+  ISSN                     = {01677055},
+  Keywords                 = {3,3d printing,5,acm ccs,adaptive slicing,computational geometry and object,computer graphics,i,level of detail,mesh saliency,model segmentation,modelling,optimize something,segmentation,use abstract,visual quality},
+  Mendeley-tags            = {level of detail,model segmentation,optimize something,use abstract},
+  Url                      = {http://doi.wiley.com/10.1111/cgf.12527}
+}
+
+@Article{Yumer2012,
+  Title                    = {{Co-abstraction of shape collections}},
+  Author                   = {Yumer, Mehmet Ersin and Kara, Levent Burak},
+  Journal                  = {ACM Transactions on Graphics},
+  Year                     = {2012},
+  Number                   = {6},
+  Pages                    = {1},
+  Volume                   = {31},
+
+  Abstract                 = {We present a co-abstraction method that takes as input a collection of 3D objects, and produces a mutually consistent and individually identity-preserving abstraction of each object. In general, an abstraction is a simpler version of a shape that preserves its main characteristics. We hypothesize, however, that there is no single abstraction of an object. Instead, there is a variety of possible abstractions, and an admissible one can only be chosen conjointly with other objects' abstractions. To this end, we introduce a new approach that hierarchically generates a spectrum of abstractions for each model in a shape collection. Given the spectra, we compute the appropriate abstraction level for each model such that shape simplification and inter-set consistency are collectively maximized, while individual shape identities are preserved. © 2012 ACM.},
+  Annote                   = {A second must cite article is also SIG Asia and is direct riveal of the first abstraction paper. Their result are a little better, but their process seems a lot more involved.
+Their main contribution is to compare evaluate the abstraction in compare with other models. For each object they have several abstractions, then they said they can only choose the correct one by comparing the rest of the modelas.
+It has a nice previos work on human perception and abstraction.
+The concept of subvolumes.},
+  Doi                      = {10.1145/2366145.2366185},
+  File                     = {:E$\backslash$:/Work/3DPrintingJorge/LIteratureReview/2012 - Yumer - Co-abstraction of shape collections.pdf:pdf},
+  ISBN                     = {0730-0301},
+  ISSN                     = {07300301},
+  Keywords                 = {abstraction,co-abstraction,mesh features,mutual abstraction,shape character extraction,shape simplifi,shape simplifica-,tion,use abstract},
+  Mendeley-tags            = {abstraction,mesh features,use abstract},
+  Url                      = {http://dl.acm.org/citation.cfm?doid=2366145.2366185$\backslash$nhttp://dl.acm.org/citation.cfm?id=2366185$\backslash$nhttp://dl.acm.org/citation.cfm?doid=2366145.2366185}
+}
+
+@Article{Zhou2013,
+  Title                    = {{Worst-case Structural Analysis}},
+  Author                   = {Zhou, Qingnan and Panetta, Julian and Zorin, Denis},
+  Journal                  = {ACM Trans. Graph.},
+  Year                     = {2013},
+  Number                   = {4},
+  Pages                    = {137:1--137:12},
+  Volume                   = {32},
+
+  Abstract                 = {Direct digital manufacturing is a set of rapidly evolving technologies that provide easy ways to manufacture highly customized and unique products. The development pipeline for such products is radically different from the conventional manufacturing pipeline: 3D geometric models are designed by users often with little or no manufacturing experience, and sent directly to the printer. Structural analysis on the user side with conventional tools is often unfeasible as it requires specialized training and software. Trial-and-error, the most common approach, is time-consuming and expensive. We present a method that would identify structural problems in objects designed for 3D printing based on geometry and material properties only, without specific assumptions on loads and manual load setup. We solve a constrained optimization problem to determine the "worst" load distribution for a shape that will cause high local stress or large deformations. While in its general form this optimization has a prohibitively high computational cost, we demonstrate that an approximate method makes it possible to solve the problem rapidly for a broad range of printed models. We validate our method both computationally and experimentally and demonstrate that it has good predictive power for a number of diverse 3D printed shapes.},
+  Doi                      = {10.1145/2461912.2461967},
+  File                     = {:E$\backslash$:/Work/3DPrintingJorge/LIteratureReview/2013 - Qingnan - Worst-case Structural Analysis.pdf:pdf},
+  ISSN                     = {0730-0301},
+  Keywords                 = {digital manufacturing,problematic parts detection,structural analysis,structural analysis, digital manufacturing,use abstract},
+  Mendeley-tags            = {problematic parts detection,use abstract},
+  Url                      = {http://doi.acm.org/10.1145/2461912.2461967$\backslash$nhttp://dl.acm.org/ft{\_}gateway.cfm?id=2461967{\&}type=pdf}
 }
 
