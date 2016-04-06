@@ -1,0 +1,44 @@
+\begin{enumerate}
+  %Bedrich Bennes
+	\item Provide in depth detailed review of previous work on abstractions. What can be applied to 3D printing and how?
+	
+	\begin{itemize}
+		\item Abstraction in general.
+		\item Abstraction in our sense.
+	\end{itemize}
+
+  \item Provide review of previous work on perception in CG and how it can be applied to the problem of 3D printing.
+	%This is actually more difficult. I'm probabbly gonna need more resources to answer.
+	%Level of detail plus some abstraction.
+	
+	\begin{itemize}
+		\item In CG in general.
+		\item In 3D printing.
+	\end{itemize}
+
+  \item Provide detailed pipeline of your method with a detailed time line of work. What, when, and how will be completed.
+	%Start of the pippeline is aready in the mock paper. Now I must put a timeline and add some calendarization. Maybe a gannt diagram
+	
+	
+	%Tim Mcgraw
+	\item What is the termination criterion? (How do you know when you are done?) Is it the user's choice, or automatic?
+	%This is easy it is as soon as the resampling in the volumetric view return no more problematic parts. Explain about the two delta criterions, and how to choos between them
+
+  \item Do you need to convert from volumetric representation back into to a mesh to print?
+	%Theory not necesarry practice I do but is only an implementation detail. I use artzy algoritm to go back and forth between the two representations
+
+  \item What specific volumetric representation do you propose to use?
+	%Great question I use voxels defined in a simple cubic grid. Put the definitions. Compare to the other regular voxel representations and against the non regular voxel representations.
+
+  %Juraj Vanek
+	\item Can you elaborate more about this perception metric you will use to evaluate visual saliency of the 3D printed object? Are you going to verify your metric with user study? e.g. to see if use will also say that corrected model is visually plausible after the modification and there is no obvious better way how to perform the correction?
+	%This is the most difficult question to answer. yes the user study could be a way, but also the saliency and the distance from the origial mesh. I guess the best answer is I dont now yet. =(
+	%Use paper form Perceptual quality assessment of 3D dynamic meshes: Subjective and objective studies
+	
+	\item How will you combine perceptual optimization with structural/material optimization? I understand we want to have optimized object that is visually plausible, but we still have to keep printability and structural strength.
+	%Yes, I plan o then redirect the output to another algoritm maybe even strees relief. The idea nbehin structural sounness could be delimited to just standing. I will not rty to garanty the pinchingg force or similars
+	
+	\item You mentioned that you would like to have the process interactive. I assume GPU acceleration will be used in this case. Since the model will be volumetric, how would you cope with memory restrictions put on fully volumetric (voxel) model?
+	%Yes, this is a great question too. Voxelization is made in CPU, but then the represetation used is morphological, so it is not really that memory consumed. So far in they say thta the expense step is, which right now is made in CPU and is still good. So I guess it is not a concer right now. I do have some cad ounder the sleeve if this is a bootle neck later.
+	
+\end{enumerate}
