@@ -59,7 +59,7 @@
 	\item What is the termination criterion? (How do you know when you are done?) Is it the user's choice, or automatic?
 	
 	There is no termination criteria in the sense of optimization. Rather, we detect the problematic parts, then I proceed to correct them one by one. Therefore, it finishes when there are no more problematic parts to correct. The user can choose to accept or reject the proposed abstraction, but regardless of his choice the abstraction is not recalculated.
-		`
+	
 	At one of the subprocess, when we produce the abstraction based on saliency there is an optimization of the metric of how far it is from the original mesh. And in that sense there is a fixed number of iterations of the abstraction as a termination criteria. Again, I would like to stress it does not make sense to become closer to the mesh than $\Delta$.
 
   \item Do you need to convert from volumetric representation back into to a mesh to print?
