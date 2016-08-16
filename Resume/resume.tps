@@ -17,8 +17,8 @@ Class=LaTeXView
 Document=resume.tex
 
 [Frame0_View0,0]
-TopLine=32
-Cursor=1618
+TopLine=0
+Cursor=2932
 
 [SessionInfo]
 FrameCount=1
