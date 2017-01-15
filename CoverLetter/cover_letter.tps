@@ -11,14 +11,14 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=1680
-NormalPos.bottom=684
+NormalPos.right=1132
+NormalPos.bottom=371
 Class=LaTeXView
 Document=cover_letter.tex
 
 [Frame0_View0,0]
-TopLine=96
-Cursor=5683
+TopLine=0
+Cursor=2706
 
 [SessionInfo]
 FrameCount=1
