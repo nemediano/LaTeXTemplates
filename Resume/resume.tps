@@ -14,11 +14,11 @@ NormalPos.top=26
 NormalPos.right=1680
 NormalPos.bottom=684
 Class=LaTeXView
-Document=..\..\..\..\Courses\CGT581DigitalFab\reports\week01\reading01.tex
+Document=resume.tex
 
 [Frame0_View0,0]
-TopLine=9
-Cursor=0
+TopLine=235
+Cursor=2365
 
 [SessionInfo]
 FrameCount=1
