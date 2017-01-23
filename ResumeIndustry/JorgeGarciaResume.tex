@@ -24,7 +24,10 @@
 \usepackage[hidelinks]{hyperref}
 \urlstyle{same}
 \usepackage[left=0.7in,top=0.6in,right=0.7in,bottom=0.6in]{geometry} % Document margins
-%\usepackage{url}
+
+
+
+
 \newcommand{\tab}[1]{\hspace{.2667\textwidth}\rlap{#1}}
 \newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
 \name{Jorge Antonio Garc\'{i}a Galicia} % Your name
@@ -32,11 +35,22 @@
 \address{\url{http://www.linkedin.com/in/jorgegarciagalicia}} % Your secondary addess (optional)
 \address{(765) 543-9834 \\ garci191@purdue.edu} % Your phone number and email
 
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{Garc\'{i}a, Jorge pg.\thepage}
+\cfoot{} % get rid of the page number 
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+
 \begin{document}
 
 %----------------------------------------------------------------------------------------
 %	EDUCATION SECTION
 %----------------------------------------------------------------------------------------
+\thispagestyle{empty}
 
 \begin{rSection}{Education}
 
@@ -83,78 +97,92 @@ Software & Visual Studio, Eclipse, Gimp, Inkscape
 
 \begin{rSubsection}{Nvidia Corporation}{Santa Clara, CA}{Software Developer Intern, OpenGL Driver Team}{May 2015 - Aug 2015}
 \item Ported OpenGL extension to expos them in the driver API
-\item Repair several bugs in the driver to correct 3rd party applications calculations
+\item Repair several bugs in the driver to correct calculations of 3rd party applications
 \item Communicated with engineers from different companies around the world to delimit bug reports
 \end{rSubsection}
 
 \begin{rSubsection}{Nvidia Corporation}{Santa Clara, CA}{Software Developer Intern, DirectX Driver Team}{May 2014 - Aug 2014}
-\item Ported OpenGL extension to expos them in the driver API
-\item Repair several bugs in the driver to correct 3rd party applications calculations
-\item Communicated with engineers from different companies around the world to delimit bug reports
+\item Created an image format converter using nVidia assemble language
+\item Wrote several shaders in HLSL for a video format conversion program
+\item Develop C functions to test algorithms inside the driver
 \end{rSubsection}
 
+\begin{rSubsection}{National Autonomous University of Mexico}{Mexico City, Mexico}{Laboratory assistant, Software Development and Information Technology Unit}{Oct 2006 - Dec 2007}
+\item Built a web site in LAMP
+\item Developed various small applications in PHP and Java for data collection
+\item Administrated an SVN based control version system
+\end{rSubsection}
+
+%\begin{rSubsection}{Computer Systems Technology}{Mexico City, Mexico}{Intern, Q.A. and developer}{Jan 2005 - Dec 2005}
+%\item Developed various applications in Java for text processing
+%\item Helped in a migration of a DB from Interbase to Oracle
+%\item Worked migrating an application from PowerHouse to Java
+%\end{rSubsection}
 
 \end{rSection}
 
-%	EXAMPLE SECTION
-%----------------------------------------------------------------------------------------
+\clearpage
 
-\begin{rSection}{Academic Achievements} \itemsep -2pt
-\item Ranked in National Top 0.2\% (amongst 1,200,000 candidates) in JEE Mains 2013 and Top 1\% (amongst 150,000 candidates) in IIT-JEE Advanced 2013
-\item Ranked in the State-wise Top 1\% (amongst 70,000 candidates) in State level Engineering competitive Exam (MP PET)
-\item Stood first in MBD Talent Search Exam conducted by state government, competing against more than 1000 participants  
+
+
+\begin{rSection}{Academic and Research Experience}
+
+	\begin{rSubsection}{Purdue University}{West Lafayette, IN}{Teaching Assistant, Computer Graphics Department}{Aug 2016 - May 2017, Aug 2014 - May 2015}
+	\item Created didactic materials for CGT215 programming class
+	\item Advised students during the lab section of programming class
+	\item Manage and grade homework and practices for more than 50 students using Blackborad
+	\end{rSubsection}
+
+	\begin{rSubsection}{Purdue University}{West Lafayette, IN}{Research assistant, HPCG laboratory}{Aug 2015 - May 2016, Aug 2012 - May 2014}
+	\item Created a 3D visualization of internal microstructures of batteries using OpenGL and CUDA
+	\item Develop an algorithm for 3D bin packing optimization
+	\item Helped in developing software for analysis of road networks using Graph Theory techniques
+	\end{rSubsection}
+	
+	\begin{rSubsection}{National Autonomous University of Mexico}{Mexico City, Mexico}{Research assistant, Institute of Applied Mathematics and Systems}{Oct 2011 - Jun 2012}
+	\item Develop programs for analysis of digital images for 3D reconstruction of blood vessels
+	\item Operated a fondus camera to capture images of the retina
+	\item Created a pipeline of several program using Bash to automatize the digital image processing
+	\end{rSubsection}
+	
+	\begin{rSubsection}{National Autonomous University of Mexico}{Mexico City, Mexico}{Lecturer, School of Higher Studies Acatl\'{a}n}{Aug 2008 - May 2012}
+	\item Teach two classes: Graph Theory and Computer Graphics
+	\item Created didactic material including slides, quizzes and notes
+	\item Gave feedback to students during mentorship hours
+	\end{rSubsection}
+	
+	\begin{rSubsection}{National Autonomous University of Mexico}{Mexico City, Mexico}{Lecturer, School of Science}{Jan 2009 - Dec 2010}
+	\item Help in teaching two classes: Modern Geometry and Introduction to Computer Science
+	\item Created didactic material including demo programs and slides
+	\item Guide students for installing software and learn best practices in programming
+	\end{rSubsection}
+
+\end{rSection}
+
+
+\begin{rSection}{Publications} \itemsep -4pt
+\item \textit{Connected fermat spirals for layered fabrication}, Zhao, H., Gu, F., Huang, Q., Garcia, J., Chen, Y., Tu, C., Benes, B., Zhang, H., Cohen-Or, D., Chen, B. ACM Transactions on Graphics (SIGGRAPH), July 2016.
+\item \textit{PackMerger: A 3D Print Volume Optimizer}, Vanek, J., Garcia, J., Benes, B., Mech, R., Carr, N., Stava, O., and Miller, G. Computer Graphics Forum, September 2014.
+\item \textit{Clever Support: Efficient Support Structure Generation for Digital Fabrication, Vanek}, J., Garcia, J. and Benes, B. Computer Graphics Forum, August 2014.
+\item \textit{Yturralde: impossible figure generator}, Esteban Garc\'{i}a Bravo and Jorge A. Garc\'{i}a. SIGGRAPH '15 ACM SIGGRAPH Art Papers.
+\end{rSection}
+
+\begin{rSection}{Other nominations} \itemsep -8pt
+\item Scholarship for intentional graduate studies, National Council of Science and Technology
+\item Senator, The Purdue Graduate Student Senate
+\item Scholarship for graduate studies, National Council of Science and Technology
+\item Technical Council member, School of Higher Studies Acatl\'{a}n
 \end{rSection}
 
 %----------------------------------------------------------------------------------------
-\begin{rSection}{Relevant Courses}
-\itab{\textbf{Core Courses}} \tab{}  \tab{\textbf{Other Courses}}
-\\ \itab{Fluid Mechanics \& its applications } \tab{}  \tab{Computational Methods in Engineering}
-\\ \itab{Thermodynamics} \tab{}  \tab{Fundamental of Computing} 
-\\ \itab{Heat Transfer \& its applications} \tab{}  \tab{Probability and Statistics} 
-\\ \itab{Mass Transfer \& its applications} \tab{} \tab{Calculus \& Linear Algebra}
-\\ \itab{Transport Phenomena (ongoing)} \tab{} \tab{Introduction to Mechanics}
+%\begin{rSection}{Relevant Courses}
+%\itab{\textbf{Core Courses}} \tab{}  \tab{\textbf{Other Courses}}
+%\\ \itab{Fluid Mechanics \& its applications } \tab{}  \tab{Computational Methods in Engineering}
+%\\ \itab{Thermodynamics} \tab{}  \tab{Fundamental of Computing} 
+%\\ \itab{Heat Transfer \& its applications} \tab{}  \tab{Probability and Statistics} 
+%\\ \itab{Mass Transfer \& its applications} \tab{} \tab{Calculus \& Linear Algebra}
+%\\ \itab{Transport Phenomena (ongoing)} \tab{} \tab{Introduction to Mechanics}
 % \\ \itab{Process Control (ongoing)} \tab{} \tab{Electrodynamics}
-
-\end{rSection}
-
-\begin{rSection}{POSITION OF RESPONSIBILITY}
-
-\begin{rSubsection}{Techkriti 2015 - Technical and entrepreneurial Festival }{August 2014 - March 2015}{Public Relations}{IIT Kanpur}
-\item Spearheaded a 2-tier team of 40 people to successfully conduct professional shows, exhibitions and talks
-\item Organized talks in Techkriti by eminent personalities like Dr K. Radhakrishnan (Chairman, ISRO), Peter Schultz (Co-inventor, Fibre optics) and David Hilmers (NASA Astronaut) with more than 1000 attendees
-\item Successfully organized Auto expo, Space expo and Defence expo together for the first time in Techkriti
-\item Promoted awareness through social campaigns like Make a wish, Adopt a tree and Teen Suicide Prevention
-\end{rSubsection}
-
-%------------------------------------------------
-
-\begin{rSubsection}{Students' Placement Office}{April 2015 - Present}{Internship Coordinator}{IIT Kanpur}
-\item Coordinating with team of 20 students responsible for facilitating internship proceedings of 650 students involving 150 companies
- \item Responsible for developing contacts with corporate recruitment teams of several firms for internship and placements 
- \item Organized sessions on Personality Development and Career Awareness by esteemed alumni for over 1600 students
-\end{rSubsection}
-
-%------------------------------------------------
-
-\begin{rSubsection}{Hall Executive Committee }{April 2014 - Nov 2014}{Secretary}{IIT Kanpur}
-\item Coordinated with 12 members to led a team of 200 students in inter hall technical, cultural and sports competition of institute 
-\item Planned an annual budget of ₹ 2 lakhs for proper functioning of hostel with more than 400 residents
-\end{rSubsection}
-
-\end{rSection}
-
-%----------------------------------------------------------------------------------------
-\begin{rSection}{Extra-Cirrucular} \itemsep -3pt
-\item Secured Gold in M.P. State Throw Ball competition and represented district in State Hand Ball competition
-\item Represented Institute in Udghosh’13 and secured second prize in Kho-Kho intramurals
-\item Secured second prize in Dance Drama competition in Galaxy’14, inter hall cultural competition of IIT Kanpur
-\item Won second prize in Electromania, circuit game designing competition in Takneek’13, inter hall technical festival of IIT Kanpur
- % \item Member, Athletics Team, IIT Kanpur. Attended Summer Sport Camp as a long jumper.
-%\item Trained and disciplined in National Cadet Corps (NCC), IIT Kanpur for a year.
- %\item  Participated in Vijyoshi Camp 2012 organized at Indian Institute of Science, Bangalore.
- %\item Won 2nd position in Kho-Kho in Intramurals conducted by Physical Education Section, IIT Kanpur.
- %\item Pursued French as second language during secondary school from Grade 6 to Grade 10. Also participated in French Song Competition and French G.K. Quiz in Class 10th. %
-
-\end{rSection}
+%\end{rSection}
 
 \end{document}
