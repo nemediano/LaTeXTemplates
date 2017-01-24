@@ -17,8 +17,8 @@ Class=LaTeXView
 Document=cover_letter.tex
 
 [Frame0_View0,0]
-TopLine=108
-Cursor=6776
+TopLine=107
+Cursor=9331
 
 [SessionInfo]
 FrameCount=1
