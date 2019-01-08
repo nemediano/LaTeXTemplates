@@ -45,7 +45,8 @@
 %To insert algorithms in pseudocode
 \usepackage{algpseudocode}
 \usepackage{algorithm} %float enviroment for algorithms
-\algrenewcommand{\algorithmiccomment}[1]{\hskip3em$//$ #1}
+%Make the comments similar to cpp
+%\algrenewcommand{\algorithmiccomment}[1]{\hskip3em$//$ #1}
 
 %Headers and footers
 \usepackage{lastpage}
@@ -63,6 +64,10 @@
 \fancyfoot[L]{CGT 501}
 \renewcommand{\headrulewidth}{2pt} 
 \renewcommand{\footrulewidth}{2pt}
+
+\usepackage{minted} %For inserting source code and embed source files
+%Requieres compilation using:
+% $xelatex -shell-escape input.tex
 
 %In order to work this temple needs to be build like this:
 % 1 XeLaTeX

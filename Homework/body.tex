@@ -72,7 +72,7 @@ But it also could be that a figure is composed of several subfigures each with h
     \label{fig:2c}
   \end{subfigure}
     
-  \caption{Plots for an imaginary exercise, lets call it $X$.}
+  \caption{Plots of an imaginary exercise, lets call it $X$.}
   \label{fig:two}
 \end{figure}
 
@@ -95,12 +95,12 @@ But it also could be that a figure is composed of several subfigures each with h
 \label{tab:exey}
 \end{table}
 
-\item Lets look at how to write an algorith using pseudo code. See the algorithm~\ref{alg:euclid}. The information comes from this part of the \href{https://en.wikibooks.org/wiki/LaTeX/Algorithms#Typesetting_using_the_algorithmicx_package}{wikibook} and from this \href{https://tex.stackexchange.com/questions/229355/algorithm-algorithmic-algorithmicx-algorithm2e-algpseudocode-confused}{post}.
+\item Lets look at how to write an algorith using pseudo code. See the algorithm~\ref{alg:euclid}. The while ends in line~\ref{euclidendwhile}. The information comes from this part of the \href{https://en.wikibooks.org/wiki/LaTeX/Algorithms#Typesetting_using_the_algorithmicx_package}{wikibook} and from this \href{https://tex.stackexchange.com/questions/229355/algorithm-algorithmic-algorithmicx-algorithm2e-algpseudocode-confused}{post}.
 
 \begin{algorithm}
-  \caption{Euclid’s algorithm}
+  \caption{Euclid's algorithm}
   \label{alg:euclid}
-  \begin{algorithmic}[1] % The number tells where the line numbering should start
+  \begin{algorithmic}[1] % The number tells where the line numbering should start 0 for no number
     \Procedure{Euclid}{$a,b$} \Comment{The g.c.d. of $a$ and $b$}
       \State $r\gets a \bmod b$
       \While{$r\not=0$} \Comment{We have the answer if $r = 0$}
@@ -113,5 +113,40 @@ But it also could be that a figure is composed of several subfigures each with h
   \end{algorithmic}
 \end{algorithm}
 
+\item We are going to implement the algorithm in C++ language. And see if we can put the source code. This is an example of minted:
+\begin{minted}{c}
+int main() {
+  printf("hello, world");
+  return 0;
+}
+\end{minted}
+
+This is another example; this time on the \emph{R language}
+
+\begin{minted}{R}
+
+ A <- matrix(c(0.15, 0.01, 0,
+               0.14, 0.36, 0.07,
+               0.15, 0.13, 0.3), ncol = 3, byrow = TRUE)
+ I = diag(nrow = nrow(A))
+
+ I%*%A
+\end{minted}
+
+This is another example of inlined code: \mintinline{python}{print(x**2)} lets see how it looks. Finally, lets try to input another file: See Listing \ref{lst:example} 
+\begin{listing}[H]
+\inputminted[
+xleftmargin=1cm,  %without this option line number goes wrong
+%frame=lines,
+framesep=0.5cm,
+baselinestretch=1.2,
+%fontsize=\footnotesize,
+linenos,
+firstline=54, %If yu omit this two the whole file is pulled 
+lastline=69
+]{cpp}{src/GccTest.cpp}
+\caption{My buggy implementation of insertion sort. (Do not use)}
+\label{lst:example}
+\end{listing}
 
 \end{enumerate}
