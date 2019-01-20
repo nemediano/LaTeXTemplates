@@ -52,7 +52,6 @@ int main() {
 }
 
 void insertion_sort(array<int, N>& input) {
-
   for (size_t i = 0; i < N; ++i) {
     size_t max_key = 0;
     for (size_t j = 1; j < N - i; ++j) {
