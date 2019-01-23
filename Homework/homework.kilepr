@@ -62,10 +62,10 @@ order=-1
 
 [item:report.tex]
 archive=true
-column=12
+column=25
 encoding=UTF-8
 highlight=LaTeX
-line=26
+line=13
 mode=LaTeX
 open=true
 order=0
@@ -77,7 +77,7 @@ JumpList=
 ViMarks=.,145,10,[,145,10,],145,10
 
 [view-settings,view=0,item:report.tex]
-CursorColumn=12
-CursorLine=26
+CursorColumn=25
+CursorLine=13
 JumpList=
-ViMarks=.,36,31,[,36,31,],36,31
+ViMarks=.,7,0,[,7,0,],7,1

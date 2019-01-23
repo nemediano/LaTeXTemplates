@@ -21,10 +21,14 @@
 \ProvidesClass{resume}[2010/07/10 v0.9 Resume class]
 
 \LoadClass[11pt,letterpaper]{article} % Font size and paper type
+\usepackage[headings]{fullpage}
+\setlength\headheight{13.6pt}
 
 \usepackage[parfill]{parskip} % Remove paragraph indentation
 \usepackage{array} % Required for boldface (\bf and \bfseries) tabular columns
 \usepackage{ifthen} % Required for ifthenelse statements
+
+\usepackage{amssymb}
 
 \pagestyle{empty} % Suppress page numbers
 
@@ -35,7 +39,7 @@
 \def \name#1{\def\@name{#1}} % Defines the \name command to set name
 \def \@name {} % Sets \@name to empty by default
 
-\def \addressSep {$\diamond$} % Set default address separator to a diamond
+\def \addressSep {$\bullet$} % Set default address separator to a bullet
 
 % One, two or three address lines can be specified 
 \let \@addressone \relax
@@ -98,7 +102,7 @@
   \MakeUppercase{\bf #1} % Section title
   \sectionlineskip
   \hrule % Horizontal line
-  \begin{list}{}{ % List for each individual item in the section
+  \begin{list}{$\bullet$}{ % List for each individual item in the section
     \setlength{\leftmargin}{1.5em} % Margin within the section
   }
   \item[]
