@@ -41,6 +41,7 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+_minted-report
 *.pdf
 *.aux
 *.log
@@ -54,3 +55,5 @@ Temporary Items
 *.tps
 *.tps
 *.bak
+*.bcf
+*.run.xml
