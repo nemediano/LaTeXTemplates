@@ -1,4 +1,4 @@
-%Hello world! \textspanish{Me gusta el diseño gráfico}.
+Hello world! the following text is in Spanish: \textspanish{Me gusta el diseño gráfico}.
 \begin{enumerate}
  \item 
  This is an example using a lot of mathematics an equations. 
@@ -7,15 +7,16 @@
  \label{eq:elipse}
  \frac{x^{2}}{a^{2}} + \frac{y^{2}}{b^{2}} = 1
  \end{equation}
- And we can refer to it later in the text like this: the equation \eqref{eq:elipse} is an elipse. If we do not want to have it numbered we can say:
+ And we can refer to it later in the text like this: the equation \eqref{eq:elipse} is an elipse.
+ If we do not want to have it numbered we can say:
  \begin{equation}
  \nonumber
  \binom{n}{k} = \frac{n!}{k!(n-k)!} 
  \end{equation}
  And you can also embed equations into text for example: $\forall x \in \mathbb{R}$. 
  You can make links to an externam website like this: 
- To learn how to use the sumation and integrals you command you can check the \href{https://en.wikibooks.org/wiki/LaTeX/Mathematics#Sums_and_integrals}{wikibooks} 
- in or search for it in \url{www.google.com}.
+ To learn how to use the sumation and integrals you can check the \href{https://en.wikibooks.org/wiki/LaTeX/Mathematics#Sums_and_integrals}{wikibooks} in or search for it in \url{www.google.com}.
+ The last form makes the link use other font.
  
  \item This is an example of an function with cases, like a \emph{pdf}.
  \begin{equation}
@@ -27,12 +28,13 @@
     0 & \quad \text{if } y < 0 \text{ or } y > 10
   \end{cases}
  \end{equation}
- An this is an example of an automatic sizing parenthesis:
+ This is an example of automatic sizing parenthesis:
  \begin{equation}
   \nonumber
   P\left(A=2\middle|\frac{A^2}{B}>4\right)
  \end{equation}
- An finally an integral in several steps: with $*$ you omit the numbers
+ And finally, an example of making math in several steps uisng the \verb|align| enviroment.
+ With $*$ in the enviroment you omit the numbers
 \begin{align*}
 P\left(X \leq 3 \right) &= \int_{0}^{3} \frac{1}{25} y \,\mathrm{d}y \\
      &= \left. \frac{1}{25} \cdot \frac{1}{2} \, y^{2} \right|_0^3 \\
@@ -40,8 +42,8 @@ P\left(X \leq 3 \right) &= \int_{0}^{3} \frac{1}{25} y \,\mathrm{d}y \\
      \frac{1}{25} \cdot \frac{9}{2} = \frac{9}{50} \approx 0.18 
 \end{align*}
 
- \item This is an example of how to place figures. The most basic way is to place a figure as a center paragraph with his caption.
- 
+ \item This section shows how to place figures.
+ The most common way is to place a figure centered with his caption.
  
 \begin{figure}[htb]
   \centering
@@ -50,7 +52,9 @@ P\left(X \leq 3 \right) &= \int_{0}^{3} \frac{1}{25} y \,\mathrm{d}y \\
   \caption{Area corresponding to $z$-value of -2.5298.}
 \end{figure}
 
-But it also could be that a figure is composed of several subfigures each with his caption and an extra caption for the whole group. See Figure~\ref{fig:two} or refer to subfigure like this. See Figure~\ref{fig:2b}.
+But its also possible to have a figure that is composed of several subfigures.
+Each subfigure with his caption and an extra caption for the whole figure group.
+And then you can reference them like this: See Figure~\ref{fig:two} or refer to subfigure like this: See Sub Figure~\ref{fig:2b}.
 
 \begin{figure}[htp]
   \centering
@@ -76,7 +80,9 @@ But it also could be that a figure is composed of several subfigures each with h
   \label{fig:two}
 \end{figure}
 
-\item This is an example of how to cite a book. This exercise was taken from~\cite{Devore2012}. And finally this is an example of a very nice table: Table \ref{tab:exey}
+\item This is an example of how to cite a book.: this exercise was taken from~\cite{Devore2012}. 
+We also show an example of how to put a book in the references without actually citing it. 
+And finally, this is an example of a very nice table: Table \ref{tab:exey}
 
 \begin{table}[htb]
   \begin{center}
@@ -91,29 +97,39 @@ But it also could be that a figure is composed of several subfigures each with h
       \bottomrule
     \end{tabular}
   \end{center}
-\caption{Anova table for exercise $y$}
+\caption{Anova table for an imaginary exercise}
 \label{tab:exey}
 \end{table}
 
-\item Lets look at how to write an algorith using pseudo code. See the algorithm~\ref{alg:euclid}. The while ends in line~\ref{euclidendwhile}. The information comes from this part of the \href{https://en.wikibooks.org/wiki/LaTeX/Algorithms#Typesetting_using_the_algorithmicx_package}{wikibook} and from this \href{https://tex.stackexchange.com/questions/229355/algorithm-algorithmic-algorithmicx-algorithm2e-algpseudocode-confused}{post}.
+\item In this number lets look at how to write an algorith using pseudo code.
+See the algorithm~\ref{alg:euclid}. The while ends in line~\ref{euclidendwhile}.
+The information comes from this part of the \href{https://en.wikibooks.org/wiki/LaTeX/Algorithms#Typesetting_using_the_algorithmicx_package}{wikibook} and from this \href{https://tex.stackexchange.com/questions/229355/algorithm-algorithmic-algorithmicx-algorithm2e-algpseudocode-confused}{post}.
 
-\begin{algorithm}
-  \caption{Euclid's algorithm}
-  \label{alg:euclid}
-  \begin{algorithmic}[1] % The number tells where the line numbering should start 0 for no number
-    \Procedure{Euclid}{$a,b$} \Comment{The g.c.d. of $a$ and $b$}
-      \State $r\gets a \bmod b$
-      \While{$r\not=0$} \Comment{We have the answer if $r = 0$}
-        \State $a \gets b$
-        \State $b \gets r$
-        \State $r \gets a \bmod b$
-      \EndWhile\label{euclidendwhile}
-      \State \textbf{return} $b$\Comment{$gcd = b$}
-    \EndProcedure
-  \end{algorithmic}
-\end{algorithm}
+The algorithm enviroment uses all the width of the page.
+There is a \href{https://tex.stackexchange.com/questions/350434/adjust-width-of-algorithm-float}{hack} to make it fit into a certain width, however use it with caution.
 
-\item We are going to implement the algorithm in C++ language. And see if we can put the source code. This is an example of minted:
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{algorithm}[H]
+    \caption{Euclid's algorithm}
+    \label{alg:euclid}
+    \begin{algorithmic}[1] % The number tells where the line numbering should start 0 for no number
+      \Procedure{Euclid}{$a,b$} \Comment{The g.c.d. of $a$ and $b$}
+        \State $r\gets a \bmod b$
+        \While{$r\not=0$} \Comment{We have the answer if $r = 0$}
+          \State $a \gets b$
+          \State $b \gets r$
+          \State $r \gets a \bmod b$
+        \EndWhile\label{euclidendwhile}
+        \State \textbf{return} $b$\Comment{$gcd = b$}
+      \EndProcedure
+    \end{algorithmic}
+  \end{algorithm}
+\end{minipage}
+\par
+}
+
+\item Here we show how include surce code using the package minted. We are going to show an example in the C language.
 \begin{minted}{c}
 int main() {
   printf("hello, world");
@@ -133,20 +149,29 @@ This is another example; this time on the \emph{R language}
  I%*%A
 \end{minted}
 
-This is another example of inlined code: \mintinline{python}{print(x**2)} lets see how it looks. Finally, lets try to input another file: See Listing \ref{lst:example}. I took a lot of help form \href{https://tex.stackexchange.com/questions/252263/alignment-of-minted-line-numbers}{here} and \href{https://www.overleaf.com/learn/latex/Code_Highlighting_with_minted}{Overleaf help}.
-\begin{listing}[H]
-\inputminted[
-xleftmargin=1.5cm,  %without this option line number goes wrong
-%frame=lines,
-framesep=0.5cm,
-baselinestretch=1.2,
-%fontsize=\footnotesize,
-linenos,
-firstline=54, %If yu omit this two the whole file is pulled 
-lastline=68
-]{cpp}{src/GccTest.cpp}
-\caption{My buggy implementation of insertion sort. (Do not use)}
-\label{lst:example}
-\end{listing}
+This is yet another example of inlined Python code: \mintinline{python}{print(x**2)} lets see how it looks.
+Finally, lets try to input another file: See Listing \ref{lst:example}.
+I took a lot of help from \href{https://tex.stackexchange.com/questions/252263/alignment-of-minted-line-numbers}{here} and \href{https://www.overleaf.com/learn/latex/Code_Highlighting_with_minted}{Overleaf help}.
+We are using the same hack that we used with the algorithm to make the listing fit into the margins.
+
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  %frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  %fontsize=\footnotesize,
+  linenos,
+  firstline=54, %If you omit this two fields, the whole file is pulled
+  lastline=68
+  ]{cpp}{src/GccTest.cpp}
+  \caption{My buggy implementation of insertion sort. (Do not use)}
+  \label{lst:example}
+  \end{listing}
+\end{minipage}
+\par
+}
 
 \end{enumerate}
