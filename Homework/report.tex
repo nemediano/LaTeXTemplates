@@ -4,12 +4,11 @@
 \usepackage{subcaption} % The hability of using subfigures
 \usepackage{amsfonts}
 \usepackage{amssymb} % To use the symbols for numerical sets
-% Language options
-% \usepackage{csquotes} % Because if is not present polyglossia throws a warning
-% \usepackage{polyglossia}
-% \setmainlanguage[variant=american]{english}
-% \setotherlanguage{spanish}
 
+% Language options
+\usepackage{polyglossia}
+\setmainlanguage[variant=american]{english}
+\setotherlanguage{spanish}
 
 % New bibliography system
 \usepackage[
@@ -25,6 +24,7 @@
   top=1.5cm,
   bottom=1.5cm
 ]{geometry}
+
 % custom links and pdf metadata
 \usepackage[
   final,
@@ -83,6 +83,8 @@
 \author{Jorge Antonio Garc\'ia Galicia}
 \title{Homework 1}
 \date{\today}
+
+\usepackage{csquotes} % Because if is not present polyglossia throws a warning
 
 \begin{document}
 \maketitle
