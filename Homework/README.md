@@ -7,7 +7,7 @@ The ones you deliver every week or so. Therefore, is nothing
 fancy but very practical, elegant and tries to maximize
 the space on a page.
 
-![Homework Template](report.pdf)
+![View PDF](report.pdf)
 
 Contains simple elegant margings with space for your personals and
 course particulars. As well as a simple mechanism for numbering the pages.
@@ -26,8 +26,8 @@ Some of the features are
   * Uses new package [`polyglossia`](https://ctan.org/pkg/polyglossia?lang=en) instead of old
     standard [`babel`](https://ctan.org/pkg/babel) for internationalization
 
-* It uses package [https://ctan.org/pkg/minted?lang=en](minted) for code syntax
-  highlighting, therefore *requires* a [python](https://www.python.org/)
+* It uses package [minted](https://ctan.org/pkg/minted?lang=en) for code syntax
+  highlighting, therefore **requires** a [python](https://www.python.org/)
   installation with [pygments](http://pygments.org/)
 
 It has usage examples of the following:
