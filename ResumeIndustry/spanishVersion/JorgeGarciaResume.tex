@@ -1,0 +1,208 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Medium Length Professional CV
+% LaTeX Template
+% Version 2.0 (8/5/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Trey Hunner (http://www.treyhunner.com/)
+%
+% Important note:
+% This template requires the resume.cls file to be in the same directory as the
+% .tex file. The resume.cls file provides the resume style used for structuring the
+% document.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{resume} % Use the custom resume.cls style
+
+% custom links and pdf metadata
+\usepackage[
+  final,
+  unicode,
+  colorlinks=true,
+  citecolor=black,
+  linkcolor=black,
+  urlcolor=black,
+  plainpages=false,
+  urlcolor=black,
+  pdfpagelabels=true,
+  pdfsubject={Curriculum Jorge Garcia},
+  pdfauthor={Jorge Antonio García Galicia},
+  pdftitle={Curriculum vitae - Jorge García},    % title
+  pdfkeywords={Curriculum vitae, Ciencias de la Computación, Doctorado, Graficación por Computadora}, % list of keywords
+]{hyperref}
+
+\usepackage[letterpaper,left=1cm,top=1.5cm,right=1cm,bottom=1cm]{geometry} % Document margins
+
+\newcommand{\tab}[1]{\hspace{.2667\textwidth}\rlap{#1}}
+\newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
+\name{Jorge Antonio Garc\'{i}a Galicia} % Your name
+\address{1154 Morse Ave. Depto 108 \\ Sunnyvale, CA 94089} % Your address
+\address{\href{http://www.linkedin.com/in/jorgegarciagalicia}{http://www.linkedin.com/in/jorgegarciagalicia}} % Your secondary addess (optional)
+\address{(765) 543-9834 \\ \href{mailto:jorgeantonio49@gmail.com}{jorgeantonio49@gmail.com}} % Your phone number and email
+
+\usepackage{fancyhdr}
+\showboxdepth=5
+\showboxbreadth=5
+
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{Garc\'{i}a, Jorge pag.\thepage}
+\cfoot{} % get rid of the page number 
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\begin{document}
+\thispagestyle{empty}
+%----------------------------------------------------------------------------------------
+%	EDUCATION SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{Educación}
+
+{\bf UNIVERSIDAD DE PURDUE} \hfill {\em West Lafayette, Indiana, EUA} 
+\\ {\bf Doctorado} en Tecnología \hfill {\em Agosto 2017}
+\\ Instituto Politécnico de Purdue, Departamento de Graficación por Computadora \hfill {\em Promedio: 3.79/4.0}
+\\ Áreas de Investigación: Manufactura aditiva (Impresión 3D) y Graficación por Computadora
+
+{\bf UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO} \hfill {\em CDMX} 
+\\ {\bf Maestría} en Ciencias de la Computación \hfill {\em Septiembre 2011}
+\\ Instituto de Investigación en Matemáticas Aplicadas y Sistemas \hfill {\em Promedio: 9.4/10.0}
+\\ Areas de estudio: Procesamiento de Imágenes Digitales y Graficación por Computadora
+
+{\bf Licenciatura} en Matemáticas Aplicadas y Computación \hfill {\em Mayo 2008}
+\\ Facultad de Estudio Superiores de Acatlán \hfill {\em Promedio: 8.6/10.0}
+
+
+\end{rSection}
+%----------------------------------------------------------------------------------------
+%	TECHNICAL STRENGTHS SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{Conocimientos en Computación}
+
+\begin{tabular}{ @{} >{\bfseries}l @{\hspace{2ex}} l }
+Lenguajes de programación &  \textbf{Avan:} C/C++, GLSL. \textbf{Med:} Matlab, JavaScript \textbf{Prin:} Python, R\\
+APIs / Frameworks & OpenGL, Qt, ASP.NET MVC, CUDA\\
+Herramientas de desarrollo &  SVN, Git, \LaTeX, bash, phpESP, Wordpress\\
+Paquetería & Visual Studio, Eclipse, Gimp, Inkscape
+\end{tabular}
+
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%	WORK EXPERIENCE SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{rSection}{Experiencia en la industria}
+
+\begin{rSubsection}{Nvidia Corporation}{Santa Clara, California, EUA}{Senior Software Engineer, Equipo de navegadores web}{Agosto 2017 - presente}
+\item Contribuí en la certificación de seguridad de una biblioteca (MISRA y CERT C) siguiendo la metodología PLC
+\item Desarollé varios widgets para web de un framework para robótica (ISAAC SDK)
+\item Contribuí en el diseño y desarrollo de una biblioteca de realidad aumentada
+\item Realicé una app para comparar SDKs de realidad aumentada en dispositivos móbiles usando Unreal Engine
+\end{rSubsection}
+
+\begin{rSubsection}{Adobe Systems Incorporated}{San Francisco, California, EUA}{Becario de investigación, Equipo de Imágenes Procedurales}{Mayo 2016 - Agosto 2016}
+\item Diseñé in motor gráfico de \emph{rendering} diferido para una aplicación para escultura interactiva
+\item Implementé varios algorimos: \emph{shadow mapping}, \emph{global ambient occlusion} y \emph{PBR shading}, usando GLSL shaders
+\end{rSubsection}
+
+\begin{rSubsection}{Nvidia Corporation}{Santa Clara, California, EUA}{Becario en desarrollo de Software, Equipo del driver de OpenGL}{Mayo 2015 - Agosto 2015}
+\item Porté extensiones de OpenGL para exponerlas en el API publico.
+\item Repairé vario bugs de calculos en el driver, descubiertos por aplicaciones de terceros
+\item Entablé comunicación con ingenieros de diversas partes del mundo para detallar reportes de bugs
+\end{rSubsection}
+
+\begin{rSubsection}{Nvidia Corporation}{Santa Clara, California, EUA}{Becario en desarrollo de Software, Equipo del driver de DirectX}{Mayo 2014 - Agosto 2014}
+\item Cree un conversor de formato de imágenes digitales, usando el lenguage ensamblador propietario de Nvidia
+\item Escribí varios shaders en HLSL para un conversor de formatos de vídeo
+%\item Developed C functions to test algorithms inside the driver
+\end{rSubsection}
+
+%\begin{rSubsection}{Universidad Nacional Autónoma de México}{CDMX, México}{Asistente de laboratorio, Unidad de Desarrollo de Software y Tecnologías de la Información}{Octubre 2006 - Diciembre 2007}
+%\item Construí y gestioné un sitio web usando Linux, Apache, MySQL and PHP
+%\item Desarrollé varias pequeñas aplicaciones en Java para recolección y limpieza de datos
+%\item Administré un sistema de control de versiones basado en SVN para el resto de los desarrolladores
+%\end{rSubsection}
+
+%\begin{rSubsection}{Tecnología en Sistemas de Software}{CDMX, México}{Becario, Q.A. y desarrollador}{Enero 2005 - Diciembre 2005}
+%\item Desarrollé varias aplicaciones en Java para procesamiento de texto
+%\item Ayudé en una migración de una BD de Interbase a Oracle
+%\item Trabajé en migrar una aplicación de PowerHouse a Java
+%\end{rSubsection}
+
+\end{rSection}
+
+\clearpage
+
+
+
+\begin{rSection}{Experiencia en ámbito académico}
+
+	\begin{rSubsection}{Universidad de Purdue}{West Lafayette, Indiana, EUA}{Ayudante de profesor, Depto de Gráficas por Computadora}{Agosto 2015 - Mayo 2016, Agosto 2016 - Mayo 2017}
+	\item Cree materiales didacticos para la clase de programación: CGT215
+	\item Suprvisé estudiantes durante sesiones de laboratorio de clases de programación
+	\item Califiqué material y administré las calificaciones para mas de 50 estudiantes usando Blackboard
+	\end{rSubsection}
+
+	\begin{rSubsection}{Universidad de Purdue}{West Lafayette, Indiana, EUA}{Asistente de investigación, laboratorio HPCG}{Agosto 2012 - Mayo 2014, Agosto 2014 - Mayo 2015}
+	\item Cree una visialización 3D de las microestructuras internas de las baterias usando OpenGL y CUDA
+	\item Desarrollé un algoritmo de opmización de empacado 3D
+	\item Contribuí en el desarrollo de software para el análisis de redes carreteras usando teoría de grafos
+	\end{rSubsection}
+	
+	\begin{rSubsection}{Universidad Nacional Autónoma de México}{CDMX, México}{Asistente de investigación, Instituto de Investigación en Matemáticas Aplicadas y Sistemas}{Octubre 2011 - Enero 2012}
+	\item Desarrollé programas de análisis de imágenes digitales para la reconstrucción 3D de venas en la retina
+	\item Operé una \emph{cámara fundus} para capturar imágenes de la retina
+	\item Cree un pipeline de varios scripts en Bash para automatizar el procesamiento de imágenes
+	\end{rSubsection}
+	
+	\begin{rSubsection}{Universidad Nacional Autónoma de México}{Edo de México, México}{Profesor, Facultad de Estudios Profesionales de Acatlán}{Agosto 2008 - Mayo 2012}
+	\item Impartí dos clases de licenciatura: Teoría de Grafos y Graficación por Computadora
+	\item Cree materiales didácticos: diapositivas, exámenes y notas
+	\item Dí mentoría a alumnos en horas extracurriculares
+	\end{rSubsection}
+	
+	\begin{rSubsection}{Universidad Nacional Autónoma de México}{CDMX, México}{Ayudante de profesor, Facultad de Ciencias}{Enero 2009 - Diciambre 2010}
+	\item Colaboré en dos clases nivel licenciatura: Geometría Moderna y Introducción a las Ciencias de la Computación
+	\item Cree material didactico programas de demostración, exámenes y diapositivas
+	\item Guié a estudiantes en la instalación de software y aprender buenas practicas de progarmación
+	\end{rSubsection}
+
+\end{rSection}
+
+\begin{rSection}{Publicaciones} \itemsep -4pt
+\item \textit{Improving printing orientation for Fused Deposition Modeling printers by analyzing connected components}, Jorge A. García Galicia y Bedrich Benes. Additive Manufacturing, July 2018.
+\item \textit{Learning Geometric Graph Grammars}, Fiser, M., Benes, B., Garcia, Jorge., Abdul-Massih, M., Aliaga, D., y Krs, V. Proceedings of the 32Nd Spring Conference on Computer Graphics, 2016.
+\item \textit{Connected fermat spirals for layered fabrication}, Zhao, H., Gu, F., Huang, Q., Garcia, J., Chen, Y., Tu, C., Benes, B., Zhang, H., Cohen-Or, D., Chen, B. ACM Transactions on Graphics (SIGGRAPH), July 2016.
+\item \textit{Yturralde: impossible figure generator}, Esteban García Bravo and Jorge A. García. SIGGRAPH '15 ACM SIGGRAPH Art Papers.
+\item \textit{PackMerger: A 3D Print Volume Optimizer}, Vanek, J., Garcia, J., Benes, B., Mech, R., Carr, N., Stava, O., y Miller, G. Computer Graphics Forum, September 2014.
+\item \textit{Clever Support: Efficient Support Structure Generation for Digital Fabrication}, Vanek, J., Garcia, J. y Benes, B. Computer Graphics Forum, August 2014.
+\end{rSection}
+
+% \begin{rSection}{Otras distinciones} \itemsep -6pt
+% \item Polytechnic Institute Summer Research Grant 2017.
+% \item Beca para estudios internaciones de posgrado, Consejo Nacional de Ciencia y Tecnología
+% \item Senador, Senado de estudiantes de posgrado en la Universidad de Purdue
+% \item Beca para estudios de posgrado, Consejo Nacional de Ciencia y Tecnología
+% \item Miembro del Consejo Técnico de la Facultad, Facultad de Estudios Superiores de Acatlán
+% \end{rSection}
+
+%----------------------------------------------------------------------------------------
+%\begin{rSection}{Cursos académicos relevantes}
+%\\ \itab{Geometría Computacional } \tab{}  \tab{Visualización científica}
+%\\ \itab{Análisis de Imágenes Multiespectrales } \tab{}  \tab{Series de tiempo} 
+%\\ \itab{Metaheuristicas para la optimiazación combinatoria } \tab{}  \tab{Procesos estocásticos} 
+%\\ \itab{Manufactura Digital } \tab{} \tab{Variable Compleja}
+%\end{rSection}
+
+\end{document}

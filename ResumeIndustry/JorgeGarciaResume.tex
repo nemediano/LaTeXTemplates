@@ -22,37 +22,30 @@
 
 \documentclass{resume} % Use the custom resume.cls style
 
+% custom links and pdf metadata
+\usepackage[
+  final,
+  unicode,
+  colorlinks=true,
+  citecolor=black,
+  linkcolor=black,
+  urlcolor=black,
+  plainpages=false,
+  urlcolor=black,
+  pdfpagelabels=true,
+  pdfsubject={Jorge Garcia's Resume},
+  pdfauthor={Jorge Antonio García Galicia},
+  pdftitle={Resume - Jorge Garcia},    % title
+  pdfkeywords={Resume, Computer Science, PhD, Graphics}, % list of keywords
+]{hyperref}
 
-\usepackage[hidelinks]{hyperref}
-\urlstyle{same}
-\usepackage[left=0.6in,top=0.6in,right=0.6in,bottom=0.6in]{geometry} % Document margins
-
-\hypersetup{
-    unicode=true,          % non-Latin characters in Acrobat’s bookmarks
-    pdftoolbar=true,        % show Acrobat’s toolbar?
-    pdfmenubar=true,        % show Acrobat’s menu?
-    pdffitwindow=false,     % window fit to page when opened
-    pdfstartview={FitH},    % fits the width of the page to the window
-    pdftitle={Resume - Jorge Garcia},    % title
-    pdfauthor={Jorge Antonio Garcia Galicia},     % author
-    pdfsubject={Jorge Garcia's Resume},   % subject of the document
-    pdfcreator={Jorge Garcia},   % creator of the document
-    pdfproducer={Kile}, % producer of the document
-    pdfkeywords={Resume, Computer Science, PhD, Graphics}, % list of keywords
-    pdfnewwindow=true,      % links in new PDF window
-    colorlinks=true,       % false: boxed links; true: colored links
-    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
-    citecolor=green,        % color of links to bibliography
-    filecolor=magenta,      % color of file links
-    urlcolor=black       % color of external links
-}
-
+\usepackage[letterpaper,left=1cm,top=1.5cm,right=1cm,bottom=1cm]{geometry} % Document margins
 
 \newcommand{\tab}[1]{\hspace{.2667\textwidth}\rlap{#1}}
 \newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
 \name{Jorge Antonio Garc\'{i}a Galicia} % Your name
 \address{1154 Morse Ave. Apt 108 \\ Sunnyvale, CA 94089} % Your address
-\address{\url{http://www.linkedin.com/in/jorgegarciagalicia}} % Your secondary addess (optional)
+\address{\href{http://www.linkedin.com/in/jorgegarciagalicia}{http://www.linkedin.com/in/jorgegarciagalicia}} % Your secondary addess (optional)
 \address{(765) 543-9834 \\ \href{mailto:jorgeg@nvidia.com}{jorgeg@nvidia.com}} % Your phone number and email
 
 \usepackage{fancyhdr}
@@ -63,7 +56,6 @@
 \lhead{}
 \chead{}
 \rhead{Garc\'{i}a, Jorge pg.\thepage}
-%\rhead{}
 \cfoot{} % get rid of the page number 
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
@@ -113,6 +105,8 @@ Software & Visual Studio, Eclipse, Gimp, Inkscape
 \begin{rSection}{Experience}
 
 \begin{rSubsection}{Nvidia Corporation}{Santa Clara, CA}{Senior Software Engineer, Browsers Team}{Aug 2017 - present}
+\item Contributed in making safety compliant a driver library (MISRA and CERT C) by following PLC
+\item Developed several web based widgets for a robotics framework (ISAAC SDK)
 \item Contributed in the design, develop and test of a library for Virtual and Augmented reality
 \item Performed a comparison of different augmented reality SDK's on mobile using Unreal Engine
 \end{rSubsection}
@@ -131,7 +125,7 @@ Software & Visual Studio, Eclipse, Gimp, Inkscape
 \begin{rSubsection}{Nvidia Corporation}{Santa Clara, CA}{Software Developer Intern, DirectX Driver Team}{May 2014 - Aug 2014}
 \item Created an image format converter using nVidia assemble language
 \item Wrote several shaders in HLSL for a video format conversion program
-\item Developed C functions to test algorithms inside the driver
+%\item Developed C functions to test algorithms inside the driver
 \end{rSubsection}
 
 %\begin{rSubsection}{National Autonomous University of Mexico}{Mexico City, Mexico}{Laboratory assistant, Software Development and Information Technology Unit}{Oct 2006 - Dec 2007}
@@ -205,13 +199,10 @@ Software & Visual Studio, Eclipse, Gimp, Inkscape
 
 %----------------------------------------------------------------------------------------
 %\begin{rSection}{Relevant Courses}
-%\itab{\textbf{Core Courses}} \tab{}  \tab{\textbf{Other Courses}}
-%\\ \itab{Fluid Mechanics \& its applications } \tab{}  \tab{Computational Methods in Engineering}
-%\\ \itab{Thermodynamics} \tab{}  \tab{Fundamental of Computing} 
-%\\ \itab{Heat Transfer \& its applications} \tab{}  \tab{Probability and Statistics} 
-%\\ \itab{Mass Transfer \& its applications} \tab{} \tab{Calculus \& Linear Algebra}
-%\\ \itab{Transport Phenomena (ongoing)} \tab{} \tab{Introduction to Mechanics}
-% \\ \itab{Process Control (ongoing)} \tab{} \tab{Electrodynamics}
+%\\ \itab{Computational Geomtery } \tab{}  \tab{Scientific visualization}
+%\\ \itab{Multispectral image analysis } \tab{}  \tab{Time series} 
+%\\ \itab{Metaehuristics for combinatorial optimization } \tab{}  \tab{Stocastich process} 
+%\\ \itab{Digital fabrication } \tab{} \tab{Complex variable }
 %\end{rSection}
 
 \end{document}
