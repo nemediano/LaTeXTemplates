@@ -1,6 +1,6 @@
-\section{Memmory flatenig}
+\section{Memory flatenig}
 
-A common problem in multidimensional data situations is memmory layout representation. Internally computers always represnt memorry in a linear fashion, the idea of mutidimensional array is just sugar syntax added by high level programming lenguajes.
+A common problem in multidimensional data situations is memory layout representation. Internally computers always represnt memorry in a linear fashion, the idea of mutidimensional array is just sugar syntax added by high level programming lenguajes.
 
 Given said that, sometimes such allocations can become dificult to use or declare by themselves. Especially in C++. Lets see an example:
 
@@ -25,13 +25,13 @@ Given said that, sometimes such allocations can become dificult to use or declar
 }
 \vspace{0.5cm}
 So far, everything looks good, sintax is clear, braket operator is helping us. 
-Conceptually, we have a series of variables with the same type that live in a contiguos space in memmory. See figure~\ref{fig:1D}.
+Conceptually, we have a series of variables with the same type that live in a contiguos space in memory. See figure~\ref{fig:1D}.
 
 \begin{figure}[htp]
   \centering
   \begin{subfigure}[b]{0.35\textwidth}
     \includegraphics[width=\textwidth]{img/array1D}
-    \caption{Logical memmory layout representation.}
+    \caption{Logical memory layout representation.}
   \label{fig:1a}
   \end{subfigure}
   \hspace*{4cm}
@@ -44,16 +44,16 @@ Conceptually, we have a series of variables with the same type that live in a co
   \label{fig:1D}
 \end{figure}
 
-The problem will start to become aparent as data start to include more dimensions. 
+The problem becomes evident as data start to include more dimensions. 
 In a bidimensional array we have data that has two dimensions.
-One can think about it like it's on a table, the situation is the one depicted in Figure~\ref{fig:2a}. 
-Now, remember this is just an abstraction (provided by our programming language; C++ in this case), since memmory is always linear in the computer.
+One can think about it like data it's in a table, the situation is the one depicted in Figure~\ref{fig:2a}. 
+Now, remember this is just an abstraction (provided by our programming language: C++; in this case), since memory is actually \emph{close} to linear in a computer.
 
 \begin{figure}[htp]
   \centering
   \begin{subfigure}[b]{0.35\textwidth}
     \includegraphics[width=\textwidth]{img/array2D}
-    \caption{Logical memmory layout representation.}
+    \caption{Logical memory layout representation.}
   \label{fig:2a}
   \end{subfigure}
   \hspace*{4cm}
@@ -66,7 +66,7 @@ Now, remember this is just an abstraction (provided by our programming language;
   \label{fig:2D}
 \end{figure}
 
-Usually, the C++ way of modeling this is creating an array, such that each element of it is also an array. See the code in Listing~\ref{lst:2dexample}
+Usually, the C++ way of modeling this is creating an array, such that each element of it, is also an array. See the code in Listing~\ref{lst:2dexample}
 
 {\centering
 \begin{minipage}{\linewidth}
@@ -90,15 +90,48 @@ Usually, the C++ way of modeling this is creating an array, such that each eleme
 \vspace{0.5cm}
 Now, there is two main points to highlight in the sample:
 \begin{enumerate}
- \item Type of the array has change. Now is \emph{a vector of int vectors}. This led us to have a longer initialization for it too. Imagine that you create functions to receive or return such arrays (Sintax to declare the parameters become difficult)
- \item We still have the huge advantage of a very elegant sintax to use the array: \mintinline{cpp}{b[j][i]} give us the element on column $i$ of row $j$ (We are zero based).
-\end{enumerate}
-Here is when the technique called memmory flattening becomes useful
+
+\item The type of the array has change. Now is \emph{a vector of int vectors}. This led us to have a longer initialization for it too. Imagine that you create functions to receive or return such arrays.
+The sintax to declare the parameters become difficult.
+
+ \item We still have the advantage of a very elegant sintax to use the array: \mintinline{cpp}{b[j][i]} give us the element on column $i$ of row $j$ (we are zero based).
+
+ \end{enumerate}
+ 
+Here is when the technique called \emph{memory flattening} becomes useful. In simple words it to mimic what the compiler is doing for us: use linear data, just provide an abstraction so you can use it like if your data had more dimensions.
+
+This has the advantage that all the data is store in a one dimensional array. Therefore, you \emph{ensure} all your data is actually contigous in memory. Also, no matter how many dimensions your data has, the type is always a one dimensional array. Finally, due \emph{cache} issues, the access tends to be faster than the alternative.
+
+Now, is clear tha in order to implement this technique we will need two mappings: First a function $g:\mathbb{Z}^n \rightarrow \mathbb{Z}$, to map the indices in $n$ dimensions to the one dimensional array. And second, the inverse mapping $h:\mathbb{Z} \rightarrow \mathbb{Z}^n$ to retrive the indices back given a position in the data buffer.
+
+Let's see this idea for the 2D case. Assume that our data hast two dimensions ($x$ and $y$ or \emph{width} and \emph{height} if you like). That we use two indices $i$ and $j$ to transverse it. That the maximun values of such indices are $W$ and $H$ and that they are zero based. See the Figure~\ref{fig:2D}.
+
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{algorithm}[H]
+    \caption{Euclid's algorithm}
+    \label{alg:euclid}
+    \begin{algorithmic}[1] % The number tells where the line numbering should start 0 for no number
+      \Procedure{Euclid}{$a,b$} \Comment{The g.c.d. of $a$ and $b$}
+        \State $r\gets a \bmod b$
+        \While{$r\not=0$} \Comment{We have the answer if $r = 0$}
+          \State $a \gets b$
+          \State $b \gets r$
+          \State $r \gets a \bmod b$
+        \EndWhile\label{euclidendwhile}
+        \State \textbf{return} $b$\Comment{$gcd = b$}
+      \EndProcedure
+    \end{algorithmic}
+  \end{algorithm}
+\end{minipage}
+\par
+}
+
 \begin{figure}[htp]
   \centering
   \begin{subfigure}[b]{0.35\textwidth}
     \includegraphics[width=\textwidth]{img/array3D}
-    \caption{Logical memmory layout representation.}
+    \caption{Logical memory layout representation.}
   \label{fig:3a}
   \end{subfigure}
   \hspace*{4cm}
