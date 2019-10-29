@@ -91,41 +91,87 @@ Usually, the C++ way of modeling this is creating an array, such that each eleme
 Now, there is two main points to highlight in the sample:
 \begin{enumerate}
 
-\item The type of the array has change. Now is \emph{a vector of int vectors}. This led us to have a longer initialization for it too. Imagine that you create functions to receive or return such arrays.
-The sintax to declare the parameters become difficult.
+\item The type of the array has change. 
+      Now is \emph{a vector of int vectors}.
+      This led us to have a longer initialization for it too.
+      Imagine that you create functions to receive or return such arrays.
+      The sintax to declare the parameters become difficult.
 
  \item We still have the advantage of a very elegant sintax to use the array: \mintinline{cpp}{b[j][i]} give us the element on column $i$ of row $j$ (we are zero based).
 
  \end{enumerate}
  
-Here is when the technique called \emph{memory flattening} becomes useful. In simple words it to mimic what the compiler is doing for us: use linear data, just provide an abstraction so you can use it like if your data had more dimensions.
+Here is when the technique called \emph{memory flattening} becomes useful.
+In simple words: This is to mimic what the compiler is doing for us: use linear data. 
+But at the same time you also provide an abstraction, so you can access it in a similar fashion that if your data had more dimensions.
+In other works you simulate the access via indices for all the simulated dimensions.
 
-This has the advantage that all the data is store in a one dimensional array. Therefore, you \emph{ensure} all your data is actually contigous in memory. Also, no matter how many dimensions your data has, the type is always a one dimensional array. Finally, due \emph{cache} issues, the access tends to be faster than the alternative.
+This has the advantage that all the data is store in a one dimensional array.
+Therefore, you \emph{ensure} all your data is actually contigous in memory.
+Also, no matter how many dimensions your data has, the type is always a one dimensional array.
+Finally, due \emph{cache} issues, the access tends to be faster than the alternative.
 
-Now, is clear tha in order to implement this technique we will need two mappings: First a function $g:\mathbb{Z}^n \rightarrow \mathbb{Z}$, to map the indices in $n$ dimensions to the one dimensional array. And second, the inverse mapping $h:\mathbb{Z} \rightarrow \mathbb{Z}^n$ to retrive the indices back given a position in the data buffer.
+Now is clear, that in order to implement this technique we will need two mappings:
+First, a function $g:\mathbb{Z}^n \rightarrow \mathbb{Z}$, to map the indices in $n$ dimensions to the one dimensional array.
+And second, the inverse mapping $h:\mathbb{Z} \rightarrow \mathbb{Z}^n$ to retrive the indices back given a position in the data buffer.
 
-Let's see this idea for the 2D case. Assume that our data hast two dimensions ($x$ and $y$ or \emph{width} and \emph{height} if you like). That we use two indices $i$ and $j$ to transverse it. That the maximun values of such indices are $W$ and $H$ and that they are zero based. See the Figure~\ref{fig:2D}.
+Let's see this idea for the 2D case.
+Assume that our data hast two dimensions ($x$ and $y$ or \emph{width} and \emph{height} if you like).
+That we use two indices $i$ and $j$ to transverse it.
+And assume also that the maximun values of such indices are \mintinline{cpp}{width} and \mintinline{cpp}{height} and that they are zero based.
+See the Figure~\ref{fig:2D}.
+
+The first function $g$ it is actually the most useful to us, since it will provide with the interface of accesing our data. 
+In Listing~\ref{lst:functions2D} we show the implementation of such function.
+We can see that the transformations are actully very simple.
+In fact one of them is the integer division and the other one is a modulo.
+Also note, that as long as we check for the boundaries of the values for both indices, only one of the maximun dimensions in this case \emph{witdh} is used in the actual calculation of the indices.
 
 {\centering
 \begin{minipage}{\linewidth}
-  \begin{algorithm}[H]
-    \caption{Euclid's algorithm}
-    \label{alg:euclid}
-    \begin{algorithmic}[1] % The number tells where the line numbering should start 0 for no number
-      \Procedure{Euclid}{$a,b$} \Comment{The g.c.d. of $a$ and $b$}
-        \State $r\gets a \bmod b$
-        \While{$r\not=0$} \Comment{We have the answer if $r = 0$}
-          \State $a \gets b$
-          \State $b \gets r$
-          \State $r \gets a \bmod b$
-        \EndWhile\label{euclidendwhile}
-        \State \textbf{return} $b$\Comment{$gcd = b$}
-      \EndProcedure
-    \end{algorithmic}
-  \end{algorithm}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  %frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  %fontsize=\footnotesize,
+  linenos,
+  firstline=86, %If you omit this two fields, the whole file is pulled
+  lastline=103
+  ]{cpp}{src/FlatMemmory.cpp}
+  \caption{Function $g$ to map real index into simulated 2D indices}
+  \label{lst:functions2D}
+  \end{listing}
 \end{minipage}
 \par
 }
+\vspace{0.5cm}
+
+For completeness, we also show Listing~\ref{lst:functions2D2} that defines the inverse function $h$, to retrive the index in the one dimensional array from the two simulated indices in 2D.
+
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  %frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  %fontsize=\footnotesize,
+  linenos,
+  firstline=105, %If you omit this two fields, the whole file is pulled
+  lastline=119
+  ]{cpp}{src/FlatMemmory.cpp}
+  \caption{Function $h$ to map simulated 2D indices into the real index, this is the inverse of $g$}
+  \label{lst:functions2D2}
+  \end{listing}
+\end{minipage}
+\par
+}
+\vspace{0.5cm}
+
+Now, lets look at the more complex, but still very common of three dimesnions. The situation is the one depicted in Figure~\ref{fig:3D}
 
 \begin{figure}[htp]
   \centering
