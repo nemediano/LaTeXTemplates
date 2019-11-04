@@ -116,9 +116,9 @@ First, a function $g:\mathbb{Z}^n \rightarrow \mathbb{Z}$, to map the indices in
 And second, the inverse mapping $h:\mathbb{Z} \rightarrow \mathbb{Z}^n$ to retrive the indices back given a position in the data buffer.
 
 Let's see this idea for the 2D case.
-Assume that our data hast two dimensions ($x$ and $y$ or \emph{width} and \emph{height} if you like).
+Assume that our data hast two dimensions ($x$ and $y$ --or \emph{width} and \emph{height}-- if you like).
 That we use two indices $i$ and $j$ to transverse it.
-And assume also that the maximun values of such indices are \mintinline{cpp}{width} and \mintinline{cpp}{height} and that they are zero based.
+And assume also that the maximun values of such indices are \mintinline{cpp}{WIDTH} and \mintinline{cpp}{HEIGHT} and that they are zero based.
 See the Figure~\ref{fig:2D}.
 
 The first function $g$ it is actually the most useful to us, since it will provide with the interface of accesing our data. 
@@ -171,7 +171,7 @@ For completeness, we also show Listing~\ref{lst:functions2D2} that defines the i
 }
 \vspace{0.5cm}
 
-Now, lets look at the more complex, but still very common of three dimesnions. The situation is the one depicted in Figure~\ref{fig:3D}
+Now, lets look at the more complex --but still very common-- scenario of three dimensions. The situation is the one depicted in Figure~\ref{fig:3D}. We include a new dimension of in the data,
 
 \begin{figure}[htp]
   \centering
