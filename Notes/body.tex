@@ -195,7 +195,9 @@ For completeness, we also show Listing~\ref{lst:functions2D2} that defines the i
 }
 \vspace{0.5cm}
 
-Now, lets look at the more complex --but still very common-- scenario of three dimensions. The situation is the one depicted in Figure~\ref{fig:3D}. We include a new dimension of in the data,
+\subsection{Three dimensional data}
+
+Now, lets look at the more complex --but still very common-- scenario of three dimensions. The situation is the one depicted in Figure~\ref{fig:3D}. We include a new dimension in the data: indexed by $k$ along the $z$ axis, we call it \emph{depth}.
 
 \begin{figure}[htp]
   \centering
@@ -213,6 +215,74 @@ Now, lets look at the more complex --but still very common-- scenario of three d
   \caption{Three dimensional array representation.}
   \label{fig:3D}
 \end{figure}
+
+In the normal mutidimensional array synatx C++ syntax this will become, an array of arrays of array of ints. See Listing~\ref{lst:3dexample}. We transvers it using three nested loops, where the most outer one is the one indexed by the new dimension.
+
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  %frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  %fontsize=\footnotesize,
+  linenos,
+  firstline=40, %If you omit this two fields, the whole file is pulled
+  lastline=64
+  ]{cpp}{src/ArrayDimensions.cpp}
+  \caption{Three dimensional array example in C++}
+  \label{lst:3dexample}
+  \end{listing}
+\end{minipage}
+\par
+}
+\vspace{0.5cm}
+
+For memory flatening, we will need new functions $g$ and $h$, that depends in a new extra parameter: \mintinline{cpp}{DEPTH}. In Listing~\ref{lst:functions3D}, we can see the new function $g$.
+
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  %frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=121, %If you omit this two fields, the whole file is pulled
+  lastline=141
+  ]{cpp}{src/FlatMemmory.cpp}
+  \caption{New function $g$ to map real index into simulated 3D indices}
+  \label{lst:functions3D}
+  \end{listing}
+\end{minipage}
+\par
+}
+\vspace{0.5cm}
+
+Similarly, the new function $h$ is presented in Listing~\ref{lst:functions3D2}
+
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  %frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=143, %If you omit this two fields, the whole file is pulled
+  lastline=161
+  ]{cpp}{src/FlatMemmory.cpp}
+  \caption{A new function $h$ to map simulated 3D indices into the real index, this is the inverse of $g$}
+  \label{lst:functions3D2}
+  \end{listing}
+\end{minipage}
+\par
+}
 
 \section{Bitwise operation}
 \begin{itemize}

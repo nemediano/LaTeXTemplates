@@ -122,7 +122,7 @@ const Vector3D indexToIndices3D(const int& index, const int& WIDTH, const int& H
   Vector3D indices;
   indices.x = indices.y = indices.z = -1;
   // Validate input
-  if (WIDTH < 2 || HEIGHT < 2 || DEPTH <= 2) {
+  if (WIDTH < 2 || HEIGHT < 2 || DEPTH < 2) {
     cerr << "Invalid limits! data is not 3 dimensional" << endl;
     return indices;
   }
@@ -143,8 +143,8 @@ const Vector3D indexToIndices3D(const int& index, const int& WIDTH, const int& H
 const int indicesToIndex3D(const Vector3D& indices, const int& WIDTH, const int& HEIGHT, const int& DEPTH) {
   // Validate input
   if (indices.x < 0 || indices.x >= WIDTH ||
-    indices.y < 0 || indices.y >= HEIGHT ||
-    indices.z < 0 || indices.z >= DEPTH) {
+      indices.y < 0 || indices.y >= HEIGHT ||
+      indices.z < 0 || indices.z >= DEPTH) {
     cerr << "Invalid indices!" << endl;
     return -1;
   }
@@ -164,8 +164,8 @@ const int indicesToIndex3D(const Vector3D& indices, const int& WIDTH, const int&
 const int indicesToIndex3D(const Vector3D& indices, const int& WIDTH, const int& HEIGHT, const int& DEPTH) {
   // Validate input
   if (indices.x < 0 || indices.x >= WIDTH ||
-    indices.y < 0 || indices.y >= HEIGHT ||
-    indices.z < 0 || indices.z >= DEPTH) {
+      indices.y < 0 || indices.y >= HEIGHT ||
+      indices.z < 0 || indices.z >= DEPTH) {
     cerr << "Invalid indices!" << endl;
     return -1;
   }
