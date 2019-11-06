@@ -161,8 +161,8 @@ Also note, that as long as we check for the boundaries of the values for both in
   baselinestretch=1.2,
   %fontsize=\footnotesize,
   linenos,
-  firstline=86, %If you omit this two fields, the whole file is pulled
-  lastline=103
+  firstline=88, %If you omit this two fields, the whole file is pulled
+  lastline=105
   ]{cpp}{src/FlatMemmory.cpp}
   \caption{Function $g$ to map real index into simulated 2D indices}
   \label{lst:functions2D}
@@ -184,8 +184,8 @@ For completeness, we also show Listing~\ref{lst:functions2D2} that defines the i
   baselinestretch=1.2,
   %fontsize=\footnotesize,
   linenos,
-  firstline=105, %If you omit this two fields, the whole file is pulled
-  lastline=119
+  firstline=107, %If you omit this two fields, the whole file is pulled
+  lastline=121
   ]{cpp}{src/FlatMemmory.cpp}
   \caption{Function $h$ to map simulated 2D indices into the real index, this is the inverse of $g$}
   \label{lst:functions2D2}
@@ -251,8 +251,8 @@ For memory flatening, we will need new functions $g$ and $h$, that depends in a 
   baselinestretch=1.2,
   fontsize=\footnotesize,
   linenos,
-  firstline=121, %If you omit this two fields, the whole file is pulled
-  lastline=141
+  firstline=123, %If you omit this two fields, the whole file is pulled
+  lastline=143
   ]{cpp}{src/FlatMemmory.cpp}
   \caption{New function $g$ to map real index into simulated 3D indices}
   \label{lst:functions3D}
@@ -262,7 +262,7 @@ For memory flatening, we will need new functions $g$ and $h$, that depends in a 
 }
 \vspace{0.5cm}
 
-Similarly, the new function $h$ is presented in Listing~\ref{lst:functions3D2}
+I will talk about the form of the function for the second parameter (the $y$ that represent the \mintinline{cpp}{j} index) in Section~\ref{sec:moreDim}. Finally, for completenees; the new function $h$ is presented in Listing~\ref{lst:functions3D2}
 
 {\centering
 \begin{minipage}{\linewidth}
@@ -274,11 +274,75 @@ Similarly, the new function $h$ is presented in Listing~\ref{lst:functions3D2}
   baselinestretch=1.2,
   fontsize=\footnotesize,
   linenos,
-  firstline=143, %If you omit this two fields, the whole file is pulled
-  lastline=161
+  firstline=145, %If you omit this two fields, the whole file is pulled
+  lastline=163
   ]{cpp}{src/FlatMemmory.cpp}
   \caption{A new function $h$ to map simulated 3D indices into the real index, this is the inverse of $g$}
   \label{lst:functions3D2}
+  \end{listing}
+\end{minipage}
+\par
+}
+
+\subsubsection{Generalizing to more dimensions}
+\label{sec:moreDim}
+
+In the case of two dimensions the calculation for function $g$ were simply the integer division and the modulo. In the case of three dimensions we also have a modulo and a division (Altrought, the parameters change in the later one). However, the interesting case is that the middle value: it has both operations.
+
+This is actually the general case. Indeed, the correct transformation to o get the simulated index of a given dimension, is as follows:
+\begin{enumerate}
+  \item Divide the real index by the size of the unit of all the previous dimensions.
+  \item Take the modulo with the maximum size of the given dimension to the result.
+\end{enumerate}
+
+Let me present an alternative to the function $g$ given in Listing~\ref{lst:functions3D} using the general appproach in Listing~\ref{lst:functions3D3}
+
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  %frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=187, %If you omit this two fields, the whole file is pulled
+  lastline=205
+  ]{cpp}{src/FlatMemmory.cpp}
+  \caption{Alternative $g$ function for 3D. Using the general form of the algorithm}
+  \label{lst:functions3D3}
+  \end{listing}
+\end{minipage}
+\par
+}
+\vspace{0.5cm}
+
+Now, it becomes clear why in Listing~\ref{lst:functions3D} we did not need the full forms. For the $x$ variable the previosu dimension has size one, and we do not need to divide by one. As for the last index $z$, we know that \mintinline{cpp}{index} is striclly less than \mintinline{cpp}{WIDTH * HEIGHT * DEPTH}, and we divide it by \mintinline{cpp}{WIDTH * HEIGHT}, so it should be a number stricltly less than \mintinline{cpp}{DEPTH}, therefore we do not need to take the modulo.
+
+Finally, now the the logic of the function $g$ becomes clear. We can also come up with a general rule for the inverse function $h$.
+\begin{enumerate}
+  \item For each dimension calculate a term. The term is the size of teh unit in the previos dimension times the index in the current dimension
+  \item Accumulate (add) all the terms to calculate the real index.
+\end{enumerate}
+
+See Listing~\ref{lst:functions3D4} for the \emph{general rule} implementation.
+
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  %frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=166, %If you omit this two fields, the whole file is pulled
+  lastline=185
+  ]{cpp}{src/FlatMemmory.cpp}
+  \caption{Alternative to function $h$ using the general rule}
+  \label{lst:functions3D4}
   \end{listing}
 \end{minipage}
 \par

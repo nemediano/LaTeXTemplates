@@ -26,6 +26,8 @@ const int indicesToIndex(const Vector2D& indices, const int& WIDTH, const int& H
 // 3D case
 const Vector3D indexToIndices3D(const int& index, const int& WIDTH, const int& HEIGHT, const int& DEPTH);
 const int indicesToIndex3D(const Vector3D& indices, const int& WIDTH, const int& HEIGHT, const int& DEPTH);
+const Vector3D indexToIndices3DFull(const int& index, const int& WIDTH, const int& HEIGHT, const int& DEPTH);
+const int indicesToIndex3DFull(const Vector3D& indices, const int& WIDTH, const int& HEIGHT, const int& DEPTH);
 
 int main() {
   const size_t W = 5U; // Max Width of the tensor
@@ -160,8 +162,8 @@ const int indicesToIndex3D(const Vector3D& indices, const int& WIDTH, const int&
   return index;
 }
 
-/*
-const int indicesToIndex3D(const Vector3D& indices, const int& WIDTH, const int& HEIGHT, const int& DEPTH) {
+
+const int indicesToIndex3DFull(const Vector3D& indices, const int& WIDTH, const int& HEIGHT, const int& DEPTH) {
   // Validate input
   if (indices.x < 0 || indices.x >= WIDTH ||
       indices.y < 0 || indices.y >= HEIGHT ||
@@ -182,7 +184,7 @@ const int indicesToIndex3D(const Vector3D& indices, const int& WIDTH, const int&
   return index;
 }
 
-const Vector3D indexToIndices3D(const int& index, const int& WIDTH, const int& HEIGHT, const int& DEPTH) {
+const Vector3D indexToIndices3DFull(const int& index, const int& WIDTH, const int& HEIGHT, const int& DEPTH) {
   Vector3D indices;
   indices.x = indices.y = indices.z = -1;
   // Validate input
@@ -201,4 +203,4 @@ const Vector3D indexToIndices3D(const int& index, const int& WIDTH, const int& H
 
   return indices;
 }
-*/
+
