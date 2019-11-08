@@ -99,9 +99,9 @@ Now, there is three main points to highlight in the sample:
       Now is \emph{a vector of int vectors}.
       This led us to have a longer initialization for it too.
       Imagine that you create functions to receive or return such arrays.
-      The sintax to declare the parameters become difficult.
+      The sintax to declare the parameters will become difficult.
 
-\item We still have the advantage of a very elegant sintax to use the array:  \mintinline{cpp}{b[j][i]} give us the element on column $i$ of row $j$.
+\item We still have the advantage of a very elegant sintax to use the array: \mintinline{cpp}{b[j][i]} give us the element on column $i$ of row $j$.
 
 \item The sintax is backwads with respect to mathematic representation.
       See Figure~\ref{fig:2D} again.
@@ -119,21 +119,21 @@ In other works you simulate the access via indices for all the simulated dimensi
 See the Figure~\ref{fig:Flat}.
 The data is equivalent to the one shown in Figure~\ref{fig:2D} in the sense that represents a two dimensional table, whose first dimension $x$ (number of columns: $5$), indexed by $i \in \{0, 1, 2, 3, 4\}$ and whose second dimension $y$ (number of rows: $4$) is indexed by $j \in \{0, 1, 2, 3\}$.
 However, the data is stored in a one dimensional array of size $5 \cdot 4 = 20$.
-The actual indices of the array go in $0, 1, \ldots, 19$ and are shown on the bottom of of Figure~\ref{fig:Flat}.
+The actual indices of the array $ \in \{ 0, 1, \ldots, 19 \}$ and are shown on the bottom of of Figure~\ref{fig:Flat}.
 However, we also provide an abstraction to access this data via simulated indices \mintinline{cpp}{[j][i]} shown in the top of Figure~\ref{fig:Flat}
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{img/arrayFlat}
-  \caption{2D array represented in a flattened array. This represents the same data as Figure~\ref{fig:2D}. Order of the indices is \mintinline{cpp}{[j][i]}}
+  \caption{2D array represented as a \emph{flattened} array. This represents the same data as Figure~\ref{fig:2D}. Order of the indices is \mintinline{cpp}{[j][i]}}
   \label{fig:Flat}
 \end{figure}
 
 This has the advantage that all the data is store in a one dimensional array.
 Therefore, you \emph{ensure} all your data is actually contigous in memory.
 Also, no matter how many dimensions your data has, the type is always a one dimensional array.
-Provided that we acces it in the \emph{same way}, the access tends to be faster than the alternative shown in Listing~\ref{lst:2dexample}
-The \emph{same way} means that the inner loop moves along the $x$ dimension and the outer loop transverses the second dimension $y$.
+Provided that we acces it in the \emph{correct way}, the access tends to be faster than the alternative shown in Listing~\ref{lst:2dexample}
+The \emph{correct way} means that the inner loop moves along the $x$ dimension and the outer loop transverses the second dimension $y$.
 The reason for this improvement becomes evident if we see Figure~\ref{fig:Flat}: in this way, we are actually accesing a linear array in his linear order.
 
 In order to implement this technique we will need two mappings:
@@ -239,7 +239,8 @@ In the normal mutidimensional array synatx C++ syntax this will become, an array
 }
 \vspace{0.5cm}
 
-For memory flatening, we will need new functions $g$ and $h$, that depends in a new extra parameter: \mintinline{cpp}{DEPTH}. In Listing~\ref{lst:functions3D}, we can see the new function $g$.
+For memory flatening, we will need new functions $g$ and $h$, that depends in a new extra parameter: \mintinline{cpp}{DEPTH}.
+In Listing~\ref{lst:functions3D}, we can see the new function $g$.
 
 {\centering
 \begin{minipage}{\linewidth}
@@ -287,12 +288,12 @@ I will talk about the form of the function for the second parameter (the $y$ tha
 \subsubsection{Generalizing to more dimensions}
 \label{sec:moreDim}
 
-In the case of two dimensions the calculation for function $g$ were simply the integer division and the modulo. In the case of three dimensions we also have a modulo and a division (Altrought, the parameters change in the later one). However, the interesting case is that the middle value: it has both operations.
+In the case of two dimensions the calculation for function $g$ were simply the integer division and the modulo. In the case of three dimensions we also have a modulo and a division (Altrought, the parameters change in the later one). However, the interesting case is that of the middle value: it has both operations.
 
-This is actually the general case. Indeed, the correct transformation to o get the simulated index of a given dimension, is as follows:
+This is actually the general case. Indeed, the correct transformation to get the simulated index of a given dimension, is as follows:
 \begin{enumerate}
   \item Divide the real index by the size of the unit of all the previous dimensions.
-  \item Take the modulo with the maximum size of the given dimension to the result.
+  \item Take the result of the previous operation and  calculate his modulo with the maximum size of the given dimension.
 \end{enumerate}
 
 Let me present an alternative to the function $g$ given in Listing~\ref{lst:functions3D} using the general appproach in Listing~\ref{lst:functions3D3}
@@ -318,11 +319,14 @@ Let me present an alternative to the function $g$ given in Listing~\ref{lst:func
 }
 \vspace{0.5cm}
 
-Now, it becomes clear why in Listing~\ref{lst:functions3D} we did not need the full forms. For the $x$ variable the previosu dimension has size one, and we do not need to divide by one. As for the last index $z$, we know that \mintinline{cpp}{index} is striclly less than \mintinline{cpp}{WIDTH * HEIGHT * DEPTH}, and we divide it by \mintinline{cpp}{WIDTH * HEIGHT}, so it should be a number stricltly less than \mintinline{cpp}{DEPTH}, therefore we do not need to take the modulo.
+Now, it becomes clear why in Listing~\ref{lst:functions3D} we did not need the full forms.
+For the $x$ variable the previosu dimension has size one, and we do not need to divide by one.
+As for the last index $z$, we know that \mintinline{cpp}{index} is striclly less than \mintinline{cpp}{WIDTH * HEIGHT * DEPTH}, and we divide it by \mintinline{cpp}{WIDTH * HEIGHT}, so it should be a number stricltly less than \mintinline{cpp}{DEPTH}, therefore we do not need to take the modulo.
 
-Finally, now the the logic of the function $g$ becomes clear. We can also come up with a general rule for the inverse function $h$.
+Now that the the logic of the function $g$ is clear; we can also come up with a general rule for the inverse function $h$.
+
 \begin{enumerate}
-  \item For each dimension calculate a term. The term is the size of teh unit in the previos dimension times the index in the current dimension
+  \item For each dimension calculate a term. The term is the size of the unit in the previos dimension times the index in the current dimension.
   \item Accumulate (add) all the terms to calculate the real index.
 \end{enumerate}
 
