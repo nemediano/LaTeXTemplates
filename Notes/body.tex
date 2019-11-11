@@ -117,7 +117,7 @@ But at the same time you also provide an abstraction, so you can access it in a 
 In other works you simulate the access via indices for all the simulated dimensions.
 
 See the Figure~\ref{fig:Flat}.
-The data is equivalent to the one shown in Figure~\ref{fig:2D} in the sense that represents a two dimensional table, whose first dimension $x$ (number of columns: $5$), indexed by $i \in \{0, 1, 2, 3, 4\}$ and whose second dimension $y$ (number of rows: $4$) is indexed by $j \in \{0, 1, 2, 3\}$.
+The data is equivalent to the one shown in Figure~\ref{fig:2D} in the sense that represents a two dimensional table, whose first dimension $x$ (number of columns: $5$), is indexed by $i \in \{0, 1, 2, 3, 4\}$ and whose second dimension $y$ (number of rows: $4$) is indexed by $j \in \{0, 1, 2, 3\}$.
 However, the data is stored in a one dimensional array of size $5 \cdot 4 = 20$.
 The actual indices of the array $ \in \{ 0, 1, \ldots, 19 \}$ and are shown on the bottom of of Figure~\ref{fig:Flat}.
 However, we also provide an abstraction to access this data via simulated indices \mintinline{cpp}{[j][i]} shown in the top of Figure~\ref{fig:Flat}
@@ -131,8 +131,9 @@ However, we also provide an abstraction to access this data via simulated indice
 
 This has the advantage that all the data is store in a one dimensional array.
 Therefore, you \emph{ensure} all your data is actually contigous in memory.
-Also, no matter how many dimensions your data has, the type is always a one dimensional array.
-Provided that we acces it in the \emph{correct way}, the access tends to be faster than the alternative shown in Listing~\ref{lst:2dexample}
+And no matter how many dimensions your data has, the type is always a one dimensional array.
+
+Also, provided that we acces the data in the \emph{correct way}, the access tends to be faster than the alternative shown in Listing~\ref{lst:2dexample}.
 The \emph{correct way} means that the inner loop moves along the $x$ dimension and the outer loop transverses the second dimension $y$.
 The reason for this improvement becomes evident if we see Figure~\ref{fig:Flat}: in this way, we are actually accesing a linear array in his linear order.
 
@@ -239,7 +240,7 @@ In the normal mutidimensional array synatx C++ syntax this will become, an array
 }
 \vspace{0.5cm}
 
-For memory flatening, we will need new functions $g$ and $h$, that depends in a new extra parameter: \mintinline{cpp}{DEPTH}.
+For memory flatening, we will need a new version of functions $g$ and $h$, that depends in a new extra parameter: \mintinline{cpp}{DEPTH}.
 In Listing~\ref{lst:functions3D}, we can see the new function $g$.
 
 {\centering
@@ -358,6 +359,35 @@ See Listing~\ref{lst:functions3D4} for the \emph{general rule} implementation.
   \item One bit manipulation, set, clear, toggle and testing
   \item Bit masking: set, clear, toggle and test group of bites
 \end{itemize}
+In this section I will explian some bit manipulation operations. As is common in most programing tasks and to avoid difficult cases; we will foucus on positive values for integer types.
+
+Just to clarify the terms: \emph{bit} is a single binary digit, it can have only two values either 0 or 1. A \emph{byte} is a group of bits that conforms the unit of the computer architecture. Technically, a byte can have any size in bits. However, in modern computers this is always 8. That is why sometimes they call a byte an \emph{octet}. For the following code samples you can assume the following constant to be in scope.
+
+\begin{minted}{cpp}
+const size_t BITS_PER_BYTE = 8U;
+\end{minted}
+
+First, let me introduce, in Listing~\ref{lst:binHelpers}; two helper function to debug and visulize such variables. The first one: \mintinline{cpp}{bitSize} returns the size in bits of the variable and the second one: \mintinline{cpp}{bitStr} returns a string with the binary representation of a variable.
+
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  %frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=37, %If you omit this two fields, the whole file is pulled
+  lastline=48
+  ]{cpp}{src/bitManipulation.cpp}
+  \caption{Helper functions to debug bit manipulations}
+  \label{lst:binHelpers}
+  \end{listing}
+\end{minipage}
+\par
+}
 
 \section{Analytic Geometry}
 \begin{itemize}

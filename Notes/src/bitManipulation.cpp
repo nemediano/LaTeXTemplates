@@ -16,19 +16,27 @@ const size_t BITS_PER_BYTE = 8U;
 template<typename T>
 static std::string binStr(const T& x);
 
+template<typename T>
+static size_t bitSize(const T& x);
+
 int main(int argc, char* argv[]) {
 	unsigned char a = 1;
-	unsigned int b = 1;
+	unsigned int b = 9;
 	int c = 0xFF00FF08;
 
-	cout << "size of a: " << sizeof(a) * BITS_PER_BYTE << endl;
-	cout << "size of b: " << sizeof(b) * BITS_PER_BYTE << endl;
-	cout << "size of c: " << sizeof(c) * BITS_PER_BYTE << endl;
-	cout << "a = " << binStr(a) << endl;
-	cout << "b = " << binStr(b) << endl;
-	cout << "c = " << binStr(c) << endl;
+	cout << "size in bits of unsigned char: " << bitSize(a) << endl;
+	cout << "size in bits of unsigned int: " << bitSize(b) << endl;
+	cout << "size in bits of int: " << bitSize(c) << endl;
+	cout << "binary representation of a: " << binStr(a) << endl;
+	cout << "binary representation of b: " << binStr(b) << endl;
+	cout << "binary representation of c: " << binStr(c) << endl;
 
 	return EXIT_SUCCESS;
+}
+
+template<typename T>
+static size_t bitSize(const T& x) {
+  return sizeof(x) * BITS_PER_BYTE;
 }
 
 template<typename T>
