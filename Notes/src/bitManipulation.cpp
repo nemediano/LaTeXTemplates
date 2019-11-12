@@ -20,6 +20,7 @@ template<typename T>
 static size_t bitSize(const T& x);
 
 int main(int argc, char* argv[]) {
+
 	unsigned char a = 0b101010;
 	unsigned int b = 9;
 	int c = 0xFF00FF08;
