@@ -34,13 +34,13 @@ int main(int argc, char* argv[]) {
 
   unsigned char d = a << 3;
   unsigned char e = a >> 3;
-  unsigned char f = a >> 8;
-  unsigned char g = a << 8;
+  unsigned char f = a >> bitSize(a);
+  unsigned char g = a << bitSize(a);
   cout << "a: " << binStr(a) << " = " << int(a) << endl;
-  cout << "d: " << binStr(d) << endl;
-  cout << "e: " << binStr(e) << endl;
-  cout << "f: " << binStr(f) << endl;
-  cout << "g: " << binStr(g) << endl;
+  cout << "d: " << binStr(d) << " = " << int(d) << endl;
+  cout << "e: " << binStr(e) << " = " << int(e) << endl;
+  cout << "f: " << binStr(f) << " = " << int(f) << endl;
+  cout << "g: " << binStr(g) << " = " << int(g) << endl;
 
 	return EXIT_SUCCESS;
 }
