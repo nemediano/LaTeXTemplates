@@ -379,8 +379,8 @@ Let me introduce, in Listing~\ref{lst:binHelpers}; two helper function to debug 
   baselinestretch=1.2,
   fontsize=\footnotesize,
   linenos,
-  firstline=48, %If you omit this two fields, the whole file is pulled
-  lastline=59
+  firstline=76, %If you omit this two fields, the whole file is pulled
+  lastline=87
   ]{cpp}{src/bitManipulation.cpp}
   \caption{Helper functions to debug bit manipulations}
   \label{lst:binHelpers}
@@ -391,15 +391,15 @@ Let me introduce, in Listing~\ref{lst:binHelpers}; two helper function to debug 
 
 Another important feature in C++ is that we can use both binary (actually since standar C++14) and heaxadecimal literals:
 \begin{minted}{cpp}
-unsigned char a = 0b101010; //it needs c++14
-int c = 0xFF00FF08;
-cout << "a: " << binStr(a) << endl;
-cout << "c: " << binStr(c) << endl;
+unsigned char aChar = 0b101010;
+int anInt = 0xFF00FF08;
+cout << "binary representation of aChar: " << binStr(aChar) << endl;
+cout << "binary representation of anInt: " << binStr(anInt) << endl;
 \end{minted}
 Will print:
 \begin{verbatim}
-a: 00101010
-c: 11111111000000001111111100001000
+binary representation of aChar: 00101010
+binary representation of anInt: 11111111000000001111111100001000
 \end{verbatim} 
 
 
@@ -413,20 +413,27 @@ The bits shifted out are descarted and in order to fill the spaces created by th
 Because of this, shifting to any side by the exact size in bits of the right operand is the same as setting the result to 0.
 However, a quick warning note: Shifting to any side by an number greater than the size (in bits) of the right operand or by a negative number it is not defined. See~\cite{INT34Cpp} for a complete explanation.
 
-The following code snippet shows a valid C++ sample of these operations:
+The code snippet in Listing~\ref{lst:bitShifting} shows a valid C++ sample of these operations:
 
-\begin{minted}{cpp}
-unsigned char a = 0b101010;
-unsigned char d = a << 3;
-unsigned char e = a >> 3;
-unsigned char f = a >> bitSize(a);
-unsigned char g = a << bitSize(a);
-cout << "a: " << binStr(a) << " = " << int(a) << endl;
-cout << "d: " << binStr(d) << " = " << int(d) << endl;
-cout << "e: " << binStr(e) << " = " << int(e) << endl;
-cout << "f: " << binStr(f) << " = " << int(f) << endl;
-cout << "g: " << binStr(g) << " = " << int(g) << endl;
-\end{minted}
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  %frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=36, %If you omit this two fields, the whole file is pulled
+  lastline=47
+  ]{cpp}{src/bitManipulation.cpp}
+  \caption{Sample of bit shiting}
+  \label{lst:bitShifting}
+  \end{listing}
+\end{minipage}
+\par
+}
 
 Produces the following output:
 
@@ -438,19 +445,63 @@ f: 00000000 = 0
 g: 00000000 = 0
 \end{verbatim} 
 
-Another important thing to notice is that, \emph{as long as the shift left significan digits} (or else we \emph{underflow}); shifting values to the right is equivalent to divide by $2^n$ where $n$ is the number of bits shifted.
+Another important thing to notice is that, \emph{as long as the shift leaves significant digits} (or else we \emph{underflow}); shifting values to the right is equivalent to divide by $2^n$ where $n$ is the number of bits shifted.
 Similarly, shifting values to the left, \emph{as long as we do not discard a significant bit} (or else we \emph{overflow}); is equivalent to multiply by $2^n$, where $n$ is the number of bits shifted.
+
+In the above sample $2^3 = 8$. Therfore: $e = 42 / 8 = 5$ (remember it's an integer division).
+And $d = 42 \cdot 8 = 336$, but it resulted in an overflow, since the maximun value for an $8$ bit variable is $2^8 = 256$.
 
 \item Bitwise \emph{AND} between two values of the same size. Performed with the operator \mintinline{cpp}{&}. Yes, it is the same as the \emph{dereference} operator. The distinctions is made due the former being a binary operator and the dereference one being a unary operator.
 \item Bitwise \emph{OR} between two values of the same size. Performed with the operator \mintinline{cpp}{|}
 \item Bitwise \emph{XOR} between two values of the same size. Also known as \emph{exclusive or}. Performed with the operator \mintinline{cpp}{^}
 
-These operator are the expected equivalent that the ones defined in first order logic.
-Remember that they operate bitwise.
-That is why they are different than the logical ones that are represented by double ampersand or double pipe.
+These operators are the expected equivalent to the ones defined in first order logic.
+However, they operate bitwise; that is why they are different than the logical ones that are represented by double ampersand or double pipe.
 
 \item Bitwise unary \emph{NOT}. Performed with the operator \mintinline{cpp}{~}
 \end{itemize}
+
+Listing~\ref{lst:bitwiseOp} present a sample usage of the bitwise logical operations:
+
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  %frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=50, %If you omit this two fields, the whole file is pulled
+  lastline=71
+  ]{cpp}{src/bitManipulation.cpp}
+  \caption{Bitwise operations sample}
+  \label{lst:bitwiseOp}
+  \end{listing}
+\end{minipage}
+\par
+}
+
+And produces the following result:
+
+\begin{verbatim}
+c = a & b
+a: 10101101
+b: 11100110
+c: 10100100
+d = a | b
+a: 10101101
+b: 11100110
+d: 11101111
+e = a ^ b
+a: 10101101
+b: 11100110
+e: 01001011
+f = ~a
+a: 10101101
+f: 01010010
+\end{verbatim}
 
 \section{Analytic Geometry}
 \begin{itemize}
