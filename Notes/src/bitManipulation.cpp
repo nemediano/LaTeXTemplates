@@ -21,54 +21,78 @@ static size_t bitSize(const T& x);
 
 int main(int argc, char* argv[]) {
 
-	unsigned char aChar = 0b101010;
-	unsigned int aUnsigInt = 9;
-	int anInt = 0xFF00FF08;
+  cout << "Bit manipulation sample..." << endl;
 
-	cout << "size in bits of unsigned char: " << bitSize(aChar) << endl;
-	cout << "size in bits of unsigned int: " << bitSize(aUnsigInt) << endl;
-	cout << "size in bits of int: " << bitSize(anInt) << endl;
-	cout << "binary representation of aChar: " << binStr(aChar) << endl;
-	cout << "binary representation of aUnsigInt: " << binStr(aUnsigInt) << endl;
-	cout << "binary representation of anInt: " << binStr(anInt) << endl;
-
-  cout << endl << "Bit shifting sample" << endl;
-  unsigned char a = aChar;
-  unsigned char b = a << 3;
-  unsigned char c = a >> 3;
-  unsigned char d = a >> bitSize(a);
-  unsigned char e = a << bitSize(a);
-  unsigned char f = a;
-
-  cout << "a: " << binStr(a) << " = " << int(a) << endl;
-  cout << "b: " << binStr(b) << " = " << int(b) << endl;
-  cout << "c: " << binStr(c) << " = " << int(c) << endl;
-  cout << "d: " << binStr(d) << " = " << int(d) << endl;
-  cout << "e: " << binStr(e) << " = " << int(e) << endl;
-
-  cout << endl << "Bitwise binary operations sample" << endl;
-  a = 0b10101101;
-  b = 0b11100110;
-  c = a & b;
-  d = a | b;
-  e = a ^ b;
-  f = ~a;
-
-  cout << "c = a & b" << endl;
+  cout << "Original value" << endl;
+  unsigned char a = 0b00101010;
   cout << "a: " << binStr(a) << endl;
-  cout << "b: " << binStr(b) << endl;
-  cout << "c: " << binStr(c) << endl;
-  cout << "d = a | b" << endl;
+
+  cout << "Create a mask for the bit at position 2" << endl;
+  unsigned char mask = 1 << 2;
+  cout << "m: " << binStr(mask) << endl;
+
+  cout << "Variable to show the reult" << endl;
+  unsigned char r = 0;
+  cout << "r: " << binStr(r) << endl;
+
+  cout << "Setting a bit: r = a | mask" << endl;
+  r = a | mask;
   cout << "a: " << binStr(a) << endl;
-  cout << "b: " << binStr(b) << endl;
-  cout << "d: " << binStr(d) << endl;
-  cout << "e = a ^ b" << endl;
+  cout << "m: " << binStr(mask) << endl;
+  cout << "r: " << binStr(r) << endl;
+
+  cout << "Clearing a bit: r = a & (~mask)" << endl;
+  r = a & (~mask);
   cout << "a: " << binStr(a) << endl;
-  cout << "b: " << binStr(b) << endl;
-  cout << "e: " << binStr(e) << endl;
-  cout << "f = ~a" << endl;
+  cout << "m: " << binStr(mask) << endl;
+  cout << "~m:" << binStr(char(~mask)) << endl;
+  cout << "r: " << binStr(r) << endl;
+
+  cout << "Toggling a bit: r = a ^ mask" << endl;
+  r = a ^ mask;
   cout << "a: " << binStr(a) << endl;
-  cout << "f: " << binStr(f) << endl;
+  cout << "m: " << binStr(mask) << endl;
+  cout << "r: " << binStr(r) << endl;
+
+  cout << "Query a bit: q = ((a & mask) != 0)" << endl;
+  bool q = ((a & mask) != 0);
+  cout << "The bit is " << (q ? "true" : "false") << endl;
+
+
+  cout << endl << "Repeat all with a diferent bit" << endl;
+  cout << "Original value" << endl;
+  cout << "a: " << binStr(a) << endl;
+
+  cout << "Create a mask for the bit at position 3" << endl;
+  mask = 1 << 3;
+  cout << "m: " << binStr(mask) << endl;
+
+  cout << "Variable to show the reult" << endl;
+  r = 0;
+  cout << "r: " << binStr(r) << endl;
+
+  cout << "Setting a bit: r = a | mask" << endl;
+  r = a | mask;
+  cout << "a: " << binStr(a) << endl;
+  cout << "m: " << binStr(mask) << endl;
+  cout << "r: " << binStr(r) << endl;
+
+  cout << "Clearing a bit: r = a & (~mask)" << endl;
+  r = a & (~mask);
+  cout << "a: " << binStr(a) << endl;
+  cout << "m: " << binStr(mask) << endl;
+  cout << "~m:" << binStr(char(~mask)) << endl;
+  cout << "r: " << binStr(r) << endl;
+
+  cout << "Toggling a bit: r = a ^ mask" << endl;
+  r = a ^ mask;
+  cout << "a: " << binStr(a) << endl;
+  cout << "m: " << binStr(mask) << endl;
+  cout << "r: " << binStr(r) << endl;
+
+  cout << "Query a bit: q = ((a & mask) != 0)" << endl;
+  q = ((a & mask) != 0);
+  cout << "The bit is " << (q ? "true" : "false") << endl;
 
 	return EXIT_SUCCESS;
 }
