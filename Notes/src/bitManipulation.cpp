@@ -67,7 +67,7 @@ int main(int argc, char* argv[]) {
   mask = 1 << 3;
   cout << "m: " << binStr(mask) << endl;
 
-  cout << "Variable to show the reult" << endl;
+  cout << "Variable to show the result" << endl;
   r = 0;
   cout << "r: " << binStr(r) << endl;
 

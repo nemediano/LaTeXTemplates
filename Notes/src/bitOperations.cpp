@@ -79,8 +79,7 @@ static size_t bitSize(const T& x) {
 }
 
 template<typename T>
-static std::string binStr(const T& x)
-{
+static std::string binStr(const T& x) {
     std::stringstream ss;
     ss << std::bitset<sizeof(T) * BITS_PER_BYTE>(x);
     return ss.str();

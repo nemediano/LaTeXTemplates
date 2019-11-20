@@ -24,11 +24,16 @@ encoding=UTF-8
 highlight=BibTeX
 mode=BibTeX
 
-[item:body.tex]
-column=67
+[item:bitMan.tex]
+archive=true
 encoding=UTF-8
 highlight=LaTeX
-line=95
+mode=LaTeX
+
+[item:memFlat.tex]
+archive=true
+encoding=UTF-8
+highlight=LaTeX
 mode=LaTeX
 
 [item:notes.kilepr]
@@ -46,12 +51,6 @@ line=25
 mode=LaTeX
 open=true
 order=1
-
-[view-settings,view=0,item:body.tex]
-CursorColumn=67
-CursorLine=95
-JumpList=
-ViMarks=.,95,44,[,95,44,],95,44
 
 [view-settings,view=0,item:notes.tex]
 CursorColumn=0
