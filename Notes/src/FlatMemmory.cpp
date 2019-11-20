@@ -188,7 +188,7 @@ const Vector3D indexToIndices3DFull(const int& index, const int& WIDTH, const in
   Vector3D indices;
   indices.x = indices.y = indices.z = -1;
   // Validate input
-  if (WIDTH < 2 || HEIGHT < 2 || DEPTH <= 2) {
+  if (WIDTH < 2 || HEIGHT < 2 || DEPTH < 2) {
     cerr << "Invalid limits! data is not 3 dimensional" << endl;
     return indices;
   }

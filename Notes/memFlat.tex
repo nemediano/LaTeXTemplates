@@ -1,6 +1,6 @@
 \section{Memory flatenig}
 
-A common problem in multidimensional data situations is memory layout representation. Internally, computers always represent memory in a linear fashion, the idea of \emph{mutidimensional array} it's just sugar syntax added by high level programming lenguajes.
+A common design problem in multidimensional data situations is memory layout representation. Internally, computers always represent memory in a linear fashion, the idea of \emph{mutidimensional array} it's just sugar syntax added by high level programming lenguajes.
 
 \subsection{One dimensional array}
 
@@ -14,7 +14,7 @@ Given said that, sometimes allocations for such constructs can become dificult t
   %frame=lines,
   framesep=0.5cm,
   baselinestretch=1.2,
-  %fontsize=\footnotesize,
+  fontsize=\footnotesize,
   linenos,
   firstline=15, %If you omit this two fields, the whole file is pulled
   lastline=21
@@ -26,8 +26,8 @@ Given said that, sometimes allocations for such constructs can become dificult t
 \par
 }
 \vspace{0.5cm}
-So far, everything looks good, sintax is clear, braket operator is helping us.
-Conceptually, we have a series of variables with the same type that live in a contiguos space in memory. See figure~\ref{fig:1D}.
+So far, everything looks good, the sintax is clear, braket operator is helping us.
+Conceptually, we have a series of variables with the same type that live in a contiguos space in memory. See Figure~\ref{fig:1D}.
 
 \begin{figure}[htp]
   \centering
@@ -51,7 +51,7 @@ Conceptually, we have a series of variables with the same type that live in a co
 The problem becomes evident as data start to include more dimensions.
 In a bidimensional array we have data that has two dimensions.
 One can think about it, like the data it's stored in a table, the situation is the one depicted in Figure~\ref{fig:2a}.
-Now, remember this is just an abstraction (provided by our programming language: C++; in this case), since memory is actually \emph{close} to linear in a computer.
+Now, remember this is just an abstraction; provided by our programming language: C++, in this case, since memory is actually \emph{close} to linear in a computer.
 
 \begin{figure}[htp]
   \centering
@@ -80,7 +80,7 @@ Usually, the C++ way of modeling this is creating an array, such that each eleme
   %frame=lines,
   framesep=0.5cm,
   baselinestretch=1.2,
-  %fontsize=\footnotesize,
+  fontsize=\footnotesize,
   linenos,
   firstline=23, %If you omit this two fields, the whole file is pulled
   lastline=38
@@ -103,10 +103,10 @@ Now, there is three main points to highlight in the sample:
 
 \item We still have the advantage of a very elegant sintax to use the array: \mintinline{cpp}{b[j][i]} give us the element on column $i$ of row $j$.
 
-\item The sintax is backwads with respect to mathematic representation.
+\item The sintax is backwads with respect to mathematic notation.
       See Figure~\ref{fig:2D} again.
       The index \mintinline{cpp}{i} is transversin along the $x$ dimension and the index \mintinline{cpp}{j} along the $y$ dimension.
-      Therefore, the element \mintinline{cpp}{b[j][i]} it's close to $b(x, y)$ in math
+      Therefore, the element \mintinline{cpp}{b[j][i]} it's analogous to $b(x, y)$ in math.
  \end{enumerate}
 
 \subsection{Memory flatenig explained}
@@ -114,7 +114,7 @@ Now, there is three main points to highlight in the sample:
 Here is when the technique called \emph{memory flattening} becomes useful.
 In simple words: This is to mimic what the compiler is doing for us: use linear data.
 But at the same time you also provide an abstraction, so you can access it in a similar fashion that if your data had more dimensions.
-In other works you simulate the access via indices for all the simulated dimensions.
+In other works you simulate the access via indices for all the required dimensions.
 
 See the Figure~\ref{fig:Flat}.
 The data is equivalent to the one shown in Figure~\ref{fig:2D} in the sense that represents a two dimensional table, whose first dimension $x$ (number of columns: $5$), is indexed by $i \in \{0, 1, 2, 3, 4\}$ and whose second dimension $y$ (number of rows: $4$) is indexed by $j \in \{0, 1, 2, 3\}$.
@@ -135,7 +135,7 @@ And no matter how many dimensions your data has, the type is always a one dimens
 
 Also, provided that we acces the data in the \emph{correct way}, the access tends to be faster than the alternative shown in Listing~\ref{lst:2dexample}.
 The \emph{correct way} means that the inner loop moves along the $x$ dimension and the outer loop transverses the second dimension $y$.
-The reason for this improvement becomes evident if we see Figure~\ref{fig:Flat}: in this way, we are actually accesing a linear array in his linear order.
+The reason for this improvement becomes evident if we see Figure~\ref{fig:Flat} again: in this way, we are actually accesing a linear array in his natural linear order.
 
 In order to implement this technique we will need two mappings:
 First, a function $g:\mathbb{Z}^n \rightarrow \mathbb{Z}$, to map the indices in $n$ dimensions to the one dimensional array.
@@ -145,12 +145,12 @@ The first function $g$ it is actually the most useful to us, since it will provi
 See the Figure~\ref{fig:2D}.
 Assume that our data hast two dimensions ($x$ and $y$ --or \emph{width} and \emph{height}-- if you like).
 That we use two indices $i$ and $j$ to transverse it.
-And assume also that the maximun values of such indices are \mintinline{cpp}{WIDTH} and \mintinline{cpp}{HEIGHT} and that they are zero based.
+And assume also that the number of cells along those dimensions are \mintinline{cpp}{WIDTH} and \mintinline{cpp}{HEIGHT} and that the indices are zero based.
 In Listing~\ref{lst:functions2D} we show the implementation of such function.
 
 We can see that the transformations are actually very simple.
 In fact, one of them is the integer division and the other one is the modulo.
-Also note, that as long as we check for the boundaries of the values for both indices, only one of the maximun dimensions in this case \emph{witdh} is used in the actual calculation of the indices.
+Also note, that as long as we check for the boundaries of the values for both indices, only one of the sizes in this case \emph{witdh} is used in the actual calculation of the indices.
 
 {\centering
 \begin{minipage}{\linewidth}
@@ -198,7 +198,7 @@ For completeness, we also show Listing~\ref{lst:functions2D2} that defines the i
 
 \subsection{Three dimensional data}
 
-Now, lets look at the more complex --but still very common-- scenario of three dimensions. The situation is the one depicted in Figure~\ref{fig:3D}. We include a new dimension in the data: indexed by $k$ along the $z$ axis, we call it \emph{depth}.
+Now, lets look at the more complex --but still very common-- scenario of three dimensions. The situation is the one depicted in Figure~\ref{fig:3D}. We include a new dimension in the data: indexed by $k$ along the $z$ axis, we call it \emph{depth}. Note that even when the frame of reference in Figure~\ref{fig:3b}, looks weird; it is a \emph{right handed} frame of reference. 
 
 \begin{figure}[htp]
   \centering
@@ -217,7 +217,7 @@ Now, lets look at the more complex --but still very common-- scenario of three d
   \label{fig:3D}
 \end{figure}
 
-In the normal mutidimensional array synatx C++ syntax this will become, an array of arrays of array of ints. See Listing~\ref{lst:3dexample}. We transvers it using three nested loops, where the most outer one is the one indexed by the new dimension.
+In the normal mutidimensional array synatx C++ syntax this will become, an array of arrays of arrays of ints. See Listing~\ref{lst:3dexample}. We transvers it using three nested loops, where the most outer one is the one indexed by the new dimension.
 
 {\centering
 \begin{minipage}{\linewidth}
@@ -227,7 +227,7 @@ In the normal mutidimensional array synatx C++ syntax this will become, an array
   %frame=lines,
   framesep=0.5cm,
   baselinestretch=1.2,
-  %fontsize=\footnotesize,
+  fontsize=\footnotesize,
   linenos,
   firstline=40, %If you omit this two fields, the whole file is pulled
   lastline=64
@@ -264,7 +264,7 @@ In Listing~\ref{lst:functions3D}, we can see the new function $g$.
 }
 \vspace{0.5cm}
 
-I will talk about the form of the function for the second parameter (the $y$ that represent the \mintinline{cpp}{j} index) in Section~\ref{sec:moreDim}. Finally, for completenees; the new function $h$ is presented in Listing~\ref{lst:functions3D2}
+I will talk about the form of the function for the second result (the $y$ that represent the \mintinline{cpp}{j} index) in Section~\ref{sec:moreDim}. Finally, for completenees; the new function $h$ is presented in Listing~\ref{lst:functions3D2}
 
 {\centering
 \begin{minipage}{\linewidth}
@@ -297,7 +297,7 @@ This is actually the general case. Indeed, the correct transformation to get the
   \item Take the result of the previous operation and  calculate his modulo with the maximum size of the given dimension.
 \end{enumerate}
 
-Let me present an alternative to the function $g$ given in Listing~\ref{lst:functions3D} using the general appproach in Listing~\ref{lst:functions3D3}
+Let me present in Listing~\ref{lst:functions3D3} an alternative to the function $g$ showed in Listing~\ref{lst:functions3D} using the general appproach.
 
 {\centering
 \begin{minipage}{\linewidth}
@@ -321,8 +321,8 @@ Let me present an alternative to the function $g$ given in Listing~\ref{lst:func
 \vspace{0.5cm}
 
 Now, it becomes clear why in Listing~\ref{lst:functions3D} we did not need the full forms.
-For the $x$ variable the previosu dimension has size one, and we do not need to divide by one.
-As for the last index $z$, we know that \mintinline{cpp}{index} is striclly less than \mintinline{cpp}{WIDTH * HEIGHT * DEPTH}, and we divide it by \mintinline{cpp}{WIDTH * HEIGHT}, so it should be a number stricltly less than \mintinline{cpp}{DEPTH}, therefore we do not need to take the modulo.
+For the $x$ variable the previous dimension has size one, and we do not need to divide by one.
+As for the last variable $z$, we know that \mintinline{cpp}{index} is striclly less than \mintinline{cpp}{WIDTH * HEIGHT * DEPTH}, and we divide it by \mintinline{cpp}{WIDTH * HEIGHT}, so it should be a number stricltly less than \mintinline{cpp}{DEPTH}, therefore we do not need to take the modulo.
 
 Now that the the logic of the function $g$ is clear; we can also come up with a general rule for the inverse function $h$.
 
