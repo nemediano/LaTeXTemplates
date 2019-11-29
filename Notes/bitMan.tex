@@ -166,7 +166,7 @@ Therefore, in an $8$ bit size variable positions are in $\{ 0, 1, \ldots, 6, 7 \
   \hspace*{1cm}
   \begin{subfigure}[b]{0.35\textwidth}
     \includegraphics[width=\textwidth]{img/bitPositions2}
-    \caption{Bit positions for an $32$ bit variable.}
+    \caption{Bit positions for a $32$ bit variable.}
     \label{fig:bitPosb}
   \end{subfigure}
   \caption{Positions of the bits in a variable.}
@@ -174,7 +174,7 @@ Therefore, in an $8$ bit size variable positions are in $\{ 0, 1, \ldots, 6, 7 \
 \end{figure}
 
 Extra note: \emph{endianism does not matter for bit manipulations}.
-The languaje (in this case C++) abstract this for you.
+The lenguaje (in this case C++) abstract this for you.
 Endianism only matters when you are reading or writing to the filesystem.
 So, for the purposes of this explanation: all machines are big endian.
 
@@ -187,7 +187,7 @@ There are four important operations for bit manipulation:
 \end{description}
 
 In order to implement the bit manipulation we have to use the bit operations in combination with what is called a \emph{mask}.
-A mask is another variable of the same size of the one we want to manipulate, that only contain ones in the places we want to manipulate.
+A mask is another variable; of the same size of the one we want to manipulate, that only contain ones in the places we want to manipulate.
 Well, technically a mask could be of any size, but the explanation get easier if you imagine them of the same size.
 
 As an example, lets construct an $8$ bit mask for manipulating the bit at position $3$.
@@ -310,20 +310,3 @@ The bit at position 5 is set
 \end{verbatim}
 
 \subsection{Manipulating groups of bits}
-
-
-\section{Analytic Geometry}
-\begin{itemize}
-  \item Ray, line and segment representations
-  \item Ray to segment intersection
-  \item Projecction
-  \item Point to segment distance
-  \item Belonging test on simple polygons
-\end{itemize}
-
-\section{Graphics Pipeline}
-\begin{itemize}
-  \item Simple: Vertex and fragment
-  \item Complete, all optional stages
-  \item Texture pipeline
-\end{itemize}
