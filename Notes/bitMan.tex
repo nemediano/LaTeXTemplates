@@ -311,6 +311,30 @@ The bit at position 5 is set
 
 \subsection{Manipulating groups of bits}
 
+The general case of manipulate a group of bits is done in the same way as individual bits.
+Remember, that we said that a mask contain ones in the places where we want to manipulate and zeros anywhere else.
+Then, to manipulate several bits at once, we just need a more general mask.
+
+This is particlary usefull when we operate on bigger integer types, like $32$ or $64$ bit sizes.
+The usual way to construct these masks is to use hexadecimal literals.
+In hexadecimal each digit represent $4$ bits.
+For example, to create a mask that operates on bits $6$, $7$ and $8$ of a $32$ bit variable. 
+
+\begin{minted}{cpp}
+unsigned int mask = 0x000001c0;
+cout << "m: " << binStr(mask) << endl;
+\end{minted}
+
+Will print:
+\begin{verbatim}
+m: 00000000000000000000000111000000
+\end{verbatim}
+
+Typically an \mintinline{cpp}{unsigned char} has $8$ bits size and an \mintinline{cpp}{unsigned int} has $32$ bits size.
+Therefore, the hexadecimal representation it's particularly usefull since a literal of the form $0xXX$, where the $X$ represents an hexadecimal digit; can create a mask for an \mintinline{cpp}{unsigned char}.
+And a literal in the form $0xXXXXXXXX$ can do it for an \mintinline{cpp}{unsigned int}.
+
+
 
 \section{Analytic Geometry}
 \begin{itemize}
