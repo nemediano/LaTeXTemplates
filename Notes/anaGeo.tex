@@ -61,8 +61,31 @@ Given a line $\mathbf{L}$ and a point $\mathbf{p}$, we want to identify the dist
 It's clear that if $\mathbf{p} \in \mathbf{L}$, then $d = 0$.
 Now, if $\mathbf{p} \notin \mathbf{L}$, we want the distant between $\mathbf{p}$ and a certain point $\mathbf{q}$, such that $\mathbf{q} \in \mathbf{L}$ and $d(\mathbf{q}, \mathbf{p})$ is the minimal to all other points in $\mathbf{L}$.
 
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{img/line}
+  \caption{Distance $d(\mathbf{p}, \mathbf{L})$ between a point $\mathbf{p}$ and a line $\mathbf{L}$}
+  \label{fig:point2line}
+\end{figure}
 
+In other words we want the minimal distance from $\mathbf{p}$ to $\mathbf{L}$.
+The Figure~\ref{fig:point2line} depicts this situation.
+If we start sliding a point on $\mathbf{L}$ (strating lets say at $\mathbf{p}$) and evaluating the distance beween that point and $\mathbf{p}$, we can see that the distance start getting smaller as we come close to $\mathbf{p}$, get his minimal value when we are right bellow $\mathbf{q}$ and then increases again. 
+Indeed, the distance we are looking is between $\mathbf{p}$ and the point $\mathbf{q}$ that is in the intesection between the lines $\mathbf{L}$ and $\mathbf{M}$
+Where $\mathbf{M}$ is the line perpendicular to $\mathbf{L}$ that toches $\mathbf{p}$. 
 
+In order to calculate the distance we need to find the corresponding parametric value $s_q$ for $\mathbf{q}$ on $\mathbf{L}$: 
+\begin{equation}
+s_q = \dfrac{(\mathbf{p} - \mathbf{a}) \cdot (\mathbf{b} - \mathbf{a})}{|\mathbf{b} - \mathbf{a}|}
+\label{eq:scalarq}
+\end{equation}
+The above formula is the classic formula for projecting the vector $\mathbf{x}$ into $\mathbf{y}$: $\Pr_\mathbf{y} \mathbf{x} = \frac{(\mathbf{x} \cdot \mathbf{y}) \mathbf{y}}{|\mathbf{y}|}$.
+Then the point is:
+\begin{equation}
+\mathbf{q} = \mathbf{a} + s_q (\mathbf{b} -\mathbf{a})
+\label{eq:pointq}
+\end{equation}
+And finally, the distance is $d(\mathbf{p}, \mathbf{L}) = d(\mathbf{p}, \mathbf{q})$.
 \subsubsection{Point to segment distance}
 \subsection{Ray to segment intersection}
 \subsection{Belonging test on simple polygons}
