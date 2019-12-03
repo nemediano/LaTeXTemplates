@@ -93,8 +93,8 @@ Another important thing to notice is that, \emph{as long as the shift leaves sig
 Similarly, shifting values to the left, \emph{as long as we do not discard a significant bit} (or else we \emph{overflow}); is equivalent to multiply by $2^n$, where $n$ is the number of bits shifted.
 Note also that unsigned types cannot underflow.
 
-In the above sample $2^3 = 8$. Therfore: $e = 42 / 8 = 5$ (remember it's an integer division).
-And $d = 42 \cdot 8 = 336$, but it resulted in an overflow, since the maximun value for an $8$ bit variable is $2^8 = 256$.
+In the above sample $2^3 = 8$. Therfore: $c = 42 / 8 = 5$ (remember it's an integer division).
+And $b = 42 \cdot 8 = 336$, but it resulted in an overflow, since the maximun value for an $8$ bit variable is $2^8 = 256$.
 
 \item Bitwise \emph{AND} between two values of the same size. Performed with the operator \mintinline{cpp}{&}. Yes, it is the same as the \emph{dereference} operator. The distinctions is made due the former being a binary operator and the dereference one being a unary operator.
 \item Bitwise \emph{OR} between two values of the same size. Performed with the operator \mintinline{cpp}{|}

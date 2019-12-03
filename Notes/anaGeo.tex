@@ -43,7 +43,10 @@ Also note that $\mathbf{v}$ is not necesarlly a unit vector.
   \label{fig:line}
 \end{figure}
 
-The Figure~\ref{fig:line} shows the line from Equation~\ref{eq:line} indentified by the points $\mathbf{a}$ and $\mathbf{b}$.
+The Figure~\ref{fig:line} shows the line from Equation~\ref{eq:line} (in black) indentified by the points $\mathbf{a}$ and $\mathbf{b}$ (in red) and the directional vector $\mathbf{v}$ (in green).
+Remember that vectors are free on the space, in this sense we can represent $\mathbf{v}$ in any place of the plane.
+
+
 On these conditions; we can give continuos values to the parameter $s$ in the Equation~\ref{eq:line}, to obtain points on the line $\mathbf{L}$.
 Particulary, if we let $s = 0$ we get the point $\mathbf{a}$ and if we let $s = 1$ we get  
 $\mathbf{b}$.
@@ -61,7 +64,17 @@ Given a line $\mathbf{L}$ and a point $\mathbf{p}$, we want to identify the dist
 It's clear that if $\mathbf{p} \in \mathbf{L}$, then $d = 0$.
 Now, if $\mathbf{p} \notin \mathbf{L}$, we want the distant between $\mathbf{p}$ and a certain point $\mathbf{q}$, such that $\mathbf{q} \in \mathbf{L}$ and $d(\mathbf{q}, \mathbf{p})$ is the minimal to all other points in $\mathbf{L}$.
 
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{img/line2point}
+  \caption{Line identified by two points. See Equation~\ref{eq:line} }
+  \label{fig:line2point}
+\end{figure}
 
+\begin{equation}
+s_q = \frac{(\mathbf{p} - \mathbf{a}) \cdot \mathbf{v}}{\mathbf{v} \cdot \mathbf{v}}
+\label{eq:lineqs}
+\end{equation}
 
 \subsubsection{Point to segment distance}
 \subsection{Ray to segment intersection}

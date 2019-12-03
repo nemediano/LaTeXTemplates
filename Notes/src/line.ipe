@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
-<ipe version="70107" creator="Ipe 7.1.10">
-<info created="D:20191130143035" modified="D:20191130143035"/>
+<ipe version="70206" creator="Ipe 7.2.7">
+<info created="D:20191130143035" modified="D:20191202143015"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -263,12 +263,13 @@ h
 0 640 m
 384 832 l
 </path>
-<text layer="labels" transformations="translations" pos="128 688" stroke="black" type="label" width="4.981" height="4.289" depth="0" valign="baseline">a</text>
-<text transformations="translations" pos="256 752" stroke="black" type="label" width="5.535" height="6.918" depth="0" valign="baseline">b</text>
-<path layer="vector" matrix="1 0 0 1 0 96" stroke="green" fill="green">
-128 640 m
-192 672 l
-192 672 l
+<text layer="labels" transformations="translations" pos="128 688" stroke="black" type="label" width="5.569" height="4.428" depth="0" valign="baseline" style="math">\mathbf{a}</text>
+<text transformations="translations" pos="256 752" stroke="black" type="label" width="6.365" height="6.918" depth="0" valign="baseline" style="math">\mathbf{b}</text>
+<path layer="vector" matrix="1 0 0 1 0 -32" stroke="green" rarrow="normal/normal">
+256 800 m
+128 736 l
+128 736 l
 </path>
+<text matrix="1 0 0 1 64 32" transformations="translations" pos="128 688" stroke="black" type="label" width="43.6" height="6.919" depth="0.83" valign="baseline" style="math">\mathbf{v} = \mathbf{b} - \mathbf{a}</text>
 </page>
 </ipe>
