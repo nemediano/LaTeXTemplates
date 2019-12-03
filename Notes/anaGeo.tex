@@ -60,7 +60,7 @@ The line \emph{segment} from $\mathbf{a}$ to $\mathbf{b}$, denoted by $\overline
 
 \subsection{Point to line distance}
 
-Given a line $\mathbf{L}$ and a point $\mathbf{p}$, we want to identify the distant $d$ from $\mathbf{p}$ to $\mathbf{L}$.
+Given a line $\mathbf{L}$ and a point $\mathbf{p}$, we want to identify the distance $d$ from $\mathbf{p}$ to $\mathbf{L}$.
 It's clear that if $\mathbf{p} \in \mathbf{L}$, then $d = 0$.
 Now, if $\mathbf{p} \notin \mathbf{L}$, we want the distant between $\mathbf{p}$ and a certain point $\mathbf{q}$, such that $\mathbf{q} \in \mathbf{L}$ and $d(\mathbf{q}, \mathbf{p})$ is the minimal to all other points in $\mathbf{L}$.
 
@@ -71,23 +71,27 @@ Now, if $\mathbf{p} \notin \mathbf{L}$, we want the distant between $\mathbf{p}$
   \label{fig:point2line}
 \end{figure}
 
-\begin{equation}
-s_q = \frac{(\mathbf{p} - \mathbf{a}) \cdot \mathbf{v}}{\mathbf{v} \cdot \mathbf{v}}
-\label{eq:lineqs}
-\end{equation}
-
 In other words we want the minimal distance from $\mathbf{p}$ to $\mathbf{L}$.
 The Figure~\ref{fig:point2line} depicts this situation.
-If we start sliding a point on $\mathbf{L}$ (strating lets say at $\mathbf{p}$) and evaluating the distance beween that point and $\mathbf{p}$, we can see that the distance start getting smaller as we come close to $\mathbf{p}$, get his minimal value when we are right bellow $\mathbf{q}$ and then increases again. 
-Indeed, the distance we are looking is between $\mathbf{p}$ and the point $\mathbf{q}$ that is in the intesection between the lines $\mathbf{L}$ and $\mathbf{M}$
-Where $\mathbf{M}$ is the line perpendicular to $\mathbf{L}$ that toches $\mathbf{p}$. 
+If we start sliding a point on $\mathbf{L}$ (starting lets say at $\mathbf{p}$) and evaluating the distance beween that point and $\mathbf{p}$, we can see that the distance start getting smaller as we come close to $\mathbf{p}$, get his minimal value when we are right bellow $\mathbf{q}$ and then increases again. 
+Indeed, the distance we are looking is between $\mathbf{p}$ and the point $\mathbf{q}$ that is in the intesection between the line $\mathbf{L}$ and the segment $\overline{\mathbf{p} \mathbf{q}}$ which is perpendicular to $\mathbf{L}$.
+In the Figure~\ref{fig:point2line}, $\overline{\mathbf{p} \mathbf{q}}$ is the orange dashed line and the desired $d$ is of course his lenght.
 
-Before proceding I put a quick reminder of the formula to calculate the projection of a vector $\mathbf{x}$ into another vector $\mathbf{y}$.
+Before proceding I put a quick reminder of the formula to calculate the projection of a vector $\mathbf{x}$ into another vector $\mathbf{y}$. 
 
 \begin{equation}
 \proj_{\mathbf{y}}\mathbf{x} = \dfrac{(\mathbf{x} \cdot \mathbf{y})}{|\mathbf{y}|} \dfrac{\mathbf{y}}{|\mathbf{y}|} = \dfrac{(\mathbf{x} \cdot \mathbf{y})}{|\mathbf{y}|^2}\mathbf{y}
 \label{eq:proj}
 \end{equation}
+
+The Figure~\ref{fig:projection} shows this situation.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.60\textwidth]{img/projection}
+  \caption{Projection of a vector $\mathbf{x}$ into another vector $\mathbf{y}$. See Equation~\ref{fig:projection}}
+  \label{fig:projection}
+\end{figure}
 
 In order to calculate the distance we use the Equation~\ref{eq:proj} to find the corresponding parametric value $s_q$ for $\mathbf{q}$ on $\mathbf{L}$: 
 \begin{equation}
@@ -100,11 +104,19 @@ Then the point is:
 \label{eq:pointq}
 \end{equation}
 And finally, the distance is $d(\mathbf{p}, \mathbf{L}) = d(\mathbf{p}, \mathbf{q})$.
+
 \subsubsection{Point to segment distance}
 
-Another common derived problem is to find the distance of a point $\mathbf{p}$ to a segment $\overline{\mathbf{a}\mathbf{b}}$.
-See Figure~\ref{fig:point2line}, we see the distance of the different points depend on how are they placed with respect of the segment.
-For the point $\mathbf{p}_1$ the distance to the segment is the distance $d(\mathbf{p}_1, \mathbf{a})$, for the point $\mathbf{p}_2$ the distance is $d(\mathbf{p}_2, \mathbf{b})$ and for the point $\mathbf{p}_3$ the distance is actually the distance $d(\mathbf{p}_3, \mathbf{L})$ where $\mathbf{L}$ is the line defined by $\mathbf{a}$ and $\mathbf{b}$.
+A common derived problem of the previos one, is to find the distance of a point $\mathbf{p}$ to a segment $\overline{\mathbf{a}\mathbf{b}}$.
+See Figure~\ref{fig:seg2point}, we see that the distance of different points depend on how are they placed with respect of the segment.
+For the point $\mathbf{p}_1$ the distance to $\overline{\mathbf{a}\mathbf{b}}$ is the distance $d(\mathbf{p}_1, \mathbf{a})$, for the point $\mathbf{p}_2$ the distance is $d(\mathbf{p}_2, \mathbf{b})$ and for the point $\mathbf{p}_3$ the distance is actually the distance $d(\mathbf{p}_3, \mathbf{L})$ where $\mathbf{L}$ is the line defined by $\mathbf{a}$ and $\mathbf{b}$.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.50\textwidth]{img/segment2point}
+  \caption{Diferents points $\mathbf{p}_i$ and their distances to segment $\overline{\mathbf{a}\mathbf{b}}$}
+  \label{fig:seg2point}
+\end{figure}
 
 The observations at the end of Section and Section give us a nice Algorithm to find this distance.
 
@@ -114,8 +126,8 @@ The observations at the end of Section and Section give us a nice Algorithm to f
     \caption{Distance between a point $\mathbf{p}$ and a line segment $\overline{\mathbf{a}\mathbf{b})}$}
     \label{alg:euclid}
     \begin{algorithmic}[1] % The number tells where the line numbering should start 0 for no number
-      \Procedure{DistancePoint2Segment}{$\mathbf{a},\mathbf{b},\mathbf{p}$} \Comment{$\mathbf{a}$ and $\mathbf{b}$ are vectors and $\mathbf{p}$ is a point all of the same dimension}
-        \If{$\mathbf{a} = \mathbf{b}$} \Comment{There is no line it's just a point}
+      \Procedure{DistancePoint2Segment}{$\mathbf{a},\mathbf{b},\mathbf{p}$} \Comment{$\mathbf{a}$, $\mathbf{b}$ and $\mathbf{p}$ are all points of the same dimension}
+        \If{$\mathbf{a} = \mathbf{b}$} \Comment{There is no line, the segment it's just a point}
           \State \textbf{return} $d(\mathbf{a},\mathbf{p})$
         \EndIf
         \State $s \gets \frac{(\mathbf{p} - \mathbf{a}) \cdot (\mathbf{b} - \mathbf{a})}{|\mathbf{b} - \mathbf{a}|^2}$ \Comment{Use Equation~\ref{eq:scalarq} to get parametric value of $\mathbf{q}$}
@@ -137,8 +149,10 @@ The observations at the end of Section and Section give us a nice Algorithm to f
 
 \subsection{Ray to segment intersection}
 
-Another common problem is to test if a ray $\mathbf{R}$ intersects a line segment $\mathbf{S}$.
-The ray its defined by a point of origin $\mathbf{o}$ and a directional vector $\mathbf{u}$.
+While the previos section results are valid to any dimenion $\mathbb{R}^n$, the result in this section is constrained to $\mathbb{R}^2$.
+
+The problem is to test if a ray $\mathbf{R}$ intersects a line segment $\mathbf{S}$.
+The ray it's defined by a point of origin $\mathbf{o}$ and a directional vector $\mathbf{u}$.
 As usual, the segment is defined by his two end points $\mathbf{a}$ and $\mathbf{b}$.
 
 In the scenario described above, the ray is $\mathbf{R}(s) = \mathbf{o} + s \mathbf{v}$ with $s \geq 1$ and the segment is $\mathbf{S}(t) = \mathbf{a} + t (\mathbf{b} - \mathbf{a})$ with $0 \leq t \leq 1$.

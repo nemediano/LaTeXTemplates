@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70206" creator="Ipe 7.2.7">
-<info created="D:20191130143035" modified="D:20191203124046"/>
+<info created="D:20191130143035" modified="D:20191203125948"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -254,37 +254,35 @@ h
 <page>
 <layer name="line"/>
 <layer name="labels"/>
-<layer name="vectors"/>
-<view layers="line labels vectors" active="line"/>
-<use layer="line" matrix="1 0 0 1 -48 -80" name="mark/disk(sx)" pos="256 768" size="large" stroke="red"/>
-<use matrix="1 0 0 1 -48 -80" name="mark/disk(sx)" pos="128 704" size="large" stroke="red"/>
-<path matrix="1 0 0 1 16 -48" stroke="black" fill="white" pen="fat">
-0 640 m
-384 832 l
+<layer name="points"/>
+<layer name="distances"/>
+<view layers="line labels points distances" active="labels"/>
+<use layer="line" name="mark/circle(sx)" pos="128 704" size="normal" stroke="red"/>
+<use name="mark/disk(sx)" pos="256 768" size="large" stroke="red"/>
+<use name="mark/disk(sx)" pos="128 704" size="large" stroke="red"/>
+<text layer="labels" transformations="translations" pos="128 688" stroke="black" type="label" width="5.569" height="4.428" depth="0" valign="baseline" style="math">\mathbf{a}</text>
+<text transformations="translations" pos="256 752" stroke="black" type="label" width="6.365" height="6.918" depth="0" valign="baseline" style="math">\mathbf{b}</text>
+<path layer="line" stroke="black" pen="fat">
+128 704 m
+256 768 l
 </path>
-<text layer="labels" matrix="1 0 0 1 -48 -80" transformations="translations" pos="128 688" stroke="black" type="label" width="5.569" height="4.428" depth="0" valign="baseline" style="math">\mathbf{a}</text>
-<text matrix="1 0 0 1 -48 -80" transformations="translations" pos="256 752" stroke="black" type="label" width="6.365" height="6.918" depth="0" valign="baseline" style="math">\mathbf{b}</text>
-<use layer="line" matrix="1 0 0 1 176 112" name="mark/disk(sx)" pos="128 704" size="large" stroke="red"/>
-<use matrix="1 0 0 1 208 48" name="mark/disk(sx)" pos="128 704" size="large" stroke="red"/>
-<path matrix="1 0 0 1 -48 48" stroke="orange" fill="white" dash="dashed">
-352 768 m
-384 704 l
+<use layer="points" name="mark/disk(sx)" pos="64 704" size="normal" stroke="black"/>
+<use name="mark/disk(sx)" pos="224 672" size="normal" stroke="black"/>
+<use name="mark/disk(sx)" pos="288 832" size="normal" stroke="black"/>
+<path layer="distances" stroke="orange" dash="dashed">
+64 704 m
+128 704 l
 </path>
-<path matrix="1 0 0 1 -48 48" stroke="black" cap="1">
-80 800 m
-80 800 l
+<path stroke="orange" dash="dashed">
+256 768 m
+288 832 l
 </path>
-<path matrix="1 0 0 1 -48 48" stroke="green" rarrow="normal/normal">
-352 768 m
-128 576 l
+<path stroke="orange" dash="dashed">
+224 672 m
+192 736 l
 </path>
-<text layer="labels" matrix="1 0 0 1 48 80" transformations="translations" pos="256 752" stroke="black" type="label" width="6.365" height="4.435" depth="1.93" valign="baseline" style="math">\mathbf{p}</text>
-<text matrix="1 0 0 1 80 -16" transformations="translations" pos="256 752" stroke="black" type="label" width="6.047" height="4.435" depth="1.93" valign="baseline" style="math">\mathbf{q}</text>
-<path layer="vectors" stroke="green" rarrow="normal/normal">
-208 688 m
-80 624 l
-</path>
-<text layer="labels" matrix="1 0 0 1 48 48" transformations="translations" pos="128 688" stroke="black" type="label" width="24.111" height="5.819" depth="1.93" valign="baseline" style="math">\mathbf{p} - \mathbf{a}</text>
-<text matrix="1 0 0 1 16 -48" transformations="translations" pos="128 688" stroke="black" type="label" width="43.6" height="6.919" depth="0.83" valign="baseline" style="math">\mathbf{v} = \mathbf{b} - \mathbf{a}</text>
+<text layer="labels" matrix="1 0 0 1 80 -16" transformations="translations" pos="128 688" stroke="black" type="label" width="10.834" height="4.435" depth="1.93" valign="baseline" style="math">\mathbf{p}_3</text>
+<text matrix="1 0 0 1 144 144" transformations="translations" pos="128 688" stroke="black" type="label" width="10.834" height="4.435" depth="1.93" valign="baseline" style="math">\mathbf{p}_2</text>
+<text matrix="1 0 0 1 -80 16" transformations="translations" pos="128 688" stroke="black" type="label" width="10.834" height="4.435" depth="1.93" valign="baseline" style="math">\mathbf{p}_1</text>
 </page>
 </ipe>
