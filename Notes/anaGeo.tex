@@ -74,12 +74,18 @@ If we start sliding a point on $\mathbf{L}$ (strating lets say at $\mathbf{p}$) 
 Indeed, the distance we are looking is between $\mathbf{p}$ and the point $\mathbf{q}$ that is in the intesection between the lines $\mathbf{L}$ and $\mathbf{M}$
 Where $\mathbf{M}$ is the line perpendicular to $\mathbf{L}$ that toches $\mathbf{p}$. 
 
-In order to calculate the distance we need to find the corresponding parametric value $s_q$ for $\mathbf{q}$ on $\mathbf{L}$: 
+Before proceding I put a quick reminder of the formula to calculate the projection of a vector $\mathbf{x}$ into another vector $\mathbf{y}$.
+
 \begin{equation}
-s_q = \dfrac{(\mathbf{p} - \mathbf{a}) \cdot (\mathbf{b} - \mathbf{a})}{|\mathbf{b} - \mathbf{a}|}
+\proj_{\mathbf{y}}\mathbf{x} = \dfrac{(\mathbf{x} \cdot \mathbf{y})}{|\mathbf{y}|} \dfrac{\mathbf{y}}{|\mathbf{y}|} = \dfrac{(\mathbf{x} \cdot \mathbf{y})}{|\mathbf{y}|^2}\mathbf{y}
+\label{eq:proj}
+\end{equation}
+
+In order to calculate the distance we use teh Equation~\ref{eq:proj} to find the corresponding parametric value $s_q$ for $\mathbf{q}$ on $\mathbf{L}$: 
+\begin{equation}
+s_q = \dfrac{(\mathbf{p} - \mathbf{a}) \cdot (\mathbf{b} - \mathbf{a})}{|\mathbf{b} - \mathbf{a}|^2}
 \label{eq:scalarq}
 \end{equation}
-The above formula is the classic formula for projecting the vector $\mathbf{x}$ into $\mathbf{y}$: $\Pr_\mathbf{y} \mathbf{x} = \frac{(\mathbf{x} \cdot \mathbf{y}) \mathbf{y}}{|\mathbf{y}|}$.
 Then the point is:
 \begin{equation}
 \mathbf{q} = \mathbf{a} + s_q (\mathbf{b} -\mathbf{a})
