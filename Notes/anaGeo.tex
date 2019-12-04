@@ -7,11 +7,11 @@ Upper case names in bold face to represent set of points in the space: $\mathbf{
 Finally, upper case names in normal font to represent matrices: $P$, $V$, $M$.
 
 The vectors are column vectors. In other words:
-$$ \mathbf{v} = \begin{pmatrix}
+$$ \mathbf{v} = \begin{bmatrix}
   x \\ 
   y \\
   z
- \end{pmatrix} $$
+ \end{bmatrix} $$
 
 Then we can use syntax like: $A \mathbf{x} = \mathbf{b}$.
 To make the reading easier, in case I will need to specify a vector inside a paragraph I will use $\mathbf{v} = \langle x, y, z \rangle$
@@ -160,8 +160,41 @@ If $\mathbf{R}(s)$ intersects $\overline{\mathbf{a}\mathbf{b}}$, then $\mathbf{R
 
 \begin{align*}
 \mathbf{a} + t (\mathbf{b} - \mathbf{a}) &= \mathbf{o} + s \mathbf{v} \\
-\mathbf{a} - \mathbf{o} &= s \mathbf{v} + t (\mathbf{a} - \mathbf{b})
+\mathbf{a} - \mathbf{o} &= s \mathbf{v} + t (\mathbf{a} - \mathbf{b}) \\
+\begin{bmatrix}
+\mathbf{a} - \mathbf{o}  \\
+ ~ 
+\end{bmatrix} &= 
+\begin{bmatrix}
+\mathbf{v} & \mathbf{a} - \mathbf{b} \\
+~ & ~
+\end{bmatrix}
+\begin{bmatrix}
+s \\
+t 
+\end{bmatrix} \\
+\begin{bmatrix}
+a_x - o_x  \\
+a_y - o_y
+\end{bmatrix} &= 
+\begin{bmatrix}
+v_x & a_x - b_x \\
+v_y & a_y - b_y
+\end{bmatrix}
+\begin{bmatrix}
+s \\
+t 
+\end{bmatrix}
 \end{align*}
+
+Which is a linear equation system that we can solve to get the values of $s$ and $t$. For example, by Cramer's rule:
+\begin{align*}
+s = \frac{\Delta_s}{\Delta} =&  \frac{(a_x - o_x)(a_y - b_y) - (a_y - o_y)(a_x - b_x)}{v_x(a_y - b_y) - v_y(a_x - b_x)} \\
+t = \frac{\Delta_t}{\Delta} =&  \frac{v_x(a_y - o_y) - v_y(a_x - o_x)}{v_x(a_y - b_y) - v_y(a_x - b_x)}
+\end{align*}
+
+Lets assume that the system has a unique soution: $\Delta \neq 0$. We can check the values $s$ and $t$. If both of the values fall in the desired range then, $\mathbf{R}$ intersects $\mathbf{S}$. If at least one of the values is ouside the range, $\mathbf{R}$ does not intersects $\mathbf{S}$.
+
 
 \subsection{Belonging test on simple polygons}
 
