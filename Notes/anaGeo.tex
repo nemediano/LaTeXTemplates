@@ -1,4 +1,5 @@
 \section{Analytic Geometry}
+\label{sec:analyticGeo}
 
 I will use the convention from~\cite{Buss2003}.
 We use lower case names in normal font to represent scalars: $s$, $t$, $v$.
@@ -19,6 +20,7 @@ To make the reading easier, in case I will need to specify a vector inside a par
 In the notation, we do not make any distinction between vectors and points, therefore the text always give context to clarify this. 
 
 \subsection{Line, ray and segment}
+\label{sec:linedef}
 
 In most CG applications, we use two \emph{different} points; let's call them $\mathbf{a}$ and $\mathbf{b}$ (with $\mathbf{a} \neq \mathbf{b}$) to specify a line: $\mathbf{L}$. 
 
@@ -59,6 +61,7 @@ A \emph{ray} from $\mathbf{a}$ in the direction of $\mathbf{b}$ is the one that 
 The line \emph{segment} from $\mathbf{a}$ to $\mathbf{b}$, denoted by $\overline{\mathbf{a} \mathbf{b}}$, is the one that also follows Equation~\ref{eq:line}, with the constrain that   $0 \leq s \leq 1$.
 
 \subsection{Point to line distance}
+\label{sec:point2line}
 
 Given a line $\mathbf{L}$ and a point $\mathbf{p}$, we want to identify the distance $d$ from $\mathbf{p}$ to $\mathbf{L}$.
 It's clear that if $\mathbf{p} \in \mathbf{L}$, then $d = 0$.
@@ -85,6 +88,8 @@ Before proceding I put a quick reminder of the formula to calculate the projecti
 \end{equation}
 
 The Figure~\ref{fig:projection} shows this situation.
+The result of $\proj_{\mathbf{y}}\mathbf{x}$ is another vector (in green in the Figure~\ref{fig:projection}) which has the same direction as $\mathbf{y}$ and whose lenght is the one that will have the shadow of $\mathbf{x}$ when its perpendiculary projected into $\mathbf{y}$.
+The Equation~\ref{eq:proj} puts in evidence that $\mathbf{y}$ is a directional vector and that $\frac{(\mathbf{x} \cdot \mathbf{y})}{|\mathbf{y}|^2}$ it his scaling lenght in units of $\mathbf{y}$.
 
 \begin{figure}[htb]
   \centering
@@ -93,7 +98,7 @@ The Figure~\ref{fig:projection} shows this situation.
   \label{fig:projection}
 \end{figure}
 
-In order to calculate the distance we use the Equation~\ref{eq:proj} to find the corresponding parametric value $s_q$ for $\mathbf{q}$ on $\mathbf{L}$: 
+In order to calculate the distance we use the scaling lenght from Equation~\ref{eq:proj} to find the corresponding parametric value $s_q$ for $\mathbf{q}$ on $\mathbf{L}$: 
 \begin{equation}
 s_q = \dfrac{(\mathbf{p} - \mathbf{a}) \cdot (\mathbf{b} - \mathbf{a})}{|\mathbf{b} - \mathbf{a}|^2}
 \label{eq:scalarq}
@@ -106,7 +111,7 @@ Then the point is:
 And finally, the distance is $d(\mathbf{p}, \mathbf{L}) = d(\mathbf{p}, \mathbf{q})$.
 
 \subsubsection{Point to segment distance}
-
+\label{sec:point2segment}
 A common derived problem of the previos one, is to find the distance of a point $\mathbf{p}$ to a segment $\overline{\mathbf{a}\mathbf{b}}$.
 See Figure~\ref{fig:seg2point}, we see that the distance of different points depend on how are they placed with respect of the segment.
 For the point $\mathbf{p}_1$ the distance to $\overline{\mathbf{a}\mathbf{b}}$ is the distance $d(\mathbf{p}_1, \mathbf{a})$, for the point $\mathbf{p}_2$ the distance is $d(\mathbf{p}_2, \mathbf{b})$ and for the point $\mathbf{p}_3$ the distance is actually the distance $d(\mathbf{p}_3, \mathbf{L})$ where $\mathbf{L}$ is the line defined by $\mathbf{a}$ and $\mathbf{b}$.
@@ -118,7 +123,7 @@ For the point $\mathbf{p}_1$ the distance to $\overline{\mathbf{a}\mathbf{b}}$ i
   \label{fig:seg2point}
 \end{figure}
 
-The observations at the end of Section and Section give us a nice Algorithm to find this distance.
+The observations at the end of Section~\ref{sec:linedef} and Section~\ref{sec:point2line} give us a nice Algorithm to find this distance.
 
 {\centering
 \begin{minipage}{\linewidth}
@@ -148,8 +153,8 @@ The observations at the end of Section and Section give us a nice Algorithm to f
 }
 
 \subsection{Ray to segment intersection}
-
-While the previos section results are valid to any dimenion $\mathbb{R}^n$, the result in this section is constrained to $\mathbb{R}^2$.
+\label{sec:ray2segment}
+While the previos sections results are valid to any dimenion $\mathbb{R}^n$, the result in this Section~\ref{sec:ray2segment} is constrained to $\mathbb{R}^2$.
 
 The problem is to test if a ray $\mathbf{R}$ intersects a line segment $\mathbf{S}$.
 The ray it's defined by a point of origin $\mathbf{o}$ and a directional vector $\mathbf{u}$.
@@ -195,6 +200,5 @@ t = \frac{\Delta_t}{\Delta} =&  \frac{v_x(a_y - o_y) - v_y(a_x - o_x)}{v_x(a_y -
 
 Lets assume that the system has a unique soution: $\Delta \neq 0$. We can check the values $s$ and $t$. If both of the values fall in the desired range then, $\mathbf{R}$ intersects $\mathbf{S}$. If at least one of the values is ouside the range, $\mathbf{R}$ does not intersects $\mathbf{S}$.
 
-
 \subsection{Belonging test on simple polygons}
-
+\label{sec:belongTest}
