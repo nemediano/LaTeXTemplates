@@ -46,14 +46,14 @@ Also note that $\mathbf{v}$ is not necesarlly a unit vector.
 \end{figure}
 
 The Figure~\ref{fig:line} shows the line from Equation~\ref{eq:line} (in black) indentified by the points $\mathbf{a}$ and $\mathbf{b}$ (in red) and the directional vector $\mathbf{v}$ (in green).
-Remember that vectors are free on the space, in this sense we can represent $\mathbf{v}$ in any place of the plane.
+Remember that vectors are free on the space, in this sense we can represent $\mathbf{v}$ in any place of the plane as long as we do not change his orientation (the angles against the frame of reference).
 
 
 On these conditions; we can give continuos values to the parameter $s$ in the Equation~\ref{eq:line}, to obtain points on the line $\mathbf{L}$.
 Particulary, if we let $s = 0$ we get the point $\mathbf{a}$ and if we let $s = 1$ we get  
 $\mathbf{b}$.
 Moreover, any value $0 \leq s \leq 1$ will get us a point $\mathbf{p}$ inside the line segment $\overline{\mathbf{a} \mathbf{b}}$.
-Any value $s > 1$ will get a $\mathbf{p} \in \mathbf{L}$, $\mathbf{p} \notin \overline{\mathbf{a} \mathbf{b}}$ that is closer to $\mathbf{b}$ than it is to to $\mathbf{a}$.
+Any value $s > 1$ will get a $\mathbf{p} \in \mathbf{L}$, $\mathbf{p} \notin \overline{\mathbf{a} \mathbf{b}}$ that is closer to $\mathbf{b}$ than it is to $\mathbf{a}$.
 Conversely, any $s < 0$ will get a $\mathbf{p} \in \mathbf{L}$, $\mathbf{p} \notin \overline{\mathbf{a} \mathbf{b}}$ that is closer to $\mathbf{a}$ than it is to $\mathbf{b}$.
 
 We can use this last observations to identify segments and rays.
@@ -76,7 +76,7 @@ Now, if $\mathbf{p} \notin \mathbf{L}$, we want the distant between $\mathbf{p}$
 
 In other words we want the minimal distance from $\mathbf{p}$ to $\mathbf{L}$.
 The Figure~\ref{fig:point2line} depicts this situation.
-If we start sliding a point on $\mathbf{L}$ (starting lets say at $\mathbf{p}$) and evaluating the distance beween that point and $\mathbf{p}$, we can see that the distance start getting smaller as we come close to $\mathbf{p}$, get his minimal value when we are right bellow $\mathbf{q}$ and then increases again. 
+If we start sliding a point on $\mathbf{L}$ (starting lets say at $\mathbf{a}$) and evaluating the distance beween that point and $\mathbf{p}$, we can see that the distance start getting smaller as we come close to $\mathbf{p}$, get his minimal value when we are right bellow $\mathbf{p}$ and then increases again. 
 Indeed, the distance we are looking is between $\mathbf{p}$ and the point $\mathbf{q}$ that is in the intesection between the line $\mathbf{L}$ and the segment $\overline{\mathbf{p} \mathbf{q}}$ which is perpendicular to $\mathbf{L}$.
 In the Figure~\ref{fig:point2line}, $\overline{\mathbf{p} \mathbf{q}}$ is the orange dashed line and the desired $d$ is of course his lenght.
 
@@ -89,7 +89,7 @@ Before proceding I put a quick reminder of the formula to calculate the projecti
 
 The Figure~\ref{fig:projection} shows this situation.
 The result of $\proj_{\mathbf{y}}\mathbf{x}$ is another vector (in green in the Figure~\ref{fig:projection}) which has the same direction as $\mathbf{y}$ and whose lenght is the one that will have the shadow of $\mathbf{x}$ when its perpendiculary projected into $\mathbf{y}$.
-The Equation~\ref{eq:proj} puts in evidence that $\mathbf{y}$ is a directional vector and that $\frac{(\mathbf{x} \cdot \mathbf{y})}{|\mathbf{y}|^2}$ it his scaling lenght in units of $\mathbf{y}$.
+The Equation~\ref{eq:proj} puts in evidence that $\mathbf{y}$ is a directional vector and that $\frac{(\mathbf{x} \cdot \mathbf{y})}{|\mathbf{y}|^2}$ it's his scaling lenght in units of $\mathbf{y}$.
 
 \begin{figure}[htb]
   \centering
@@ -98,7 +98,7 @@ The Equation~\ref{eq:proj} puts in evidence that $\mathbf{y}$ is a directional v
   \label{fig:projection}
 \end{figure}
 
-In order to calculate the distance we use the scaling lenght from Equation~\ref{eq:proj} to find the corresponding parametric value $s_q$ for $\mathbf{q}$ on $\mathbf{L}$: 
+In order to calculate the distance, we use the scaling lenght from Equation~\ref{eq:proj} to find the corresponding parametric value $s_q$ for $\mathbf{q}$ on $\mathbf{L}$: 
 \begin{equation}
 s_q = \dfrac{(\mathbf{p} - \mathbf{a}) \cdot (\mathbf{b} - \mathbf{a})}{|\mathbf{b} - \mathbf{a}|^2}
 \label{eq:scalarq}
@@ -154,7 +154,7 @@ The observations at the end of Section~\ref{sec:linedef} and Section~\ref{sec:po
 
 \subsection{Ray to segment intersection}
 \label{sec:ray2segment}
-While the previos sections results are valid to any dimenion $\mathbb{R}^n$, the result in this Section~\ref{sec:ray2segment} is constrained to $\mathbb{R}^2$.
+While the results of previos Sections are valid to any dimenion $\mathbb{R}^n$, the result in this Section~\ref{sec:ray2segment} is constrained to $\mathbb{R}^2$.
 
 The problem is to test if a ray $\mathbf{R}$ intersects a line segment $\mathbf{S}$.
 The ray it's defined by a point of origin $\mathbf{o}$ and a directional vector $\mathbf{u}$.
