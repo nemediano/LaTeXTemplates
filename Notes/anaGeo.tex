@@ -160,6 +160,22 @@ The problem is to test if a ray $\mathbf{R}$ intersects a line segment $\mathbf{
 The ray it's defined by a point of origin $\mathbf{o}$ and a directional vector $\mathbf{u}$.
 As usual, the segment is defined by his two end points $\mathbf{a}$ and $\mathbf{b}$.
 
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.50\textwidth]{img/segment2rays}
+  \caption{Diferents rays $\mathbf{R}_i$ and their test of intersection with segment $\overline{\mathbf{a}\mathbf{b}}$}
+  \label{fig:rays2seg}
+\end{figure}
+
+The Figure~\ref{fig:rays2seg} shows the different cases: 
+\begin{itemize}
+  \item $\mathbf{R}_1$ hits the whole segment.
+  \item $\mathbf{R}_2$ misses the segment.
+  \item $\mathbf{R}_3$ hits the segment in the middle.
+  \item $\mathbf{R}_4$ kisses (touches) the segmnet  at his endpoint. By convention we will say this is a hit.
+  \item $\mathbf{R}_5$ is parrallel to the segment but does not touch it.
+\end{itemize}
+
 In the scenario described above, the ray is $\mathbf{R}(s) = \mathbf{o} + s \mathbf{v}$ with $s \geq 1$ and the segment is $\mathbf{S}(t) = \mathbf{a} + t (\mathbf{b} - \mathbf{a})$ with $0 \leq t \leq 1$.
 If $\mathbf{R}(s)$ intersects $\overline{\mathbf{a}\mathbf{b}}$, then $\mathbf{R}(s) = \mathbf{S}(t)$ for some values of $\mathbf{s}$ and $\mathbf{t}$.
 
