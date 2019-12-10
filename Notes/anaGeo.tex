@@ -169,11 +169,12 @@ As usual, the segment is defined by his two end points $\mathbf{a}$ and $\mathbf
 
 The Figure~\ref{fig:rays2seg} shows the different cases: 
 \begin{itemize}
-  \item $\mathbf{R}_1$ hits the whole segment.
+  \item $\mathbf{R}_1$ overlaps with the whole segment. By convention we say this is a hit.
   \item $\mathbf{R}_2$ misses the segment.
   \item $\mathbf{R}_3$ hits the segment in the middle.
-  \item $\mathbf{R}_4$ kisses (touches) the segmnet  at his endpoint. By convention we will say this is a hit.
+  \item $\mathbf{R}_4$ kisses (touches) the segmnet  at his endpoint. By convention we also say this is a hit.
   \item $\mathbf{R}_5$ is parrallel to the segment but does not touch it.
+  \item $\mathbf{R}_6$ is parrallel to the segment, is on the same line, but also does not touch it.
 \end{itemize}
 
 In the scenario described above, the ray is $\mathbf{R}(s) = \mathbf{o} + s \mathbf{v}$ with $s \geq 1$ and the segment is $\mathbf{S}(t) = \mathbf{a} + t (\mathbf{b} - \mathbf{a})$ with $0 \leq t \leq 1$.
@@ -208,12 +209,36 @@ t
 \end{bmatrix}
 \end{align*}
 
-Which is a linear equation system that we can solve to get the values of $s$ and $t$. 
-Another interesting observation, is that if we identify the last equallity with the equations of the ray and the segement; 
-we see that the matrix part (right hand side) is  concerned with the linear independence of the directional vectors.
-Meanwhile, the vector part (left hand side) is concerned with the linear independence of the origin points.
+Which is a linear equation system that we can solve to get the values of $s$ and $t$.
+We solve the system by Cramer's rule. 
+Therefore, first we define:
+\begin{align*}
+\Delta =&  
+\begin{vmatrix}
+v_x & a_x - b_x \\
+v_y & a_y - b_y
+\end{vmatrix} \\
+\Delta_s =&  
+\begin{vmatrix}
+a_x - o_x & a_x - b_x \\
+a_y - o_y & a_y - b_y
+\end{vmatrix} \\
+\Delta_t =&  
+\begin{vmatrix}
+v_x & a_x - o_x \\
+v_y & a_y - o_y
+\end{vmatrix} \\
+\end{align*}
 
-We solve the system by Cramer's rule:
+An interesting observation, is that if we identify the previous determinats with the equations of the ray and the segement; 
+we see that $\Delta$ is  concerned with the linear independence of the directional vectors $\mathbf{v}$ and $\mathbf{a} - \mathbf{b}$.
+Meanwhile, $\Delta_s$ and $\Delta_t$ are concerned with the linear independence of each of the directional vectors with $\mathbf{a} - \mathbf{o}$ which is the diference between both origin points.
+
+In other words if $\Delta = 0$ then, the directional vectors are parallel.
+If $\Delta_s =  0$ or $\Delta_t = 0$ then, $\mathbf{a} - \mathbf{o}$ is parrallel with one of the directional vectors.
+
+Finally, we get values for $s$ and $t$ by:
+
 \begin{align*}
 s = \frac{\Delta_s}{\Delta} =&  \frac{(a_x - o_x)(a_y - b_y) - (a_y - o_y)(a_x - b_x)}{v_x(a_y - b_y) - v_y(a_x - b_x)} \\
 t = \frac{\Delta_t}{\Delta} =&  \frac{v_x(a_y - o_y) - v_y(a_x - o_x)}{v_x(a_y - b_y) - v_y(a_x - b_x)}
@@ -221,18 +246,17 @@ t = \frac{\Delta_t}{\Delta} =&  \frac{v_x(a_y - o_y) - v_y(a_x - o_x)}{v_x(a_y -
 
 Lets assume that the system has a unique soution: $\Delta \neq 0$. We can check the values $s$ and $t$. If both of the values fall in the desired range then, $\mathbf{R}$ intersects $\mathbf{S}$. If at least one of the values is ouside the range, $\mathbf{R}$ does not intersects $\mathbf{S}$.
 
-When $\Delta = 0$ means that we have linear depndency of the vectors $\mathbf{u}$ and $\mathbf{v} = \mathbf{b} - \mathbf{a}$.
+When $\Delta = 0$ means that we have linear dependency of the vectors $\mathbf{v}$ and $\mathbf{a} - \mathbf{b}$ (or $\mathbf{b} - \mathbf{a}$ if that matters).
 If we look again at Figure~\ref{fig:rays2seg} this means that the ray and the segmen are parallel.
-There is again two possible cases geometric situation for this. One of them also divides in sub cases: 
+There is again two possible geometric situation for this. One of them also divides in sub cases: 
 \begin{enumerate}
-  \item They are parrallel but they are not on the same line. Like the case of $\mathbf{R}_5$ in the Figure~\ref{fig:rays2seg}.
-  \item They are parrallel and the reside on the same line. Like $\mathbf{R}_1$ in the Figure~\ref{fig:rays2seg}.
+  \item They do not reside on the same line. Like the case of $\mathbf{R}_5$ in the Figure~\ref{fig:rays2seg}.
+  \item They reside on the same line. Then, we have two possible subcases:
   \begin{enumerate}
-    \item They are parallel, on the same line but the do not intersect. Since $\mathbf{R}$ and $\mathbf{S}$ are not complete lines.
-    \item They are parallel, on the same line and they have some infinite ovelaping. This is the sub case of $\mathbf{R}_1$ in the Figure~\ref{fig:rays2seg}.
+    \item They do not intersect: $\mathbf{R}$ is not on the segments and shoots away from the segment $\overline{\mathbf{a}\mathbf{b}}$. This is the sub case of $\mathbf{R}_6$ in the Figure~\ref{fig:rays2seg}.
+    \item They do intersect and overlap. $\mathbf{R}$ is either on $\overline{\mathbf{a}\mathbf{b}}$ or shooting into segment. This is the sub case of $\mathbf{R}_1$ in the Figure~\ref{fig:rays2seg}.
   \end{enumerate}
 \end{enumerate}
-
 
 \subsection{Belonging test on simple polygons}
 \label{sec:belongTest}
