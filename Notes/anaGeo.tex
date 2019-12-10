@@ -208,13 +208,31 @@ t
 \end{bmatrix}
 \end{align*}
 
-Which is a linear equation system that we can solve to get the values of $s$ and $t$. For example, by Cramer's rule:
+Which is a linear equation system that we can solve to get the values of $s$ and $t$. 
+Another interesting observation, is that if we identify the last equallity with the equations of the ray and the segement; 
+we see that the matrix part (right hand side) is  concerned with the linear independence of the directional vectors.
+Meanwhile, the vector part (left hand side) is concerned with the linear independence of the origin points.
+
+We solve the system by Cramer's rule:
 \begin{align*}
 s = \frac{\Delta_s}{\Delta} =&  \frac{(a_x - o_x)(a_y - b_y) - (a_y - o_y)(a_x - b_x)}{v_x(a_y - b_y) - v_y(a_x - b_x)} \\
 t = \frac{\Delta_t}{\Delta} =&  \frac{v_x(a_y - o_y) - v_y(a_x - o_x)}{v_x(a_y - b_y) - v_y(a_x - b_x)}
 \end{align*}
 
 Lets assume that the system has a unique soution: $\Delta \neq 0$. We can check the values $s$ and $t$. If both of the values fall in the desired range then, $\mathbf{R}$ intersects $\mathbf{S}$. If at least one of the values is ouside the range, $\mathbf{R}$ does not intersects $\mathbf{S}$.
+
+When $\Delta = 0$ means that we have linear depndency of the vectors $\mathbf{u}$ and $\mathbf{v} = \mathbf{b} - \mathbf{a}$.
+If we look again at Figure~\ref{fig:rays2seg} this means that the ray and the segmen are parallel.
+There is again two possible cases geometric situation for this. One of them also divides in sub cases: 
+\begin{enumerate}
+  \item They are parrallel but they are not on the same line. Like the case of $\mathbf{R}_5$ in the Figure~\ref{fig:rays2seg}.
+  \item They are parrallel and the reside on the same line. Like $\mathbf{R}_1$ in the Figure~\ref{fig:rays2seg}.
+  \begin{enumerate}
+    \item They are parallel, on the same line but the do not intersect. Since $\mathbf{R}$ and $\mathbf{S}$ are not complete lines.
+    \item They are parallel, on the same line and they have some infinite ovelaping. This is the sub case of $\mathbf{R}_1$ in the Figure~\ref{fig:rays2seg}.
+  \end{enumerate}
+\end{enumerate}
+
 
 \subsection{Belonging test on simple polygons}
 \label{sec:belongTest}
