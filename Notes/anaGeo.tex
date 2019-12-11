@@ -129,7 +129,7 @@ The observations at the end of Section~\ref{sec:linedef} and Section~\ref{sec:po
 \begin{minipage}{\linewidth}
   \begin{algorithm}[H]
     \caption{Distance between a point $\mathbf{p}$ and a line segment $\overline{\mathbf{a}\mathbf{b})}$}
-    \label{alg:euclid}
+    \label{alg:poin2seg}
     \begin{algorithmic}[1] % The number tells where the line numbering should start 0 for no number
       \Procedure{DistancePoint2Segment}{$\mathbf{a},\mathbf{b},\mathbf{p}$} \Comment{$\mathbf{a}$, $\mathbf{b}$ and $\mathbf{p}$ are all points of the same dimension}
         \If{$\mathbf{a} = \mathbf{b}$} \Comment{There is no line, the segment it's just a point}
@@ -145,6 +145,29 @@ The observations at the end of Section~\ref{sec:linedef} and Section~\ref{sec:po
           \State $r \gets d(\mathbf{q},\mathbf{p})$
         \EndIf
         \State \textbf{return} $r$ \Comment{Distance is stored in $r$}
+      \EndProcedure
+    \end{algorithmic}
+  \end{algorithm}
+\end{minipage}
+\par
+}
+
+In Algorthm~\ref{alg:poin2seg2} we see a better implementation of the above. That comprees the branching for the values of $s$ into just one statement. Less clear, but a little bit more efficient.
+
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{algorithm}[H]
+    \caption{Distance between a point $\mathbf{p}$ and a line segment $\overline{\mathbf{a}\mathbf{b})}$  (Second version)}
+    \label{alg:poin2seg2}
+    \begin{algorithmic}[1] % The number tells where the line numbering should start 0 for no number
+      \Procedure{DistancePoint2Segment}{$\mathbf{a},\mathbf{b},\mathbf{p}$} \Comment{$\mathbf{a}$, $\mathbf{b}$ and $\mathbf{p}$ are all points of the same dimension}
+        \State $l^2 \gets \text{dist2}(\mathbf{a},\mathbf{b})$
+        \If{$l^2 = 0$} \Comment{There is no line, the segment it's just a point}
+          \State \textbf{return} $d(\mathbf{a},\mathbf{p})$
+        \EndIf
+        \State $s \gets \Max(0, \Min(1, (\mathbf{p}-\mathbf{a})\cdot(\mathbf{b}-\mathbf{a}) / l^2))$ \Comment{Use Equation~\ref{eq:scalarq} to get parametric value of $\mathbf{q}$}
+        \State $\mathbf{q} \gets \mathbf{a} + s (\mathbf{b} - \mathbf{a})$
+        \State \textbf{return} $d(\mathbf{q},\mathbf{p})$
       \EndProcedure
     \end{algorithmic}
   \end{algorithm}
@@ -257,6 +280,35 @@ There is again two possible geometric situation for this. One of them also divid
     \item They do intersect and overlap. $\mathbf{R}$ is either on $\overline{\mathbf{a}\mathbf{b}}$ or shooting into segment. This is the sub case of $\mathbf{R}_1$ in the Figure~\ref{fig:rays2seg}.
   \end{enumerate}
 \end{enumerate}
+
+All the above led us to Algorithm~\ref{alg:ray2seg}:
+
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{algorithm}[H]
+    \caption{Intersection test between a ray $\mathbf{R}$ and a line segment $\overline{\mathbf{a}\mathbf{b})}$}
+    \label{alg:ray2seg}
+    \begin{algorithmic}[1] % The number tells where the line numbering should start 0 for no number
+      \Procedure{RayIntersectSegment}{$\mathbf{a},\mathbf{b},\mathbf{o},\mathbf{v}$} \Comment{$\mathbf{a}$, $\mathbf{b}$ and $\mathbf{o}$ are all points of the same dimension. $\mathbf{v} \neq 0$ it's the direction vector of the ray}
+        \If{$\mathbf{a} = \mathbf{b}$} \Comment{There is no line, the segment it's just a point}
+          \State \textbf{return} $d(\mathbf{a},\mathbf{p})$
+        \EndIf
+        \State $s \gets \frac{(\mathbf{p} - \mathbf{a}) \cdot (\mathbf{b} - \mathbf{a})}{|\mathbf{b} - \mathbf{a}|^2}$ \Comment{Use Equation~\ref{eq:scalarq} to get parametric value of $\mathbf{q}$}
+        \If{$s < 0$} \Comment{$\mathbf{p}$ is closer to $\mathbf{a}$ than to $\overline{\mathbf{a}\mathbf{b}}$}
+          \State $r \gets d(\mathbf{a},\mathbf{p})$
+         \ElsIf{$s > 1$} \Comment{$\mathbf{p}$ is closer to $\mathbf{b}$ than to $\overline{\mathbf{a}\mathbf{b}}$}
+          \State $r \gets d(\mathbf{b},\mathbf{p})$
+        \Else \Comment{$\mathbf{p}$ is over $\overline{\mathbf{a}\mathbf{b}}$}
+          \State $\mathbf{q} \gets \mathbf{a} + s (\mathbf{b} - \mathbf{a})$ \Comment{Calculate $\mathbf{q}$}
+          \State $r \gets d(\mathbf{q},\mathbf{p})$
+        \EndIf
+        \State \textbf{return} $r$ \Comment{Distance is stored in $r$}
+      \EndProcedure
+    \end{algorithmic}
+  \end{algorithm}
+\end{minipage}
+\par
+}
 
 \subsection{Belonging test on simple polygons}
 \label{sec:belongTest}
