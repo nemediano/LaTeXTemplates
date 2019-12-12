@@ -310,8 +310,9 @@ All the above led us to Algorithm~\ref{alg:ray2seg}:
       \EndIf
       \If{$\Delta_s \neq 0$} \Comment{They are parallel but they are not in the same line}
         \State \textbf{return} false
-      \Else \Comment{They are on the same line. Check relative positions}
-        \State \textbf{return} false
+      \Else \Comment{They are on the same line. Check relative positions of $\mathbf{o}$ and $\overline{\mathbf{a}\mathbf{b}}$}
+        \State $s_p \gets \frac{(\mathbf{o} - \mathbf{a}) \cdot (\mathbf{b} - \mathbf{a})}{|\mathbf{b} - \mathbf{a}|^2}$
+        \State \textbf{return} $s_p \leq 1$
       \EndIf
       \EndProcedure
     \end{algorithmic}

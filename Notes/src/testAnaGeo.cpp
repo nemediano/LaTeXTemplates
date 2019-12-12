@@ -94,9 +94,9 @@ bool rayIntersectSegment(const glm::vec2& a, const glm::vec2& b, const glm::vec2
   }
 
   if (glm::epsilonNotEqual(det_s, 0.0f, EPSILON)) {
-      return false;
+    return false;
   } else {
-      // TODO: Handle this case
-      return true;
+    const float s_p = glm::dot(o - a, b - a) / glm::distance2(a, b);
+    return s_p <= 1.0f;
   }
 }
