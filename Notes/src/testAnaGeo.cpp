@@ -1,6 +1,9 @@
 #include <iostream>
 #include <cstdlib>
 
+#include <utility>
+#include <vector>
+
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/vec3.hpp>
 #include <glm/gtx/norm.hpp>
@@ -15,6 +18,21 @@ double point2SementDistance(const glm::vec3& a, const glm::vec3& b, const glm::v
 bool rayIntersectSegment(const glm::vec3& a, const glm::vec3& b, const glm::vec3& o, const glm::vec3& v);
 
 int main (int argc, char* argv[]) {
+  vector< pair<glm::vec3, glm::vec3> > rays = {
+    {glm::vec3(0.0f, 2.0, 0.0f), glm::vec3(2.0, 1.0, 0.0f)},
+    {glm::vec3(14.0f, 12.0, 0.0f), glm::vec3(0.0, -1.0, 0.0f)},
+    {glm::vec3(12.0f, 2.0, 0.0f), glm::vec3(-1.0, 1.0, 0.0f)},
+    {glm::vec3(6.0f, 8.0, 0.0f), glm::vec3(2.0, 0.0, 0.0f)},
+    {glm::vec3(13.0f, 6.0, 0.0f), glm::vec3(-2.0, -1.0, 0.0f)},
+    {glm::vec3(14.0f, 9.0, 0.0f), glm::vec3(2.0, 1.0, 0.0f)}
+  };
+
+  const glm::vec3 a = glm::vec3(4.0f, 4.0f, 0.0f);
+  const glm::vec3 b = glm::vec3(12.0f, 8.0f, 0.0f);
+
+  for (auto r : rays) {
+    cout << (rayIntersectSegment(a, b, r.first, r.second) ? "hit!" : "miss!") << endl;
+  }
 
   return EXIT_SUCCESS;
 }
