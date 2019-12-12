@@ -38,8 +38,8 @@ int main (int argc, char* argv[]) {
     {{glm::vec2(14.0f,  9.0), glm::vec2( 2.0,  1.0)}, false}
   };
 
-  const glm::vec3 a = glm::vec3(4.0f, 4.0f, 0.0f);
-  const glm::vec3 b = glm::vec3(12.0f, 8.0f, 0.0f);
+  const glm::vec2 a = glm::vec2(4.0f, 4.0f);
+  const glm::vec2 b = glm::vec2(12.0f, 8.0f);
 
   for (auto t : tests) {
     const Ray r = t.ray;
@@ -75,5 +75,28 @@ double point2SementDistance(const glm::vec3& a, const glm::vec3& b, const glm::v
 }
 
 bool rayIntersectSegment(const glm::vec2& a, const glm::vec2& b, const glm::vec2& o, const glm::vec2& v) {
-  return true;
+  if (glm::epsilonEqual(glm::length(v), 0.0f, EPSILON)) {
+    return false;
+  }
+
+  const float det = v.x * (a.y - b.y) - v.y * (a.x - b.x);
+  const float det_s = (a.x - o.x) * (a.y - b.y) - (a.y - o.y) * (a.x - b.x);
+  const float det_t = v.x * (a.y - o.y) - v.y * (a.x - o.x);
+
+  if (glm::epsilonNotEqual(det, 0.0f, EPSILON)) {
+    const float s = det_s / det;
+    const float t = det_t / det;
+    if (t >= 0.0f && t <= 1.0f && s >= 0.0f) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  if (glm::epsilonNotEqual(det_s, 0.0f, EPSILON)) {
+      return false;
+  } else {
+      // TODO: Handle this case
+      return true;
+  }
 }
