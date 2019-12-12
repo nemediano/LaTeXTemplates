@@ -177,7 +177,9 @@ In Algorthm~\ref{alg:poin2seg2} we see a better implementation of the above. Tha
 
 \subsection{Ray to segment intersection}
 \label{sec:ray2segment}
-While the results of previos Sections are valid to any dimenion $\mathbb{R}^n$, the result in this Section~\ref{sec:ray2segment} is constrained to $\mathbb{R}^2$.
+While the results of previos Sections are valid to any dimension $\mathbb{R}^n$, the result in this Section~\ref{sec:ray2segment} is constrained to $\mathbb{R}^2$.
+This is due the fact that in $\mathbb{R}^3$ and above dimensions it is possible for two lines to be non parallel and still do not intersect.
+Such lines are called \emph{skew} lines, to avoid such complication I will restric the discussion to $\mathbb{R}^2$.
 
 The problem is to test if a ray $\mathbf{R}$ intersects a line segment $\mathbf{S}$.
 The ray it's defined by a point of origin $\mathbf{o}$ and a directional vector $\mathbf{u}$.
@@ -200,7 +202,7 @@ The Figure~\ref{fig:rays2seg} shows the different cases:
   \item $\mathbf{R}_6$ is parrallel to the segment, is on the same line, but also does not touch it.
 \end{itemize}
 
-In the scenario described above, the ray is $\mathbf{R}(s) = \mathbf{o} + s \mathbf{v}$ with $s \geq 1$ and the segment is $\mathbf{S}(t) = \mathbf{a} + t (\mathbf{b} - \mathbf{a})$ with $0 \leq t \leq 1$.
+In the scenario described above, the ray is $\mathbf{R}(s) = \mathbf{o} + s \mathbf{v}$ with $s \geq 0$ and the segment is $\mathbf{S}(t) = \mathbf{a} + t (\mathbf{b} - \mathbf{a})$ with $0 \leq t \leq 1$.
 If $\mathbf{R}(s)$ intersects $\overline{\mathbf{a}\mathbf{b}}$, then $\mathbf{R}(s) = \mathbf{S}(t)$ for some values of $\mathbf{s}$ and $\mathbf{t}$.
 
 \begin{align*}
@@ -271,13 +273,13 @@ Lets assume that the system has a unique soution: $\Delta \neq 0$. We can check 
 
 When $\Delta = 0$ means that we have linear dependency of the vectors $\mathbf{v}$ and $\mathbf{a} - \mathbf{b}$ (or $\mathbf{b} - \mathbf{a}$ if that matters).
 If we look again at Figure~\ref{fig:rays2seg} this means that the ray and the segmen are parallel.
-There is again two possible geometric situation for this. One of them also divides in sub cases: 
+There is again two possible geometric situations for this. One of them also divides in sub cases: 
 \begin{enumerate}
   \item They do not reside on the same line. Like the case of $\mathbf{R}_5$ in the Figure~\ref{fig:rays2seg}.
   \item They reside on the same line. Then, we have two possible subcases:
   \begin{enumerate}
-    \item They do not intersect: $\mathbf{R}$ is not on the segments and shoots away from the segment $\overline{\mathbf{a}\mathbf{b}}$. This is the sub case of $\mathbf{R}_6$ in the Figure~\ref{fig:rays2seg}.
-    \item They do intersect and overlap. $\mathbf{R}$ is either on $\overline{\mathbf{a}\mathbf{b}}$ or shooting into segment. This is the sub case of $\mathbf{R}_1$ in the Figure~\ref{fig:rays2seg}.
+    \item They do not intersect: $\mathbf{R}$ is not on the segments and shoots away from the segment $\overline{\mathbf{a}\mathbf{b}}$. This is the situation for $\mathbf{R}_6$ in the Figure~\ref{fig:rays2seg}.
+    \item They do intersect and overlap. $\mathbf{R}$ is either on $\overline{\mathbf{a}\mathbf{b}}$ or shooting into segment. This is the case the situation for $\mathbf{R}_1$ in the Figure~\ref{fig:rays2seg}.
   \end{enumerate}
 \end{enumerate}
 
@@ -289,20 +291,23 @@ All the above led us to Algorithm~\ref{alg:ray2seg}:
     \caption{Intersection test between a ray $\mathbf{R}$ and a line segment $\overline{\mathbf{a}\mathbf{b})}$}
     \label{alg:ray2seg}
     \begin{algorithmic}[1] % The number tells where the line numbering should start 0 for no number
-      \Procedure{RayIntersectSegment}{$\mathbf{a},\mathbf{b},\mathbf{o},\mathbf{v}$} \Comment{$\mathbf{a}$, $\mathbf{b}$ and $\mathbf{o}$ are all points of the same dimension. $\mathbf{v} \neq 0$ it's the direction vector of the ray}
-        \If{$\mathbf{a} = \mathbf{b}$} \Comment{There is no line, the segment it's just a point}
-          \State \textbf{return} $d(\mathbf{a},\mathbf{p})$
-        \EndIf
-        \State $s \gets \frac{(\mathbf{p} - \mathbf{a}) \cdot (\mathbf{b} - \mathbf{a})}{|\mathbf{b} - \mathbf{a}|^2}$ \Comment{Use Equation~\ref{eq:scalarq} to get parametric value of $\mathbf{q}$}
-        \If{$s < 0$} \Comment{$\mathbf{p}$ is closer to $\mathbf{a}$ than to $\overline{\mathbf{a}\mathbf{b}}$}
-          \State $r \gets d(\mathbf{a},\mathbf{p})$
-         \ElsIf{$s > 1$} \Comment{$\mathbf{p}$ is closer to $\mathbf{b}$ than to $\overline{\mathbf{a}\mathbf{b}}$}
-          \State $r \gets d(\mathbf{b},\mathbf{p})$
-        \Else \Comment{$\mathbf{p}$ is over $\overline{\mathbf{a}\mathbf{b}}$}
-          \State $\mathbf{q} \gets \mathbf{a} + s (\mathbf{b} - \mathbf{a})$ \Comment{Calculate $\mathbf{q}$}
-          \State $r \gets d(\mathbf{q},\mathbf{p})$
-        \EndIf
-        \State \textbf{return} $r$ \Comment{Distance is stored in $r$}
+      \Procedure{RayIntersectSegment}{$\mathbf{a},\mathbf{b},\mathbf{o},\mathbf{v}$} \Comment{$\mathbf{a}, \mathbf{b}, \mathbf{o} \in \mathbb{R}^2$ are all points. $\mathbf{v} \in \mathbb{R}^2$ it's the direction vector of the ray}
+      \If{$|\mathbf{v}| = 0$} \Comment{There is no ray}
+          \State \textbf{return} false
+      \EndIf
+      \State $\Delta \gets v_x(a_y - b_y) - v_y(a_x - b_x)$
+      \State $\Delta_s \gets (a_x - o_x)(a_y - b_y) - (a_y - o_y)(a_x - b_x)$
+      \State $\Delta_t \gets v_x(a_y - o_y) - v_y(a_x - o_x)$
+      \If{$\Delta \neq 0$} \Comment{Ray and segment are not parralell. Perform normal test}
+          \State $s \gets \Delta_s / \Delta$
+          \State $t \gets \Delta_t / \Delta$
+          \If{$0 \leq t \leq 1$ \textbf{and} $s \geq 0$} \Comment{They intersect}
+            \State \textbf{return} true
+          \Else \Comment{They do not intersect}
+            \State \textbf{return} false
+          \EndIf
+      \Else \Comment{Ray and segment are parallel. Handle special cases}
+      \EndIf
       \EndProcedure
     \end{algorithmic}
   \end{algorithm}
