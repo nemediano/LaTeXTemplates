@@ -76,13 +76,13 @@ double point2SementDistance(const glm::vec3& a, const glm::vec3& b, const glm::v
 
 bool rayIntersectSegment(const glm::vec2& a, const glm::vec2& b, const glm::vec2& o, const glm::vec2& v) {
   if (glm::epsilonEqual(glm::length(v), 0.0f, EPSILON)) {
+    // There is no ray at all
     return false;
   }
-
   const float det = v.x * (a.y - b.y) - v.y * (a.x - b.x);
   const float det_s = (a.x - o.x) * (a.y - b.y) - (a.y - o.y) * (a.x - b.x);
   const float det_t = v.x * (a.y - o.y) - v.y * (a.x - o.x);
-
+  // Normal case they are not parallel
   if (glm::epsilonNotEqual(det, 0.0f, EPSILON)) {
     const float s = det_s / det;
     const float t = det_t / det;
@@ -92,11 +92,11 @@ bool rayIntersectSegment(const glm::vec2& a, const glm::vec2& b, const glm::vec2
       return false;
     }
   }
-
+  // If they are parallel but they are not in the same line
   if (glm::epsilonNotEqual(det_s, 0.0f, EPSILON)) {
     return false;
-  } else {
-    const float s_p = glm::dot(o - a, b - a) / glm::distance2(a, b);
-    return s_p <= 1.0f;
   }
+  // They are parallel and in the same line (Check relative position)
+  const float s_p = glm::dot(o - a, b - a) / glm::distance2(a, b);
+  return s_p <= 1.0f;
 }
