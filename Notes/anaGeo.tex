@@ -17,7 +17,7 @@ $$ \mathbf{v} = \begin{bmatrix}
 Then we can use syntax like: $A \mathbf{x} = \mathbf{b}$.
 To make the reading easier, in case I will need to specify a vector inside a paragraph I will use $\mathbf{v} = \langle x, y, z \rangle$
 
-In the notation, we do not make any distinction between vectors and points, therefore the text always give context to clarify this. 
+In the notation, we do not make any distinction between vectors and points, therefore the text always gives context to clarify this. 
 
 \subsection{Line, ray and segment}
 \label{sec:linedef}
@@ -46,7 +46,7 @@ Also note that $\mathbf{v}$ is not necesarlly a unit vector.
 \end{figure}
 
 The Figure~\ref{fig:line} shows the line from Equation~\ref{eq:line} (in black) indentified by the points $\mathbf{a}$ and $\mathbf{b}$ (in red) and the directional vector $\mathbf{v}$ (in green).
-Remember that vectors are free on the space, in this sense we can represent $\mathbf{v}$ in any place of the plane as long as we do not change his orientation (the angles against the frame of reference).
+Remember that vectors are free on the space, in this sense we can represent $\mathbf{v}$ in any place of the plane as long as we do not change his orientation (the angles it makes against the frame of reference).
 
 
 On these conditions; we can give continuos values to the parameter $s$ in the Equation~\ref{eq:line}, to obtain points on the line $\mathbf{L}$.
@@ -80,7 +80,7 @@ If we start sliding a point on $\mathbf{L}$ (starting lets say at $\mathbf{a}$) 
 Indeed, the distance we are looking is between $\mathbf{p}$ and the point $\mathbf{q}$ that is in the intesection between the line $\mathbf{L}$ and the segment $\overline{\mathbf{p} \mathbf{q}}$ which is perpendicular to $\mathbf{L}$.
 In the Figure~\ref{fig:point2line}, $\overline{\mathbf{p} \mathbf{q}}$ is the orange dashed line and the desired $d$ is of course his lenght.
 
-Before proceding I put a quick reminder of the formula to calculate the projection of a vector $\mathbf{x}$ into another vector $\mathbf{y}$. 
+Before we proced; I put a quick reminder of the formula to calculate the projection of a vector $\mathbf{x}$ into another vector $\mathbf{y}$. 
 
 \begin{equation}
 \proj_{\mathbf{y}}\mathbf{x} = \dfrac{(\mathbf{x} \cdot \mathbf{y})}{|\mathbf{y}|} \dfrac{\mathbf{y}}{|\mathbf{y}|} = \dfrac{(\mathbf{x} \cdot \mathbf{y})}{|\mathbf{y}|^2}\mathbf{y}
@@ -152,7 +152,9 @@ The observations at the end of Section~\ref{sec:linedef} and Section~\ref{sec:po
 \par
 }
 
-In Algorthm~\ref{alg:poin2seg2} we see a better implementation of the above. That compress the branching for the values of $s$ into just one statement, since we can use a clamp. Less clear, but a little bit more efficient.
+We can have a less clear, but a little bit more efficient algorithm.
+The branching due the value of $s$ can be reduced if we use a clamp (by the means of $\Max$ and $\Min$ functions).
+The Algorthm~\ref{alg:poin2seg2} shows this idea and Listing~\ref{lst:poin2seg2} shows the implementation in C++ using the \href{https://glm.g-truc.net}{GLM} library.
 
 {\centering
 \begin{minipage}{\linewidth}
@@ -161,7 +163,7 @@ In Algorthm~\ref{alg:poin2seg2} we see a better implementation of the above. Tha
     \label{alg:poin2seg2}
     \begin{algorithmic}[1] % The number tells where the line numbering should start 0 for no number
       \Procedure{DistancePoint2Segment}{$\mathbf{a},\mathbf{b},\mathbf{p}$} \Comment{$\mathbf{a}$, $\mathbf{b}$ and $\mathbf{p}$ are all points of the same dimension}
-        \State $l^2 \gets \text{dist2}(\mathbf{a},\mathbf{b})$
+        \State $l^2 \gets |\mathbf{b} - \mathbf{a}|^2$
         \If{$l^2 = 0$} \Comment{There is no line, the segment it's just a point}
           \State \textbf{return} $d(\mathbf{a},\mathbf{p})$
         \EndIf
@@ -198,7 +200,7 @@ In Algorthm~\ref{alg:poin2seg2} we see a better implementation of the above. Tha
 \subsection{Ray to segment intersection}
 \label{sec:ray2segment}
 While the results of previos Sections are valid to any dimension $\mathbb{R}^n$, the result in this Section~\ref{sec:ray2segment} is constrained to $\mathbb{R}^2$.
-This is due the fact that in $\mathbb{R}^3$ and above dimensions it is possible for two lines to be non parallel and still do not intersect.
+This is due the fact that in $\mathbb{R}^3$ (and higher dimensions) it is possible for two lines to be non parallel and still do not intersect.
 Such lines are called \emph{skew} lines, to avoid such complication I will restric the discussion to $\mathbb{R}^2$.
 
 The problem is to test if a ray $\mathbf{R}$ intersects a line segment $\mathbf{S}$.
@@ -214,10 +216,10 @@ As usual, the segment is defined by his two end points $\mathbf{a}$ and $\mathbf
 
 The Figure~\ref{fig:rays2seg} shows the different cases: 
 \begin{itemize}
-  \item $\mathbf{R}_1$ overlaps with the whole segment. By convention we say this is a hit.
-  \item $\mathbf{R}_2$ misses the segment.
+  \item $\mathbf{R}_1$ Hits the whole segment. In fact, both reside on the same line. This is a hit.
+  \item $\mathbf{R}_2$ does not the segment.
   \item $\mathbf{R}_3$ hits the segment in the middle.
-  \item $\mathbf{R}_4$ kisses (touches) the segmnet  at his endpoint. By convention we also say this is a hit.
+  \item $\mathbf{R}_4$ kisses (touches) the segmnet at his endpoint. By convention we say this is a hit.
   \item $\mathbf{R}_5$ is parrallel to the segment but does not touch it.
   \item $\mathbf{R}_6$ is parrallel to the segment, is on the same line, but also does not touch it.
 \end{itemize}
@@ -254,8 +256,8 @@ t
 \end{bmatrix}
 \end{align*}
 
-Which is a linear equation system that we can solve to get the values of $s$ and $t$.
-We solve the system by Cramer's rule. 
+Which is a $2 \times 2$ linear equations system that we can solve to get the values of $s$ and $t$.
+We will solve it by Cramer's rule. 
 Therefore, first we define:
 \begin{align*}
 \Delta =&  
@@ -277,7 +279,7 @@ v_y & a_y - o_y
 
 An interesting observation, is that if we identify the previous determinats with the equations of the ray and the segement; 
 we see that $\Delta$ is  concerned with the linear independence of the directional vectors $\mathbf{v}$ and $\mathbf{a} - \mathbf{b}$.
-Meanwhile, $\Delta_s$ and $\Delta_t$ are concerned with the linear independence of each of the directional vectors with $\mathbf{a} - \mathbf{o}$ which is the diference between both origin points.
+Meanwhile, $\Delta_s$ and $\Delta_t$ are concerned with the linear independence of each of the directional vectors with $\mathbf{a} - \mathbf{o}$ which is the diference between both origin ($\mathbf{a}$ is in a sense the origin of $\mathbf{S}$) points.
 
 In other words if $\Delta = 0$ then, the directional vectors are parallel.
 If $\Delta_s =  0$ or $\Delta_t = 0$ then, $\mathbf{a} - \mathbf{o}$ is parrallel with one of the directional vectors.
@@ -293,13 +295,14 @@ Lets assume that the system has a unique soution: $\Delta \neq 0$. We can check 
 
 When $\Delta = 0$ means that we have linear dependency of the vectors $\mathbf{v}$ and $\mathbf{a} - \mathbf{b}$ (or $\mathbf{b} - \mathbf{a}$ if that matters).
 If we look again at Figure~\ref{fig:rays2seg} this means that the ray and the segmen are parallel.
-There is again two possible geometric situations for this. One of them also divides in sub cases: 
+There is again two possible geometric situations for this. One of them also divides in sub cases.
+In summary, if $\Delta = 0$ we have any of the following situations for $\mathbf{R}$ and $\mathbf{S}$:
 \begin{enumerate}
   \item They do not reside on the same line. Like the case of $\mathbf{R}_5$ in the Figure~\ref{fig:rays2seg}.
   \item They reside on the same line. Then, we have two possible subcases:
   \begin{enumerate}
-    \item They do not intersect: $\mathbf{R}$ is not on the segments and shoots away from the segment $\overline{\mathbf{a}\mathbf{b}}$. This is the situation for $\mathbf{R}_6$ in the Figure~\ref{fig:rays2seg}.
-    \item They do intersect and overlap. $\mathbf{R}$ is either on $\overline{\mathbf{a}\mathbf{b}}$ or shooting into segment. This is the case the situation for $\mathbf{R}_1$ in the Figure~\ref{fig:rays2seg}.
+    \item They do not intersect: $\mathbf{R}$ is not inside $\overline{\mathbf{a}\mathbf{b}}$ and shoots away from it. This is the situation for $\mathbf{R}_6$ in the Figure~\ref{fig:rays2seg}.
+    \item They do intersect. In fact, they overlap. $\mathbf{R}$ is either on $\overline{\mathbf{a}\mathbf{b}}$ or shooting into it. This is the situation for $\mathbf{R}_1$ in the Figure~\ref{fig:rays2seg}.
   \end{enumerate}
 \end{enumerate}
 
@@ -312,8 +315,11 @@ All the above led us to Algorithm~\ref{alg:ray2seg}:
     \label{alg:ray2seg}
     \begin{algorithmic}[1] % The number tells where the line numbering should start 0 for no number
       \Procedure{RayIntersectSegment}{$\mathbf{a},\mathbf{b},\mathbf{o},\mathbf{v}$} \Comment{$\mathbf{a}, \mathbf{b}, \mathbf{o} \in \mathbb{R}^2$ are all points. $\mathbf{v} \in \mathbb{R}^2$ it's the direction vector of the ray}
-      \If{$|\mathbf{v}| = 0$} \Comment{There is no ray}
-          \State \textbf{return} false
+      \If{$|\mathbf{v}|^2 = 0$} \Comment{There is no ray}
+          \State \Return{false}
+      \EndIf
+      \If{$\mathbf{a} = \mathbf{b}$} \Comment{The segment it's just a point}
+          \State \Return{\Call{RayHitsPoint}{$\mathbf{o},\mathbf{v},\mathbf{a}$}}
       \EndIf
       \State $\Delta \gets v_x(a_y - b_y) - v_y(a_x - b_x)$
       \State $\Delta_s \gets (a_x - o_x)(a_y - b_y) - (a_y - o_y)(a_x - b_x)$
@@ -322,16 +328,28 @@ All the above led us to Algorithm~\ref{alg:ray2seg}:
           \State $s \gets \Delta_s / \Delta$
           \State $t \gets \Delta_t / \Delta$
           \If{$0 \leq t \leq 1$ \textbf{and} $s \geq 0$} \Comment{They intersect}
-            \State \textbf{return} true
+            \State \Return{true}
           \Else \Comment{They do not intersect}
-            \State \textbf{return} false
+            \State \Return{false}
           \EndIf
       \EndIf
       \If{$\Delta_s \neq 0$} \Comment{They are parallel but they are not in the same line}
-        \State \textbf{return} false
+        \State \Return{false}
       \EndIf
       \State $s_p \gets \frac{(\mathbf{o} - \mathbf{a}) \cdot (\mathbf{b} - \mathbf{a})}{|\mathbf{b} - \mathbf{a}|^2}$ \Comment{They are on the same line. Check relative positions of $\mathbf{o}$ and $\overline{\mathbf{a}\mathbf{b}}$}
-      \State \textbf{return} $s_p \leq 1$
+      \State \Return{$s_p \leq 1$}
+      \EndProcedure
+      \State
+      \Procedure{RayHitsPoint}{$\mathbf{o},\mathbf{v},\mathbf{p}$} \Comment{$\mathbf{o}, \mathbf{p} \in \mathbb{R}^2$ are points. $\mathbf{v} \in \mathbb{R}^2$ it's the direction vector of the ray}
+        \If{$|\mathbf{v}|^2 = 0$} \Comment{There is no ray}
+          \State \Return{false}
+        \EndIf
+        \State $s_q \gets \frac{(\mathbf{p} - \mathbf{o}) \cdot \mathbf{v}}{|\mathbf{v}|^2}$
+        \If{$s_q < 0$} \Comment{The point is behind the ray}
+           \State \Return{false}
+        \EndIf
+        \State $\mathbf{q} \gets \mathbf{o} + s_q \mathbf{v}$ \Comment{Project the point into the ray}
+        \State \Return{$\mathbf{q} = \mathbf{a}$} \Comment{Test if the point was on the ray}
       \EndProcedure
     \end{algorithmic}
   \end{algorithm}
@@ -349,8 +367,8 @@ All the above led us to Algorithm~\ref{alg:ray2seg}:
   baselinestretch=1.2,
   fontsize=\footnotesize,
   linenos,
-  firstline=77, %If you omit this two fields, the whole file is pulled
-  lastline=102
+  firstline=78, %If you omit this two fields, the whole file is pulled
+  lastline=123
   ]{cpp}{src/testAnaGeo.cpp}
   \caption{Implementation of Algorthm~\ref{alg:ray2seg} in C++ and GLM}
   \label{lst:ray2seg}

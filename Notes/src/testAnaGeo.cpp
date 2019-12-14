@@ -16,6 +16,7 @@ const float EPSILON = 0.00001f;
 double point2LineDistance(const glm::vec3& a, const glm::vec3& b, const glm::vec3& p);
 double point2SementDistance(const glm::vec3& a, const glm::vec3& b, const glm::vec3& p);
 bool rayIntersectSegment(const glm::vec2& a, const glm::vec2& b, const glm::vec2& o, const glm::vec2& v);
+bool rayHitsPoint(const glm::vec2& o, const glm::vec2& v, const glm::vec2& p);
 
 struct Ray {
   glm::vec2 origin;
@@ -79,6 +80,10 @@ bool rayIntersectSegment(const glm::vec2& a, const glm::vec2& b, const glm::vec2
     // There is no ray at all
     return false;
   }
+  if (glm::epsilonEqual(glm::distance2(a, b), 0.0f, EPSILON)) {
+    // There is no segment it's just a point
+    return rayHitsPoint(o, v, a);
+  }
   const float det = v.x * (a.y - b.y) - v.y * (a.x - b.x);
   const float det_s = (a.x - o.x) * (a.y - b.y) - (a.y - o.y) * (a.x - b.x);
   const float det_t = v.x * (a.y - o.y) - v.y * (a.x - o.x);
@@ -99,4 +104,20 @@ bool rayIntersectSegment(const glm::vec2& a, const glm::vec2& b, const glm::vec2
   // They are parallel and in the same line (Check relative position)
   const float s_p = glm::dot(o - a, b - a) / glm::distance2(a, b);
   return s_p <= 1.0f;
+}
+
+bool rayHitsPoint(const glm::vec2& o, const glm::vec2& v, const glm::vec2& p) {
+  if (glm::epsilonEqual(glm::length(v), 0.0f, EPSILON)) {
+    // There is no ray at all
+    return false;
+  }
+  const float s_q = glm::dot(p - o, v) / glm::length2(v);
+  // Point is behind the ray cannot be hit
+  if (s_q < 0.0f) {
+    return false;
+  }
+  // Project point into ray
+  const glm::vec2 q = o + s_q * v;
+  // See if the point is the projection
+  return glm::epsilonEqual(glm::distance2(p, q), 0.0f, EPSILON);
 }
