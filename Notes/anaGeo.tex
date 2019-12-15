@@ -76,9 +76,9 @@ Now, if $\mathbf{p} \notin \mathbf{L}$, we want the distant between $\mathbf{p}$
 
 In other words we want the minimal distance from $\mathbf{p}$ to $\mathbf{L}$.
 The Figure~\ref{fig:point2line} depicts this situation.
-If we start sliding a point on $\mathbf{L}$ (starting lets say at $\mathbf{a}$) and evaluating the distance beween that point and $\mathbf{p}$, we can see that the distance start getting smaller as we come close to $\mathbf{p}$, get his minimal value when we are right bellow $\mathbf{p}$ and then increases again. 
+If we start sliding a point on $\mathbf{L}$ (starting lets say at $\mathbf{a}$) and evaluating the distance beween that point and $\mathbf{p}$, we can see that the distance begins getting smaller as we come close to $\mathbf{p}$, get his minimal value when we are right bellow $\mathbf{p}$ and then increases again. 
 Indeed, the distance we are looking is between $\mathbf{p}$ and the point $\mathbf{q}$ that is in the intesection between the line $\mathbf{L}$ and the segment $\overline{\mathbf{p} \mathbf{q}}$ which is perpendicular to $\mathbf{L}$.
-In the Figure~\ref{fig:point2line}, $\overline{\mathbf{p} \mathbf{q}}$ is the orange dashed line and the desired $d$ is of course his lenght.
+In the Figure~\ref{fig:point2line}, $\overline{\mathbf{p} \mathbf{q}}$ is the orange dashed line and the desired $d$ it's of course his lenght.
 
 Before we proced; I put a quick reminder of the formula to calculate the projection of a vector $\mathbf{x}$ into another vector $\mathbf{y}$. 
 
@@ -204,7 +204,7 @@ This is due the fact that in $\mathbb{R}^3$ (and higher dimensions) it is possib
 Such lines are called \emph{skew} lines, to avoid such complication I will restric the discussion to $\mathbb{R}^2$.
 
 The problem is to test if a ray $\mathbf{R}$ intersects a line segment $\mathbf{S}$.
-The ray it's defined by a point of origin $\mathbf{o}$ and a directional vector $\mathbf{u}$.
+The ray it's defined by a point of origin $\mathbf{o}$ and a directional vector $\mathbf{v}$.
 As usual, the segment is defined by his two end points $\mathbf{a}$ and $\mathbf{b}$.
 
 \begin{figure}[htb]
@@ -294,7 +294,7 @@ t = \frac{\Delta_t}{\Delta} =&  \frac{v_x(a_y - o_y) - v_y(a_x - o_x)}{v_x(a_y -
 Lets assume that the system has a unique soution: $\Delta \neq 0$. We can check the values $s$ and $t$. If both of the values fall in the desired range then, $\mathbf{R}$ intersects $\mathbf{S}$. If at least one of the values is ouside the range, $\mathbf{R}$ does not intersects $\mathbf{S}$.
 
 When $\Delta = 0$ means that we have linear dependency of the vectors $\mathbf{v}$ and $\mathbf{a} - \mathbf{b}$ (or $\mathbf{b} - \mathbf{a}$ if that matters).
-If we look again at Figure~\ref{fig:rays2seg} this means that the ray and the segmen are parallel.
+If we look again at Figure~\ref{fig:rays2seg} this means that the ray and the segment are parallel.
 There is again two possible geometric situations for this. One of them also divides in sub cases.
 In summary, if $\Delta = 0$ we have any of the following situations for $\mathbf{R}$ and $\mathbf{S}$:
 \begin{enumerate}
@@ -379,3 +379,42 @@ All the above led us to Algorithm~\ref{alg:ray2seg}:
 
 \subsection{Belonging test on simple polygons}
 \label{sec:belongTest}
+
+In principle, this problem does not seem to be related to the previos ones.
+However, the algorithm to solve it does really on all the previos algorithms.
+
+As it is ussual in CG, we represent a simple polygon\footnote{A \emph{simple} polygon is one in which his edges only intersect in their respective endpoints} $\mathbf{P}$ with an ordered list $V$, $|V| \geq 3$ of points in $\mathbb{R}^2$ that represent his consecutive vertices.
+By convention, we assume that there is an extra edge between the first and last point in $V$.
+
+Now, if we have an extra point $\mathbf{p} \in \mathbb{R}^2$.
+The problem is to determine if $\mathbf{p}$ it's in the interior region of $\mathbf{P}$.
+\footnote{By \href{https://en.wikipedia.org/wiki/Jordan_curve_theorem}{Jordan's curve theorem}, any simple polygon will divide $\mathbb{R}^2$ in three regions: his interior, his exterior and his boundary. In our case, by convention; we will consider the boundary to be part of the interior.}
+
+Since we know, thanks to the \href{https://en.wikipedia.org/wiki/Jordan_curve_theorem}{Jordan's curve theorem} that any path that connects the interioir with the exterior will need to cross the boundary.
+That the boundary is $\mathbf{P}$.
+And that all the points in $V$ are finite. 
+Therefore, we can generate a very simple and elegant algorithm to solve our problem.
+
+Shoot any ray $\mathbf{R}$ from $\mathbf{p}$, then count how many of the segments defined by $L$ are intersected by $\mathbf{R}$. 
+If the number of intersections is even, then $\mathbf{p}$ was in the exterior of $\mathbf{P}$, else (i.e the number of intersections is odd) $\mathbf{p}$ is in the interior of $\mathbf{P}$.\footnote{Remember, that zero it's an even number. So, no intersection means that $\mathbf{p}$ was in the exterior of $\mathbf{P}$}
+
+In principle \emph{any} ray $\mathbf{R}$ will work.
+However, due numerical stabillity and to simplify a lot of calculations; we use an horizontal ray shooted to the right of $\mathbf{p}$
+
+The Figure~\ref{fig:polygonTest} shows a simple polygon and several points $\mathbf{p}_i$.
+The different points $\mathbf{p}_i$ are shown in black, each of them spawn a corresponding ray $\mathbf{R}_i$, shown in a dashed orange line.
+The polygon $\mathbf{P}$ it's defined by his vertices $V$ shown in red.
+We can see that $\mathbf{R}_1$ and $\mathbf{R}_5$ hit the poligon edges an odd number of times, therefore they are inside of $\mathbf{P}$.
+In contrast, $\mathbf{R}_2$ and $\mathbf{R}_4$ hit an even number of times and they are outside of $\mathbf{P}$
+It also shows an interesting corner case: $\mathbf{R}_3$, (How many times does $\mathbf{R}_3$ crosses the boundary?) that we will discuss below.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.50\textwidth]{img/polygonTest}
+  \caption{Diferents points $\mathbf{p}_i$ and their test of belonging to a polygon}
+  \label{fig:polygonTest}
+\end{figure}
+
+By convention if a point its exactlly on any of the edges of $\mathbf{P}$ (like $\mathbf{p}_5$), we will say it belongs to the polygon.
+
+
