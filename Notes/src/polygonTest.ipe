@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
-<ipe version="70107" creator="Ipe 7.1.10">
-<info created="D:20191214191933" modified="D:20191214195452"/>
+<ipe version="70206" creator="Ipe 7.2.7">
+<info created="D:20191214191933" modified="D:20191216154750"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -257,24 +257,24 @@ h
 <layer name="origins"/>
 <layer name="rays"/>
 <layer name="labels"/>
-<view layers="vertices polygon origins rays labels" active="labels"/>
-<use layer="vertices" name="mark/disk(sx)" pos="64 768" size="normal" stroke="red"/>
-<use name="mark/disk(sx)" pos="96 800" size="normal" stroke="red"/>
-<use name="mark/disk(sx)" pos="64 672" size="normal" stroke="red"/>
-<use name="mark/disk(sx)" pos="96 640" size="normal" stroke="red"/>
-<use name="mark/disk(sx)" pos="96 768" size="normal" stroke="red"/>
-<use name="mark/disk(sx)" pos="96 672" size="normal" stroke="red"/>
-<use name="mark/disk(sx)" pos="128 672" size="normal" stroke="red"/>
-<use name="mark/disk(sx)" pos="128 704" size="normal" stroke="red"/>
-<use name="mark/disk(sx)" pos="160 704" size="normal" stroke="red"/>
-<use name="mark/disk(sx)" pos="160 672" size="normal" stroke="red"/>
-<use name="mark/disk(sx)" pos="192 672" size="normal" stroke="red"/>
-<use name="mark/disk(sx)" pos="192 704" size="normal" stroke="red"/>
-<use name="mark/disk(sx)" pos="224 704" size="normal" stroke="red"/>
-<use name="mark/disk(sx)" pos="224 672" size="normal" stroke="red"/>
-<use name="mark/disk(sx)" pos="192 640" size="normal" stroke="red"/>
-<use name="mark/disk(sx)" pos="224 800" size="normal" stroke="red"/>
-<use name="mark/disk(sx)" pos="224 768" size="normal" stroke="red"/>
+<view layers="vertices polygon origins rays labels" active="rays"/>
+<use layer="vertices" name="mark/disk(sx)" pos="64 768" size="normal" stroke="black"/>
+<use name="mark/disk(sx)" pos="96 800" size="normal" stroke="black"/>
+<use name="mark/disk(sx)" pos="64 672" size="normal" stroke="black"/>
+<use name="mark/disk(sx)" pos="96 640" size="normal" stroke="black"/>
+<use name="mark/disk(sx)" pos="96 768" size="normal" stroke="black"/>
+<use name="mark/disk(sx)" pos="96 672" size="normal" stroke="black"/>
+<use name="mark/disk(sx)" pos="128 672" size="normal" stroke="black"/>
+<use name="mark/disk(sx)" pos="128 704" size="normal" stroke="black"/>
+<use name="mark/disk(sx)" pos="160 704" size="normal" stroke="black"/>
+<use name="mark/disk(sx)" pos="160 672" size="normal" stroke="black"/>
+<use name="mark/disk(sx)" pos="192 672" size="normal" stroke="black"/>
+<use name="mark/disk(sx)" pos="192 704" size="normal" stroke="black"/>
+<use name="mark/disk(sx)" pos="224 704" size="normal" stroke="black"/>
+<use name="mark/disk(sx)" pos="224 672" size="normal" stroke="black"/>
+<use name="mark/disk(sx)" pos="192 640" size="normal" stroke="black"/>
+<use name="mark/disk(sx)" pos="224 800" size="normal" stroke="black"/>
+<use name="mark/disk(sx)" pos="224 768" size="normal" stroke="black"/>
 <path layer="polygon" stroke="black">
 224 768 m
 224 800 l
@@ -295,35 +295,39 @@ h
 96 768 l
 224 768 l
 </path>
-<use layer="origins" matrix="1 0 0 1 -16 0" name="mark/disk(sx)" pos="176 784" size="normal" stroke="black"/>
-<use name="mark/disk(sx)" pos="176 688" size="normal" stroke="black"/>
-<use name="mark/disk(sx)" pos="208 736" size="normal" stroke="black"/>
-<use name="mark/disk(sx)" pos="144 704" size="normal" stroke="black"/>
-<path layer="rays" stroke="orange" dash="dashed">
+<use layer="origins" matrix="1 0 0 1 -16 0" name="mark/disk(sx)" pos="176 784" size="normal" stroke="red"/>
+<use matrix="1 0 0 1 -64 0" name="mark/disk(sx)" pos="176 688" size="normal" stroke="red"/>
+<use name="mark/disk(sx)" pos="208 736" size="normal" stroke="red"/>
+<use matrix="1 0 0 1 32 0" name="mark/disk(sx)" pos="144 704" size="normal" stroke="red"/>
+<path layer="rays" stroke="orange" arrow="normal/normal">
 160 784 m
 256 784 l
 </path>
-<path stroke="orange" dash="dashed">
+<path stroke="orange" arrow="normal/normal">
 208 736 m
 256 736 l
 </path>
-<path stroke="orange" dash="dashed">
-176 688 m
-256 688 l
-</path>
-<path stroke="orange" dash="dashed">
-144 704 m
-256 704 l
-</path>
-<use layer="origins" name="mark/disk(sx)" pos="224 672" size="normal" stroke="black"/>
-<path layer="rays" stroke="orange" dash="dashed">
+<use layer="origins" name="mark/disk(sx)" pos="224 672" size="normal" stroke="red"/>
+<path layer="rays" stroke="orange" arrow="normal/normal">
 224 672 m
 256 672 l
 </path>
-<text layer="labels" matrix="1 0 0 1 -1.79766 21.2723" transformations="translations" pos="160 752" stroke="black" type="label" width="13.062" height="6.84" depth="1.49" valign="baseline">$\mathbf{R}_1$</text>
-<text matrix="1 0 0 1 47.9376 -28.1634" transformations="translations" pos="160 752" stroke="black" type="label" width="13.062" height="6.84" depth="1.49" valign="baseline">$\mathbf{R}_2$</text>
-<text matrix="1 0 0 1 -17.0776 -61.4201" transformations="translations" pos="160 752" stroke="black" type="label" width="13.062" height="6.84" depth="1.49" valign="baseline">$\mathbf{R}_3$</text>
-<text matrix="1 0 0 1 64.4161 -92.5795" transformations="translations" pos="160 752" stroke="black" type="label" width="13.062" height="6.84" depth="1.49" valign="baseline">$\mathbf{R}_5$</text>
-<text matrix="1 0 0 1 15.8794 -75.2021" transformations="translations" pos="160 752" stroke="black" type="label" width="13.062" height="6.84" depth="1.49" valign="baseline">$\mathbf{R}_4$</text>
+<text layer="labels" matrix="1 0 0 1 -1.79766 21.2723" transformations="translations" pos="160 752" stroke="black" type="label" width="13.062" height="6.84" depth="1.49" valign="baseline" style="math">\mathbf{R}_1</text>
+<text matrix="1 0 0 1 47.9376 -28.1634" transformations="translations" pos="160 752" stroke="black" type="label" width="13.062" height="6.84" depth="1.49" valign="baseline" style="math">\mathbf{R}_2</text>
+<text matrix="1 0 0 1 14.9224 -61.4201" transformations="translations" pos="160 752" stroke="black" type="label" width="13.062" height="6.84" depth="1.49" valign="baseline" style="math">\mathbf{R}_3</text>
+<text matrix="1 0 0 1 64.4161 -92.5795" transformations="translations" pos="160 752" stroke="black" type="label" width="13.062" height="6.84" depth="1.49" valign="baseline" style="math">\mathbf{R}_5</text>
+<text matrix="1 0 0 1 -48.1206 -75.2021" transformations="translations" pos="160 752" stroke="black" type="label" width="13.062" height="6.84" depth="1.49" valign="baseline" style="math">\mathbf{R}_4</text>
+<path layer="polygon" stroke="orange" arrow="normal/normal">
+176 704 m
+256 704 l
+</path>
+<path layer="rays" stroke="orange" arrow="normal/normal">
+176 704 m
+256 704 l
+</path>
+<path stroke="orange" arrow="normal/normal">
+112 688 m
+256 688 l
+</path>
 </page>
 </ipe>
