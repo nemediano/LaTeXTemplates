@@ -61,6 +61,7 @@ _minted-report
 #Kile generated files
 *.kile
 *.synctex.gz
+*.tex.backup
 
 #Executables from the surce files
 Notes/src/bitManipulation
