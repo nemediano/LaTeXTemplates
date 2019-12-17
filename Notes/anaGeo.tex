@@ -451,9 +451,9 @@ The reason is that if we have an horizontal segment $\overline{\mathbf{a}\mathbf
             \State \Return{true} \Comment{If $\mathbf{p} \in \overline{\mathbf{a}\mathbf{b}}$ ; by convention, we say we are inside}
           \EndIf
           \If{$a_y \neq b_y$} \Comment{If the edge is not horizontal}
-            \State $s \gets $
-            \State $t \gets $
-            \If{$0 \leq s \leq 1$ \textbf{and} $t > 0$} \Comment{Test if we hit the edge}
+            \State $s \gets \frac{(a_x - o_x)(a_y - b_y)}{a_y - b_y}$
+            \State $t \gets \frac{a_y - o_y}{a_y - b_y}$
+            \If{$0 \leq t \leq 1$ \textbf{and} $s > 0$} \Comment{Test if we hit the edge}
               \State $c \gets c + 1$ \Comment{We hit it, increase counter}
             \EndIf
           \EndIf
