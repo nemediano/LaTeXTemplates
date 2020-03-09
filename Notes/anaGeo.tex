@@ -381,7 +381,7 @@ All the above led us to Algorithm~\ref{alg:ray2seg}:
 \label{sec:belongTest}
 
 In principle, this problem does not seem to be related to the previos ones.
-However, the algorithm to solve it does really on all the previos algorithms.
+However, the algorithm to solve it does use ideas from on all the previos algorithms.
 
 As it is ussual in CG, we represent a simple polygon\footnote{A \emph{simple} polygon is one in which his edges only intersect in their respective endpoints} $\mathbf{P}$ with an ordered list $V$, $|V| \geq 3$ of points in $\mathbb{R}^2$ that represent his consecutive vertices.
 By convention, we assume that there is an extra edge between the first and last point in $V$.
@@ -415,7 +415,9 @@ It also shows an interesting corner case: $\mathbf{R}_3$, (How many times does $
   \label{fig:polygonTest}
 \end{figure}
 
-By convention, if $\mathbf{p}$ it's exactlly on any of the edges: $\overline{\mathbf{a}\mathbf{b}}$ (like $\mathbf{p}_5$), we will say it belongs to $\mathbf{P}$. If that is not the case, we transverse trough all the edges of $\mathbf{P}$ counting all the intersections counting the number of hits. Finally, we test for the pairity of the number of hits.
+By convention, if $\mathbf{p}$ it's exactlly on any of the edges: $\overline{\mathbf{a}\mathbf{b}}$ (like $\mathbf{p}_5$ in Figure~\ref{fig:polygonTest}), we will say it belongs to $\mathbf{P}$.
+If that is not the case, we transverse trough all the edges of $\mathbf{P}$ counting all the intersections.
+Finally, we test for the pairity of the number of hits.
 
 Special attention needs to be placed in case of an horizontal edge.
 If we found such an edge $a_y = b_y$, we just don't count it.
@@ -432,6 +434,8 @@ The reason is that if we have an horizontal segment $\overline{\mathbf{a}\mathbf
   We should be adding two to the counter.
   However, since at the end we are interested in the counter's pairity, we can just ignore it!
 \end{itemize}
+
+As in the previous cases. The Algorithm~\ref{alg:pointInPoly} shows the algorithm just described in pseudocode and the Listing~\ref{lst:pointInPoly} the implementation in C++ using GLM.
 
 {\centering
 \begin{minipage}{\linewidth}
@@ -451,8 +455,8 @@ The reason is that if we have an horizontal segment $\overline{\mathbf{a}\mathbf
             \State \Return{true} \Comment{If $\mathbf{p} \in \overline{\mathbf{a}\mathbf{b}}$ ; by convention, we say we are inside}
           \EndIf
           \If{$a_y \neq b_y$} \Comment{If the edge is not horizontal}
-            \State $s \gets \frac{(a_x - o_x)(a_y - b_y)}{a_y - b_y}$
-            \State $t \gets \frac{a_y - o_y}{a_y - b_y}$
+            \State $s \gets \frac{(a_x - p_x)(a_y - b_y)}{a_y - b_y}$
+            \State $t \gets \frac{a_y - p_y}{a_y - b_y}$
             \If{$0 \leq t \leq 1$ \textbf{and} $s > 0$} \Comment{Test if we hit the edge}
               \State $c \gets c + 1$ \Comment{We hit it, increase counter}
             \EndIf
@@ -469,7 +473,7 @@ The reason is that if we have an horizontal segment $\overline{\mathbf{a}\mathbf
         \If{$s_q < 0$ \textbf{or} $s_q > 1$} \Comment{The point is outside the segment projection,  cannot be in $\overline{\mathbf{a}\mathbf{b}}$}
            \State \Return{false}
         \EndIf
-        \State $\mathbf{q} \gets \mathbf{o} + s_q \mathbf{v}$ \Comment{Project the point into the segment}
+        \State $\mathbf{q} \gets \mathbf{a} + s_q (\mathbf{b} - \mathbf{a})$ \Comment{Project the point into the segment}
         \State \Return{$\mathbf{q} = \mathbf{p}$} \Comment{Test if the point was the projection}
       \EndProcedure
     \end{algorithmic}
@@ -478,3 +482,22 @@ The reason is that if we have an horizontal segment $\overline{\mathbf{a}\mathbf
 \par
 }
 
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  %frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=127, %If you omit this two fields, the whole file is pulled
+  lastline=172
+  ]{cpp}{src/testAnaGeo.cpp}
+  \caption{Implementation of Algorthm~\ref{alg:pointInPoly} in C++ and GLM}
+  \label{lst:pointInPoly}
+  \end{listing}
+\end{minipage}
+\par
+}

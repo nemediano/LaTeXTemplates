@@ -17,6 +17,8 @@ double point2LineDistance(const glm::vec3& a, const glm::vec3& b, const glm::vec
 double point2SementDistance(const glm::vec3& a, const glm::vec3& b, const glm::vec3& p);
 bool rayIntersectSegment(const glm::vec2& a, const glm::vec2& b, const glm::vec2& o, const glm::vec2& v);
 bool rayHitsPoint(const glm::vec2& o, const glm::vec2& v, const glm::vec2& p);
+bool pointInSegment(const glm::vec2& a, const glm::vec2& b, const glm::vec2& p);
+bool pointInPolygon(const std::vector<glm::vec2>& polygon, const glm::vec2& p);
 
 struct Ray {
   glm::vec2 origin;
@@ -120,4 +122,51 @@ bool rayHitsPoint(const glm::vec2& o, const glm::vec2& v, const glm::vec2& p) {
   const glm::vec2 q = o + s_q * v;
   // See if the point is the projection
   return glm::epsilonEqual(glm::distance2(p, q), 0.0f, EPSILON);
+}
+
+bool pointInSegment(const glm::vec2& a, const glm::vec2& b, const glm::vec2& p) {
+  if (glm::epsilonEqual(glm::distance2(a, b), 0.0f, EPSILON)) {
+    // There is no segment it's just a point
+    return glm::epsilonEqual(glm::distance2(a, p), 0.0f, EPSILON);
+  }
+  const float s_q = glm::dot((a - p), (b - a)) / glm::length2(b - a);
+  if (s_q < 0.0f || s_q > 1.0f) {
+    // We cannot be inside: our projection fails outside the segment
+    return false;
+  }
+  // Project point into segment
+  const glm::vec2 q = a + s_q * (b - a);
+  // See if the point is the projection
+  return glm::epsilonEqual(glm::distance2(p, q), 0.0f, EPSILON); 
+}
+
+bool pointInPolygon(const std::vector<glm::vec2>& polygon, const glm::vec2& p) {
+  if (polygon.size() < 3U) {
+    // There is no polygon
+    return false;
+  }
+  // Counter for the number of times the cross an edge
+  size_t hitsCount = 0U;
+  // Loop trough all the edges
+  for (size_t i = 0; i < polygon.size(); ++i) {
+    // An edge is form by the current vertice and the next one
+    const glm::vec2 a = polygon[i];
+    const glm::vec2 b = polygon[(i + 1) % polygon.size()];
+    // If we are on the edge we say we are inside and break
+    if (pointInSegment(a, b, p)) {
+      return true;
+    }
+    // If this edge it's horizontal skip
+    if (glm::epsilonEqual(a.y, b.y, EPSILON)) {
+      // Calculate potential intersection
+      const float s = (a.x - p.x) * (a.y - b.y) / (a.y - b.y);
+      const float t = (a.y - p.y) / (a.y - b.y);
+      // See if the ray hits the edge
+      if (t >= 0.0f && t <= 1.0f && s >= 0.0f) {
+        hitsCount++;
+      }  
+    }
+  }
+  // If the number of hits is odd
+  return hitsCount % 2U == 1U;
 }
