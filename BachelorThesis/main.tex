@@ -1,0 +1,106 @@
+\documentclass[12pt,letterpaper,spanish]{book}%% Me lo estoy fusilando del demo de winshell.
+
+\usepackage[spanish]{babel} %% Plantilla y separacion de archivos en español.
+
+%\usepackage[latin1]{inputenc} %% Solo windows recuerda cambiar la codificacion de los documentos.
+%\usepackage[dvips]{graphicx} %% Para poner figuras cuando se hace el dvi.
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc} %% Para usar la  directamente los acentos y codificar en utf8
+
+%Este paquete me deja customizar los pies de las figuras y las tablas
+\usepackage[margin=2cm,font=footnotesize,labelfont=bf]{caption}
+
+\usepackage{fancyhdr}
+%% El paquete geometry es la neta, me deja poner los margenes de manera mas sencilla
+\usepackage[left=2cm,right=1.5cm]{geometry}
+
+
+\usepackage{graphicx} %Imágenes
+
+%%Este hace al momento de hacer el PDF que todas las referencias se conviertan en vinculos
+\usepackage[pdftex]{hyperref}
+
+\pagestyle{fancyplain}
+
+%% Redefieniendo las cabezeras y los pies de pagina me lo fusile del demo de winshell
+\renewcommand{\chaptermark}[1]
+                 {\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]
+                 {\markright{\thesection\ #1}}
+\lhead[\fancyplain{}{\thepage}]
+      {\fancyplain{}{\rightmark}}
+\rhead[\fancyplain{}{\leftmark}]
+      {\fancyplain{}{\thepage}}
+\cfoot{}
+\sloppy
+
+%% Se supone que esto hace posible poner imagenes en ambos tanto en pdf como en dvi
+% \newif\ifpdf
+% \ifx\pdfoutput\undefined
+%    \pdffalse 
+% \else
+%    \pdfoutput=1
+%    \pdftrue
+% \fi
+% 
+% \ifpdf
+%    \usepackage[pdftex]{graphicx}
+%    \pdfinfo {
+%       /Title (Modelado Grafico de un Cuerpo Neumatico con OpenGL a Base de Ecuaciones Diferenciales)
+%       /Subject (Modelado Grafico y Ecuaciones Diferenciales)
+%       /Author (Jorge Antonio Garcia Galicia)
+%       /Keywords (graficacion, animacion, flexible, ecuacion diferencial, neumatico, opengl)
+%    }
+% \else
+%    \usepackage[dvips]{graphicx}
+% \fi
+
+%%paquete que hace que al hacer un pdf, las citas y referencias sean hypervinculos
+\usepackage{hyperref}
+
+%% Para quitar un warning que me esta mandando
+\setlength{\headheight}{16pt}
+
+\parskip=3mm
+%% Empieza el documento
+
+\begin{document}
+
+\author{Jorge Antonio García Galicia}
+\title{Modelado Gráfico de un Cuerpo Neumático con OpenGL a Base de Ecuaciones Diferenciales}
+\maketitle
+
+\pagenumbering{roman}
+
+\setcounter{page}{1}
+\tableofcontents
+\listoffigures
+\listoftables
+\pagenumbering{arabic}
+
+\include{introduccion}
+
+\include{capitulo1}
+\include{capitulo2}
+\include{capitulo3}
+\include{capitulo4}
+
+\include{conclusiones}
+
+
+\begin{appendix}
+\appendix
+\include{apendice1}
+\end{appendix}
+
+
+
+\addcontentsline{toc}{chapter}{Bibliografía}
+
+\bibliographystyle{plain}
+\thispagestyle{empty}
+
+\bibliography{bibliografia}
+\nocite{*}
+
+\end{document}
