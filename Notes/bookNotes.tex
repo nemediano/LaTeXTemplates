@@ -1,0 +1,36 @@
+\section{Notes from book}
+
+While I wasz reading the book~\cite{Gottschling2015}, I had the need to take notes all all the parts that were specially important either because I did not know them or because I am not always aware or their importance (i.e: I tent to forgot them).
+
+\subsection{Chapter 1}
+\begin{itemize}
+ \item Brace initialization cannot be narrowed (pp 10)
+ \item Do not use macros (pp 10)
+ \item Addresable is called an \emph{lvale} (pp 13)
+ \item Mathemathic expresions should not have side effects. (pp 12)
+ \item Always use \mintinline{cpp}{bool} for logical comparisions. In other words: do not use the integer test agains zero. (pp 14)
+ \item Bitwise shifts \mintinline{cpp}{<<} and \mintinline{cpp}{>>} \emph{almost} always use zeroes to fill. Except for \emph{signed right shift} which is implementation defined. (pp 15)
+ \item Expressions v.s statements. (pp 21)
+ \item If we use default value for an argument, then every other argumnet to the \emph{right} of it should also have it. (pp 30)
+ \item Use of \mintinline{cpp}{explicit} keyword (pp 32)
+ \item Assert as much as you can (pp 35)
+ \item C++ can \mintinline{cpp}{throw} anything as exception. Althrougth, is recomended to \mintinline{cpp}{throw} only exceptions. (pp 37)
+ \item Always \mintinline{cpp}{catch} an exception by reference. (pp 39)
+ \item Catching order matters, and elipsis at the end catch evertything (pp 40)
+ \item Generic stream manipulation can be impleneted by: (pp 42)
+ \begin{itemize}
+  \item Output: \mintinline{cpp}{ostream}
+  \item Input: \mintinline{cpp}{istream}
+  \item both: \mintinline{cpp}{iostream}
+ \end{itemize}
+  \item \mintinline{cpp}{Stringstream} can create an \mintinline{cpp}{std::string} from any printable type. (pp 42)
+  \item Output stream can formats numbers in octal, decimal and hexadecimal. For binary see this same notes in their bitshift preamble. You can also use \mintinline{cpp}{boolalpha} to format booleans as strings. (pp 44)
+  \item Use list initialization with collections, since avoids narrowing. (pp 47)
+  \item Use pointer for data structs. (pp 51)
+  \item Use RAII when use pointers. (pp 51)
+  \item Usage of smart pointers. (pp 51 - 55)
+  \item The \mintinline{cpp}{valarray} behaves somehow as a math vector. (pp 58)
+  \item Conditional compilation using preprocesor directives. (pp 62)
+  \item The preprocessor can be abused for allowing nested comments (pp 63)
+  
+\end{itemize}
