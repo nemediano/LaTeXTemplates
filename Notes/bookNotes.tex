@@ -1,6 +1,6 @@
 \section{Notes from book}
 
-While I wasz reading the book~\cite{Gottschling2015}, I had the need to take notes all all the parts that were specially important either because I did not know them or because I am not always aware or their importance (i.e: I tent to forgot them).
+While I was reading the book~\cite{Gottschling2015}, I had the need to take notes at all the parts that were specially important either because I did not know them or because I am not always aware or their importance (i.e: I tent to forget them).
 
 \subsection{Chapter 1}
 \begin{itemize}
@@ -31,6 +31,56 @@ While I wasz reading the book~\cite{Gottschling2015}, I had the need to take not
   \item Usage of smart pointers. (pp 51 - 55)
   \item The \mintinline{cpp}{valarray} behaves somehow as a math vector. (pp 58)
   \item Conditional compilation using preprocesor directives. (pp 62)
-  \item The preprocessor can be abused for allowing nested comments (pp 63)
+  \item The preprocessor can be abused to allow nested comments (pp 63)
+\end{itemize}
+
+\subsection{Chapter 2}
+\begin{itemize}
+ \item When to make a constructor \mintinline{cpp}{explicit} (pp 79)
+ \item An \mintinline{cpp}{explicit} constructor with more than one argument make sense in C++11 (pp 80)
+ \item Delegate contructors: Call another constructor in the initialization argument list of a constructor. (pp 80)
+ \item Assigment and copy constructor should be consistent. Assigment should make extra validations against self assigment and compatibility. (pp 81)
+ \item An initializer list can be used to construct an object from a list of values of the same type. But we need to implement special assigments and copy constructors. (pp 81-83)
+ \item Uniform initializers allow us to use braces \mintinline{cpp}{{ }} as universal initializers, can be dangerous. (pp 83-85)
+ \item Use braces in constructor's memeber initialization list, to avoid narrowing (pp 85)
+ \item Use move semantics to allow \emph{shallow} copies. (pp 85)
+ \item Move semantic is done by providing both: a move copy constructor and a move assigment. (pp 86)
+ \item The move constructor steals data from the source and and leaves it in an empty state. Read carefully (pp 86)
+ \item Move asigment can be implemented efficientlly by swapping pointer between source and target, (then relying in source's desturctor). Caution: It can can cause unvoluntary swaps if is used with \mintinline{cpp}{std::move()}. (pp 87)
+ \item Remember to check compatibillty with move assigment. (Same with normal assigment) (pp 88)
+ \item Most move constructor/assigment is called less frequentlly than we expect due \emph{elission}. However, this is compiler dependent and we must not relly on it. (pp 88)
+ \item When you use \mintinline{cpp}{std::move()} move semantic its \emph{always} used, but remember an object is considered expired after a move. (pp 89)
+ \item Never \mintinline{cpp}{throw} an exception in a destructor. (pp 89)
+ \item If a class has at least one \mintinline{cpp}{virtual} member the destructor should also be \mintinline{cpp}{virtual} (pp 89)
+ \item Resource allocation it's initialization. (\emph{RAII}). A resource should be tied to an object. I.e it should be allocated in the constructor and released in the destructor. Practically, this means that every time we want to use a resourse we must do it by creating an object that owns it. (pp 90)
+ \item Managed resources: we can implement manager clases by using \mintinline{cpp}{std::unique_ptr} and \mintinline{cpp}{std::shared_ptr} only one resource per class. (pp 91)
+ \item Release is more important than initialization. Only one single object is responsible for a resource. (pp 91)
+ \item A technique for managing resources that depend on other resources is called \emph{resource rescue}. Look at the exmple in (pp 91 - 95)
+ \item In C++11, there are six methods with a default behaviour. (pp 95)
+ \begin{enumerate}
+  \item Default (empthy) constructor.
+  \item Copy constructor
+  \item Move copy constructor
+  \item Assigment operator: \mintinline{cpp}{=}
+  \item Assigment move operator: \mintinline{cpp}{=}
+  \item Destructor.
+ \end{enumerate}
+  \item The rule of six: with regard to the six methods mentioned above: Implemnet as little as possible and declare as much as possible. (pp 96)
+  \item Member function can return \emph{references} to member data. (pp 96)
+  \item Do not keep references of temporary expressions. (pp 97)
+  \item To have access to constant data (like in literals) requires a \mintinline{cpp}{const} overload of the method. (pp 97)
+  \item You can overload the subscript operator (brakets). If you do, you usually need a \mintinline{cpp}{const} overload too. (pp 99)
+  \item For most of the other member functions (methods), only the \mintinline{cpp}{const} version is needed. This is the most common use of \mintinline{cpp}{const}. (pp 99)
+  \item The braket (subscript) operator should only apply to an lvalue. To that, we can qualify the member operator with a reference. (pp 100)
+  \item We can also reference qualify the asigment operators. (pp 100)
+  \item Two ampersands \mintinline{cpp}{&&} can \emph{rvalue} qualify a method. (pp 100)
+  \item Define your operators \emph{consitentlly} with each other and whenever appropiate provide a semantic similar to those of an standar type. (pp 101)
+  \item You cannot change priority: even for your operator overloads. (pp 102)
+  \item Pay attention that the semantic/intended priority of your overloads matches the priority of C++. (pp 102)
+  \item Most operators can be defined as member or as a free function. Depending on the case one can make more sense than the other. (pp 102-104)
+  \item Implement binary operators as free functions. (pp 104)
+  \item Unary operators are \emph{usually} OK as members. (pp 104)
+  \item Operators of intrinsic types with primitive types should have conmutative overloads. (pp 103)
+  \item Overloading the output stream operator: \mintinline{cpp}{<<}. (pp 104)
   
 \end{itemize}
