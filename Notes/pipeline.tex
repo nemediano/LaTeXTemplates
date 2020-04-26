@@ -1,6 +1,113 @@
 \section{Graphics Pipeline}
+
+\subsection{Common pipeline}
+\label{sec:commPipe}
+
+As is defined in OpenGL 4.6, it is the most common version of the pipeline.  If you are interview for a graphics position chances are that they refer to this pipeline. None of the  optional shader stages are present. See the Section~\ref{sec:compPipe} for the complete pipeline.
+
 \begin{itemize}
-  \item Simple: Vertex and fragment
-  \item Complete, all optional stages
-  \item Texture pipeline
+ \item Vertex specification.
+ \begin{itemize}
+  \item It is started with a drawing command and a properly set shader program.
+  \item Retrive vertex arrays from CPU as per VAO specification.
+  \begin{itemize}
+   \item Vertex array objects (Vertex data)
+   \item Vertex index buffer (Primitive assemble instructions)
+  \end{itemize}
+  \item Retrive shader uniforms.
+  \item Fill vertex attributes.
+ \end{itemize}
+
+ \item Vertex shader.
+ \begin{itemize}
+  \item User defined programable stage.
+  \item It is mandatory.
+  \item Execution appears to be parallel for each vertex. The user has no knowledge of order execution.
+  \item Map input and output in a 1:1 way. There most be exactlly one output per input. Because of this can be cached. A vertex with the same input must have the same output, therefore can be skipped the second time.
+  \item If you want to draw something, it must output normalize device coordinates. Also known as clip coordinates. 
+  \begin{itemize}
+   \item A vector of four components. The first three must be in $[-1, 1]$
+   \item It represent the vertex position in homogenous coordinates in the viewing volume.
+   \item It is typically archived by multpliying the input position by the Projection, View and Model matrices: $P V M\mathbf{x}$
+  \end{itemize}
+
+ \end{itemize}
+
+ \item Vertex post processing.
+ \begin{itemize}
+  \item Transformation feedback can optionally happen here. Output of the primitives are written into buffer objects.
+  \item Clipping: All primitives that lies in the boundary are broken into smaller primitives that are inside the viewing volume.
+  \item Perspective division. The vertex position is divided by the $w$ coordinate.
+  \item Viewport transformation. The vertex is mapped into (possiblly more than one) discrete screen coordinates according to the output framebuffer.
+ \end{itemize}
+
+ \item Primitive assembly.
+ \begin{itemize}
+  \item All vertex are assamble into primitives inside the viewing volume. Typically triangles.
+  \item Face culling can optionally happen. Due the winding order of the triangles and the fact that you are in normalize device coordinates. You can take the dot product between the normal of the rendring plane ($\mathbf{k}$) and the normal of the triagle: $(\mathbf{p}_1 - \mathbf{p}_0) \times (\mathbf{p}_2 - \mathbf{p}_0)$ order matters. And you know which face is facing the camera (back or front).
+ \end{itemize}
+
+ \item Rasterization.
+ \begin{itemize}
+  \item Primitive are rasterized in the order thay were given.
+  \item The result is a fragment, that is the set of properties used to compute the final color of a pixel.
+  \item If multisampling is enable a fragment is created per sample (and the state include coverage info)
+ \end{itemize}
+
+ \item Fragment shader.
+ \begin{itemize}
+  \item User defined programable optional stage.
+  \item Execution appears to be parallel for each sample. The user has no knowledge of order execution.
+  \item You have access to all the user defined attributes per sample and his positon in the ouput frambuffer.
+  \item You can discard a fragment or sample.
+  \item The ouput (if you want to draw) must be one color per each output frambuffer expected. Plus depth values and stencil values. 
+  \item If you do not supply one, the depth and stencil values are still output to the frambuffers, and the color buffer content it's not defined.
+ \end{itemize}
+
+ \item Per sample operations.
+ \begin{itemize}
+  \item A series of tests that the fragment goes to see if it will become a pixel in the output frambuffer. Most of them are optional.
+  \item Pixel ownership test. If the pixel is not owned by the OpenGL context this test fails. It is the only non optional test. If you draw to a framebuffer object, this test alway pases.
+  \item Siccssor test: optional, fails if the pixel lies ourside a user defined rectangle of the screen.
+  \item Stencil test: optional, when its enable, the pixel performs a user defined operation with the contents of the stencil buffer. And optionally writes to the buffer. If fail the pixel is discarded.
+  \item Depth test: optional, the pixel depth value is compared with the one in the buffer if is less, then overrides the buffer and passes, if it is not then it is discarded.
+  \item Blending: this is not a test, but an operation that all the pixel perform to store his content into the output frambuffer. It is user configurable and typically uses alpha value to perform transparency.
+  \item Write to the output framebuffers. An optional last masking of certain channels can happen (maybe you disable writting to the depth).
+ \end{itemize}
+
 \end{itemize}
+
+
+\subsection{Complete pipeline}
+\label{sec:compPipe}
+
+It is the same as the previous section but with the optional programable stages active.
+The two stages are the Tesselation stage and the Geometry stage.
+
+\begin{itemize}
+ \item Vertex specification.
+ \item Vertex shader.
+ \item Tesselation shader.
+ \begin{itemize}
+  \item Optional, programable user defined stage.
+  \item It is divided in two:
+  \begin{itemize}
+   \item Tesselation control shader. Determines the amount of tesselation and the geometry of a primitive. It is optional even if the tesselation stage is active.
+   \item Tesselation evaluation shader. Determines the values of the primitive attributes after the tesselation happens. It must be present if the tesselation stage is active
+  \end{itemize}
+ \end{itemize}
+ \item Geometry shader
+ \begin{itemize}
+  \item It recieves the primitives used ofr drawing.
+  \item Can optionally change the primitive type, number and modify vertex attributes.
+  \item It must output the vertex position in normalize device coordinates.
+ \end{itemize}
+ \item Vertex post processing.
+ \item Primitive assembly.
+ \item Rasterization.
+ \item Fragment shader.
+ \item Per sample operations.
+\end{itemize}
+
+\subsection{Texture pipeline}
+\label{sec:textPipe}
