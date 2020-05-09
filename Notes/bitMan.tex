@@ -152,8 +152,8 @@ f: 01010010
 
 In order to do bit manipulations, we need to be able to refer to a specific bit.
 The bits on a variable are refered by a position.
-The first position, is the rightmost bit; its refered as $0$ positions continue to increment by one to the left until the last bit.
-Look at the Figure~\ref{fig:bitPos}
+The first position, is the rightmost bit; its refered as $0$, and positions continue to increment by one to the left until the last bit.
+Look at the Figure~\ref{fig:bitPos}.
 Therefore, in an $8$ bit size variable positions are in $\{ 0, 1, \ldots, 6, 7 \}$ and in a $32$ bit variable are in $\{ 0, 1, \ldots, 30, 31 \}$.
 
 \begin{figure}[htb]
@@ -266,7 +266,7 @@ The bit is false
 \end{verbatim}
 
 Finally, the above sample in Listing~\ref{lst:bitManip}, was written in a long form that prefers clarity on explanation rather than brevity in the code.
-Indeed, the most common (and compact) way to perform bit manipulation opearates does not use a temporal storage for the mask.
+Indeed, the most common (and compact) way to perform bit manipulation does not use a temporal storage for the mask.
 And operates in place: using the same vairiable as operand and output.
 The Listing~\ref{lst:bitManip2} shows a sample of the most common usage.
 

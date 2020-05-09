@@ -70,7 +70,7 @@ Now, if $\mathbf{p} \notin \mathbf{L}$, we want the distant between $\mathbf{p}$
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{img/line2point}
-  \caption{Line identified by two points. See Equation~\ref{eq:line} }
+  \caption{The distance of $\mathbf{p}$ to $\mathbf{L}$ is the lenght of the orange dashed segment.}
   \label{fig:point2line}
 \end{figure}
 
@@ -94,7 +94,7 @@ The Equation~\ref{eq:proj} puts in evidence that $\mathbf{y}$ is a directional v
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.60\textwidth]{img/projection}
-  \caption{Projection of a vector $\mathbf{x}$ into another vector $\mathbf{y}$. See Equation~\ref{fig:projection}}
+  \caption{Projection of a vector $\mathbf{x}$ into another vector $\mathbf{y}$. See Equation~\ref{eq:proj}}
   \label{fig:projection}
 \end{figure}
 
@@ -187,8 +187,8 @@ The Algorthm~\ref{alg:poin2seg2} shows this idea and Listing~\ref{lst:poin2seg2}
   baselinestretch=1.2,
   fontsize=\footnotesize,
   linenos,
-  firstline=67, %If you omit this two fields, the whole file is pulled
-  lastline=75
+  firstline=70, %If you omit this two fields, the whole file is pulled
+  lastline=78
   ]{cpp}{src/testAnaGeo.cpp}
   \caption{Implementation of Algorthm~\ref{alg:poin2seg2} in C++ and GLM}
   \label{lst:poin2seg2}
@@ -216,10 +216,10 @@ As usual, the segment is defined by his two end points $\mathbf{a}$ and $\mathbf
 
 The Figure~\ref{fig:rays2seg} shows the different cases: 
 \begin{itemize}
-  \item $\mathbf{R}_1$ Hits the whole segment. In fact, both reside on the same line. This is a hit.
-  \item $\mathbf{R}_2$ does not the segment.
+  \item $\mathbf{R}_1$ Hits the whole segment. In fact, both reside on the same line. By convention we will say that this is a hit.
+  \item $\mathbf{R}_2$ does not hit the segment.
   \item $\mathbf{R}_3$ hits the segment in the middle.
-  \item $\mathbf{R}_4$ kisses (touches) the segmnet at his endpoint. By convention we say this is a hit.
+  \item $\mathbf{R}_4$ kisses (touches) the segmnet at his endpoint. Again, by convention we say this is a hit.
   \item $\mathbf{R}_5$ is parrallel to the segment but does not touch it.
   \item $\mathbf{R}_6$ is parrallel to the segment, is on the same line, but also does not touch it.
 \end{itemize}
@@ -349,7 +349,7 @@ All the above led us to Algorithm~\ref{alg:ray2seg}:
            \State \Return{false}
         \EndIf
         \State $\mathbf{q} \gets \mathbf{o} + s_q \mathbf{v}$ \Comment{Project the point into the ray}
-        \State \Return{$\mathbf{q} = \mathbf{a}$} \Comment{Test if the point was on the ray}
+        \State \Return{$\mathbf{p} = \mathbf{q}$} \Comment{Test if the point was on the ray}
       \EndProcedure
     \end{algorithmic}
   \end{algorithm}
@@ -367,8 +367,8 @@ All the above led us to Algorithm~\ref{alg:ray2seg}:
   baselinestretch=1.2,
   fontsize=\footnotesize,
   linenos,
-  firstline=78, %If you omit this two fields, the whole file is pulled
-  lastline=123
+  firstline=80, %If you omit this two fields, the whole file is pulled
+  lastline=125
   ]{cpp}{src/testAnaGeo.cpp}
   \caption{Implementation of Algorthm~\ref{alg:ray2seg} in C++ and GLM}
   \label{lst:ray2seg}
@@ -430,6 +430,7 @@ The reason is that if we have an horizontal segment $\overline{\mathbf{a}\mathbf
   \item The point $\mathbf{p}$ it's in the same line that contains $\overline{\mathbf{a}\mathbf{b}}$.
   $\mathbf{p}$ it's either to the right or to the left of the segment.
   This could be a hit in the case that $\mathbf{p}$ is to the left of $\overline{\mathbf{a}\mathbf{b}}$.
+  THIS IS INCORRECT, I NEED TO RE-WRITE THIS SECTION
   However, even in this situation there will be two hits: one when we enter $\overline{\mathbf{a}\mathbf{b}}$ trought $\mathbf{a}$ and another one when we left it trough $\mathbf{b}$, see $\mathbf{R}_3$ in the Figure~\ref{fig:polygonTest}.
   We should be adding two to the counter.
   However, since at the end we are interested in the counter's pairity, we can just ignore it!
@@ -461,6 +462,7 @@ As in the previous cases. The Algorithm~\ref{alg:pointInPoly} shows the algorith
               \State $c \gets c + 1$ \Comment{We hit it, increase counter}
             \EndIf
           \EndIf
+          \Comment{There is an error, we must have consideration in this case}
       \EndFor
       \State \Return{$c \equiv 1 \Mod{2}$} \Comment{Test if the counter is odd}
       \EndProcedure
