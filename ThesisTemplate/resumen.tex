@@ -1,0 +1,16 @@
+\chapter*{Resumen}
+Este trabajo trata de como visualizar campos escalares que han pasado por un proceso de digitalización. En particular se usa una técnica de graficación por computadora conocida como visualización por superficies o \emph{surface rendering}.
+
+Se asume que se tienen conjuntos digitales de datos que provienen de haber muestreado de manera uniforme el espacio en tres dimensiones. Asumimos que este muestreo está hecho en una rejilla rectangular y por lo tanto tenemos una imagen digital en 3D o volumen. Hacemos dos suposiciones importantes sobre el volumen. Primero, que es una buena aproximación del campo escalar y segundo que no tenemos información de la manera como se realizó la digitalización.
+
+Primeramente revisamos dos algoritmos de rastreo de superficies sobre volúmenes. El algoritmo de \emph{Marching Cubes} que es el mas usado en la actualidad y el Algoritmo de Artzy cuya salida posee características deseables desde el punto de vista topológico. Ambos algoritmos producen una malla poligonal que aproxima una superficie del campo escalar original.
+
+El problema en adelante es visualizar correctamente estas mallas. Se incluye una revisión de algunas técnicas de graficación por computadora para visualizar mallas. En particular nos enfocamos a la iluminación con el modelo de Phong y a las técnicas basadas en mapas; tales como el mapeo de texturas y el mapeo de relieves (\emph{bump mapping}).
+
+Se explica también la creación de superficies implícitas o modelo blobby usado comúnmente en graficación para hacer modelado orgánico. Se revisan algunas funciones base que se usan con este modelo. Se presentan las funciones Kaiser-Bessel generalizadas también llamadas \emph{blobs}.
+
+El objetivo de este trabajo consiste en encontrar una forma de mejorar la visualización de la malla del Algoritmo de Artzy y hacerla equiparable con el algoritmo de \emph{Marching Cubes} sin modificar la malla y usando solamente efectos de iluminación.
+
+La principal aportación del trabajo es un algoritmo para encontrar una superficie implícita formada por \emph{blobs} que envuelve la malla del Algoritmo de Artzy. Por medio de esta superficie calculamos vectores normales que luego ponemos en los vértices de la malla y usamos para iluminación.
+
+Por último, se reportan resultados de algunos experimentos con esta técnica. Primeramente se realizan experimentos en conjuntos de datos obtenidos por medio de técnicas de imagenología biomédica, estos resultados constituyen una prueba visual de que la técnica propuesta funciona. Por ultimo se hacen experimentos sobre campos escalares conocidos (\emph{phantoms}) y se comparan las normales obtenidas por nuestro método con las normales analíticas de los \emph{phantoms}. En la última sección del trabajo se reportan las conclusiones y se proponen algunas lineas de investigación para trabajo futuro.
