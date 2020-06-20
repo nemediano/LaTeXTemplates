@@ -23,7 +23,7 @@ As is defined in OpenGL 4.6, it is the most common version of the pipeline.  If 
   \item User defined programable stage.
   \item It is mandatory.
   \item Execution appears to be parallel for each vertex. The user has no knowledge of order execution.
-  \item Map input and output in a 1:1 way. There most be exactlly one output per input. Because of this can be cached. A vertex with the same input must have the same output, therefore can be skipped the second time.
+  \item Map input and output in a 1:1 way. There most be exactlly one output per input. Because of this it can be cached. A vertex with the same input must have the same output, therefore can be skipped the second time.
   \item If you want to draw something, it must output normalize device coordinates. Also known as clip coordinates. 
   \begin{itemize}
    \item A vector of four components. The first three must be in $[-1, 1]$
