@@ -1,14 +1,21 @@
 \section{Bit manipulation}
 
-In this section I will explian some bit manipulation operations. As it's common in most programing tasks and to avoid difficult cases: we will foucus on positive values for integer types.
+In this section I will explian some bit manipulation operations.
+As it's common in most programing tasks and to avoid difficult cases: we will foucus on positive values for integer types.
 
-Just to clarify the terms: \emph{bit} is a single binary digit, it can have only two values either 0 or 1. A \emph{byte} is a group of bits that conforms the unit of the computer architecture. Technically, a byte can have any size in bits. However, in modern computers this is always 8. That is why sometimes they call a byte an \emph{octet}. For the following code samples you can assume the following constant to be in scope.
+Just to clarify the terms: \emph{bit} is a single binary digit, it can have only two values either 0 or 1.
+A \emph{byte} is a group of bits that conforms the unit of the computer architecture.
+Technically, a byte can have any size in bits.
+However, in modern computers this is always 8.
+That is why sometimes they call a byte an \emph{octet}.
+For the following code samples you can assume the following constant to be in scope.
 
 \begin{minted}{cpp}
 const size_t BITS_PER_BYTE = 8U;
 \end{minted}
 
-Let me introduce, in Listing~\ref{lst:binHelpers}; two helper function to debug and visulize such variables. The first one: \mintinline{cpp}{bitSize} returns the size in bits of the variable and the second one: \mintinline{cpp}{bitStr} returns a string with the binary representation of a variable.
+Let me introduce, in Listing~\ref{lst:binHelpers}; two helper functions to debug and visulize such variables.
+The first one: \mintinline{cpp}{bitSize} returns the size in bits of the variable and the second one: \mintinline{cpp}{bitStr} returns a string with the binary representation of a variable.
 
 {\centering
 \begin{minipage}{\linewidth}
@@ -54,7 +61,24 @@ These binary operations take an integer value (in the left hand side) and an uns
 The bits shifted out are discarded and in order to fill the spaces created by the shift, zeros are inserted.
 Because of this, shifting to any side by the exact size in bits of the left operand is the same as setting the result to 0.
 And of course, shifting to any side by 0, it's a null operation, the left operand it's returned without modification.
-However, a quick warning note: Shifting to any side by a number greater than the size (in bits) of the left operand or by a negative number it is not defined. See~\cite{INT34Cpp} for a more detailed explanation.
+However, a quick warning note: Shifting to any side by a number greater than the size (in bits) of the left operand or by a negative number it is not defined.
+See~\cite{INT34Cpp} for a more detailed explanation.
+\item Bitwise \emph{AND} between two values of the same size.
+      Performed with the operator \mintinline{cpp}{&}.
+      Yes, it is the same as the \emph{dereference} operator.
+      The distinctions is made due the former being a binary operator and the dereference one being a unary operator.
+\item Bitwise \emph{OR} between two values of the same size.
+      Performed with the operator \mintinline{cpp}{|}
+\item Bitwise \emph{XOR} between two values of the same size.
+      Also known as \emph{exclusive or}.
+      Performed with the operator \mintinline{cpp}{^}
+
+These operators are the expected equivalent to the ones defined in first order logic.
+However, they operate bitwise; that is why they are different than the logical ones that are represented by double ampersand or double pipe.
+
+\item Bitwise unary \emph{NOT}.
+      Performed with the operator \mintinline{cpp}{~}
+\end{itemize}
 
 The code snippet in Listing~\ref{lst:bitShifting} shows a valid C++ sample of these operations:
 
@@ -90,20 +114,12 @@ e: 00000000 = 0
 
 Another important thing to notice is that, \emph{as long as the shift leaves significant digits} (or else we \emph{underflow}); shifting values to the right is equivalent to divide by $2^n$ where $n$ is the number of bits shifted.
 Similarly, shifting values to the left, \emph{as long as we do not discard a significant bit} (or else we \emph{overflow}); is equivalent to multiply by $2^n$, where $n$ is the number of bits shifted.
-Note also that unsigned types cannot underflow.
+Note also that \mintinline{cpp}{unsigned} types cannot underflow.
 
-In the above sample $2^3 = 8$. Therfore: $c = 42 / 8 = 5$ (remember it's an integer division).
+In the above sample $2^3 = 8$.
+Therfore: $c = 42 / 8 = 5$ (remember it's an integer division).
 And $b = 42 \cdot 8 = 336$, but it resulted in an overflow, since the maximun value for an $8$ bit variable is $2^8 = 256$.
 
-\item Bitwise \emph{AND} between two values of the same size. Performed with the operator \mintinline{cpp}{&}. Yes, it is the same as the \emph{dereference} operator. The distinctions is made due the former being a binary operator and the dereference one being a unary operator.
-\item Bitwise \emph{OR} between two values of the same size. Performed with the operator \mintinline{cpp}{|}
-\item Bitwise \emph{XOR} between two values of the same size. Also known as \emph{exclusive or}. Performed with the operator \mintinline{cpp}{^}
-
-These operators are the expected equivalent to the ones defined in first order logic.
-However, they operate bitwise; that is why they are different than the logical ones that are represented by double ampersand or double pipe.
-
-\item Bitwise unary \emph{NOT}. Performed with the operator \mintinline{cpp}{~}
-\end{itemize}
 
 Listing~\ref{lst:bitwiseOp} present a sample usage of the bitwise logical operations:
 
@@ -151,7 +167,7 @@ f: 01010010
 
 In order to do bit manipulations, we need to be able to refer to a specific bit.
 The bits on a variable are refered by a position.
-The first position, is the rightmost bit; its refered as $0$, and positions continue to increment by one to the left until the last bit.
+The first position, is the rightmost bit; which is refered as $0$, and positions continue to increment by one to the left until the last bit.
 Look at the Figure~\ref{fig:bitPos}.
 Therefore, in an $8$ bit size variable positions are in $\{ 0, 1, \ldots, 6, 7 \}$ and in a $32$ bit variable are in $\{ 0, 1, \ldots, 30, 31 \}$.
 
@@ -180,9 +196,12 @@ So, for the purposes of this explanation: all machines are big endian.
 There are four important operations for bit manipulation:
 \begin{description}
 \item[Set] Put in an specific bit to the value of $1$.
-\item[Clear] Put in an specific bit to the value of $0$. Also known as \emph{reset} or \emph{unset}.
-\item[Toggle] Change the value of a specific bit. In other words: if the bit is $1$ set it to $0$, else set it to $1$.
-\item[Query] This operation results in a boolean value. If an specif bit is $1$ return \mintinline{cpp}{true}, else return \mintinline{cpp}{false}.
+\item[Clear] Put in an specific bit to the value of $0$.
+             Also known as \emph{reset} or \emph{unset}.
+\item[Toggle] Change the value of a specific bit.
+              In other words: if the bit is $1$ set it to $0$, else set it to $1$.
+\item[Query] This operation results in a boolean value.
+             If an specif bit is $1$ return \mintinline{cpp}{true}, else return \mintinline{cpp}{false}.
 \end{description}
 
 In order to implement the bit manipulation we have to use the bit operations in combination with what is called a \emph{mask}.
@@ -265,8 +284,8 @@ The bit is false
 \end{verbatim}
 
 Finally, the above sample in Listing~\ref{lst:bitManip}, was written in a long form that prefers clarity on explanation rather than brevity in the code.
-Indeed, the most common (and compact) way to perform bit manipulation does not use a temporal storage for the mask.
-And operates in place: using the same vairiable as operand and output.
+Indeed, the most common (and compact) way to perform bit manipulations does not use a temporal storage for the mask.
+And operates in place: using the same variable as operand and output.
 The Listing~\ref{lst:bitManip2} shows a sample of the most common usage.
 
 {\centering
@@ -310,7 +329,7 @@ The bit at position 5 is set
 
 \subsection{Manipulating groups of bits}
 
-The general case of manipulate a group of bits is done in the same way as individual bits.
+The general case is to manipulate a group of bits, and it's done in the same way as individual bits.
 Remember, that we said that a mask contain ones in the places where we want to manipulate and zeros anywhere else.
 Then, to manipulate several bits at once, we just need a more general mask.
 
@@ -330,5 +349,7 @@ m: 00000000000000000000000111000000
 \end{verbatim}
 
 Typically an \mintinline{cpp}{unsigned char} has $8$ bits size and an \mintinline{cpp}{unsigned int} has $32$ bits size.
-Therefore, the hexadecimal representation it's particularly usefull since a literal of the form $0xXX$, where the $X$ represents an hexadecimal digit; can create a mask for an \mintinline{cpp}{unsigned char}.
+However, if you want to be sure (and not really in conventions), you can also use types with explicit size since C++11, like \mintinline{cpp}{uint8_t} and \mintinline{cpp}{uint32_t}.
+They just require the header \mintinline{cpp}{#include <cstdint>}. 
+The hexadecimal representation it's particularly usefull since a literal of the form $0xXX$, where the $X$ represents an hexadecimal digit; can create a mask for an \mintinline{cpp}{unsigned char}.
 And a literal in the form $0xXXXXXXXX$ can do it for an \mintinline{cpp}{unsigned int}.

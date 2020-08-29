@@ -159,7 +159,7 @@ The Algorthm~\ref{alg:poin2seg2} shows this idea and Listing~\ref{lst:poin2seg2}
 {\centering
 \begin{minipage}{\linewidth}
   \begin{algorithm}[H]
-    \caption{Distance between a point $\mathbf{p}$ and a line segment $\overline{\mathbf{a}\mathbf{b})}$  (Second version)}
+    \caption{Distance between a point $\mathbf{p}$ and a line segment $\overline{\mathbf{a}\mathbf{b}}$  (Second version)}
     \label{alg:poin2seg2}
     \begin{algorithmic}[1] % The number tells where the line numbering should start 0 for no number
       \Procedure{DistancePoint2Segment}{$\mathbf{a},\mathbf{b},\mathbf{p}$} \Comment{$\mathbf{a}$, $\mathbf{b}$ and $\mathbf{p}$ are all points of the same dimension}
@@ -381,7 +381,7 @@ All the above led us to Algorithm~\ref{alg:ray2seg}:
 \label{sec:belongTest}
 
 In principle, this problem does not seem to be related to the previos ones.
-However, the algorithm to solve it does use ideas from on all the previos algorithms.
+However, the algorithm to solve it uses ideas from on all the previos algorithms.
 
 As it is ussual in CG, we represent a simple polygon\footnote{A \emph{simple} polygon is one in which his edges only intersect in their respective endpoints} $\mathbf{P}$ with an ordered list $V$, $|V| \geq 3$ of points in $\mathbb{R}^2$ that represent his consecutive vertices.
 By convention, we assume that there is an extra edge between the first and last point in $V$.
@@ -390,7 +390,7 @@ Now, if we have an extra point $\mathbf{p} \in \mathbb{R}^2$.
 The problem is to determine if $\mathbf{p}$ it's in the interior region of $\mathbf{P}$.
 \footnote{By \href{https://en.wikipedia.org/wiki/Jordan_curve_theorem}{Jordan's curve theorem}, any simple polygon will divide $\mathbb{R}^2$ in three regions: his interior, his exterior and his boundary. In our case, by convention; we will consider the boundary to be part of the interior.}
 
-Since we know, thanks to the \href{https://en.wikipedia.org/wiki/Jordan_curve_theorem}{Jordan's curve theorem} that any path that connects the interioir with the exterior will need to cross the boundary.
+We know, thanks to the \href{https://en.wikipedia.org/wiki/Jordan_curve_theorem}{Jordan's curve theorem} that any path that connects the interioir with the exterior will need to cross the boundary.
 That the boundary is $\mathbf{P}$.
 And that all the points in $V$ are finite. 
 Therefore, we can generate a very simple and elegant algorithm to solve our problem.
@@ -468,7 +468,7 @@ As in the previous cases. The Algorithm~\ref{alg:pointInPoly} shows the algorith
       \EndProcedure
       \Statex
       \Procedure{PointInEdge}{$\mathbf{p},\mathbf{a},\mathbf{b}$} \Comment{$\mathbf{p} \in \mathbb{R}^2$ is a point. $\mathbf{a}, \mathbf{b} \in \mathbb{R}^2$ represent an edge $\overline{\mathbf{a}\mathbf{b}}$}
-        \If{$\mathbf{a} = \mathbf{b}$} \Comment{There is no edge, it just a point}
+        \If{$\mathbf{a} = \mathbf{b}$} \Comment{There is no edge, it is just a point}
           \State \Return{$d(\mathbf{a}, \mathbf{p}) = 0$}
         \EndIf
         \State $s_q \gets \frac{(\mathbf{a} - \mathbf{p}) \cdot (\mathbf{b} - \mathbf{a})}{|\mathbf{b} - \mathbf{a}|^2}$

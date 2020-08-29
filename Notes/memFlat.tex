@@ -1,10 +1,13 @@
 \section{Memory flatenig}
 
-A common design problem in multidimensional data situations is memory layout representation. Internally, computers always represent memory in a linear fashion, the idea of \emph{mutidimensional array} it's just sugar syntax added by high level programming lenguajes.
+A common design problem in multidimensional data situations is memory layout representation.
+Internally, computers always represent memory in a linear fashion, the idea of \emph{mutidimensional array} it's just sugar syntax added by high level programming lenguajes.
 
 \subsection{One dimensional array}
 
-Given said that, sometimes allocations for such constructs can become dificult to use or declare by themselves. Especially in C++. Lets see an example:
+Having said that, sometimes allocations for such constructs can become dificult to use or declare by themselves.
+Specially, in C++.
+Lets see an example:
 
 {\centering
 \begin{minipage}{\linewidth}
@@ -27,7 +30,8 @@ Given said that, sometimes allocations for such constructs can become dificult t
 }
 \vspace{0.5cm}
 So far, everything looks good, the sintax is clear, braket operator is helping us.
-Conceptually, we have a series of variables with the same type that live in a contiguos space in memory. See Figure~\ref{fig:1D}.
+Conceptually, we have a series of variables with the same type that live in a contiguos space in memory.
+See Figure~\ref{fig:1D}.
 
 \begin{figure}[htp]
   \centering
@@ -70,7 +74,8 @@ Now, remember this is just an abstraction; provided by our programming language:
   \label{fig:2D}
 \end{figure}
 
-Usually, the C++ way of modeling this is creating an array, such that each element of it, is also an array. See the code in Listing~\ref{lst:2dexample}
+Usually, the C++ way of modeling this is creating an array, such that each element of it, is also an array.
+See the code in Listing~\ref{lst:2dexample}
 
 {\centering
 \begin{minipage}{\linewidth}
@@ -106,7 +111,7 @@ Now, there is three main points to highlight in the sample:
 \item The sintax is backwads with respect to mathematic notation.
       See Figure~\ref{fig:2D} again.
       The index \mintinline{cpp}{i} is transversin along the $x$ dimension and the index \mintinline{cpp}{j} along the $y$ dimension.
-      Therefore, the element \mintinline{cpp}{b[j][i]} it's analogous to $b(x, y)$ in math.
+      Therefore, the element \mintinline{cpp}{b[j][i]} it's analogous to $b(x_i, y_j)$ in math.
  \end{enumerate}
 
 \subsection{Memory flatenig explained}
@@ -131,7 +136,7 @@ However, we also provide an abstraction to access this data via simulated indice
 
 This has the advantage that all the data is store in a one dimensional array.
 Therefore, you \emph{ensure} all your data is actually contigous in memory.
-And no matter how many dimensions your data has, the type is always a one dimensional array.
+And no matter how many dimensions your data has, the type it's always a one dimensional array.
 
 Also, provided that we acces the data in the \emph{correct way}, the access tends to be faster than the alternative shown in Listing~\ref{lst:2dexample}.
 The \emph{correct way} means that the inner loop moves along the $x$ dimension and the outer loop transverses the second dimension $y$.
@@ -198,7 +203,10 @@ For completeness, we also show Listing~\ref{lst:functions2D2} that defines the i
 
 \subsection{Three dimensional data}
 
-Now, lets look at the more complex --but still very common-- scenario of three dimensions. The situation is the one depicted in Figure~\ref{fig:3D}. We include a new dimension in the data: indexed by $k$ along the $z$ axis, we call it \emph{depth}. Note that even when the frame of reference in Figure~\ref{fig:3b}, looks weird; it is a \emph{right handed} frame of reference. 
+Now, lets look at the more complex --but still very common-- scenario of three dimensions.
+The situation is the one depicted in Figure~\ref{fig:3D}.
+We include a new dimension in the data: indexed by $k$ along the $z$ axis, we call it \emph{depth}.
+Note that even when the frame of reference in Figure~\ref{fig:3b}, looks weird; it is a \emph{right handed} frame of reference. 
 
 \begin{figure}[htp]
   \centering
@@ -217,7 +225,9 @@ Now, lets look at the more complex --but still very common-- scenario of three d
   \label{fig:3D}
 \end{figure}
 
-In the normal mutidimensional array synatx of C++, this will become, an array of arrays of arrays of ints. See Listing~\ref{lst:3dexample}. We transvers it using three nested loops, where the most outer one is the one indexed by the new dimension.
+In the normal mutidimensional array synatx of C++, this will become, an array of arrays of arrays of ints.
+See Listing~\ref{lst:3dexample}.
+We transvers it using three nested loops, where the most outer one is the one indexed by the new dimension.
 
 {\centering
 \begin{minipage}{\linewidth}
@@ -264,7 +274,8 @@ In Listing~\ref{lst:functions3D}, we can see the new function $g$.
 }
 \vspace{0.5cm}
 
-I will talk about the form of the function for the second result (the $y$ that represent the \mintinline{cpp}{j} index) in Section~\ref{sec:moreDim}. Finally, for completenees; the new function $h$ is presented in Listing~\ref{lst:functions3D2}
+I will talk about the form of the function for the second result (the $y$ that represents the \mintinline{cpp}{j} index) in Section~\ref{sec:moreDim}.
+Finally, for completenees; the new function $h$ is presented in Listing~\ref{lst:functions3D2}
 
 {\centering
 \begin{minipage}{\linewidth}
@@ -289,9 +300,12 @@ I will talk about the form of the function for the second result (the $y$ that r
 \subsubsection{Generalizing to more dimensions}
 \label{sec:moreDim}
 
-In the case of two dimensions the calculation for function $g$ were simply the integer division and the modulo. In the case of three dimensions we also have a modulo and a division (Altrought, the parameters change in the later one). However, the interesting case is that of the middle value: it has both operations.
+In the case of two dimensions the calculation in function $g$ were simply the integer division and the modulo.
+In the case of three dimensions we also have a modulo and a division (Altrought, the parameters change in the later one).
+However, the interesting case is that of the middle value: it has both operations.
 
-This is actually the general case. Indeed, the correct transformation to get the simulated index of a given dimension, is as follows:
+This is actually the general case.
+Indeed, the correct transformation to get the simulated index of a given dimension, is as follows:
 \begin{enumerate}
   \item Divide the real index by the size of the unit of all the previous dimensions.
   \item Take the result of the previous operation and  calculate his modulo with the maximum size of the given dimension.
@@ -327,7 +341,8 @@ As for the last variable $z$, we know that \mintinline{cpp}{index} is striclly l
 Now that the the logic of the function $g$ is clear; we can also come up with a general rule for the inverse function $h$.
 
 \begin{enumerate}
-  \item For each dimension calculate a term. The term is the size of the unit in the previos dimension times the index in the current dimension.
+  \item For each dimension calculate a term.
+        The term is the size of the unit in the previos dimension times the index in the current dimension.
   \item Accumulate (add) all the terms to calculate the real index.
 \end{enumerate}
 
