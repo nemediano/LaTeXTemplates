@@ -2,18 +2,6 @@
 \addcontentsline{toc}{chapter}{Conclusiones}
 \markboth{CONCLUSIONES}{CONCLUSIONES}
 
-Los resultados visuales obtenidos en la Sección \ref{sec:experimentosVisuales} nos indican que se pueden alcanzar mejoras manipulando solamente los parámetros del la iluminación y que esto puede hacerse con una técnica como la presentada en este trabajo, sin conocer ninguna información \emph{a priori} del conjunto de datos que queremos visualizar.
-
-Aunque los resultados son buenos con el blob utilizado para la rejilla \emph{bcc}, este blob es ideal para un modelo promedio. Con esto queremos decir que hay modelos para los que este blob es bueno, por ejemplo el de la Figura \ref{fig:MRI-Head}, sin embargo no existe un blob ideal para todos los modelos. Una posible linea de investigación es buscar una manera de optimizar el blob para un modelo en particular conociendo solamente la malla $\mathcal{A}_{\tau}$ que aproxima la superficie.
-
-Un punto importante es también que la calidad de la malla producida por el Algoritmo de Artzy es mejor que la del algoritmo estándar de MC. Los experimentos nos demostraron que en general el número de caras de la malla de Artzy es menor que la producida por MC además de tener la característica de que sus vértices tienen grados más homogéneos lo cual es una ventaja desde el punto de vista computacional, pues en general se ocupa menos espacio para guardar las mallas de Artzy.
-
-Otra posible linea de investigación seria utilizar el Algoritmo de Artzy cuando el volumen esta muestreado en la rejilla \emph{bcc}. En \cite{EdgarBoundaryTraking} se hace esta implementación que da como resultado vóxeles con forma de dodecaedro rómbico. Estos vóxeles son mas eficientes al llenar el espacio, y tiene la ventaja de tener caras en forma de rombos (y en doce orientaciones distintas). Por lo que se sospecha que usar en esta malla la aproximación aquí descrita mejoraría mucho su visualización.
-
-La malla de Artzy como estructura discreta nos es mas útil que la de MC, pues podemos hacer operaciones como medir el volumen interior de la superficie o el área de la malla envolvente con mucha mas facilidad que en la malla de MC. Esto es debido a que su geometría es mas simple y sobre todo a que por ser topológicamente correcta no da lugar a ambigüedades (en todo momento sabemos que hay un conjunto de vóxeles interiores y otro conjunto de vóxeles exteriores). Por lo tanto podemos concluir que vale la pena seguir trabajando con el Algoritmo de Artzy aun cuando MC sea el algoritmo de rastreo de superficies mas usado actualmente.
-
-También cabe señalar que dado que asumimos total desconocimiento del origen del conjunto de datos ``cualquier'' criterio que usemos para adaptar mejor una superficie implícita es valido. Por esta razón en futuros experimentos se deberían explorar nuevos criterios para optimizar los blobs, particularmente se piensa que criterios puramente geométricos (sin usar técnicas de procesamiento de imágenes) podrían dar buenos resultados.
-
 Hay que señalar que los resultados son puramente visuales y altamente dependientes del modelo de iluminación. Aunque en este trabajo nos limitamos al modelo de iluminación de Phong y al sombreado de Gouraud, bien valdría la pena explorar modelos alternativos tanto para iluminación como para sombreado.
 
 También como trabajo futuro se podría intentar que el GPU se hiciera cargo no solo de los cálculos de iluminación si no también de los cálculos de extracción de superficie, es decir que el Algoritmo de Artzy debería de poderse implementar en GPU.
