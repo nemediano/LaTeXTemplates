@@ -17,6 +17,7 @@
 % \setlength\cftaftertoctitleskip{2pt}
 
 %\includeonly{dedicatoria} %Por debug solo compila un capitulo
+\usepackage{csquotes} % Because if is not present HERE polyglossia throws a warning
 
 \begin{document}
 
@@ -41,9 +42,9 @@
 \tableofcontents
 \listoffigures
 \listoftables
-%\cleardoublepage
-%\begin{abstract}
-%\end{abstract}
+\listofalgorithms
+\cleardoublepage
+
 
 %%%%Change numbering to arabic
 \clearpage \pagenumbering{arabic}
@@ -60,13 +61,7 @@
 
 %\bibliographystyle{ieee_esp}
 \nocite{*}
-%%%%For kile to work fine with bibliography (autocompletion), the .bib
-%%%%files must be at the same folder as the .kilepr and where the .tex are!!!
-%%%%I thougth it worked with only the one at the root, but it doesn't, so
-%%%%now it is at both places.
-%%%%I created a link to the Research.bib file that is synchronized with
-%%%%the repository.
-%\bibliography{bibliografia}
+
 \printbibliography
 
 \addcontentsline{toc}{chapter}{\bibname}

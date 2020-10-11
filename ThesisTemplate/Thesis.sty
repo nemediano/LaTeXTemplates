@@ -6,7 +6,7 @@
 \usepackage{csquotes}
 \usepackage{polyglossia}
 \setmainlanguage{spanish}
-\setotherlanguage{english}
+\setotherlanguage[variant=american]{english}
 
 %%%%Electronic version
 %\usepackage[obeyDraft, spanish, color=green!40, colorinlistoftodos=true]{todonotes}
@@ -20,7 +20,8 @@
 % \usepackage[spanish, backgroundcolor=white, linecolor=black, colorinlistoftodos=true]{todonotes}
 
 %These four are required to create the cover
-\usepackage{graphicx}
+\usepackage{graphicx} % Images
+\usepackage{subcaption} % The hability of using subfigures
 \usepackage[normalem]{ulem}
 %%%%For displaying in multiple columns.
 \usepackage{multicol}
@@ -33,9 +34,8 @@
 %%%%Several math symbols, like \bigstar and \smallsetminus.
 \usepackage{amssymb}
 
-
-
-
+%Profesionall looking tables
+\usepackage{booktabs}
 
 %%Puestos por mi haber si funcionan (Jorge)
 %Este es el que mas me preocupa
@@ -70,7 +70,7 @@
 %%%%For its use with todonotes (I put to obeyDraft), we must say that it's a final version
 %%%%otherwise no links will appear.
 \usepackage[final,unicode,colorlinks=true,citecolor=blue,linkcolor=blue,plainpages=false,
-pdfpagelabels=true,pdfauthor={Jorge Garcia},pdftitle={Visualización suavizada de superfícies obtenidas por rastreo de fronteras aplicado a volúmenes discretizados},pdfkeywords={visualización, graficas por computadora, superficies implícitas, superficies, suavizado}]{hyperref}
+pdfpagelabels=true,pdfauthor={Jorge Antonio García Galicia},pdftitle={Modelado Gráfico de un Cuerpo Neumático con OpenGL a Base de Ecuaciones Diferenciales},pdfkeywords={modelado, graficas por computadora, ecuaciones diferenciales, OpenGL, cuerpo flexible}]{hyperref}
 %%%%If I set draft, no links will appear (for printable version).
 % \usepackage[draft,pdftex,unicode,colorlinks=true,citecolor=blue,linkcolor=blue,plainpages=false,
 % pdfpagelabels=true,pdfauthor={Laura Leonides}]{hyperref}
@@ -89,8 +89,10 @@ pdfpagelabels=true,pdfauthor={Jorge Garcia},pdftitle={Visualización suavizada d
 \usepackage[margin=2cm,font=footnotesize,labelfont=bf]{caption}
 
 %%Estos dos paquetes me dejan poner pseudocodigos se usan en conjunto
-\usepackage{algorithm} %Para poner pseudo-códigos
-\usepackage{algorithmic} %Se usan en conjunto
+\usepackage{algpseudocode}
+\usepackage{algorithm} %float enviroment for algorithms
+%Make the comments similar to cpp
+%\algrenewcommand{\algorithmiccomment}[1]{\hskip3em$//$ #1}
 %Poniendo los encabezados de los algoritmos en español
 \floatname{algorithm}{Algoritmo}
 \renewcommand{\algorithmicrequire}{\textbf{Entradas:}}
@@ -100,21 +102,23 @@ pdfpagelabels=true,pdfauthor={Jorge Garcia},pdftitle={Visualización suavizada d
 %\usepackage[color]{changebar} %Barras de cambio
 %\cbcolor{blue} %Color de barra de cambio
 
-%Ahora en xelatex
-\DeclareFontFamily{U}{wncy}{}
-\DeclareFontShape{U}{wncy}{m}{n}{<->wncyr10}{}
-\DeclareSymbolFont{cyr}{U}{wncy}{m}{n}
-\DeclareMathSymbol{\shah}{\mathord}{cyr}{88} 
-
 %\pagestyle{fancyplain}
 \newtheorem{teo}{Teorema}
 \newtheorem*{teoSN}{Teorema}
 
-%Subfiguras
-\usepackage{subfigure}
-
-%\usepackage{mciteplus}
 \usepackage{bm}
 \usepackage{mathrsfs}
 \usepackage{amsthm}
+
+\usepackage{minted} %For inserting source code and embed source files
+%Requieres compilation using:
+% $xelatex -shell-escape input.tex
+%In order to work this temple needs to be build like this:
+% 1 XeLaTeX
+% 2 Biber 
+%    This tool is not in the default Kile: I need to install the package and then configure 
+%    here: https://tex.stackexchange.com/questions/154751/biblatex-with-biber-configuring-my-editor-to-avoid-undefined-citations/154763#154763)
+% 3 XeLaTex
+% 4 XeLateX
+% 5 ViewPDF
 
