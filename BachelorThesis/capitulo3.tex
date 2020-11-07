@@ -580,7 +580,7 @@ Vector detectaColision(Punto *p)
 \end{verbatim} 
 La función primero calcula el vector $\vec{V}$ que va del centro de la esfera al punto, después lo normaliza. Luego pregunta si el punto no está fijo, en cuyo caso, mueve el punto justo afuera de la esfera, cambiándolo de posición al punto $\vec{p} + (r\vec{V})$, donde $\vec{p}$ es la posición de la esfera, $r$ su radio y $\vec{V}$ ya es unitario. Si el punto sí estuviera fijo, lo que hace es mover a la esfera fuera del punto cambiándola de posición al punto $\vec{s} - (r\vec{V})$, donde $\vec{s}$ ahora representa la posición de la partícula..
 \subsection{La respuesta de la colisión}
-La mayor parte del trabajo se hizo en la función anterior, ahora que sabemos el vector normal $\vec{n}$ a la colisión, sólo nos resta seguir los pasos explicados en la página \pageref{respuestaColision}.
+La mayor parte del trabajo se hizo en la función anterior, ahora que sabemos el vector normal $\vec{n}$ a la colisión, sólo nos resta seguir los pasos explicados en la página \pageref{alg:elasmov}.
 \begin{verbatim}
 void respondeColision (Punto *p, Vector normal)
 {

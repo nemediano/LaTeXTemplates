@@ -45,21 +45,27 @@ Una variable para integrar la ecuación de Newton
  
 Los valores de estas constantes con las que se hizo este experimento están en la tabla~\ref{valores:constantes}.
 \begin{table}
-\caption[Tabla con los valores de las constantes durante el experimento]{Valor de las constantes del experimento}
-\label{valores:constantes}
+\ra{1.2}
 \begin{center}
-\begin{tabular} {|c|c|p{10cm}|} \hline
-Constante & Valor & Comentario\\ \hline
+\begin{tabular} {@{}lrp{10cm}@{}}
+\toprule
+Constante & Valor & Comentario\\ 
+\midrule
  LADO & 26 & Para que se vea mejor el modelo, se elige un número par\\
  PARTICULAS & 676 &  \\
  RESORTES & 1300 & \\
- CUADROS & 625 & \\ \hline
+ CUADROS & 625 & \\ 
+\midrule
  MUNDO & 100 & La proyección va de $-MUNDO$ a $MUNDO$ en cada eje\\
- FONDO & -50.0 & \\ \hline
- DT & 0.01 & \\ \hline
+ FONDO & -50.0 & \\ 
+\midrule 
+ DT & 0.01 & \\ 
+\midrule
  M & 0.009 & El peso total del cuerpo flexible es $M \cdot PARTICULAS$ \\
-\hline
+\bottomrule
 \end{tabular}
+\caption[Tabla con los valores de las constantes durante el experimento]{Valor de las constantes del experimento}
+\label{valores:constantes}
 \end{center}
 \end{table}
 
@@ -103,11 +109,13 @@ Los valores de default de estas variables (el valor que tiene al iniciar la ejec
 \end{figure}
 
 \begin{table}
-\caption[Tabla con los valores de defecto de los parámetros]{Valor inicial de los parámetros del experimento}
-\label{valores:variables}
+\ra{1.2}
 \begin{center}
-\begin{tabular} {|c|c|p{10cm}|} \hline
-Parametro & Valor & Comentario\\ \hline
+%\begin{tabular} {|c|c|p{10cm}|}
+\begin{tabular} {@{}llp{10cm}@{}}
+\toprule
+Parametro & Valor & Comentario\\
+\midrule
  Masa & 0.08 & Masa del cuerpo rígido \\
  Integrador & Runge Kutta & Método Numérico con el que se integra. \\
  Gas & Activado & El programa empieza con la fuerza del gas prendida \\
@@ -116,9 +124,11 @@ Parametro & Valor & Comentario\\ \hline
  $g$ & -10.0 & La gravedad es negativa (jala hacia abajo) \\
  $k_s$ & 1.0 & La fuerza de los resortes \\
  $k_d$ & 0.4 & El valor de damping \\
-\hline
+\bottomrule
 \end{tabular}
 \end{center}
+\caption[Tabla con los valores de defecto de los parámetros]{Valor inicial de los parámetros del experimento}
+\label{valores:variables}
 \end{table}
 
 \subsection{Características del entorno de pruebas}
@@ -307,19 +317,22 @@ La nomenclatura de la prueba usando estas variables se especifica en el cuadro~\
 Cada una de las variantes arriba mencionadas puede tener dos valores. El \emph{\foreignlanguage{english}{render}} puede tener muchos valores pero para hacer las pruebas sólo voy a considerar dos: prendido, cuando se dibujan todos los cuerpos en estado sólido con iluminación y apagado, cuando se dibuja en wireframe sin luz y no se dibuja la caja del cuerpo flexible.
 
 \begin{table}
-\caption[Explicación de la nomenclatura de la prueba del programa]{Nomenclatura de la prueba}
-\label{nomenclatura:prueba}
+\ra{1.2}
 \begin{center}
-\begin{tabular} {|c|c|p{10cm}|} \hline
- Variable & Valores & Explicación\\ \hline
+\begin{tabular} {@{}llp{10cm}@{}}
+\toprule
+ Variable & Valores & Explicación\\
+\midrule 
  Animación & 0 ó 1 & Se considera 1 cuando la animación esta en marcha, y 0 cuando está en pausa. \\
  Colisiones & 0 ó 1 & Se considera 1 cuando hay una colisión y se ejecuta la respuesta, 0 cuando no hay colisión y sólo se ejecuta la detección. \\
  Método Numérico & 0 ó 1 & Se considera 1 cuando se ejecuta Runge Kutta y 0 cuando se ejecuta Euler. \\
  Fuerza del gas & 0 ó 1 & Se considera 1 cuando está prendida y 0 cuando está apagada. \\
  Render & 0 ó 1 & Se considera 1 cuando se hace la mayor cantidad render, como se explicó arriba y 0 cuando se hace el mínimo posible. \\
-\hline
+\bottomrule
 \end{tabular}
 \end{center}
+\caption[Explicación de la nomenclatura de la prueba del programa]{Nomenclatura de la prueba}
+\label{nomenclatura:prueba}
 \end{table}
 
 Se tienen pues cinco posibles variantes, cada una con dos valores. Se ejecutaron los 18 casos posibles (la animacion apagada implica que haya opciones que no tengan sentido, por eso son sólo 18 en vez de 32) y para cada caso anoté entre qué valores oscilan los fps. Los resultados se resumen en la tabla~\ref{resultado:prueba1}.
@@ -333,11 +346,13 @@ $$ C = \frac{FPS_{min} + FPS_{max}}{2} \div FPS_{base}$$
 En donde $FPS_{min}$ es el mínimo de fps en cada categoría y $FPS_{max}$ es el máximo de fps en la misma, $FPS_{base}$ es el promedio de fps de la categoría base, para este caso $FPS_{base} =$ 210.81 dado que es el promedio de los $FPS$ de la prueba que más poder requiere y se presenta en el último renglón de la tabla.
 
 \begin{table}
-\caption[Resultados de la prueba del programa]{Resultados primera prueba}
-\label{resultado:prueba1}
+\ra{1.2}
 \begin{center}
-\begin{tabular} {|c|c|c|c|c|c|c|} \hline
- Anim & Coli & Método & F. Gas & Render & FPS & Contr\\ \hline
+%\begin{tabular} {|c|c|c|c|c|c|c|}
+\begin{tabular} {@{}cccccrr@{}}
+\toprule
+ Anim & Coli & Método & F. Gas & Render & FPS & Contr\\
+\midrule
  0 & n/a & n/a & n/a & 0 & 2753.08 - 2768.15 & 0.08\\
  0 & n/a & n/a & n/a & 1 & 2754.01 - 2826.18 & 0.08\\
  1 & 0 & 0 & 0 & 0 & 654.35 - 663.34 & 0.32\\
@@ -356,9 +371,11 @@ En donde $FPS_{min}$ es el mínimo de fps en cada categoría y $FPS_{max}$ es el
  1 & 1 & 1 & 0 & 1 & 333.67 - 342.32 & 0.62\\
  1 & 1 & 1 & 1 & 0 & 214.34 - 219.26 & 0.97\\
  1 & 1 & 1 & 1 & 1 & 209.04 - 212.57 & 1.00\\
-\hline
+\bottomrule
 \end{tabular}
 \end{center}
+\caption[Resultados de la prueba del programa]{Resultados primera prueba}
+\label{resultado:prueba1}
 \end{table}
 
 Hay algunos datos interesantes con respecto a la tabla \ref{resultado:prueba1}, por ejemplo el hecho de lo poco que contribuye el render al desempeño de la animación (el .03). Esto se explica por que cuando el render está apagado se trazan más objetos gráficos, se dibujan cuatro lineas y cuatro puntos por cada cara, mientras que cuando el render está prendido si bien se hacen cálculos de iluminación sólo se dibuja un cuadro por cada cara.

@@ -98,19 +98,23 @@ Es momento de hacernos unas preguntas: ¿Qué es lo que compone nuestro cuerpo? 
 Ciertamente cada una de estas fuerzas es de naturaleza distinta, la fuerza de gravedad es externa y se puede calcular para cada punto por separado, la de los resortes depende de la posición de cada punto y de sus vecinos a los cuales está conectado por un \emph{resorte-amortiguador} y por último la de presión depende de la cara en la que esté el punto y del volumen total del cuerpo. Podemos resumirlo en el cuadro~\ref{ejemplo:fuerzas}.
 
 \begin{table}
-\caption[Resumen de las fuerzas que actúan sobre cada partícula]{Fuerzas a calcular para cada punto y que se necesita saber para hacer los calculos}
-\label{ejemplo:fuerzas}
+\ra{1.2}
 \begin{center}
-\begin{tabular} {|p{2cm}|c|p{2cm}|p{7cm}|} \hline
-Fuerza & Símbolo &  Parámetros & Datos necesarios \\ \hline
-Fuerza de gravedad & $ F_g $ & $g$, $m$ & Ninguno \\ \hline
-Fuerza del resorte & $ F_s + F_d $ & $k_s$, $k_d$ & Puntos unidos por el resorte \\
-& & & Velocidad y posición de cada punto que une el resorte \\ \hline
-Fuerza debida a la Presión & $ F_p $ & $k_p$ & Puntos que forman la cara \\ 
+\begin{tabular} {@{}llll@{}} 
+\toprule
+Fuerza & Símbolo &  Parámetros & Datos necesarios \\ 
+\midrule
+Gravedad & $ F_g $ & $g$, $m$ & Ninguno \\
+Resorte & $ F_s + F_d $ & $k_s$, $k_d$ & Puntos unidos por el resorte \\
+& & & Velocidad y posición de cada punto que une el resorte \\
+Presión & $ F_p $ & $k_p$ & Puntos que forman la cara \\ 
 & & & Volumen total del cuerpo \\ 
-& & & Area de la cara \\ \hline
+& & & Area de la cara \\ 
+\bottomrule
 \end{tabular}
 \end{center}
+\caption[Resumen de las fuerzas que actúan sobre cada partícula]{Fuerzas a calcular para cada punto y que se necesita saber para hacer los calculos}
+\label{ejemplo:fuerzas}
 \end{table}
 
 Para calcular la fuerza de gravedad es necesario que se conozcan dos parámetros, la masa de cada punto $m$, y la constante gravitación $g$. La gravedad debe de acumularse en cada punto.
@@ -198,11 +202,13 @@ Actualmente hay muchas maneras de atacar estos problemas, es decir muchas famili
 El primer método para obtener una aproximación numérica de la solución de una ecuación diferencial es el método de Euler, y desde entonces se han propuesto muchísimos métodos e ideas más. El cuadro~\ref{historia:metodos} es una línea del tiempo que tiene algunos de los acontecimientos más importantes del desarrollo de esta disciplina.
 
 \begin{table}
-\caption[Evolución histórica de los métodos numéricos]{Una línea de tiempo que muestra algunos de los acontecimientos mas importantes para la solución numérica de ecuaciones diferenciales}
-\label{historia:metodos}
+\ra{1.2}
 \begin{center}
-\begin{tabular} {|c|p{12cm}|} \hline
-Año & Evento \\ \hline
+%\begin{tabular} {@{}|c|p{12cm}|@{}} 
+\begin{tabular} {@{}lp{12cm}@{}} 
+\toprule
+Año & Evento \\ 
+\midrule
 1768 & Leonhard Euler publica su método, el primero en la historia \\
 1824 & Agustin Cauchy demuestra la convergencia del método de Euler, emplea el método de Euler implícito \\
 1855 & En una carta escrita por John F. Bashforth, se mencionan por primera vez los metodos de pasos multiples de Couch Adams \\
@@ -210,9 +216,12 @@ Año & Evento \\ \hline
 1905 & Martin Kutta describe el popular método de Runge Kutta de orden cuatro \\ 
 1910 & Lewis Fry Richardson anuncia su método de extrapolación. \\
 1952 & Charles F. Curtiss y Joseph Oakland Hirschfelder acuñan el término \emph{\foreignlanguage{english}{stiff equations}}. \\
-1967 & Loup Verlet publica su método, especialmente enfocado a la mecánica de partículas \\ \hline
+1967 & Loup Verlet publica su método, especialmente enfocado a la mecánica de partículas \\ 
+\bottomrule
 \end{tabular}
 \end{center}
+\caption[Evolución histórica de los métodos numéricos]{Una línea de tiempo que muestra algunos de los acontecimientos mas importantes para la solución numérica de ecuaciones diferenciales}
+\label{historia:metodos}
 \end{table}
 
 En escencia estos métodos se encargan de resolver la ecuacion diferencial de la forma:
@@ -480,16 +489,21 @@ Supongamos que se tienen dos cuerpos $A$ y $B$, las formas no importan, y sabemo
 Suponemos también que conocemos todas las propiedades de los cuerpos, es decir su masa, su velocidad y su posición.
 
 Queremos determinar una nueva posición y una nueva velocidad para los objetos como resultado de la colisión entre ellos. Esto se resumen el el cuadro~\ref{condiciones:Colision}.
+
 \begin{table}
-\caption{Condiciones de la respuesta a las colisiones}
-\label{condiciones:Colision}
+\ra{1.2}
 \begin{center}
-\begin{tabular} {|c|c|c|} \hline
-Objeto & Información conocida & Información por determinar \\ \hline
+\begin{tabular} {@{}lll@{}}
+\toprule
+Objeto & Información conocida & Información por determinar \\
+\midrule
 $A$ & Masa $m$, Velocidad $\vec{u}$ & Velocidad ajustada $\vec{s}$ \\
-$B$ & Masa $p$, Velocidad $\vec{v}$ & Velocidad ajustada $\vec{w}$ \\ \hline
+$B$ & Masa $p$, Velocidad $\vec{v}$ & Velocidad ajustada $\vec{w}$ \\
+\bottomrule
 \end{tabular}
 \end{center}
+\caption{Condiciones de la respuesta a las colisiones}
+\label{condiciones:Colision}
 \end{table}
 
 Para entender el porqué de la respuesta a la colisión, es necesario seguir los siguientes pasos\footnote{Esta es una reproducción del procedimiento mostrado en~\cite{FisicaMatematicasVideojuegos} con mi nomenclatura}. Primero vamos por el caso más simple: dos objetos $A$ y $B$, con velocidades $\vec{u}$ y $\vec{v}$ respectivamente chocan, como respuesta a la colisión las velocidades de ambos objetos cambian a $\vec{s}$ y $\vec{w}$. Ver la figura~\ref{colision:fig}.
@@ -529,30 +543,48 @@ Así que tenemos justo las condiciones necesarias para encontrar una solución, 
 
 Con esto se tiene todo lo necesario  para resolver una colisión elástica con uno de los dos objetos en reposo. Podemos utilizar el siguiente pseudocódigo:
 
-\begin{enumerate}
- \item $r = \frac{m}{p}$
- \item $\bar{u_n} = parteNormal(\vec{u}, \vec{n})$
- \item $\bar{u_t} = \bar{u} - \bar{u_n}$
- \item $\bar{s_n} = \bar{u_n} \left( \frac{r - 1}{r + 1} \right) $
- \item $\bar{w_n} = \bar{u_n} \left( \frac{2r}{r + 1} \right) $
- \item $\bar{s} = \bar{u_t} + \bar{s_n}$
- \item $\bar{w} = \bar{w_n}$
-\end{enumerate}
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{algorithm}[H]
+    \caption{Respuesta a una colisión elástica}
+    \label{alg:elas}
+    \begin{algorithmic}[1] % The number tells where the line numbering should start 0 for no number
+\State $r \gets \frac{m}{p}$
+\State $\textbf{u}_n \gets parteNormal(\vec{u}, \vec{n})$
+\State $\textbf{u}_t \gets \textbf{u} - \textbf{u}_n$
+\State $\textbf{s}_n \gets \textbf{u}_n \left( \frac{r - 1}{r + 1} \right) $
+\State $\textbf{w}_n \gets \textbf{u}_n \left( \frac{2r}{r + 1} \right) $
+\State $\textbf{s} \gets \textbf{u}_t + \textbf{s}_n$
+\State $\textbf{w} \gets \textbf{w}_n$
+    \end{algorithmic}
+  \end{algorithm}
+\end{minipage}
+\par
+}
+
 En donde la función \verb|parteNormal|, es una función que recibe un vector $\vec{u}$ y un vector $\vec{n}$, devuelve la parte normal de $\vec{u}$ con respecto a $\vec{n}$. Es decir nos sirve para partir al vector $\vec{u}$ en una parte tangencial y una parte normal a la colisión haciendo uso de las fórmulas \ref{eq:sepVector}.
 
 Ahora veamos el caso más general, donde $\vec{v} \neq 0$. Aquí vamos a ocupar el principio de relatividad y le restamos a todo el sistema $\vec{v}$, lo que lo transforma en el caso anterior. Resolvemos como lo habíamos hecho antes y luego le sumamos a todo el sistema $\vec{v}$. El pseudocódigo es casi idéntico:
  
-\begin{enumerate}
-\label{respuestaColision} 
- \item $r = \frac{m}{p}$
- \item $\bar{u} = \bar{u} - \bar{v}$
- \item $\bar{u_n} = parteNormal(\vec{u}, \vec{n})$
- \item $\bar{u_t} = \bar{u} - \bar{u_n}$
- \item $\bar{s_n} = \bar{u_n} \left( \frac{r - 1}{r + 1} \right) $
- \item $\bar{w_n} = \bar{u_n} \left( \frac{2r}{r + 1} \right) $
- \item $\bar{s} = \bar{u_t} + \bar{s_n} + \bar{v}$
- \item $\bar{w} = \bar{w_n} + \bar{v}$
-\end{enumerate}
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{algorithm}[H]
+    \caption{Respuesta a una colisión elástica con ambos cuerpos en movimeinto}
+    \label{alg:elasmov}
+    \begin{algorithmic}[1] % The number tells where the line numbering should start 0 for no number
+\State $r \gets \frac{m}{p}$
+\State $\textbf{u} \gets \textbf{u} - \textbf{v}$
+\State $\textbf{u}_n \gets parteNormal(\vec{u}, \vec{n})$
+\State $\textbf{u}_t \gets \textbf{u} - \textbf{u}_n$
+\State $\textbf{s}_n \gets \textbf{u}_n \left( \frac{r - 1}{r + 1} \right) $
+\State $\textbf{w}_n \gets \textbf{u}_n \left( \frac{2r}{r + 1} \right) $
+\State $\textbf{s} \gets \textbf{u}_t + \textbf{s}_n + \textbf{v}$
+\State $\textbf{w} \gets \textbf{w}_n + \textbf{v}$
+    \end{algorithmic}
+  \end{algorithm}
+\end{minipage}
+\par
+}
 
 Con esto podemos programar un función general que resuelva colisiones elásticas, sólo debemos asegurarnos de que la función que detecta las colisiones le informe a aquella función de tres cosas: las propiedades del objeto $A$, las propiedades del objeto $B$ y un vector normal al plano de colisión que vaya de $A$ a $B$.
 
@@ -578,15 +610,25 @@ w_n & = & r \left(  n u_n - v_n \right) \nonumber
 \end{eqnarray}
 
 Y el pseudocódigo, que resuelve la colisión de manera inelástica es el siguiente:
-\begin{enumerate}
- \item $r = \frac{m}{p}$
- \item $e = eficiencia(A) \cdot eficiencia(B)$
- \item $\bar{u} = \bar{u} - \bar{v}$
- \item $\bar{u_n} = parteNormal(\vec{u}, \vec{n})$
- \item $\bar{u_t} = \bar{u} - \bar{u_n}$
- \item $ dis = r^{2} \left(  \bar{u_n} \cdot \bar{u_n} \right) - \left( (r - e) (\bar{u_n} \cdot \bar{u_n}) + (1 - e) (\bar{u_t} \cdot \bar{u_t}) \right) $
- \item $\bar{s_n} = \bar{n} \left( \frac{ \sqrt{dis} - r \bar{u_n} }{r + 1} \right) $
- \item $\bar{w_n} = r \left( \frac{\bar{u_n} - \bar{v_n}}{r + 1} \right) $
- \item $\bar{s} = \bar{u_t} + \bar{s_n} + \bar{v}$
- \item $\bar{w} = \bar{w_n} + \bar{v}$
-\end{enumerate}
+
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{algorithm}[H]
+    \caption{Respuesta general a una colisión inelástica}
+    \label{alg:inelas}
+    \begin{algorithmic}[1] % The number tells where the line numbering should start 0 for no number
+\State $r \gets \frac{m}{p}$
+\State $e \gets eficiencia(A) \cdot eficiencia(B)$
+\State $\textbf{u} \gets \textbf{u} - \textbf{v}$
+\State $\textbf{u}_n \gets parteNormal(\vec{u}, \vec{n})$
+\State $\textbf{u}_t \gets \textbf{u} - \textbf{u}_n$
+\State $ dis = r^{2} \left(  \textbf{u}_n \cdot \textbf{u}_n \right) - \left( (r - e) (\textbf{u}_n \cdot \textbf{u}_n) + (1 - e) (\textbf{u}_t \cdot \textbf{u}_t) \right) $
+\State $\textbf{s}_n \gets \textbf{n} \left( \frac{ \sqrt{dis} - r \textbf{u}_n }{r + 1} \right) $
+\State $\textbf{w}_n \gets r \left( \frac{\textbf{u}_n - \textbf{v}_n}{r + 1} \right) $
+\State $\textbf{s} \gets \textbf{u}_t + \textbf{s}_n + \textbf{v}$
+\State $\textbf{w} \gets \textbf{w}_n + \textbf{v}$
+    \end{algorithmic}
+  \end{algorithm}
+\end{minipage}
+\par
+}
