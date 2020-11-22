@@ -635,7 +635,7 @@ m \textbf{u}_n = m \textbf{s}_n + p \textbf{w}_n
 
 Así que tenemos justo las condiciones necesarias para encontrar una solución, pues tenemos dos valores por determinar y dos ecuaciones que las relacionan.
 Para encontrar la solución hacemos un cambio de variable $r = \frac{m}{p}$.
-Luego despejamos de la ecuación~\ref{eq:momento} a $\bar{w_n}$, y lo sustituimos en~\ref{eq:energia} y obtenemos el valor de $\bar{s_n}$. En realidad se obtienen dos valores $\bar{s_n} = \bar{u_n}$ y $\bar{s_n} = \bar{u_n} \frac{r-1}{r+1}$, tomamos el segundo (el primero corresponde a la condición inicial, por que las colisiones elásticas son reversibles en el tiempo), y lo sustituimos de nueva en~\ref{eq:momento} para obtener el valor de $\bar{w_n} = \frac{2 r \bar{u_n}}{r + 1}$.
+Luego despejamos de la ecuación~\ref{eq:momento} a $\textbf{w}_n$, y lo sustituimos en~\ref{eq:energia} y obtenemos el valor de $\textbf{s}_n$. En realidad se obtienen dos valores $\textbf{s}_n = \textbf{u}_n$ y $\textbf{s}_n = \textbf{u}_n \frac{r-1}{r+1}$, tomamos el segundo (el primero corresponde a la condición inicial, por que las colisiones elásticas son reversibles en el tiempo), y lo sustituimos de nueva en~\ref{eq:momento} para obtener el valor de $\textbf{w}_n = \frac{2 r \textbf{u}_n}{r + 1}$.
 
 Con esto se tiene todo lo necesario  para resolver una colisión elástica con uno de los dos objetos en reposo. Podemos utilizar el siguiente pseudocódigo:
 
@@ -645,22 +645,29 @@ Con esto se tiene todo lo necesario  para resolver una colisión elástica con u
     \caption{Respuesta a una colisión elástica}
     \label{alg:elas}
     \begin{algorithmic}[1] % The number tells where the line numbering should start 0 for no number
+\Procedure{RespuestaColisionElastica}{$\textbf{u}, \textbf{n}, m, p$}
 \State $r \gets \frac{m}{p}$
-\State $\textbf{u}_n \gets parteNormal(\vec{u}, \vec{n})$
+\State $\textbf{u}_n \gets$ \Call{parteNormal}{$\textbf{u}, \textbf{n}$}
 \State $\textbf{u}_t \gets \textbf{u} - \textbf{u}_n$
 \State $\textbf{s}_n \gets \textbf{u}_n \left( \frac{r - 1}{r + 1} \right) $
 \State $\textbf{w}_n \gets \textbf{u}_n \left( \frac{2r}{r + 1} \right) $
 \State $\textbf{s} \gets \textbf{u}_t + \textbf{s}_n$
 \State $\textbf{w} \gets \textbf{w}_n$
+\State \Return{$\textbf{s}, \textbf{w}$}
+\EndProcedure
+\Procedure{parteNormal}{$\textbf{v}, \textbf{n}$}
+\State $\textbf{v}_n \gets \frac{(\textbf{v} \cdot \textbf{n})}{|\textbf{n}|} \frac{\textbf{n}}{|\textbf{n}|}$
+\State \Return{$\textbf{v}_n$}
+\EndProcedure
     \end{algorithmic}
   \end{algorithm}
 \end{minipage}
 \par
 }
 
-En donde la función \verb|parteNormal|, es una función que recibe un vector $\vec{u}$ y un vector $\vec{n}$, devuelve la parte normal de $\vec{u}$ con respecto a $\vec{n}$. Es decir nos sirve para partir al vector $\vec{u}$ en una parte tangencial y una parte normal a la colisión haciendo uso de las fórmulas \ref{eq:sepVector}.
+En donde la función \verb|parteNormal|, es una función que recibe un vector $\textbf{u}$ y un vector $\textbf{n}$, devuelve la parte normal de $\textbf{u}$ con respecto a $\textbf{n}$. Es decir nos sirve para partir al vector $\textbf{u}$ en una parte tangencial y una parte normal a la colisión haciendo uso de las fórmulas \ref{eq:sepVector}.
 
-Ahora veamos el caso más general, donde $\vec{v} \neq 0$. Aquí vamos a ocupar el principio de relatividad y le restamos a todo el sistema $\vec{v}$, lo que lo transforma en el caso anterior. Resolvemos como lo habíamos hecho antes y luego le sumamos a todo el sistema $\vec{v}$. El pseudocódigo es casi idéntico:
+Ahora veamos el caso más general, donde $\textbf{v} \neq 0$. Aquí vamos a ocupar el principio de relatividad y le restamos a todo el sistema $\textbf{v}$, lo que lo transforma en el caso anterior. Resolvemos como lo habíamos hecho antes y luego le sumamos a todo el sistema $\textbf{v}$. El pseudocódigo es casi idéntico:
  
 {\centering
 \begin{minipage}{\linewidth}
@@ -668,14 +675,17 @@ Ahora veamos el caso más general, donde $\vec{v} \neq 0$. Aquí vamos a ocupar 
     \caption{Respuesta a una colisión elástica con ambos cuerpos en movimeinto}
     \label{alg:elasmov}
     \begin{algorithmic}[1] % The number tells where the line numbering should start 0 for no number
+\Procedure{RespuestaColisionElastica}{$\textbf{u}, \textbf{v}, \textbf{n}, m, p$}
 \State $r \gets \frac{m}{p}$
 \State $\textbf{u} \gets \textbf{u} - \textbf{v}$
-\State $\textbf{u}_n \gets parteNormal(\vec{u}, \vec{n})$
+\State $\textbf{u}_n \gets$ \Call{parteNormal}{$\textbf{u}, \textbf{n}$}
 \State $\textbf{u}_t \gets \textbf{u} - \textbf{u}_n$
 \State $\textbf{s}_n \gets \textbf{u}_n \left( \frac{r - 1}{r + 1} \right) $
 \State $\textbf{w}_n \gets \textbf{u}_n \left( \frac{2r}{r + 1} \right) $
 \State $\textbf{s} \gets \textbf{u}_t + \textbf{s}_n + \textbf{v}$
 \State $\textbf{w} \gets \textbf{w}_n + \textbf{v}$
+\State \Return{$\textbf{s}, \textbf{w}$}
+\EndProcedure
     \end{algorithmic}
   \end{algorithm}
 \end{minipage}
@@ -685,24 +695,29 @@ Ahora veamos el caso más general, donde $\vec{v} \neq 0$. Aquí vamos a ocupar 
 Con esto podemos programar un función general que resuelva colisiones elásticas, sólo debemos asegurarnos de que la función que detecta las colisiones le informe a aquella función de tres cosas: las propiedades del objeto $A$, las propiedades del objeto $B$ y un vector normal al plano de colisión que vaya de $A$ a $B$.
 
 \subsubsection{Colisiones inelásticas}
-En una colisión inelástica se tienen un pérdida de energía como respuesta al impacto. En la realidad las colisiones son inelásticas, podemos apreciar parte de la pérdida de la energía, al escuchar el sonido de la colisión. Por ejemplo en el billar.
+En una colisión inelástica se tienen un pérdida de energía como respuesta al impacto.
+En la realidad las colisiones son inelásticas, podemos apreciar parte de la pérdida de la energía, al escuchar el sonido de la colisión.
+Por ejemplo en el billar.
 
-Para simular un colisión inelástica, vamos también a hacer una suposición: que los objetos tiene una cierta eficiencia, y que ésta se mantiene fija para todas las colisiones que involucren ese objeto. Es una gran simplificación porque en la realidad la eficiencia de una colisión depende de muchos factores, como el medio ambiente, o la velocidad de los objetos al momento de la colisión.
+Para simular un colisión inelástica, vamos también a hacer una suposición: que los objetos tiene una cierta eficiencia, y que ésta se mantiene fija para todas las colisiones que involucren ese objeto.
+Es una gran simplificación porque en la realidad la eficiencia de una colisión depende de muchos factores, como el medio ambiente, o la velocidad de los objetos al momento de la colisión.
 
-Si dos objetos chocan y uno de ellos tiene \emph{coeficiente de restitución} de 0.9 y el otro un coeficiente de restitución de 0.85, la energía total después de la colisión seria: 0.9 $\times$ 0.85 $\left(  E_b + E_a\right)$. Donde $E_a$ y $E_b$ es la energía de cada objeto antes de la colisión. Como se puede ver el coeficiente de restitución es una manera de medir la \emph{eficiencia} y significa que el primer objeto después de una colisión transmite por ejemplo el 95 por ciento de su energía.
+Si dos objetos chocan y uno de ellos tiene \emph{coeficiente de restitución} de 0.9 y el otro un coeficiente de restitución de 0.85, la energía total después de la colisión seria: 0.9 $\times$ 0.85 $\left(  E_b + E_a\right)$.
+Donde $E_a$ y $E_b$ es la energía de cada objeto antes de la colisión.
+Como se puede ver el coeficiente de restitución es una manera de medir la \emph{eficiencia} y significa que el primer objeto después de una colisión transmite por ejemplo el 95 por ciento de su energía.
 
 Para resolver una colisión inelástica se usa el mismo procedimiento que en la sección anterior, sólo que ahora la ecuación~\ref{eq:energia}, toma la siguiente forma:
 \begin{equation}
- \frac{1}{2} e m \bar{u}^2 = \frac{1}{2} m \bar{s}^2 + \frac{1}{2} p \bar{w}^2
+ \frac{1}{2} e m \textbf{u}^2 = \frac{1}{2} m \textbf{s}^2 + \frac{1}{2} p \textbf{w}^2
  \label{eq:energiaIne} 
 \end{equation} 
 
-Donde $e$ es el producto de los coeficientes de restitución de ambos objetos. Y se procede de la misma manera que en el caso anterior a calcular los valores de $w_n$ y $s_n$. Resolviendo el sistema formado por la ecuación~\ref{eq:momento} y la ~\ref{eq:energiaIne}.
+Donde $e$ es el producto de los coeficientes de restitución de ambos objetos. Y se procede de la misma manera que en el caso anterior a calcular los valores de $\textbf{w}_n$ y $\textbf{s}_n$. Resolviendo el sistema formado por la ecuación~\ref{eq:momento} y la ~\ref{eq:energiaIne}.
 
 Las nuevas soluciones son: 
 \begin{eqnarray}
-s_n & = & \frac{-ru - \sqrt{r^{2} u_{n}^{2} - \left( r + 1\right)  \left( (r - e) u_{n}^{2} + (1 -e) u_{t}^{2} \right) } } { r + 1} \nonumber \\
-w_n & = & r \left(  n u_n - v_n \right) \nonumber
+\textbf{s}_n & = & \frac{-r\textbf{u} - \sqrt{r^{2} \textbf{u}_{n}^{2} - \left( r + 1\right)  \left( (r - e) \textbf{u}_{n}^{2} + (1 -e) \textbf{u}_{t}^{2} \right) } } { r + 1} \nonumber \\
+\textbf{w}_n & = & r \left(  n \textbf{u}_n - \textbf{v}_n \right) \nonumber
 \end{eqnarray}
 
 Y el pseudocódigo, que resuelve la colisión de manera inelástica es el siguiente:
@@ -713,16 +728,19 @@ Y el pseudocódigo, que resuelve la colisión de manera inelástica es el siguie
     \caption{Respuesta general a una colisión inelástica}
     \label{alg:inelas}
     \begin{algorithmic}[1] % The number tells where the line numbering should start 0 for no number
+\Procedure{RespuestaColisionInelastica}{$\textbf{u}, \textbf{v}, \textbf{n}, m, p, E_a, E_b$}
 \State $r \gets \frac{m}{p}$
-\State $e \gets eficiencia(A) \cdot eficiencia(B)$
+\State $e \gets E_a \cdot E_b$
 \State $\textbf{u} \gets \textbf{u} - \textbf{v}$
-\State $\textbf{u}_n \gets parteNormal(\vec{u}, \vec{n})$
+\State $\textbf{u}_n \gets$ \Call{parteNormal}{$\textbf{u}, \textbf{n}$}
 \State $\textbf{u}_t \gets \textbf{u} - \textbf{u}_n$
-\State $ dis = r^{2} \left(  \textbf{u}_n \cdot \textbf{u}_n \right) - \left( (r - e) (\textbf{u}_n \cdot \textbf{u}_n) + (1 - e) (\textbf{u}_t \cdot \textbf{u}_t) \right) $
-\State $\textbf{s}_n \gets \textbf{n} \left( \frac{ \sqrt{dis} - r \textbf{u}_n }{r + 1} \right) $
+\State $ d \gets r^{2} \left(  \textbf{u}_n \cdot \textbf{u}_n \right) - \left( (r - e) (\textbf{u}_n \cdot \textbf{u}_n) + (1 - e) (\textbf{u}_t \cdot \textbf{u}_t) \right) $
+\State $\textbf{s}_n \gets \textbf{n} \left( \frac{ \sqrt{d} - r \textbf{u}_n }{r + 1} \right) $
 \State $\textbf{w}_n \gets r \left( \frac{\textbf{u}_n - \textbf{v}_n}{r + 1} \right) $
 \State $\textbf{s} \gets \textbf{u}_t + \textbf{s}_n + \textbf{v}$
 \State $\textbf{w} \gets \textbf{w}_n + \textbf{v}$
+\State \Return{$\textbf{s}, \textbf{w}$}
+\EndProcedure
     \end{algorithmic}
   \end{algorithm}
 \end{minipage}
