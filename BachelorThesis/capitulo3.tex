@@ -1,5 +1,7 @@
 \chapter{Implementación del código en lenguaje C}
-Este capítulo está dedicado a cubrir los detalles de la implementación del modelo en código. Dado que la principal finalidad de este trabajo es el modelado físico no entraré en detalles de otras áreas del programa más que las que tienen que ver con el modelo. Sólo hablare de los módulos del programa que tienen que ver con lo tratado en los capítulos anteriores.
+Este capítulo está dedicado a cubrir los detalles de la implementación del modelo en código.
+Dado que la principal finalidad de este trabajo es el modelado físico no entraré en detalles de otras áreas del programa más que las que tienen que ver con el modelo.
+Sólo hablare de los módulos del programa que tienen que ver con lo tratado en los capítulos anteriores.
 
 La primera parte describe cómo se van a crear las estructuras de datos necesarias para guardar en memoria los datos del modelo.
 
@@ -13,7 +15,8 @@ Por último se explica cómo es que se implementaron la rutina tanto de detecci�
 Todo programador debería de preocuparse en como debe de guardar los datos en memoria, aquí recurrí a tipos de datos simples, pero siempre teniendo en mente crear un tipo de dato que permitiera hacer las operaciones de acumulación de fuerzas de un manera sencilla.
 
 \subsection{Las partículas}
-La parte fundamental del modelo la constituyen los puntos o partículas; de cada una de éstas nos interesa saber básicamente tres cosas: su posición, su velocidad y la fuerza que se le está aplicando. Con esto en mente la primera estructura de datos que se creó fue \verb|Punto|.
+La parte fundamental del modelo la constituyen los puntos o partículas; de cada una de éstas nos interesa saber básicamente tres cosas: su posición, su velocidad y la fuerza que se le está aplicando.
+Con esto en mente la primera estructura de datos que se creó fue \verb|Punto|.
 
 \begin{verbatim}
 typedef struct
@@ -25,7 +28,9 @@ typedef struct
 }Punto;
 \end{verbatim}
 
-En donde \verb|x|, \verb|y| y \verb|z|, son números reales que representan la posición del punto en el espacio. Los valores \verb|vx|, \verb|vy| y \verb|vz| representan la velocidad del punto en forma también de vector y por ultimo \verb|fx|, \verb|fy| y \verb|fz| representan la fuerza aplicada al punto en un paso de tiempo particular. Y también hay una variable entera, \verb|fixed|, ésta se usa sólo como una bandera que toma sólo dos valores $0$ ó $1$, y que significa que el punto está fijo en la escena cuando vale $1$ (que en lenguaje C se evalúa a verdadero igual que cualquier entero diferente de $0$).
+En donde \verb|x|, \verb|y| y \verb|z|, son números reales que representan la posición del punto en el espacio.
+Los valores \verb|vx|, \verb|vy| y \verb|vz| representan la velocidad del punto en forma también de vector y por ultimo \verb|fx|, \verb|fy| y \verb|fz| representan la fuerza aplicada al punto en un paso de tiempo particular.
+Y también hay una variable entera, \verb|fixed|, ésta se usa sólo como una bandera que toma sólo dos valores $0$ ó $1$, y que significa que el punto está fijo en la escena cuando vale $1$ (que en lenguaje C se evalúa a verdadero igual que cualquier entero diferente de $0$).
 
 \subsection{Los resortes}
 
@@ -44,7 +49,8 @@ En donde \verb|a| y \verb|b| son apuntadores a variables de tipo \verb|Punto|, q
 También hay una variable flotante \verb|lenght|, que se utilizará para guardar la distancia entre estos dos puntos, o lo que es lo mismo la longitud del resorte en un momento del tiempo.
 
 \subsection{Las caras}
-Para hacer la acumulación de la fuerza debida a la presión, es necesario organizar el cuerpo flexible en un conjunto de caras, justo como se vio en~\ref{ejemplo:presion}. Para este fin se hace uso de otra estructura más, la estructura \verb|Cara|.
+Para hacer la acumulación de la fuerza debida a la presión, es necesario organizar el cuerpo flexible en un conjunto de caras, justo como se vio en~\ref{ejemplo:presion}.
+Para este fin se hace uso de otra estructura más, la estructura \verb|Cara|.
 \begin{verbatim}
 typedef struct
 {
@@ -52,7 +58,8 @@ typedef struct
     float nx, ny, nz;
 }Cara;
 \end{verbatim}
-Aquí se tienen cuatro apuntadores de tipo \verb|Punto|, esto por que se decidió hacer caras en forma de cuadriláteros, y también al momento de acumular la fuerza debida a la presión es necesario modificar los valores de estos puntos a través de la \verb|Cara| que forman. Hay también tres variables \verb|nx|, \verb|ny| y \verb|nz|, que se ocupan para guardar el vector normal a esta cara, lo cual es un dato que servirá para hacer la acumulación de la fuerza debida a la presión.
+Aquí se tienen cuatro apuntadores de tipo \verb|Punto|, esto por que se decidió hacer caras en forma de cuadriláteros, y también al momento de acumular la fuerza debida a la presión es necesario modificar los valores de estos puntos a través de la \verb|Cara| que forman.
+Hay también tres variables \verb|nx|, \verb|ny| y \verb|nz|, que se ocupan para guardar el vector normal a esta cara, lo cual es un dato que servirá para hacer la acumulación de la fuerza debida a la presión.
 \subsection{La esfera}
 Por último, una estructura que utilizaré para guardar información de un cuerpo rígido en la escena: una esfera.
 \begin{verbatim}
@@ -64,7 +71,8 @@ typedef struct
     float radio;
 }Esfera;
 \end{verbatim} 
-Los valores \verb|x|, \verb|y|, y \verb|z| guardan el vector de posición, los valores \verb|Vx|, \verb|Vy| y \verb|Vz| guardan la velocidad y la fuerza se almacena en \verb|Fx|, \verb|Fy|, y \verb|Fz|. También hay una variable extra \verb|radio|, que al tratarse de una esfera me dice todo lo necesario para poder dibujarla en la escena.
+Los valores \verb|x|, \verb|y|, y \verb|z| guardan el vector de posición, los valores \verb|Vx|, \verb|Vy| y \verb|Vz| guardan la velocidad y la fuerza se almacena en \verb|Fx|, \verb|Fy|, y \verb|Fz|.
+También hay una variable extra \verb|radio|, que al tratarse de una esfera me dice todo lo necesario para poder dibujarla en la escena.
 
 \subsection{Arreglos de datos}
 
@@ -78,7 +86,8 @@ Cara mosaico[CUADROS];
 \end{verbatim} 
 En donde las constantes \verb|PARTICULAS|, \verb|RESORTES| y \verb|CUADROS| son enteros previamente definidos.
 
-Hay algunas cosas que decir aquí: primero, que lo que se quiere modelar es una tela cuadrada que servirá como cuerpo flexible, por lo que el número de partículas es en realidad $n^{2}$ en donde $n$ es el número de puntos en cada lado de la tela, y por las mismas condiciones el número de resortes totales es $2 n (n - 1)$ y el número de caras es: $(n-1)^{2}$. Segunda, que, pese al arreglo cuadrado de la tela, los puntos son guardados en un arreglo unidimensional (lineal), esto por que simplifica y hace mucho más generales las rutinas de acumulación de fuerza.
+Hay algunas cosas que decir aquí: primero, que lo que se quiere modelar es una tela cuadrada que servirá como cuerpo flexible, por lo que el número de partículas es en realidad $n^{2}$ en donde $n$ es el número de puntos en cada lado de la tela, y por las mismas condiciones el número de resortes totales es $2 n (n - 1)$ y el número de caras es: $(n-1)^{2}$.
+Segunda, que, pese al arreglo cuadrado de la tela, los puntos son guardados en un arreglo unidimensional (lineal), esto por que simplifica y hace mucho más generales las rutinas de acumulación de fuerza.
 
 La rutina que inicializa el arreglo de puntos es la siguiente:
 \begin{verbatim}
@@ -149,15 +158,21 @@ for (i = 0; i < (LADO * (LADO - 1)); i++)
    }
 }
 \end{verbatim} 
-Esta rutina es especial en el sentido que se debe de tener cuidado de unir cada par de puntos, $i$, $i+1$, con los puntos que están justo debajo de ellos, por eso se tiene que prevenir que al llegar a la parte inferior de la tela, ya no haya más puntos abajo. Es por eso que el ciclo for itera mas veces que el numero total de caras. Con esto se garantiza que se puedan visitar todos las particulas del modelo de tres formas distintas, ya sea por resortes, o por caras, o accediendo directamente por medio del arreglo de puntos \verb|tela|.
+Esta rutina es especial en el sentido que se debe de tener cuidado de unir cada par de puntos, $i$, $i+1$, con los puntos que están justo debajo de ellos, por eso se tiene que prevenir que al llegar a la parte inferior de la tela, ya no haya más puntos abajo.
+Es por eso que el ciclo for itera mas veces que el numero total de caras.
+Con esto se garantiza que se puedan visitar todos las particulas del modelo de tres formas distintas, ya sea por resortes, o por caras, o accediendo directamente por medio del arreglo de puntos \verb|tela|.
+
 \section{La física del modelo}
-Toca el turno de ver las rutinas que tienen que ver con la acumulación de fuerzas en el modelo. Como se ha dicho antes hay básicamente tres fuerzas que se deben acumular, la de la gravedad, la de los resortes amortiguadores y la debida a la presión del gas.
+Toca el turno de ver las rutinas que tienen que ver con la acumulación de fuerzas en el modelo.
+Como se ha dicho antes hay básicamente tres fuerzas que se deben acumular, la de la gravedad, la de los resortes amortiguadores y la debida a la presión del gas.
 
 Estas rutinas se encuentran en los archivos: fisica.c y fisica.h
 \subsection{La fuerza de gravedad}
-La primera y más sencilla de las fuerzas que vamos a poner es la de gravedad. Como se dijo desde~\ref{fuerzaGravedad}, sólo depende de dos cosas de la masa del objeto y de la constante de gravedad, y además sólo afecta en un componente vectorial el componente $y$, del vector fuerza.
+La primera y más sencilla de las fuerzas que vamos a poner es la de gravedad.
+Como se dijo desde~\ref{fuerzaGravedad}, sólo depende de dos cosas de la masa del objeto y de la constante de gravedad, y además sólo afecta en un componente vectorial el componente $y$, del vector fuerza.
 
-La fuerza de gravedad se aplica a cada una de las partículas del cuerpo flexible, por lo que es conveniente acumularla por medio del un arreglo que contenga todos los puntos del cuerpo flexible. Aquí está la función que pone la fuerza de gravedad:
+La fuerza de gravedad se aplica a cada una de las partículas del cuerpo flexible, por lo que es conveniente acumularla por medio del un arreglo que contenga todos los puntos del cuerpo flexible.
+Aquí está la función que pone la fuerza de gravedad:
 \begin{verbatim}
 void putGravity(Punto ptos[PARTICULAS])
 {
@@ -171,12 +186,14 @@ void putGravity(Punto ptos[PARTICULAS])
 \end{verbatim} 
 La función \verb|putGravity|, recibe como parámetro un arreglo de puntos, y acumula sobre cada uno de los puntos la fuerza de gravedad.
 
-La constante \verb|M| es global y tiene la masa de cada una de las partículas, y la constante \verb|G|, también global contiene la constante de gravedad. En palabras simples acumula la fuerza sobre cada punto usando la ecuación~\ref{fuerzaGravedad}.
+La constante \verb|M| es global y tiene la masa de cada una de las partículas, y la constante \verb|G|, también global contiene la constante de gravedad.
+En palabras simples acumula la fuerza sobre cada punto usando la ecuación~\ref{fuerzaGravedad}.
 
 ¿Por qué mandar como parámetro el arreglo de puntos, si es una variable global? Bueno eso se debe a que la gravedad no siempre será aplicada sobre el arreglo en el que guardamos puntos con los que se dibuja la escena, debido a que los métodos numéricos de integración (en particular el Runge Kutta) van a requerir copias del arreglo de puntos para hacer cálculos, por lo que no siempre se le mandará el \emph{mismo} arreglo de puntos.
 
 \subsection{La fuerza de los resortes}
-Aquí es donde empezaremos a notar el porqué de la construcción de los demás arreglos. Primero vamos a ver qué se debe de hacer en esta función: se debe de ciclar por todos los resortes que se encuentran en el modelo; cada resorte se debe ocupar la ecuación~\ref{fuerzaResorte}, para acumular la fuerza en los dos puntos que son unidos por ese resorte.
+Aquí es donde empezaremos a notar el porqué de la construcción de los demás arreglos.
+Primero vamos a ver qué se debe de hacer en esta función: se debe de ciclar por todos los resortes que se encuentran en el modelo; cada resorte se debe ocupar la ecuación~\ref{fuerzaResorte}, para acumular la fuerza en los dos puntos que son unidos por ese resorte.
 \begin{verbatim}
 void putSpringForce(Resorte res[RESORTES])
 {
@@ -223,16 +240,21 @@ void putSpringForce(Resorte res[RESORTES])
  }
 }
 \end{verbatim} 
-Como se puede ver en el código, ahora ciclamos por todo el arreglo de resortes, y con ellos podemos acceder a los dos puntos \verb|a| y \verb|b| que conectan. Lo primero es saber la distancia entre los dos puntos, si ésta fuera cero, no se hace ningún cálculo. Cabe señalar que por las condiciones del modelo es muy difícil que dicho caso suceda.
+Como se puede ver en el código, ahora ciclamos por todo el arreglo de resortes, y con ellos podemos acceder a los dos puntos \verb|a| y \verb|b| que conectan.
+Lo primero es saber la distancia entre los dos puntos, si ésta fuera cero, no se hace ningún cálculo.
+Cabe señalar que por las condiciones del modelo es muy difícil que dicho caso suceda.
 
 Después se procede a calcular la fuerza del amortiguador y del resorte, para cada una de ellas se ocupan sus respectivas constantes \verb|Ks| y \verb|Kd|, que son variables globales.
 
-Por último se le da la dirección a la fuerza del resorte y se actualiza en los puntos, recordando cambiar el signo en el segundo punto. Hay también que hacer énfasis en que la fuerza nunca es actualizada directamente sino más bien es acumulada (sumada a la fuerza anterior).
+Por último se le da la dirección a la fuerza del resorte y se actualiza en los puntos, recordando cambiar el signo en el segundo punto.
+Hay también que hacer énfasis en que la fuerza nunca es actualizada directamente sino más bien es acumulada (sumada a la fuerza anterior).
 
 \subsection{La fuerza del gas}
-La siguiente fuerza en ser acumulada es la fuerza debida a la presión del gas. Para esto se ocupa la ecuación~\ref{fuerzaGas}, y se debe de acumular una vez por cada cara. Para poder calcular esta fuerza se necesitan hacer varias operaciones importantes: calcular el volumen total del cuerpo flexible y además calcular el área y el vector normal de cada una de las caras.
+La siguiente fuerza en ser acumulada es la fuerza debida a la presión del gas. Para esto se ocupa la ecuación~\ref{fuerzaGas}, y se debe de acumular una vez por cada cara.
+Para poder calcular esta fuerza se necesitan hacer varias operaciones importantes: calcular el volumen total del cuerpo flexible y además calcular el área y el vector normal de cada una de las caras.
 
-Para hacer el cálculo del volumen se hace uso de un arreglo de puntos auxiliares, se simula que el cuerpo está formado por varios pedazos rectangulares. Para cada parte (hexaedro regular) se ocupa la fórmula~\ref{ecuacionVolumen} y finalmente la suma del volumen de todas nos proporciona el volumen total del cuerpo.
+Para hacer el cálculo del volumen se hace uso de un arreglo de puntos auxiliares, se simula que el cuerpo está formado por varios pedazos rectangulares.
+Para cada parte (hexaedro regular) se ocupa la fórmula~\ref{ecuacionVolumen} y finalmente la suma del volumen de todas nos proporciona el volumen total del cuerpo.
 
 Para calcular el área de cada cara se ocupa la fórmula~\ref{formulaArea}.
 
@@ -314,14 +336,19 @@ void putPressure (Punto pts[PARTICULAS], Cara msc[CUADROS])
   }
 }
 \end{verbatim}
-Para calcular la fuerza de nuevo se hace uso de una variable global \verb|Kp|, que guarda la constante de la presión. Y finalmente la fuerza se acumula en cada uno de los cuatro puntos que forman la cara. También hay que notar que el vector normal a ésta se quedó guardado en \verb|nx|, \verb|ny| y \verb|nz|; después se puede hacer uso de él para hacer la iluminación de la escena.
+Para calcular la fuerza de nuevo se hace uso de una variable global \verb|Kp|, que guarda la constante de la presión.
+Y finalmente la fuerza se acumula en cada uno de los cuatro puntos que forman la cara.
+También hay que notar que el vector normal a ésta se quedó guardado en \verb|nx|, \verb|ny| y \verb|nz|; después se puede hacer uso de él para hacer la iluminación de la escena.
 
 La funciones \verb|volumenHexaedro| y \verb|areaCuadrilatero|, sólo hacen uso de las fórmulas~\ref{ecuacionVolumen} y~\ref{formulaArea}, respectivamente, y devuelven un valor real.
 
 \section{Los métodos numéricos}
-Otra de las rutinas mas complicadas son los métodos numéricos. Para integrar la ecuación de Newton, se requiere saber la posición y la velocidad actual de cada una de las partículas del modelo y tener una manera de llamar a la función que se encarga de acumular las fuerzas.
+Otra de las rutinas mas complicadas son los métodos numéricos.
+Para integrar la ecuación de Newton, se requiere saber la posición y la velocidad actual de cada una de las partículas del modelo y tener una manera de llamar a la función que se encarga de acumular las fuerzas.
+
 \subsection{El método de Euler}
-Básicamente se trata de tomar las ecuaciones~\ref{formulas:Euler} e implementarlas en el código, aprovechando la gran ventaja de que el método de Euler puede integrar un punto a la vez. La función que se explica recibe de parámetro una referencia a un objeto de tipo \verb|Punto|.
+Básicamente se trata de tomar las ecuaciones~\ref{formulas:Euler} e implementarlas en el código, aprovechando la gran ventaja de que el método de Euler puede integrar un punto a la vez.
+La función que se explica recibe de parámetro una referencia a un objeto de tipo \verb|Punto|.
 \begin{verbatim}
 void eulerIntegrator (Punto *p)
 {
@@ -357,9 +384,12 @@ void eulerIntegrator (Punto *p)
   }
 }
 \end{verbatim} 
-Como puede apreciarse, esta función es muy sencilla, calcula con la fórmula~\ref{formulas:Euler} y guarda esos valores en variables. Luego pregunta si el punto que le mandaron por referencia tiene el estado \verb|fixed|, de ser así, borra las fuerzas y las velocidades; en caso contrario, simplemente le aumenta el avance en este paso de tiempo. \verb|DT| es una constante real que guarda el tamaño del paso $h$.
+Como puede apreciarse, esta función es muy sencilla, calcula con la fórmula~\ref{formulas:Euler} y guarda esos valores en variables.
+Luego pregunta si el punto que le mandaron por referencia tiene el estado \verb|fixed|, de ser así, borra las fuerzas y las velocidades; en caso contrario, simplemente le aumenta el avance en este paso de tiempo. \verb|DT| es una constante real que guarda el tamaño del paso $h$.
+
 \subsection{El método de Runge-Kutta}
-Aquí se explica el que fue probablemente el método mas complicado de implementar, pues no tiene la ventaja de Euler de integrar cada partícula independientemente, así que necesita integrar todas juntas. Además, debe tener espacio para guardar los ponderadores del paso de integración de cada partícula.
+Aquí se explica el que fue probablemente el método mas complicado de implementar, pues no tiene la ventaja de Euler de integrar cada partícula independientemente, así que necesita integrar todas juntas.
+Además, debe tener espacio para guardar los ponderadores del paso de integración de cada partícula.
 
 Para tener una idea clara de lo que que hace el siguiente código conviene volver a ver las ecuaciones~\ref{ponderadores:RK4} y~\ref{formulas:RK4}.
 \begin{verbatim}
@@ -517,10 +547,15 @@ void rungeKuttaIntegrator (void)
 }
 \end{verbatim}
 El truco consiste en ocupar un conjunto de puntos, resortes y caras auxiliares, para con ellos calcular los ponderadores del método de RK4, después la rutina es muy parecida a la de Euler.
+
 \section{El manejo de las colisiones}
-Como ya se ha dicho antes, el problema de las colisiones se resuelve en dos partes, primero la detección y luego la respuesta. La forma de responder consiste básicamente en mover los objetos que se colisionan a un lugar donde ya no choquen y ajustar las velocidades como respuesta.
+Como ya se ha dicho antes, el problema de las colisiones se resuelve en dos partes, primero la detección y luego la respuesta.
+La forma de responder consiste básicamente en mover los objetos que se colisionan a un lugar donde ya no choquen y ajustar las velocidades como respuesta.
+
 \subsection{La rutina de las colisiones}
-La detección es llevada a cabo en dos funciones. Recordemos que nuestra tarea de detección se simplifica muchísimo por el hecho de que uno de los objetos, el objeto incidente es una esfera. Para saber si dicha esfera está en colisión con nuestro cuerpo flexible, lo que hacemos es probar si cualquiera de las partículas está dentro de la esfera; de ser así, empezamos a resolver la colisión entre la esfera y la partícula en cuestión. Después seguimos revisando el resto de las partículas.
+La detección es llevada a cabo en dos funciones.
+Recordemos que nuestra tarea de detección se simplifica muchísimo por el hecho de que uno de los objetos, el objeto incidente es una esfera.
+Para saber si dicha esfera está en colisión con nuestro cuerpo flexible, lo que hacemos es probar si cualquiera de las partículas está dentro de la esfera; de ser así, empezamos a resolver la colisión entre la esfera y la partícula en cuestión. Después seguimos revisando el resto de las partículas.
 
 El algoritmo tiene la siguiente forma:
 \begin{verbatim}
@@ -539,12 +574,14 @@ void colisiones (void)
   }
 }
 \end{verbatim}
-Recordemos que \verb|tela|, es un arreglo global que contiene todos los puntos, se hace un ciclo por todo este arreglo preguntando con la función \verb|dentro| si está adentro de la esfera; de ser así, se manda llamar la funcion que detecta la colisión, es decir calcula el vector normal y lo devuelve. Luego ese vector normal \verb|n| y el punto son mandados a la función que resuelve la colisión. Y así sucesivamente con todas las partículas que forman parte del cuerpo flexible.
+Recordemos que \verb|tela|, es un arreglo global que contiene todos los puntos, se hace un ciclo por todo este arreglo preguntando con la función \verb|dentro| si está adentro de la esfera; de ser así, se manda llamar la funcion que detecta la colisión, es decir calcula el vector normal y lo devuelve.
+Luego ese vector normal \verb|n| y el punto son mandados a la función que resuelve la colisión. Y así sucesivamente con todas las partículas que forman parte del cuerpo flexible.
 
 La función \verb|dentro|, sabe si hay una colisión, pues la esfera está guardada en una variable global y el punto se le pasa como parámetro, así que sólo regresa verdadero cuando la distancia del punto al centro de la esfera es menos que el radio de ésta y falso en cualquier otro caso.
 
 \subsection{La detección de la colisión}
-Esta función se encarga de calcular el vector normal al lugar de la colisión y de mover el punto fuera de la esfera. Mover el punto fuera de la esfera es en realidad parte de la respuesta a la colisión, pero decidí implementarlo en esta función, para que en la siguiente parte sólo se tenga que ajustar las velocidades.
+Esta función se encarga de calcular el vector normal al lugar de la colisión y de mover el punto fuera de la esfera.
+Mover el punto fuera de la esfera es en realidad parte de la respuesta a la colisión, pero decidí implementarlo en esta función, para que en la siguiente parte sólo se tenga que ajustar las velocidades.
 \begin{verbatim}
 Vector detectaColision(Punto *p)
 {
@@ -578,7 +615,9 @@ Vector detectaColision(Punto *p)
   return resultado;
 }
 \end{verbatim} 
-La función primero calcula el vector $\vec{V}$ que va del centro de la esfera al punto, después lo normaliza. Luego pregunta si el punto no está fijo, en cuyo caso, mueve el punto justo afuera de la esfera, cambiándolo de posición al punto $\vec{p} + (r\vec{V})$, donde $\vec{p}$ es la posición de la esfera, $r$ su radio y $\vec{V}$ ya es unitario. Si el punto sí estuviera fijo, lo que hace es mover a la esfera fuera del punto cambiándola de posición al punto $\vec{s} - (r\vec{V})$, donde $\vec{s}$ ahora representa la posición de la partícula..
+La función primero calcula el vector $\vec{V}$ que va del centro de la esfera al punto, después lo normaliza.
+Luego pregunta si el punto no está fijo, en cuyo caso, mueve el punto justo afuera de la esfera, cambiándolo de posición al punto $\vec{p} + (r\vec{V})$, donde $\vec{p}$ es la posición de la esfera, $r$ su radio y $\vec{V}$ ya es unitario. Si el punto sí estuviera fijo, lo que hace es mover a la esfera fuera del punto cambiándola de posición al punto $\vec{s} - (r\vec{V})$, donde $\vec{s}$ ahora representa la posición de la partícula..
+
 \subsection{La respuesta de la colisión}
 La mayor parte del trabajo se hizo en la función anterior, ahora que sabemos el vector normal $\vec{n}$ a la colisión, sólo nos resta seguir los pasos explicados en la página \pageref{alg:elasmov}.
 \begin{verbatim}
