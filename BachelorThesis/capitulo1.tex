@@ -171,9 +171,9 @@ Empecemos a plantear las condiciones del modelo, supongamos que es una masa unid
 En estas condiciones el único movimiento permitido para la masa será el horizontal y a la derecha, de nuevo por convención diremos que es a la dirección positiva del eje $x$.
 La figura~\ref{masaResorte:fig} ilustra la situación aquí descrita.
 
-\begin{figure}
+\begin{figure}[htb]
  \centering
- \includegraphics[]{Img/masa_resorte}
+ \includegraphics[width=0.6\textwidth]{Img/masaResorte}
  \caption[Masa unida por un resorte]{ 
  Una masa que se mueve solamente afectada por la fuerza de un resorte.
  } \label{masaResorte:fig}
@@ -192,17 +192,27 @@ Esta expresión básicamente nos dice que la fuerza es proporcional a la distanc
 La nomenclatura $F_s$ se debe a que la mayoría de la bibliografía consultada está en inglés y traté de ser consistente con ella, ésta es la fuerza del resorte o \emph{\foreignlanguage{english}{spring force}}.
 
 Se observa en esta expresión que cuando el resorte está estirado, es decir, su largo $x$ es mayor a $L$ la fuerza del resorte se vuelve negativa y por ende jala a la masa a su punto de reposo.
-Como se ve en la figura~\ref{leyHokke:fig}.
+Como se ve en la figura~\ref{fig:estirada}.
 
 \begin{figure}
  \centering
- \includegraphics[]{Img/varias_masas}
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{Img/masaEstirada}
+    \caption{$x>L$}
+  \label{fig:estirada}
+  \end{subfigure}
+\\
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{Img/masaCompresa}
+    \caption{$x<L$}
+    \label{fig:compresa}
+  \end{subfigure}
  \caption[Ley de Hooke para resortes]{ 
- En la parte superior el caso donde $x>L$ y en la parte inferior el caso en donde $x<L$.
+ La fuerza trata de llevar el sistema a $x = L$
  } \label{leyHokke:fig}
 \end{figure}
 
-En el caso que el resorte esté comprimido, es decir, $ x < L$, el resorte empuja el cuerpo para que alcance la posición de reposo y de nuevo lo hace con una fuerza proporcional a la distancia que esté alejado del cuerpo de este punto. 
+En el caso que el resorte esté comprimido (Figura~\ref{fig:compresa}), es decir, $ x < L$, el resorte empuja el cuerpo para que alcance la posición de reposo y de nuevo lo hace con una fuerza proporcional a la distancia que esté alejado del cuerpo de este punto. 
 
 También se observa que cuando el largo del resorte es $ x = L$ el resorte está en reposo y por lo tanto la fuerza se hace cero, éste es el caso que se ilustro en la figura~\ref{masaResorte:fig}.
 
@@ -340,6 +350,8 @@ Un comportamiento común se puede apreciar en la figura \ref{OsciAmor:fig}, en d
 Tomaremos el modelo de la sección anterior; pero lo vamos a generalizar de manera que se pueda modelar este mismo fenómeno unidimensional solo que situado en un espacio tridimensional.
 Por medios geométricos trataré de aplicar las mismas fórmulas de la sección pasada.
 Por simplicidad en los diagramas, voy a explicar el caso de dos dimensiones, sin embargo, como la explicación se hará con vectores, no se debe de tener problema en generalizar para tres dimensiones.
+
+De aquí en adelante, para la notacion matemática; usaré la convención de escribir los vectores en negritas y los escalares en fuente normal~\footnote{Ésta es una convención muy aceptada en la literatura de las gráficas por computadora}.
 
 Primero vamos a considerar que hay dos puntos en el espacio que están unidos por un resorte, este resorte es la única fuerza que actúa sobre ellos.
 El resorte no tiene masa y ambos cuerpos tienen una masa $m$.
