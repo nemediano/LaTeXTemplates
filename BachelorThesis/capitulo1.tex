@@ -198,17 +198,17 @@ Como se ve en la figura~\ref{fig:estirada}.
  \centering
   \begin{subfigure}[b]{0.5\textwidth}
     \includegraphics[width=\textwidth]{Img/masaEstirada}
-    \caption{$x>L$}
+    \caption{Cuando $x>L$, el resorte jala la masa.}
   \label{fig:estirada}
   \end{subfigure}
 \\
   \begin{subfigure}[b]{0.5\textwidth}
     \includegraphics[width=\textwidth]{Img/masaCompresa}
-    \caption{$x<L$}
+    \caption{Cuando $x<L$, el resorte empuja la masa}
     \label{fig:compresa}
   \end{subfigure}
  \caption[Ley de Hooke para resortes]{ 
- La fuerza trata de llevar el sistema a $x = L$
+ $F_s$ trata de llevar el sistema a $x = L$
  } \label{leyHokke:fig}
 \end{figure}
 
@@ -233,13 +233,13 @@ Por simple inspección se puede ver que $x(t)= L$ es una solución que nos puede
 Además recuérdese que las constantes $k_s$, $m$ y $L$, son todas positivas por lo que una solución es:
 
 \begin{equation}
-x_h = c_1 \cos{\sqrt{\frac{k_s}{m}}}t + c_2 \sen{\sqrt{\frac{k_s}{m}}}t
+x_h = c_1 \cos{\sqrt{\frac{k_s}{m}}}t + c_2 \sin{\sqrt{\frac{k_s}{m}}}t
 \end{equation}
 
 Con estas dos soluciones tenemos:
 \begin{eqnarray}
 x(t) & = & x_p + x_h \nonumber \\
-     & = & c_1 \cos{\left(\sqrt{\frac{k_s}{m}} t \right)} + c_2 \sen{\left(\sqrt{\frac{k_s}{m}} t \right)} + L
+     & = & c_1 \cos{\left(\sqrt{\frac{k_s}{m}} t \right)} + c_2 \sin{\left(\sqrt{\frac{k_s}{m}} t \right)} + L
 \end{eqnarray}
 
 Y podemos determinar las dos constantes de integración $c_1$ y $c_2$ de las condiciones iniciales.
@@ -247,7 +247,7 @@ Y podemos determinar las dos constantes de integración $c_1$ y $c_2$ de las con
 Para este problema en particular la solución que estamos buscando es:
 
 \begin{equation}
-x(t) = \left(x_0 - L \right) \cos{\left(\sqrt{\frac{k_s}{m}} t \right)} +  \left( v_0 \sqrt{\frac{m}{k_s}}\right) \sen{\left(\sqrt{\frac{k_s}{m}} t \right)} + L
+x(t) = \left(x_0 - L \right) \cos{\left(\sqrt{\frac{k_s}{m}} t \right)} +  \left( v_0 \sqrt{\frac{m}{k_s}}\right) \sin{\left(\sqrt{\frac{k_s}{m}} t \right)} + L
 \end{equation}
 
 Como puede apreciarse en la solución el cuerpo nunca deja de moverse, su movimiento está expresado por una función periódica.
@@ -322,7 +322,7 @@ Y por tanto la ecuación diferencial tiene una solución de la forma:
 
 \begin{equation}
 \label{solOsiArmAmor} 
-x(t) = e^{-\alpha t} \left( c_1 \cos{\beta t} + c_2 \sen{\beta t} \right) + L
+x(t) = e^{-\alpha t} \left( c_1 \cos{\beta t} + c_2 \sin{\beta t} \right) + L
 \end{equation}
 
 De nuevo por medio de las condiciones iniciales se pueden obtener los valores de las constantes $c_1$ y $c_2$, quedando de esta manera:
@@ -336,14 +336,14 @@ De la solucion \ref{solOsiArmAmor} es claro que cuando el tiempo $t \rightarrow 
 
 \begin{figure}
  \centering
- \includegraphics[]{Img/oscilador_amortiguado}
+ \includegraphics[width=0.85\textwidth]{Img/oscilador_amortiguado}
  \caption[Plano fase del oscilador armónico amortiguado]{ 
- Aquí se puede ver la gráfica de $e^{\frac{-1}{10}x} \left( 3 \cos{x} + 3 \sen{x} \right)$.
+ Aquí se puede ver la gráfica de $x(t) = e^{\frac{-1}{10}t} \left( 3 \cos{t} + 3 \sin{t} \right)$.
  } \label{OsciAmor:fig}
 \end{figure}
 
 
-Un comportamiento común se puede apreciar en la figura \ref{OsciAmor:fig}, en donde se han elegido los parámetros del modelo con el fin de ilustrar el comportamiento de la solución.
+Un comportamiento común se puede apreciar en la figura \ref{OsciAmor:fig}, en donde se ha elegido arbitrariamente un conjunto de parámetros del modelo con el fin de ilustrar el comportamiento de la solución.
 
 \subsection{Masa-resorte en más de una dimensión}
 
