@@ -162,183 +162,155 @@ Esta rutina es muy parecida a la anterior: recorre todas las particulas, si la p
 Toca el turno de ver las rutinas que tienen que ver con la acumulación de fuerzas en el modelo.
 Como se ha dicho antes hay básicamente tres fuerzas que se deben acumular, la de la gravedad, la de los resortes amortiguadores y la debida a la presión del gas.
 
-Estas rutinas se encuentran en los archivos: fisica.c y fisica.h
+Aquí es donde empezaremos a notar el porqué de la construcción de los demás vectores de referencias.
+
 \subsection{La fuerza de gravedad}
 La primera y más sencilla de las fuerzas que vamos a poner es la de gravedad.
-Como se dijo desde~\ref{fuerzaGravedad}, sólo depende de dos cosas de la masa del objeto y de la constante de gravedad, y además sólo afecta en un componente vectorial el componente $y$, del vector fuerza.
+Como se dijo desde la ecuación~\eqref{fuerzaGravedad}, sólo depende de dos cosas de la masa del objeto y de la constante de gravedad, y además sólo afecta en un componente vectorial el componente $y$, del vector fuerza.
 
-La fuerza de gravedad se aplica a cada una de las partículas del cuerpo flexible, por lo que es conveniente acumularla por medio del un arreglo que contenga todos los puntos del cuerpo flexible.
-Aquí está la función que pone la fuerza de gravedad:
-\begin{verbatim}
-void putGravity(Punto ptos[PARTICULAS])
-{
-   int i;
-   for (i = 0; i < PARTICULAS; i++)
-   {
-      ptos[i].fy += M * G;
-   }
-
-}
-\end{verbatim} 
-La función \verb|putGravity|, recibe como parámetro un arreglo de puntos, y acumula sobre cada uno de los puntos la fuerza de gravedad.
-
-La constante \verb|M| es global y tiene la masa de cada una de las partículas, y la constante \verb|G|, también global contiene la constante de gravedad.
-En palabras simples acumula la fuerza sobre cada punto usando la ecuación~\ref{fuerzaGravedad}.
-
-¿Por qué mandar como parámetro el arreglo de puntos, si es una variable global? Bueno eso se debe a que la gravedad no siempre será aplicada sobre el arreglo en el que guardamos puntos con los que se dibuja la escena, debido a que los métodos numéricos de integración (en particular el Runge Kutta) van a requerir copias del arreglo de puntos para hacer cálculos, por lo que no siempre se le mandará el \emph{mismo} arreglo de puntos.
+La fuerza de gravedad se aplica a cada una de las partículas del cuerpo flexible. 
+Convenientemente, tenemos un vector con dichas partículas.
+Por lo anterior y gracias a que glm sobrecarga los operadores en vectores de la manera natural, la implementación es trivial como se puede ver en el Listado~\ref{lst:addGravity}.
+La constante de gravedad es un miembro de \mintinline{cpp}{SoftBody} y tiene el signo negativo.
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  %frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=584, %If you omit this two fields, the whole file is pulled
+  lastline=590
+  ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
+  \caption{El método \mintinline{cpp}{addGravity} de \mintinline{cpp}{SoftBody}}
+  \label{lst:addGravity}
+  \end{listing}
+\end{minipage}
+\par
+} 
 
 \subsection{La fuerza de los resortes}
-Aquí es donde empezaremos a notar el porqué de la construcción de los demás arreglos.
-Primero vamos a ver qué se debe de hacer en esta función: se debe de ciclar por todos los resortes que se encuentran en el modelo; cada resorte se debe ocupar la ecuación~\ref{fuerzaResorte}, para acumular la fuerza en los dos puntos que son unidos por ese resorte.
-\begin{verbatim}
-void putSpringForce(Resorte res[RESORTES])
-{
-  int i;
-  float rX, rY, rZ, vX, vY, vZ, Fd, Fs, Fx, Fy, Fz, largo;
 
-  for (i = 0; i < RESORTES; i++)
-  {
-    // La distancia entre los dos puntos
-    largo = distancia(*res[i].a, *res[i].b);
+La implementacion de estos metodos tambien es trivial gracias a nuestro diseño.
+Tan solo se debe iterar por todos los resortes de \mintinline{cpp}{SoftBody} en cada resorte se debe ocupar la ecuación~\ref{fuerzaResorte}, para acumular la fuerza en los dos puntos que son unidos por ese resorte (Listado~\ref{lst:addSpringDamper}).
+Solo por completez, en Listado~\ref{lst:add_forceSD} se muestra el método \mintinline{cpp}{add_force} de \mintinline{cpp}{SpringDamper} que en escencia implementa la ecuación~\ref{fuerzaResorte}.
 
-    if (largo != 0.0)
-    {
-      // la diferencia de las posisciones
-      rX = res[i].a->x - res[i].b->x;
-      rY = res[i].a->y - res[i].b->y;
-      rZ = res[i].a->z - res[i].b->z;
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  %frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=592, %If you omit this two fields, the whole file is pulled
+  lastline=596
+  ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
+  \caption{El método \mintinline{cpp}{addSpringDamper} de \mintinline{cpp}{SoftBody}}
+  \label{lst:addSpringDamper}
+  \end{listing}
+\end{minipage}
+\par
+} 
 
-      // la diferencia de las velocidades
-      vX = res[i].a->vx - res[i].b->vx;
-      vY = res[i].a->vy - res[i].b->vy;
-      vZ = res[i].a->vz - res[i].b->vz;
-
-      /* Calculo de las fuerzas (escalares)*/
-      Fd = Kd * (rX * vX + rY * vY + rZ * vZ) / largo;
-      Fs = Ks * (largo - L);
-
-      /* Pongo las fuerzas escalares en un vector */
-      Fx = -(Fd + Fs) * (rX / largo);
-      Fy = -(Fd + Fs) * (rY / largo);
-      Fz = -(Fd + Fs) * (rZ / largo);
-
-      //Actualizo con la fuerza que acabo de calcular
-      //El primer punto
-      res[i].a->fx += Fx;
-      res[i].a->fy += Fy;
-      res[i].a->fz += Fz;
-
-      //El segundo punto
-      res[i].b->fx -= Fx;
-      res[i].b->fy -= Fy;
-      res[i].b->fz -= Fz;
-    }
- }
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  %frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=19, %If you omit this two fields, the whole file is pulled
+  lastline=32
+  ]{cpp}{../../../GLSamples/SoftBody/physics/SpringDamper.cpp}
+  \caption{El método \mintinline{cpp}{add_force} de \mintinline{cpp}{SpringDamper}}
+  \label{lst:add_forceSD}
+  \end{listing}
+\end{minipage}
+\par
 }
-\end{verbatim} 
-Como se puede ver en el código, ahora ciclamos por todo el arreglo de resortes, y con ellos podemos acceder a los dos puntos \verb|a| y \verb|b| que conectan.
-Lo primero es saber la distancia entre los dos puntos, si ésta fuera cero, no se hace ningún cálculo.
-Cabe señalar que por las condiciones del modelo es muy difícil que dicho caso suceda.
-
-Después se procede a calcular la fuerza del amortiguador y del resorte, para cada una de ellas se ocupan sus respectivas constantes \verb|Ks| y \verb|Kd|, que son variables globales.
-
-Por último se le da la dirección a la fuerza del resorte y se actualiza en los puntos, recordando cambiar el signo en el segundo punto.
-Hay también que hacer énfasis en que la fuerza nunca es actualizada directamente sino más bien es acumulada (sumada a la fuerza anterior).
 
 \subsection{La fuerza del gas}
 \label{sec:fuerzaGas}
 
 La siguiente fuerza en ser acumulada es la fuerza debida a la presión del gas. Para esto se ocupa la ecuación~\ref{fuerzaGas}, y se debe de acumular una vez por cada cara.
-Para poder calcular esta fuerza se necesitan hacer varias operaciones importantes: calcular el volumen total del cuerpo flexible y además calcular el área y el vector normal de cada una de las caras.
+Para poder calcular esta fuerza se necesitan hacer varias operaciones importantes: calcular el volumen total del cuerpo flexible y además calcular el área y el vector normal de cada una de las caras (Listado~\ref{lst:addPreassure}).
+
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  %frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=598, %If you omit this two fields, the whole file is pulled
+  lastline=606
+  ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
+  \caption{El método \mintinline{cpp}{addPreassure} de \mintinline{cpp}{SoftBody}}
+  \label{lst:addPreassure}
+  \end{listing}
+\end{minipage}
+\par
+} 
+
+La clase \mintinline{cpp}{Face} implementa la mayoria de las operaciones.
 
 Para hacer el cálculo del volumen se hace uso de un arreglo de puntos auxiliares, se simula que el cuerpo está formado por varios pedazos rectangulares.
 Para cada parte (hexaedro regular) se ocupa la fórmula~\ref{ecuacionVolumen} y finalmente la suma del volumen de todas nos proporciona el volumen total del cuerpo.
 
-Para calcular el área de cada cara se ocupa la fórmula~\ref{formulaArea}.
+Para calcular el área de cada cara se ocupa la fórmula~\ref{formulaArea}, como se puede ver en el Listado~\ref{lst:addPreassure}.
+Y para calcular el vector normal se hace uso de la fórmula~\ref{formulaVecNormal}, en donde $n=4$, dado que cada cara está formada por cuatro puntos (Listado~\ref{lst:addPreassure}).
 
-Para calcular el vector normal se hace uso de la fórmula~\ref{formulaVecNormal}, en donde $n=4$, dado que cada cara está formada por cuatro puntos.
-
-\begin{verbatim}
-void putPressure (Punto pts[PARTICULAS], Cara msc[CUADROS])
-{
-  int i;
-  float volumen = 0.0f, area, fuerza, largo, Fx, Fy, Fz;
-  float vec1[3], vec2[3], vec3[3], vec4[3], vecPro[3];
-  Punto aux[PARTICULAS];
-
-  /* Puntos auxiliaes que me ayudaran a calcular el volumen */
-  for (i = 0; i < PARTICULAS; i++)
-  {
-    aux[i].x = pts[i].x;
-    aux[i].y = FONDO;
-    aux[i].z = pts[i].z;
-  }
-
-  /** Calculo el volumen del cuerpo */
-  for (i = 0; i < (LADO * (LADO - 1)); i++)
-  {
-    if ( (i % LADO) != (LADO - 1) )
-    {
-      volumen += volumenHexaedro(pts[i], pts[i+1], pts[i+LADO], 
-      pts[i+1+LADO], aux[i], aux[i+1], aux[i+LADO], aux[i+1+LADO]);
-    }
-  }
-
-  /** Loop sobre todas las caras para calcular su fuerza de presion */
-  for (i = 0; i < CUADROS; i++)
-  {
-    /* El area de esta cara */
-    area = areaCuadrilatero(*msc[i].a, *msc[i].b, *msc[i].c, *msc[i].d);
-
-    fuerza = area * Kp / volumen;
-
-    /* Calculo el vector normal a la cara */
-    vectorNormal(*msc[i].a, *msc[i].c, *msc[i].b, vec1);
-    vectorNormal(*msc[i].b, *msc[i].a, *msc[i].d, vec2);
-    vectorNormal(*msc[i].c, *msc[i].d, *msc[i].a, vec3);
-    vectorNormal(*msc[i].d, *msc[i].b, *msc[i].c, vec4);
-
-    vecPro[0] = (vec1[0] + vec2[0] + vec3[0] + vec4[0]) / 4.0f;
-    vecPro[1] = (vec1[1] + vec2[1] + vec3[1] + vec4[1]) / 4.0f;
-    vecPro[2] = (vec1[2] + vec2[2] + vec3[2] + vec4[2]) / 4.0f;
-
-    /* Hago unitario al vector normal */
-    largo = sqrt(vecPro[0] * vecPro[0] + 
-    vecPro[1] * vecPro[1] + vecPro[2] * vecPro[2]);
-
-    msc[i].nx = vecPro[0] / largo;
-    msc[i].ny = vecPro[1] / largo;
-    msc[i].nz = vecPro[2] / largo;
-
-    /* Calculo los vectores de fuerza */
-    Fx = msc[i].nx * fuerza;
-    Fy = msc[i].ny * fuerza;
-    Fz = msc[i].nz * fuerza;
-
-    /* Acomulo la fuerza de presion en cada particula de la cara */
-    msc[i].a->fx += Fx;
-    msc[i].a->fy += Fy;
-    msc[i].a->fz += Fz;
-
-    msc[i].b->fx += Fx;
-    msc[i].b->fy += Fy;
-    msc[i].b->fz += Fz;
-
-    msc[i].c->fx += Fx;
-    msc[i].c->fy += Fy;
-    msc[i].c->fz += Fz;
-
-    msc[i].d->fx += Fx;
-    msc[i].d->fy += Fy;
-    msc[i].d->fz += Fz;
-  }
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=44, %If you omit this two fields, the whole file is pulled
+  lastline=53
+  ]{cpp}{../../../GLSamples/SoftBody/physics/Face.cpp}
+  \caption{El método \mintinline{cpp}{get_area} de \mintinline{cpp}{Face}}
+  \label{lst:get_area}
+  \end{listing}
+\end{minipage}
+\par
 }
-\end{verbatim}
-Para calcular la fuerza de nuevo se hace uso de una variable global \verb|Kp|, que guarda la constante de la presión.
-Y finalmente la fuerza se acumula en cada uno de los cuatro puntos que forman la cara.
-También hay que notar que el vector normal a ésta se quedó guardado en \verb|nx|, \verb|ny| y \verb|nz|; después se puede hacer uso de él para hacer la iluminación de la escena.
 
-La funciones \verb|volumenHexaedro| y \verb|areaCuadrilatero|, sólo hacen uso de las fórmulas~\ref{ecuacionVolumen} y~\ref{formulaArea}, respectivamente, y devuelven un valor real.
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=55, %If you omit this two fields, the whole file is pulled
+  lastline=63
+  ]{cpp}{../../../GLSamples/SoftBody/physics/Face.cpp}
+  \caption{El método \mintinline{cpp}{get_normal} de \mintinline{cpp}{Face}}
+  \label{lst:get_normal}
+  \end{listing}
+\end{minipage}
+\par
+}
 
 \section{Los métodos numéricos}
 Otra de las rutinas mas complicadas son los métodos numéricos.
