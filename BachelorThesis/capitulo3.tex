@@ -11,68 +11,65 @@ En la tercera sección se explican las rutinas de la física del modelo, concret
 
 Por último se explica cómo es que se implementaron la rutina tanto de detección como de respuesta a las colisiones.
 
-\section{Definir la estructura de los datos}
-Todo programador debería de preocuparse en como debe de guardar los datos en memoria, aquí recurrí a tipos de datos simples, pero siempre teniendo en mente crear un tipo de dato que permitiera hacer las operaciones de acumulación de fuerzas de un manera sencilla.
+\section{Diseño de clases}
+Todo programador debería de preocuparse en como debe de guardar los datos en memoria. Dado que el lenguaje de programación es C++, lo natural es elegir el paradigma de porgramación orientada a objetos. Y la creación de las clases guiara el desarrollo.
 
-\subsection{Las partículas}
-La parte fundamental del modelo la constituyen los puntos o partículas; de cada una de éstas nos interesa saber básicamente tres cosas: su posición, su velocidad y la fuerza que se le está aplicando.
-Con esto en mente la primera estructura de datos que se creó fue \verb|Punto|.
+Hago uso de la biblioteca de algebra para graficos: \href{http://github.com/g-truc/glm}{glm} por dos razones.
+Primero, por que cuenta con tipos de datos para representar vectores en 2 y 3 dimensiones e implementa las operaciones usuales entre ellos.
+Y segundo, por que esta biblioteca tiene un alto nivel de integración con OpenGL.
 
-\begin{verbatim}
-typedef struct
-{
-    float x, y, z;
-    float vx, vy, vz;
-    float fx, fy, fz;
-    int fixed;
-}Punto;
-\end{verbatim}
+La parte fundamental del modelo la constituyen las partículas; de cada una de éstas nos interesa saber básicamente cuatro cosas: su posición, su velocidad, la fuerza que se le está aplicando y la masa.
+Adicionalmente, dado la definición sistema se necesita saber si una partícula esta fija.
+Si una particúla esta fija, entonces se deben de ignorar las operaciones de integración.
+Los métodos nos deben de permitir editar estos cuatro miembros. En este sentido la clase \mintinline{cpp}{Particle} es muy simple pues solo contiene los métodos mutadores obvios.
 
-En donde \verb|x|, \verb|y| y \verb|z|, son números reales que representan la posición del punto en el espacio.
-Los valores \verb|vx|, \verb|vy| y \verb|vz| representan la velocidad del punto en forma también de vector y por ultimo \verb|fx|, \verb|fy| y \verb|fz| representan la fuerza aplicada al punto en un paso de tiempo particular.
-Y también hay una variable entera, \verb|fixed|, ésta se usa sólo como una bandera que toma sólo dos valores $0$ ó $1$, y que significa que el punto está fijo en la escena cuando vale $1$ (que en lenguaje C se evalúa a verdadero igual que cualquier entero diferente de $0$).
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  %frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=5, %If you omit this two fields, the whole file is pulled
+  lastline=37
+  ]{cpp}{../../../GLSamples/SoftBody/physics/Particle.h}
+  \caption{Definición del objeto Partícula}
+  \label{lst:bitManip2}
+  \end{listing}
+\end{minipage}
+\par
+}
 
-\subsection{Los resortes}
+El siguiente objeto importante del modelo son los osciladores o resortes amortiguadores.
 
-Una parte importante del modelo son los osciladores o resortes amortiguadores, la siguiente estructura de datos guarda todo lo necesario con respecto a estos.
+Para representarlos se creó la clase \mintinline{cpp}{SpringDamper} que tiene como miembros \emph{referencias} a las dos particulas que une el resorte.
+Hago enfasis en que usaremos referencias, pues las particulas van ser usadas para formar varios objetos y se requiere que no sea necesario actualizar en cada objeto por separado, cada que una particula sea modificada. Finalmente, se debe saber la longitud $L$ del resorte cuando esta en su estado de reposo.
 
-\begin{verbatim}
-typedef struct
-{
-    Punto *a, *b;
-    float lenght;
-}Resorte;
-\end{verbatim} 
+La clase \mintinline{cpp}{SpringDamper} tiene un define los métodos para:
+\begin{itemize}
+ \item Actualizar que partículas forman este resorte.
+ \item Consultar y modificar $L$.
+ \item Consultar las posiciones de las partículas que forman este resorte.
+ \item Acumular la fuerza del resorte en sus dos partículas dados $k_s$ y $k_d$.
+\end{itemize}
 
-En donde \verb|a| y \verb|b| son apuntadores a variables de tipo \verb|Punto|, que van a ser los dos puntos que están conectados por este resorte, y son referencias porque de esta manera puedo saber y modificar los datos que guardan esos puntos a través de la estructura resorte (lo cual resulta ideal al momento de acumular la fuerza del resorte).
+La última clase que define el cuerpo neumático es la clase \mintinline{cpp}{Face}; que representa una cara del cuerpo flexible.
+Como es de esperar; dado que las caras son cuadriláteros, esta clase solo necesita referencias a cuatro particulas.
 
-También hay una variable flotante \verb|lenght|, que se utilizará para guardar la distancia entre estos dos puntos, o lo que es lo mismo la longitud del resorte en un momento del tiempo.
+La clase \mintinline{cpp}{Face} tiene:
+\begin{itemize}
+ \item Los accesores esperados a las partículas que la forman.
+ \item Un método para actualizar las partículas que forman esta cara (equivalente al de \mintinline{cpp}{SpringDamper}).
+ \item Un método para calcular el área de esta cara.
+ \item Un método que sirve como auxiliar en el caclulo del volumen de todo el cuerpo flexible. La logica de este metodo se explica en la Sección~\ref{sec:fuerzaGas}. Por razones de Ingeniería de Software (IS) era conveniente incluirlo en esta clase.
+\end{itemize}
 
-\subsection{Las caras}
-Para hacer la acumulación de la fuerza debida a la presión, es necesario organizar el cuerpo flexible en un conjunto de caras, justo como se vio en~\ref{ejemplo:presion}.
-Para este fin se hace uso de otra estructura más, la estructura \verb|Cara|.
-\begin{verbatim}
-typedef struct
-{
-    Punto *a, *b, *c, *d;
-    float nx, ny, nz;
-}Cara;
-\end{verbatim}
-Aquí se tienen cuatro apuntadores de tipo \verb|Punto|, esto por que se decidió hacer caras en forma de cuadriláteros, y también al momento de acumular la fuerza debida a la presión es necesario modificar los valores de estos puntos a través de la \verb|Cara| que forman.
-Hay también tres variables \verb|nx|, \verb|ny| y \verb|nz|, que se ocupan para guardar el vector normal a esta cara, lo cual es un dato que servirá para hacer la acumulación de la fuerza debida a la presión.
-\subsection{La esfera}
-Por último, una estructura que utilizaré para guardar información de un cuerpo rígido en la escena: una esfera.
-\begin{verbatim}
-typedef struct
-{
-    float x, y, z;
-    float Vx, Vy, Vz;
-    float Fx, Fy, Fz;
-    float radio;
-}Esfera;
-\end{verbatim} 
-Los valores \verb|x|, \verb|y|, y \verb|z| guardan el vector de posición, los valores \verb|Vx|, \verb|Vy| y \verb|Vz| guardan la velocidad y la fuerza se almacena en \verb|Fx|, \verb|Fy|, y \verb|Fz|.
-También hay una variable extra \verb|radio|, que al tratarse de una esfera me dice todo lo necesario para poder dibujarla en la escena.
+Tambien se define una clase para representar el cuerpo flexible: \mintinline{cpp}{SoftBody}. Esta clase es la mas importante de la aplicación.
+  
+Finalmente, se necesita también una clase para representar el único cuerpo rígido en la escena. La clase \mintinline{cpp}{Ball} tiene como miembros una partícula, un escalar que representa el radio de la esfera y un miembro para registrar que método numérico se usa para integrar (De nuevo por IS, era conveniente que cada objeto en la escena llevara registro de que integrador está en uso).
 
 \subsection{Arreglos de datos}
 
@@ -250,6 +247,8 @@ Por último se le da la dirección a la fuerza del resorte y se actualiza en los
 Hay también que hacer énfasis en que la fuerza nunca es actualizada directamente sino más bien es acumulada (sumada a la fuerza anterior).
 
 \subsection{La fuerza del gas}
+\label{sec:fuerzaGas}
+
 La siguiente fuerza en ser acumulada es la fuerza debida a la presión del gas. Para esto se ocupa la ecuación~\ref{fuerzaGas}, y se debe de acumular una vez por cada cara.
 Para poder calcular esta fuerza se necesitan hacer varias operaciones importantes: calcular el volumen total del cuerpo flexible y además calcular el área y el vector normal de cada una de las caras.
 
