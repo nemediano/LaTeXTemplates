@@ -1,27 +1,87 @@
-\chapter{Implementación del código en lenguaje C++}
-Este capítulo está dedicado a cubrir los detalles de la implementación del modelo en código.
-Dado que la principal finalidad de este trabajo es el modelado físico no entraré en detalles de otras áreas del programa más que las que tienen que ver con el modelo.
-Sólo hablare de los módulos del programa que tienen que ver con lo tratado en los capítulos anteriores.
+\chapter{Implementación del modelo}
+Este capítulo está dedicado a cubrir los detalles de la implementación del modelo en código, concretamente en lenguaje C++.
 
-La primera parte describe cómo se van a crear las estructuras de datos necesarias para guardar en memoria los datos del modelo.
+Dado que la principal finalidad de este trabajo es el modelado físico, no entraré en detalles en otras áreas del programa más que las que tienen que ver con lo descrito en los capítulos anteriores.
 
-En la siguiente sección se ve la manera como se implementaron en código los métodos numéricos usados para integrar la ecuación de Newton.
+El programa completo contiene módulos para la graficación en \href{http://www.opengl.org/}{OpenGL}, para la interfaz de usuario por medio de \href{https://github.com/ocornut/imgui}{dear imgui}, para la lectura y escritura de imágenes usando \href{http://freeimage.sourceforge.io/}{freeimage} (para cargar texturas y para hacer capturas de pantalla) e implementa el modelo de iluminación de \href{http://en.wikipedia.org/wiki/Phong_reflection_model}{Phong} en shaders por medio de \href{http://www.khronos.org/opengl/wiki/OpenGL_Shading_Language}{GLSL}.
+
+El lector interesado puede consultar el código fuente completo del programa que se incluye en un CD o puede descargarlo de \href{http://github.com/nemediano}{github}.
+Aunque el código está escrito en inglés (por ser el estándar) traté de ser lo más extenso en los comentarios en todo el código.
+Por lo que el lector que cuente con los conocimientos de programación y graficación por computadora adquiridos en la licenciatura podrá entender y usar todo el código fuente del programa sin ningún problema.
+
+Se decidió implementar el programa usando el paradigma de programación orientada a objetos. 
+En la primera sección se describen las clases más importantes: las necesarias para representar las estructuras del modelo y la clase que lleva a cabo la ejecución del programa.
+
+La siguiente sección se revisa cómo se implementaron en código los métodos numéricos usados para integrar la ecuación de Newton.
 
 En la tercera sección se explican las rutinas de la física del modelo, concretamente las rutinas que se encargan de aplicar las fuerzas que intervienen en el modelo.
 
-Por último se explica cómo es que se implementaron la rutina tanto de detección como de respuesta a las colisiones.
+En la última sección del capítulo, se explica cómo es que se implementaron la rutina tanto de detección como de respuesta a las colisiones.
 
 \section{Diseño de clases}
-Todo programador debería de preocuparse en como debe de guardar los datos en memoria. Dado que el lenguaje de programación es C++, lo natural es elegir el paradigma de porgramación orientada a objetos. Y la creación de las clases guiara el desarrollo.
 
-Hago uso de la biblioteca de algebra para graficos: \href{http://github.com/g-truc/glm}{glm} por dos razones.
+Decidí usar de la biblioteca de algebra para graficos: \href{http://github.com/g-truc/glm}{glm} por dos razones.
 Primero, por que cuenta con tipos de datos para representar vectores en 2 y 3 dimensiones e implementa las operaciones usuales entre ellos.
-Y segundo, por que esta biblioteca tiene un alto nivel de integración con OpenGL.
+Y segundo, por que esta biblioteca tiene un alto nivel de integración con OpenGL al grado de ser casi un estandar.
 
 La parte fundamental del modelo la constituyen las partículas; de cada una de éstas nos interesa saber básicamente cuatro cosas: su posición, su velocidad, la fuerza que se le está aplicando y la masa.
-Adicionalmente, dado la definición sistema se necesita saber si una partícula esta fija.
+Adicionalmente, por un detalle particular a nuestra implementación, se necesita saber si una partícula esta fija.
 Si una particúla esta fija, entonces se deben de ignorar las operaciones de integración.
-Los métodos nos deben de permitir editar estos cuatro miembros. En este sentido la clase \mintinline{cpp}{Particle} es muy simple pues solo contiene los métodos mutadores obvios.
+Los métodos nos permiten editar y consultar estos cinco miembros. En este sentido la clase \mintinline{cpp}{Particle} es muy simple~\footnote{En el argot del lenguaje \href{http://www.java.com/en/}{Java} diriamos que la clase \mintinline{cpp}{Particle} es casi un \href{http://en.wikipedia.org/wiki/JavaBeans}{bean}}.
+
+Para representar a los resortes-amortiguadores se creó la clase \mintinline{cpp}{SpringDamper} que tiene como miembros \emph{referencias} a las dos partículas que une éste resorte.
+Hago énfasis en que usaremos referencias, pues las partículas van ser usadas para formar varios objetos y se requiere que no sea necesario actualizar en cada objeto por separado cada que una partícula sea modificada. Finalmente, se debe saber la longitud $L$ del resorte cuando está en su estado de reposo.
+
+La clase \mintinline{cpp}{SpringDamper} tiene un define los métodos para:
+\begin{itemize}
+ \item Actualizar qué partículas forman éste resorte.
+ \item Consultar y modificar $L$.
+ \item Consultar las posiciones de las partículas que forman este resorte.
+ \item Acumular la fuerza del resorte en sus dos partículas dados $k_s$ y $k_d$.
+\end{itemize}
+
+La última clase que define el cuerpo neumático es la clase \mintinline{cpp}{Face}, que representa una cara del cuerpo flexible.
+Como es de esperar, dado que las caras son cuadriláteros, esta clase solo necesita como propiedades referencias a cuatro partículas.
+
+Adicionalmente, la clase \mintinline{cpp}{Face} implementa los siguientes métodos:
+\begin{itemize}
+ \item Los accesores y mutadores a las partículas que la forman.
+ \item Un método para actualizar las partículas que forman esta cara (equivalente al de \mintinline{cpp}{SpringDamper}).
+ \item Un método para calcular el área de esta cara.
+ \item Un método que sirve como auxiliar en el cálculo del volumen de todo el cuerpo flexible. La lógica de este método se explica en la Sección~\ref{sec:fuerzaGas}. Aunque ésta no es una propiedad de la cara, por razones de Ingeniería de Software (IS) era conveniente incluirlo en esta clase.
+\end{itemize}
+
+También se define una clase para representar el cuerpo flexible: \mintinline{cpp}{SoftBody}.
+Esta clase es la más importante de la aplicación.
+Y el resto de éste capítulo está dedicado a explicar como funcionan sus métodos.
+En este momento, es relevante decir que esta clase contiene una colección de partículas, una colección de resortes y una colección de caras.
+Las caras y resortes en realidad contienen referencias a las partículas, de esta manera la información de las partículas sólo está almacenada una vez.
+
+Por orden, esta clase también define una estructura: \mintinline{cpp}{SoftBodyParameters} que contiene todos los parámetros físicos del cuerpo flexible. 
+ 
+Finalmente, se necesita también una clase para representar el único cuerpo rígido en la escena.
+La clase \mintinline{cpp}{Ball} tiene como miembros una partícula, un escalar que representa el radio de la esfera y un miembro para registrar qué método numérico se usa para integrar (De nuevo por IS, era conveniente que cada objeto en la escena llevará registro de que integrador está en uso).
+
+La relación entre estas clases esta resumida en el diagrama de clases mostrado en la Figura~\ref{clases:fig}. De nuevo hago énfasis en que la implementación de hecho contiene mas miembros que los mostrados, pues solo aparecen en el diagrama los relevantes para este trabajo.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=\textwidth]{Img/03/diagramaClases}
+ \caption[Diagrama de clases]{ 
+ La clase \mintinline{cpp}{Particle} es la unidad de construcción. La clase \mintinline{cpp}{SoftBody} es la que controla la ejecución. 
+ } \label{clases:fig}
+\end{figure}
+
+\section{Creación del cuerpo flexible}
+
+Cómo se dijo en la sección anterior, hay tres colecciones que forman el cuerpo flexible: las particulas, los resortes y las caras. Estas colecciones estan almacenadas en vectores que forman parte de la clase \mintinline{cpp}{SoftBody}.
+
+Hay algunas cosas que decir aquí: primero, que lo que se quiere modelar es una tela cuadrada que servirá como cuerpo flexible, por lo que el número de partículas es en realidad $n^{2}$ en donde $n$ es el número de puntos en cada lado de la tela (en el código es el miembro \mintinline{cpp}{size_t m_side} de \mintinline{cpp}{SoftBody}), y como no hay resortes en las orillas de la tela el número de resortes totales es $2 (n - 1) (n - 2)$ y el número de caras es: $(n-1)^{2}$.
+Segunda, que, pese al arreglo cuadrado de la tela, los puntos son guardados en un arreglo unidimensional (lineal), esto por que simplifica y hace mucho más generales las rutinas de acumulación de fuerza.
+
+Dado que la partículas están en un arreglo unidimensional se hace uso del método \mintinline{cpp}{simIndexes} que recibe el índice de la particula en el vector unidimensional y nos regresa los indices $(i, j)$ que la partícula tendría en un arreglo bidimensional. El metodo \mintinline{cpp}{realIndex} hace la operacion inversa.
+
+La rutina que inicializa las partículas es la siguiente:
 
 {\centering
 \begin{minipage}{\linewidth}
@@ -33,131 +93,70 @@ Los métodos nos deben de permitir editar estos cuatro miembros. En este sentido
   baselinestretch=1.2,
   fontsize=\footnotesize,
   linenos,
-  firstline=5, %If you omit this two fields, the whole file is pulled
-  lastline=37
-  ]{cpp}{../../../GLSamples/SoftBody/physics/Particle.h}
-  \caption{Definición del objeto Partícula}
-  \label{lst:bitManip2}
+  firstline=306, %If you omit this two fields, the whole file is pulled
+  lastline=328
+  ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
+  \caption{Este es un extracto del método \mintinline{cpp}{recreate_particles} de \mintinline{cpp}{SoftBody}}
+  \label{lst:recreate_particles}
   \end{listing}
 \end{minipage}
 \par
 }
 
-El siguiente objeto importante del modelo son los osciladores o resortes amortiguadores.
+El código mostrado en el Listado~\ref{lst:recreate_particles} inicializa la velocidad, la fuerza y la masa de la partículas (la posición es inicializada con una rutina muy simple que esta fuera de la clase \mintinline{cpp}{SoftBody}). También se encarga de fijar las partículas que estan en las orillas de la tela.
 
-Para representarlos se creó la clase \mintinline{cpp}{SpringDamper} que tiene como miembros \emph{referencias} a las dos particulas que une el resorte.
-Hago enfasis en que usaremos referencias, pues las particulas van ser usadas para formar varios objetos y se requiere que no sea necesario actualizar en cada objeto por separado, cada que una particula sea modificada. Finalmente, se debe saber la longitud $L$ del resorte cuando esta en su estado de reposo.
+La rutina que inicializa los resortes es ejecutada después de las particulas. Se muestra un extracto en el Listado~\ref{lst:connectSprings}.
 
-La clase \mintinline{cpp}{SpringDamper} tiene un define los métodos para:
-\begin{itemize}
- \item Actualizar que partículas forman este resorte.
- \item Consultar y modificar $L$.
- \item Consultar las posiciones de las partículas que forman este resorte.
- \item Acumular la fuerza del resorte en sus dos partículas dados $k_s$ y $k_d$.
-\end{itemize}
-
-La última clase que define el cuerpo neumático es la clase \mintinline{cpp}{Face}; que representa una cara del cuerpo flexible.
-Como es de esperar; dado que las caras son cuadriláteros, esta clase solo necesita referencias a cuatro particulas.
-
-La clase \mintinline{cpp}{Face} tiene:
-\begin{itemize}
- \item Los accesores esperados a las partículas que la forman.
- \item Un método para actualizar las partículas que forman esta cara (equivalente al de \mintinline{cpp}{SpringDamper}).
- \item Un método para calcular el área de esta cara.
- \item Un método que sirve como auxiliar en el caclulo del volumen de todo el cuerpo flexible. La logica de este metodo se explica en la Sección~\ref{sec:fuerzaGas}. Por razones de Ingeniería de Software (IS) era conveniente incluirlo en esta clase.
-\end{itemize}
-
-Tambien se define una clase para representar el cuerpo flexible: \mintinline{cpp}{SoftBody}. Esta clase es la mas importante de la aplicación.
-  
-Finalmente, se necesita también una clase para representar el único cuerpo rígido en la escena. La clase \mintinline{cpp}{Ball} tiene como miembros una partícula, un escalar que representa el radio de la esfera y un miembro para registrar que método numérico se usa para integrar (De nuevo por IS, era conveniente que cada objeto en la escena llevara registro de que integrador está en uso).
-
-\subsection{Arreglos de datos}
-
-Por último la estructura de datos mas importante: los arreglos donde se guarda la información acerca del cuerpo flexible que queremos modelar.
-
-Hay básicamente tres arreglos, que son globales a todos los módulos del programa.
-\begin{verbatim}
-Punto tela[PARTICULAS];
-Resorte esqueleto[RESORTES];
-Cara mosaico[CUADROS];
-\end{verbatim} 
-En donde las constantes \verb|PARTICULAS|, \verb|RESORTES| y \verb|CUADROS| son enteros previamente definidos.
-
-Hay algunas cosas que decir aquí: primero, que lo que se quiere modelar es una tela cuadrada que servirá como cuerpo flexible, por lo que el número de partículas es en realidad $n^{2}$ en donde $n$ es el número de puntos en cada lado de la tela, y por las mismas condiciones el número de resortes totales es $2 n (n - 1)$ y el número de caras es: $(n-1)^{2}$.
-Segunda, que, pese al arreglo cuadrado de la tela, los puntos son guardados en un arreglo unidimensional (lineal), esto por que simplifica y hace mucho más generales las rutinas de acumulación de fuerza.
-
-La rutina que inicializa el arreglo de puntos es la siguiente:
-\begin{verbatim}
-primero = -MUNDO / 2;
-ultimo = MUNDO / 2;
-incremento = (ultimo - primero) / (LADO - 1);
-L = incremento;
-posX = posZ = primero;
-
-for (i = 0; i < PARTICULAS; i++)
-{
-  tela[i].x = posX;
-  tela[i].y = 0.0f;
-  tela[i].z = posZ;
-  tela[i].fixed = 0;
-
-  posX += incremento;
-  if (i % LADO == (LADO - 1))
-  {
-     posX = primero;
-     posZ += incremento;
-  }
-
-}
-\end{verbatim} 
-Se forma el arreglo de la tela, que debe medir la mitad del mundo y debe estar centrada en su origen, también se inicializa la variable \verb|L|, que guarda la distancia entre cada uno de los puntos, o lo que es lo mismo el largo de los resortes en reposo.
-
-Ahora falta inicializar el arreglo de resortes que apunta a los puntos que ya tenemos dentro del arreglo \verb|tela|.
-\begin{verbatim}
-int i, k = 0;
-/** Ciclo por el arreglo esqueleto, y cada resorte le conecto 
-  sus dos puntos que le corresponden */
-for (i = 0; i < PARTICULAS ; i++)
-{
-  /* Resorte Horizontal */
-  if ((i % LADO) != (LADO - 1))
-  {
-     esqueleto[k].a = &tela[i];
-     esqueleto[k].b = &tela[i + 1];
-     k++;
-  }
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  %frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=345, %If you omit this two fields, the whole file is pulled
+  lastline=368
+  ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
+  \caption{Este es un extracto del método \mintinline{cpp}{connectSprings} de \mintinline{cpp}{SoftBody}}
+  \label{lst:connectSprings}
+  \end{listing}
+\end{minipage}
+\par
 }
 
-for (i = 0; i < (LADO * (LADO - 1)); i++)
-{
-  /* Resorte Vertical */
-     esqueleto[k].a = &tela[i];
-     esqueleto[k].b = &tela[i + LADO];
-     k++;
-}
-\end{verbatim} 
-Primero se construyen los resortes que son paralelos al eje x, y después se construyen los resortes que son perpendiculares a los primeros, es decir son paralelos al eje z. También hay que notar que en ningún momento se hace uso de resortes estructurales.
+Por las condiciones que definimos en nuestra tela. 
+\begin{center}
+ \item Las partículas que están en las arístas superiores e inferiores no tienen un resorte horizontal entre ellas.
+ \item Las partículas que están en las arístas izquierda y derecha no tienen un resorte vertical entre ellas.
+\end{center} 
 
-Y por último la rutina que construye las caras, de nuevo se toman como base los puntos guardados en el arreglo tela.
-\begin{verbatim}
-int i, j = 0;
-/** Cicla por todas las caras */
-for (i = 0; i < (LADO * (LADO - 1)); i++)
-{
-   if ( (i % LADO) != (LADO - 1) )
-   {
-     /* Haz una cara */
-     mosaico[j].a = &tela[i];
-     mosaico[j].b = &tela[i + 1];
-     mosaico[j].c = &tela[i + LADO];
-     mosaico[j].d = &tela[i + LADO + 1];
-     j++;
-   }
+El algoritmo, pregunta si esta particula puede ser unida (por un resorte) con la partícula a su derecha, de ser así las conecta. Después, pregunta si debe ser unida con la particula abajo de ella, de ser así tambien es conectada.
+
+La logica para formar las caras se presenta en el Listado~\ref{lst:connectFaces}: 
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  %frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=372, %If you omit this two fields, the whole file is pulled
+  lastline=389
+  ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
+  \caption{Este es un extracto del método \mintinline{cpp}{connectFaces} de \mintinline{cpp}{SoftBody}}
+  \label{lst:connectFaces}
+  \end{listing}
+\end{minipage}
+\par
 }
-\end{verbatim} 
-Esta rutina es especial en el sentido que se debe de tener cuidado de unir cada par de puntos, $i$, $i+1$, con los puntos que están justo debajo de ellos, por eso se tiene que prevenir que al llegar a la parte inferior de la tela, ya no haya más puntos abajo.
-Es por eso que el ciclo for itera mas veces que el numero total de caras.
-Con esto se garantiza que se puedan visitar todos las particulas del modelo de tres formas distintas, ya sea por resortes, o por caras, o accediendo directamente por medio del arreglo de puntos \verb|tela|.
+
+Esta rutina es muy parecida a la anterior: recorre todas las particulas, si la partícula actual, tiene un partícula a su izquierda y otra partícula abajo, entonces se pueden tomar cuatro partículas (pues debe existir otra una partícula en diagonal) para formar una cara.
 
 \section{La física del modelo}
 Toca el turno de ver las rutinas que tienen que ver con la acumulación de fuerzas en el modelo.
