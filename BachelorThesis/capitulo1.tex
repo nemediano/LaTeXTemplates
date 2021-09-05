@@ -27,7 +27,7 @@ Y finalmente, con este modelo trabajar la situación que deseo analizar.
 
 \section{Un cuerpo en caída libre}
 Imagínese una piedra que descansa cerca de la orilla del quicio de una ventana.
-La piedra es empujada horizontalmente hasta que resbala de la orilla y se cáe, (ver figura~\ref{piedra:fig}).
+La piedra es empujada horizontalmente hasta que resbala de la orilla y se cáe, (ver Figura~\ref{piedra:fig}).
 Éste es un ejemplo de caída libre.
 
 Mas formalmente, la caída libre consiste en modelar un cuerpo sólido, con masa uniformemente distribuida y despreciando la fricción del aire.
@@ -35,7 +35,7 @@ Es decir, la única fuerza que actúa sobre este cuerpo es la \emph{fuerza de gr
 
 \begin{figure}
  \centering
- \includegraphics[]{Img/caida_libre}
+ \includegraphics[]{Img/01/caida_libre}
  \caption[Ejemplo de caída libre]{ 
  Una piedra en caída libre, la única fuerza que actúa sobre ella es la de la gravedad.
  } \label{piedra:fig}
@@ -66,11 +66,11 @@ Una consecuencia de la ley de la gravitación universal y de que la masa de la T
 Gracias a que la fuerza que atrae las cosas a la tierra es casi constante, el problema de caída libre tendrá una solución matemática analítica y hasta cierto punto fácil de obtener.
 Hay muchas maneras de derivar estas leyes, más adelante cuando se unan todos los modelos se entenderá por qué elegí explicarla de esta manera y no de una manera más natural.
 
-Empiezo planteando las condiciones del modelo: suponemos que se trata de un objeto con masa $m$, que se encuentra al iniciar su movimiento a una altura $y_0$, que en el momento de iniciar su movimiento tiene una velocidad inicial $v_0$ y que durante todo su movimiento sólo va a actuar sobre él una fuerza constante $F$ (figura~\ref{cida:fig}), que le imprime una aceleración constante $a$ y que esta fuerza es precisamente la fuerza de gravedad que ejerce la tierra sobre él, es decir: $a = g$.
+Empiezo planteando las condiciones del modelo: suponemos que se trata de un objeto con masa $m$, que se encuentra al iniciar su movimiento a una altura $y_0$, que en el momento de iniciar su movimiento tiene una velocidad inicial $v_0$ y que durante todo su movimiento sólo va a actuar sobre él una fuerza constante $F$ (Figura~\ref{cida:fig}), que le imprime una aceleración constante $a$ y que esta fuerza es precisamente la fuerza de gravedad que ejerce la tierra sobre él, es decir: $a = g$.
 
 \begin{figure}
  \centering
- \includegraphics[]{Img/cuerpo_caida}
+ \includegraphics[]{Img/01/cuerpo_caida}
  \caption[Diagrama de cuerpo libre]{ 
  El modelo del cuerpo en caida libre, con su sistema de coordenadas.
  } \label{cida:fig}
@@ -169,11 +169,11 @@ Es entonces que la ley de Hooke para los resortes nos da una manera de calcular 
 
 Empecemos a plantear las condiciones del modelo, supongamos que es una masa unida por un resorte a un objeto inamovible, una pared por ejemplo y que todo el sistema descansa en el piso, para que no lo afecte la gravedad, y este piso no le da ningún tipo de fricción.
 En estas condiciones el único movimiento permitido para la masa será el horizontal y a la derecha, de nuevo por convención diremos que es a la dirección positiva del eje $x$.
-La figura~\ref{masaResorte:fig} ilustra la situación aquí descrita.
+La Figura~\ref{masaResorte:fig} ilustra la situación aquí descrita.
 
 \begin{figure}[htb]
  \centering
- \includegraphics[width=0.6\textwidth]{Img/masaResorte}
+ \includegraphics[width=0.6\textwidth]{Img/01/masaResorte}
  \caption[Masa unida por un resorte]{ 
  Una masa que se mueve solamente afectada por la fuerza de un resorte.
  } \label{masaResorte:fig}
@@ -192,18 +192,18 @@ Esta expresión básicamente nos dice que la fuerza es proporcional a la distanc
 La nomenclatura $F_s$ se debe a que la mayoría de la bibliografía consultada está en inglés y traté de ser consistente con ella, ésta es la fuerza del resorte o \emph{\foreignlanguage{english}{spring force}}.
 
 Se observa en esta expresión que cuando el resorte está estirado, es decir, su largo $x$ es mayor a $L$ la fuerza del resorte se vuelve negativa y por ende jala a la masa a su punto de reposo.
-Como se ve en la figura~\ref{fig:estirada}.
+Como se ve en la Figura~\ref{fig:estirada}.
 
 \begin{figure}
  \centering
   \begin{subfigure}[b]{0.5\textwidth}
-    \includegraphics[width=\textwidth]{Img/masaEstirada}
+    \includegraphics[width=\textwidth]{Img/01/masaEstirada}
     \caption{Cuando $x>L$, el resorte jala la masa.}
   \label{fig:estirada}
   \end{subfigure}
 \\
   \begin{subfigure}[b]{0.5\textwidth}
-    \includegraphics[width=\textwidth]{Img/masaCompresa}
+    \includegraphics[width=\textwidth]{Img/01/masaCompresa}
     \caption{Cuando $x<L$, el resorte empuja la masa}
     \label{fig:compresa}
   \end{subfigure}
@@ -212,9 +212,9 @@ Como se ve en la figura~\ref{fig:estirada}.
  } \label{leyHokke:fig}
 \end{figure}
 
-En el caso que el resorte esté comprimido (Figura~\ref{fig:compresa}), es decir, $ x < L$, el resorte empuja el cuerpo para que alcance la posición de reposo y de nuevo lo hace con una fuerza proporcional a la distancia que esté alejado del cuerpo de este punto. 
+En el caso que el resorte esté compreso (Figura~\ref{fig:compresa}), es decir, $ x < L$, el resorte empuja el cuerpo para que alcance la posición de reposo y de nuevo lo hace con una fuerza proporcional a la distancia que esté alejado del cuerpo de este punto. 
 
-También se observa que cuando el largo del resorte es $ x = L$ el resorte está en reposo y por lo tanto la fuerza se hace cero, éste es el caso que se ilustro en la figura~\ref{masaResorte:fig}.
+También se observa que cuando el largo del resorte es $ x = L$ el resorte está en reposo y por lo tanto la fuerza se hace cero, éste es el caso que se ilustró en la Figura~\ref{masaResorte:fig}.
 
 Esta expresión para la fuerza se vuelve a aplicar a la ecuación de la ley de Newton, quedando la siguiente ecuación diferencial.
 
@@ -328,7 +328,7 @@ c_1 & = & x_0 - L \nonumber \\
 c_2 & = & \frac{v_0 + \left( x_0 - L \right) \alpha }{\beta } \nonumber 
 \end{eqnarray}
 
-De la solución \ref{solOsiArmAmor} es claro que cuando el tiempo $t \rightarrow \infty $, el factor $e^{-\alpha t}$ dominará y la masa se detendrá poco a poco.
+De la solución \eqref{solOsiArmAmor} es claro que cuando el tiempo $t \rightarrow \infty $, el factor $e^{-\alpha t}$ dominará y la masa se detendrá poco a poco.
 
 A manera de ejemplo ilustrativo, podemos elegir un conjunto arbitrario de valores para los parámetros. 
 Por ejemplo, si $m = \frac{1}{2}$, $k_d = \frac{1}{10}$, $k_s = \frac{9 + 1 / 100}{2}$, $x_0 = 6$ y $v_0 = 9 - 3/10$.
@@ -337,7 +337,7 @@ Lo que conduce a la solución $x(t) = e^{\frac{-1}{10}t} \left( 3 \cos{t} + 3 \s
 
 \begin{figure}[htb]
  \centering
- \includegraphics[width=0.85\textwidth]{Img/oscilador_amortiguado}
+ \includegraphics[width=0.85\textwidth]{Img/01/oscilador_amortiguado}
  \caption[Plano fase del oscilador armónico amortiguado]{ 
  Gráfica de $x(t) = e^{\frac{-1}{10}t} \left( 3 \cos{t} + 3 \sin{t} \right) + 3$. La linea discontinua en azul indica el estado de equilibrio: $x(t) = L$.
  } \label{OsciAmor:fig}
@@ -356,29 +356,29 @@ El resorte no tiene masa y ambos cuerpos tienen una masa $m$.
 Los puntos no están sujetos, es decir se mueven libremente por el espacio, y la única fuerza que actúa sobre ellos es el resorte.
 
 Hay que notar que a diferencia de la sección pasada, donde el resorte estaba empotrado en la pared, aquí el resorte esta unido a dos puntos sueltos, y por lo tanto aplica la misma fuerza sobre cada uno de los puntos.
-Esto se puede apreciar mejor en la figura \ref{masaSuelta:fig}.
+Esto se puede apreciar mejor en la Figura \ref{masaSuelta:fig}.
 
 \begin{figure}[hbt]
 \centering
   \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{Img/resortesJuntos}
+    \includegraphics[width=\textwidth]{Img/01/resortesJuntos}
     \caption{Cuando $\textbf{r}<L$, el resorte empuja ambas masas}
     \label{fig:juntos}
   \end{subfigure}
 \\
   \begin{subfigure}[b]{0.5\textwidth}
-    \includegraphics[width=\textwidth]{Img/resortesNormal}
+    \includegraphics[width=\textwidth]{Img/01/resortesNormal}
     \caption{Cuando $\textbf{r}=L$, el resorte no ejerce fuerza}
     \label{fig:normales}
   \end{subfigure}
 \\
   \begin{subfigure}[b]{0.7\textwidth}
-    \includegraphics[width=\textwidth]{Img/resortesSeparados}
+    \includegraphics[width=\textwidth]{Img/01/resortesSeparados}
     \caption{Cuando $\textbf{r}>L$, el resorte jala ambas masas.}
     \label{fig:estirados}
   \end{subfigure}
  \caption[Masas libres en el espacio unidas por un resorte]{ 
- Cuando las masas están libres, el resorte aplica sobre cada una de ellas la misma fuerza, pero en sentido contrario.
+ Como las masas están libres, el resorte aplica sobre cada una de ellas la misma fuerza, pero en sentido contrario.
  } \label{masaSuelta:fig}
 \end{figure}
 
@@ -386,7 +386,7 @@ Llamaré estos puntos $a$ y $b$ respectivamente, y vemos que una posible manera 
 
 \begin{figure}
  \centering
- \includegraphics[width=5cm]{Img/vector_posicion}
+ \includegraphics[width=7cm]{Img/01/vector_posicion}
  \caption[Ejemplo de vectores de posición]{ 
  Podemos localizar puntos en el espacio por medio de sus vectores de posición.
  } \label{posVec:fig}
@@ -402,7 +402,7 @@ Sabemos que una manera de encontrar el vector que une los puntos $a$ y $b$ es re
 \textbf{r} = \textbf{p}_a - \textbf{p}_b
 \end{equation}
 
-Como se ve en la figura~\ref{posVec:fig} este vector empieza en la punta de $\textbf{p}_b$ y termina en la punta de $\textbf{p}_a$.
+Como se ve en la Figura~\ref{posVec:fig} este vector empieza en la punta de $\textbf{p}_b$ y termina en la punta de $\textbf{p}_a$.
 Entonces la distancia que hay de $a$ a $b$ es precisamente la norma de este vector $\textbf{r}$, dicho de otra manera $\textbf{r} = \textbf{p}_a - \textbf{p}_b$ y $\overline{ab} = |\textbf{r}|$.
 
 Ahora que sabemos la distancia de $a$ a $b$, la podemos restar con el tamaño de resorte que es el escalar $L$.
@@ -440,7 +440,7 @@ Esta fuerzas son: la fuerza anterior debida al resorte que los une, y una nueva 
 \textbf{F}_a = \textbf{F}_s + \textbf{F}_d
 \end{equation}
 
-Donde $\textbf{F}_s$ es precisamente la expresión \ref{fuerza:resorte}. Así que sólo nos falta calcular $\textbf{F}_d$.
+Donde $\textbf{F}_s$ es precisamente la expresión \eqref{fuerza:resorte}. Así que sólo nos falta calcular $\textbf{F}_d$.
 Esta fuerza, como ya se dijo, es proporcional a la velocidad a la que se mueve un punto respecto al otro $\left( \textbf{v}_a - \textbf{v}_b \right)$ con una constante $k_d$, y además actúa en el sentido contrario al de la velocidad, es decir $F_d$ es proporcional a $-k_d \left( \textbf{v}_a - \textbf{v}_b \right)$.
 
 
@@ -470,7 +470,7 @@ Quedando la expresión final para $\textbf{F}_d$:
 \textbf{F}_d = - k_d \left[ \frac{ ( \textbf{v}_a - \textbf{v}_b ) \cdot ( \textbf{p}_a - \textbf{p}_b ) } { | \textbf{p}_a - \textbf{p}_b |} \right] \left[ \frac{ \textbf{p}_a - \textbf{p}_b } { | \textbf{p}_a - \textbf{p}_b |} \right]
 \end{equation}
 
-Como ya expliqué antes ésta es sólo la fuerza del amortiguador así que la expresión de fuerza para este \emph{resorte-amortiguador}, remplazando $\textbf{r} = \textbf{p}_a - \textbf{p}_b$ y $\textbf{v} = \textbf{v}_a - \textbf{v}_b$ para no hacer muy compleja la notación es la siguiente:
+Como ya expliqué antes ésta es sólo la fuerza del amortiguador así que la expresión de fuerza para este \emph{resorte-amortiguador} (remplazando $\textbf{r} = \textbf{p}_a - \textbf{p}_b$ y $\textbf{v} = \textbf{v}_a - \textbf{v}_b$ para no hacer muy compleja la notación) es la siguiente:
 
 \begin{eqnarray}
 \textbf{F}_a & = & \textbf{F}_s + \textbf{F}_d \nonumber \\
@@ -577,18 +577,18 @@ Es la ecuación que nos servirá en nuestro modelo.
 
 \subsection{Un ejemplo ilustrativo}
 
-Supongamos que se tiene una caja cerrada cuya \emph{tapa} tiene el largo y el ancho mostrado en la figura~\ref{cuadrilatero:fig} la caja tiene una altura igual a 1, es decir, $h=1$. Esta caja tiene las tapas fijas a lo alto, por lo que la fuerza de un gas solo la puede deformar en sus lados.
+Supongamos que se tiene una caja cerrada cuya \emph{tapa} tiene el largo y el ancho mostrado en la Figura~\ref{cuadrilatero:fig} la caja tiene una altura igual a 1, es decir, $h=1$. Esta caja tiene las tapas fijas a lo alto, por lo que la fuerza de un gas solo la puede deformar en sus lados.
 Calculemos ahora la fuerza debida a la presión de un gas que esté dentro de esta caja.
 
 \begin{figure}
  \centering
- \includegraphics[]{Img/cuadrilatero}
+ \includegraphics[width=7cm]{Img/01/cuadrilatero}
  \caption[Cuadrilátero]{ 
  La figura cerrada para la cual se harán los cálculos de presión.
  } \label{cuadrilatero:fig}
 \end{figure}
 
-Vamos a calcular la fuerza correspondiente a la presión, por medio de la ecuación \ref{fuerzaGas}.
+Vamos a calcular la fuerza correspondiente a la presión, por medio de la ecuación \eqref{fuerzaGas}.
 Como la caja es de altura unitaria, el volumen $V$ que es igual al área de su tapa por la altura equivale simplemente al área de su tapa.
 Por la misma razon las áreas de las caras laterales de la caja equivalen a la longitud de el lado de la tapa en el que se encuentran.
 
@@ -596,11 +596,11 @@ Para calcular la fuerza de presión en este caso se necesita saber entonces: la 
 Por suerte para nosotros lo único que necesitamos para conocer todos estos datos, es ubicar la posición de cada una de sus esquinas.
 
 Identificaremos cada una de las esquinas $\textbf{A}_i$ por medio de sus coordenadas $x_i$ y $y_i$, dicho de otra manera $\textbf{A}_i = ( x_i , y_i)$.
-Esta situación queda determinada por la figura~\ref{cuadrilateroDiagrama:fig}.
+Esta situación queda determinada por la Figura~\ref{cuadrilateroDiagrama:fig}.
 
 \begin{figure}
  \centering
- \includegraphics[]{Img/cuadrilatero_diagrama}
+ \includegraphics[width=7cm]{Img/01/cuadrilatero_diagrama}
  \caption[Cuadrilátero localizado en el espacio]{ 
  Figura con los puntos que representan las esquinas identificados y localizados.
  } \label{cuadrilateroDiagrama:fig}
@@ -624,11 +624,11 @@ Una vez conocidos estos datos podemos calcular la longitud de cada lado simpleme
 \overline{\textbf{A}_4 \textbf{A}_1} & =  \sqrt{(x_4 - x_1)^2 + (y_4 - y_1)^2}  = & \sqrt{10}  \nonumber
 \end{eqnarray}
 
-También podemos calcular el área de la tapa con un sencillo truco, podemos trazar la diagonal que divide al cuadrilátero tal que pase por $\textbf{A}_1$ y $\textbf{A}_3$, con lo que para calcular el área total del cuadrilátero basta con calcular el área de los dos triángulos $\bigtriangleup \textbf{A}_1 \textbf{A}_3 \textbf{A}_4$ y $\bigtriangleup \textbf{A}_1 \textbf{A}_2 \textbf{A}_3$ y luego sumar ambas áreas (ver la figura~\ref{vectorArista:fig}).
+También podemos calcular el área de la tapa con un sencillo truco, podemos trazar la diagonal que divide al cuadrilátero tal que pase por $\textbf{A}_1$ y $\textbf{A}_3$, con lo que para calcular el área total del cuadrilátero basta con calcular el área de los dos triángulos $\bigtriangleup \textbf{A}_1 \textbf{A}_3 \textbf{A}_4$ y $\bigtriangleup \textbf{A}_1 \textbf{A}_2 \textbf{A}_3$ y luego sumar ambas áreas (ver la Figura~\ref{vectorArista:fig}).
 
 \begin{figure}
  \centering
- \includegraphics[]{Img/vectores_cuerpo}
+ \includegraphics[width=7cm]{Img/01/vectores_cuerpo}
  \caption[Cálculo del área de un caudrilátero]{ 
 Aquí se pueden ver los vectores que representan cada uno de los lados, y que son calculados por la resta de los vectores de posición de los puntos.
  } \label{vectorArista:fig}
@@ -674,7 +674,7 @@ Y finalmente el vector fuerza que estamos buscando para esta cara en particular 
 $$\textbf{F}_{\overline{\textbf{A}_1 \textbf{A}_2}} = \frac{1}{V}\overline{\textbf{A}_1 \textbf{A}_2} k_g \vec{n} = \frac{1}{9} \sqrt{13} \left( 10 \right)  \frac{1}{\sqrt{13}} (2, -3) = \frac{10}{9}(2, -3) $$
 
 Una consideración más que debe tenerse, al calcular el vector normal, pudiera darse el caso que éste dirija la fuerza al contrario de como se desea, es decir que la dirija, al centro del cuerpo en vez de hacia afuera.
-Como se ilustra en la figura \ref{presionMal:fig}.
+Como se ilustra en la Figura \ref{presionMal:fig}.
 En cuyo caso hay que multiplicar este vector normal por $-1$.
 En general la mejor práctica es graficar el cuerpo para así poder calcular el vector normal correcto.
 
@@ -684,13 +684,13 @@ Así que se debe tener cuidado al calcular el vector para dirigir la fuerza de p
 
 \begin{figure}
  \centering
- \includegraphics[]{Img/presion_mal}
+ \includegraphics[width=7cm]{Img/01/presion_mal}
  \caption[Vectores de presión incorrectos]{ 
  Aqui se pueden ver los vectores incorrectos para dirigir la presión pues apuntan al centro de la figura.
  } \label{presionMal:fig}
 \end{figure}
 
-El resto de las operaciones correspondientes al ejemplo se pueden ver en la tabla ~\ref{ejemplo:presion}.
+El resto de las operaciones correspondientes al ejemplo se pueden ver en el Cuadro ~\ref{ejemplo:presion}.
 En la primera columna de la tabla se muestra la cara a la que se estaba calculando la fuerza, después se muestra el valor escalar de la presión, luego el vector asociado a la cara, que ya habíamos obtenido, después el vector normal resultado del procedimiento antes explicado.
 Hay que tomar en cuenta que el vector podría ser que apunte hacia afuera o hacia adentro, y en la tabla ya fue corregido (multiplicándolo por el escalar $-1$).
 Y en la última columna aparecen los vectores de fuerza que se estaban buscando, y son los que se requieren para poder acumularse en la ecuación de Newton.
@@ -718,7 +718,7 @@ La principal dificultad es que debe tratar con la geometría del cuerpo para cal
 
 \begin{figure}
  \centering
- \includegraphics[]{Img/presion_bien}
+ \includegraphics[width=7cm]{Img/01/presion_bien}
  \caption[Vectores de presión correctos]{ 
  Así es como debe de dirigirse la fuerza de presión. Obsérvese que cada esquina debe acomular la fuerza de las dos caras laterales que está uniendo.
  } \label{presionBien:fig}
