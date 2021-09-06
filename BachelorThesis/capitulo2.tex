@@ -215,22 +215,37 @@ Es decir, se aproxima el volumen por medio de poliedros regulares ya sean inscri
 
 Una forma mas simple es aproximando con un \emph{hexahedro regular} cuyo volumen es $ l \cdot w \cdot h $, o largo por alto por ancho; otra forma geométrica que se usa de manera muy común es el \emph{elipsoide}, cuyo volumen es $ \frac{4\pi}{3} a \cdot   b \cdot  c $, donde $a$, $b$ y $c$, son los largos de sus ejes principales.
 \subsubsection{Volúmenes Exactos}
-También se pueden tener ciertas técnicas de cálculo de volúmenes exactos mediante la descomposición de un cuerpo en cuerpos simples y calculando después su volumen, que es la técnica que usaremos aquí.
-Algunos consejos para el cálculo de estos volúmenes son los siguientes.
+Una técnica muy útil para calcular el volúmen de una malla triangular se puede ver en~\cite{Zhang:volumen}.
 
-El volumen de un \emph{paralelepípedo} construido sobre los vectores linealmente independientes $\overrightarrow{\textbf{OA}}$, $\overrightarrow{\textbf{OB}}$ y $\overrightarrow{\textbf{OC}}$ es $V = \vert \det (\overrightarrow{\textbf{OA}}, \overrightarrow{\textbf{OB}}, \overrightarrow{\textbf{OC}} ) \vert $
+La técnica consiste recorrer todas la caras, y en cada una calcular el \emph{volumen orientado} del tetraedro cuya base es la cara triangular y cuya punta es el origen del sistema de referencia.
+El signo del volumen (por eso dijimos que es un volumen orientada) depende de si el tetraedo apunta hacia el origen.
+Eso quere decir que habrá alguna áreas que sean negativas y otras positivas, la suma de todos los volumenes es el volumen de la malla.
 
-El volumen del \emph{tetraedro} determinado por los puntos $\textbf{A}_1 = (x_1, y_1, z_1)$, $\textbf{A}_2 = (x_2, y_2, z_2)$, $\textbf{A}_3 = (x_3, y_3, z_3)$ y $\textbf{A}_4 = (x_4, y_4, z_4)$ es:
+Es importante que al usar esta formula, los triangulos apunten hacia el mismo lado de la malla.
+En otras palabras, se deben de definir un orden para los vértices de los triangulos (por ejemplo en contra de las manecillas del reloj) y se debe ser consistente en toda la malla.
+En efecto, esta técnica usa una normal a la cara del triángulo para orientar, pero dicha normal esta implicita por el orden de los vértices.
 
-$$V = \frac{1}{6} \vert \det ( \overrightarrow{\textbf{A}_1 \textbf{A}_2}, \overrightarrow{\textbf{A}_1 \textbf{A}_3}, \overrightarrow{\textbf{A}_1 \textbf{A}_4} ) \vert$$
+En resumen el volumen del la malla formada por $n$ caras traingulares esta dado por:
+\begin{equation}
+V = \frac{1}{6} \sum_{i=1}^{n} \textbf{g}_i \cdot \textbf{N}_i
+\label{eq:volumen}
+\end{equation}
 
-Como un ampliación a lo hecho en la Figura~\ref{vectorArista:fig}, podemos calcular el área del \emph{hexaedro irregular} formado por los ocho puntos $\textbf{P}_1, \textbf{P}_2, \ldots \textbf{P}_8$ tales que los vectores $\overrightarrow{\textbf{P}_1 \textbf{P}_2}$, $\overrightarrow{\textbf{P}_2 \textbf{P}_3}$, $\overrightarrow{\textbf{P}_3 \textbf{P}_4}$ y $\overrightarrow{\textbf{P}_4 \textbf{P}_1}$, formen la tapa superior y los vectores $\overrightarrow{\textbf{P}_1 \textbf{P}_3}$, $\overrightarrow{\textbf{P}_1 \textbf{P}_5}$, $\overrightarrow{\textbf{P}_5 \textbf{P}_7}$ y $\overrightarrow{\textbf{P}_3 \textbf{P}_7}$, formen uno de los lados.
-Entonces una forma de calcular el volumen es:
+En donde $\textbf{g}_i$ y $\textbf{N}_i$ son el baricentro y la normal del triángulo $i$. Y asumiendo que dicho triangulo tiene vértices en el orden $\textbf{v}_{i}^{1}$, $\textbf{v}_{i}^{2}$ y $\textbf{v}_{i}^{3}$ se pueden calcular de la siguiente manera:
 
 \begin{equation}
-\label{ecuacionVolumen} 
- V =  \frac{1}{2} \left( \vert \det ( \overrightarrow{\textbf{P}_1 \textbf{P}_2}, \overrightarrow{\textbf{P}_1 \textbf{P}_3}, \overrightarrow{\textbf{P}_1 \textbf{P}_5} ) \vert + \vert \det (\overrightarrow{\textbf{P}_8 \textbf{P}_7}, \overrightarrow{\textbf{P}_8 \textbf{P}_6}, \overrightarrow{\textbf{P}_8 \textbf{P}_4} ) \vert \right) 
+\textbf{g}_{i} = \frac{(\textbf{v}_{i}^{1} + \textbf{v}_{i}^{2} + \textbf{v}_{i}^{3})}{3}
+\label{eq:baricentro}
 \end{equation}
+
+\begin{equation}
+\textbf{N}_i = (\textbf{v}_{i}^{2} - \textbf{v}_{i}^{1}) \times (\textbf{v}_{i}^{3} - \textbf{v}_{i}^{1})
+\label{eq:normTriag}
+\end{equation}
+
+Como ya se dijo, se puede transformar cualquier malla poligonal en una malla triangular subdividiendo cada cara en triangulos.
+Por ejemplo, nuestro cuerpo flexible esta formado por caras en forma de cuadriláteros.
+Cada cara se puede partir por su diagonal para formar dos triángulos.
 
 \subsection{Vectores normales}
 Dado un plano podemos encontrar un vector que le sea normal, sólo necesitamos dos vectores linealmente independientes que se encuentren en el plano y calculando su producto cruz obtenemos un vector normal, es decir en términos mas simples, si conocemos tres puntos del plano y no son colineales, podemos calcular el vector perpendicular a ese plano.

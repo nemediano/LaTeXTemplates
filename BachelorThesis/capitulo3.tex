@@ -83,25 +83,38 @@ Dado que la partículas están en un arreglo unidimensional se hace uso del mét
 
 La rutina que inicializa las partículas es la siguiente:
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
   \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
-  %frame=lines,
-  framesep=0.5cm,
+  %xleftmargin=1.5cm,  %without this option line number goes wrong
+  %framesep=0.5cm,
   baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
+  fontsize=\scriptsize,
+  %linenos,
   firstline=306, %If you omit this two fields, the whole file is pulled
   lastline=328
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
   \caption{Este es un extracto del método \mintinline{cpp}{recreate_particles} de \mintinline{cpp}{SoftBody}}
   \label{lst:recreate_particles}
-  \end{listing}
-\end{minipage}
-\par
-}
+
+
+% {\centering
+% \begin{minipage}{\linewidth}
+%   \begin{listing}[H]
+%   \inputminted[
+%   xleftmargin=1.5cm,  %without this option line number goes wrong
+%   frame=lines,
+%   framesep=0.5cm,
+%   baselinestretch=1.2,
+%   fontsize=\footnotesize,
+%   linenos,
+%   firstline=306, %If you omit this two fields, the whole file is pulled
+%   lastline=328
+%   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
+%   \caption{Este es un extracto del método \mintinline{cpp}{recreate_particles} de \mintinline{cpp}{SoftBody}}
+%   \label{lst:recreate_particles}
+%   \end{listing}
+% \end{minipage}
+% \par
+% }
 
 El código mostrado en el Listado~\ref{lst:recreate_particles} inicializa la velocidad, la fuerza y la masa de la partículas (la posición es inicializada con una rutina muy simple que esta fuera de la clase \mintinline{cpp}{SoftBody}). También se encarga de fijar las partículas que estan en las orillas de la tela.
 
@@ -266,11 +279,54 @@ Para poder calcular esta fuerza se necesitan hacer varias operaciones importante
 
 La clase \mintinline{cpp}{Face} implementa la mayoria de las operaciones.
 
-Para hacer el cálculo del volumen se hace uso de un arreglo de puntos auxiliares, se simula que el cuerpo está formado por varios pedazos rectangulares.
-Para cada parte (hexaedro regular) se ocupa la fórmula~\ref{ecuacionVolumen} y finalmente la suma del volumen de todas nos proporciona el volumen total del cuerpo.
+Para hacer el calculo de volumen se hace uso de la ecuación~\eqref{eq:volumen}.
+Hay que recordar que el cuerpo flexible esta formado por seis caras.
+Cinco de las cuales estan fijas y otra es la tela (o tapa) que es el cuerpo flexible.
+El Listado~\ref{lst:calculateVolume} muestra la lógica. La función \mintinline{cpp}{tethVolume} implementa las ecuaciones~\eqref{eq:baricentro} y~\eqref{eq:normTriag}.
 
-Para calcular el área de cada cara se ocupa la fórmula~\ref{formulaArea}, como se puede ver en el Listado~\ref{lst:addPreassure}.
-Y para calcular el vector normal se hace uso de la fórmula~\ref{formulaVecNormal}, en donde $n=4$, dado que cada cara está formada por cuatro puntos (Listado~\ref{lst:addPreassure}).
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=608, %If you omit this two fields, the whole file is pulled
+  lastline=643
+  ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
+  \caption{El método \mintinline{cpp}{calculateVolume} de \mintinline{cpp}{SoftBody}}
+  \label{lst:calculateVolume}
+  \end{listing}
+\end{minipage}
+\par
+}
+
+El método \mintinline{cpp}{lst:calculateVolume} de la clase cara, suma la contribución de una cara al volumen usando la misma función \mintinline{cpp}{tethVolume} dos veces en los puntos que forman la cara (Listado~\ref{lst:get_contributed_volume})
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=65, %If you omit this two fields, the whole file is pulled
+  lastline=73
+  ]{cpp}{../../../GLSamples/SoftBody/physics/Face.cpp}
+  \caption{El método \mintinline{cpp}{get_contributed_volume} de \mintinline{cpp}{Face}}
+  \label{lst:get_contributed_volume}
+  \end{listing}
+\end{minipage}
+\par
+}
+
+Para calcular el área de cada cara se ocupa la fórmula~\eqref{formulaArea}, como se puede ver en el Listado~\ref{lst:get_area}.
+Y para calcular el vector normal se hace uso de la fórmula~\eqref{formulaVecNormal}, en donde $n=4$, dado que cada cara está formada por cuatro puntos (Listado~\ref{lst:get_normal}).
 
 {\centering
 \begin{minipage}{\linewidth}
@@ -317,206 +373,54 @@ Otra de las rutinas mas complicadas son los métodos numéricos.
 Para integrar la ecuación de Newton, se requiere saber la posición y la velocidad actual de cada una de las partículas del modelo y tener una manera de llamar a la función que se encarga de acumular las fuerzas.
 
 \subsection{El método de Euler}
-Básicamente se trata de tomar las ecuaciones~\ref{formulas:Euler} e implementarlas en el código, aprovechando la gran ventaja de que el método de Euler puede integrar un punto a la vez.
-La función que se explica recibe de parámetro una referencia a un objeto de tipo \verb|Punto|.
-\begin{verbatim}
-void eulerIntegrator (Punto *p)
-{
-  float drx, dry, drz;
+Básicamente se trata de tomar las ecuaciones~\ref{formulas:Euler} e implementarlas en el código (Listado~\ref{lst:euler_integrate}), aprovechando la gran ventaja de que el método de Euler puede integrar una partícula la vez.
 
-  /* Para las x */
-  p->vx += p->fx / M * DT;
-  drx = p->vx * DT;
-  /* Para las y */
-  p->vy += p->fy / M * DT;
-  dry = p->vy * DT;
-  /* Para las z */
-  p->vz += p->fz / M * DT;
-  drz = p->vz * DT;
-
-
-  if (!p->fixed)
-  {
-    /* Ahora si los tengo que mover */
-    p->x += drx;
-    p->y += dry;
-    p->z += drz;
-  }
-  else
-  {
-    p->vx = 0.0;
-    p->vy = 0.0;
-    p->vz = 0.0;
-
-    p->fx = 0.0;
-    p->fy = 0.0;
-    p->fz = 0.0;
-  }
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=465, %If you omit this two fields, the whole file is pulled
+  lastline=476
+  ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
+  \caption{El método \mintinline{cpp}{euler_integrate} de \mintinline{cpp}{SoftBody}}
+  \label{lst:euler_integrate}
+  \end{listing}
+\end{minipage}
+\par
 }
-\end{verbatim} 
-Como puede apreciarse, esta función es muy sencilla, calcula con la fórmula~\ref{formulas:Euler} y guarda esos valores en variables.
-Luego pregunta si el punto que le mandaron por referencia tiene el estado \verb|fixed|, de ser así, borra las fuerzas y las velocidades; en caso contrario, simplemente le aumenta el avance en este paso de tiempo. \verb|DT| es una constante real que guarda el tamaño del paso $h$.
 
 \subsection{El método de Runge-Kutta}
-Aquí se explica el que fue probablemente el método mas complicado de implementar, pues no tiene la ventaja de Euler de integrar cada partícula independientemente, así que necesita integrar todas juntas.
+Aquí se explica el que fue probablemente el método numérico mas complicado de implementar, pues no tiene la ventaja de Euler de integrar cada partícula independientemente, así que necesita integrar todas juntas.
 Además, debe tener espacio para guardar los ponderadores del paso de integración de cada partícula.
 
-Para tener una idea clara de lo que que hace el siguiente código conviene volver a ver las ecuaciones~\ref{ponderadores:RK4} y~\ref{formulas:RK4}.
-\begin{verbatim}
-void rungeKuttaIntegrator (void)
-{
-  int i;
-
-  float drx, dry, drz, dvx, dvy, dvz,
-  k1[3][PARTICULAS], k2[3][PARTICULAS], k3[3][PARTICULAS], k4[3][PARTICULAS],
-  l1[3][PARTICULAS], l2[3][PARTICULAS], l3[3][PARTICULAS], l4[3][PARTICULAS];
-  /*La segunda dimension es el numero de puntos en la tela */
-
-  Punto auxPun[PARTICULAS];
-  Resorte auxRes[RESORTES];
-  Cara auxCar[CUADROS];
-
-  /*Inicializa los resortes auxiliares, para que apunten a 
-    los puntos auxiliares y podamos llamar a la funcion 
-    acumulate forces sobre ellos */
-  ponResortes(auxPun, auxRes);
-  ponCaras(auxPun, auxCar);
-
-  /* Calculo ponderadores de primer orden K1 y L1 */
-  for (i = 0; i < PARTICULAS; i++)
-  {
-     k1[0][i] = tela[i].fx / M;
-     l1[0][i] = tela[i].vx;
-
-     k1[1][i] = tela[i].fy / M;
-     l1[1][i] = tela[i].vy;
-
-     k1[2][i] = tela[i].fz / M;
-     l1[2][i] = tela[i].vz;
-  }
-//===================================================================
-  /* Copio en los auxPun para poder estimar una fuerza media */
-  for (i = 0; i < PARTICULAS; i++)
-  {
-     auxPun[i].x  = tela[i].x  + (DT / 2.0f) * l1[0][i];
-     auxPun[i].y  = tela[i].y  + (DT / 2.0f) * l1[1][i];
-     auxPun[i].z  = tela[i].z  + (DT / 2.0f) * l1[2][i];
-
-     auxPun[i].vx = tela[i].vx + (DT / 2.0f) * k1[0][i];
-     auxPun[i].vy = tela[i].vy + (DT / 2.0f) * k1[1][i];
-     auxPun[i].vz = tela[i].vz + (DT / 2.0f) * k1[2][i];
-  }
-
-  acomulateForces(auxPun, auxRes, auxCar);
-
-  /* Calculo ponderadores de segundo orden K2 y L2 */
-  for (i = 0; i < PARTICULAS; i++)
-  {
-     k2[0][i] = auxPun[i].fx / M;
-     l2[0][i] = auxPun[i].vx + (DT / 2.0f) * k1[0][i];
-
-     k2[1][i] = auxPun[i].fy / M;
-     l2[1][i] = auxPun[i].vy + (DT / 2.0f) * k1[1][i];
-
-     k2[2][i] = auxPun[i].fz / M;
-     l2[2][i] = auxPun[i].vz + (DT / 2.0f) * k1[2][i];
-  }
-
-//=============================================================
-  /* Copio en los auxPun para poder estimar una fuerza media */
-  for (i = 0; i < PARTICULAS; i++)
-  {
-     auxPun[i].x  = tela[i].x  + (DT / 2.0f) * l2[0][i];
-     auxPun[i].y  = tela[i].y  + (DT / 2.0f) * l2[1][i];
-     auxPun[i].z  = tela[i].z  + (DT / 2.0f) * l2[2][i];
-
-     auxPun[i].vx = tela[i].vx + (DT / 2.0f) * k2[0][i];
-     auxPun[i].vy = tela[i].vy + (DT / 2.0f) * k2[1][i];
-     auxPun[i].vz = tela[i].vz + (DT / 2.0f) * k2[2][i];
-  }
-
-  acomulateForces(auxPun, auxRes, auxCar);
-
-  /* Calculo ponderadores de tercer orden K3 y L3 */
-  for (i = 0; i < PARTICULAS; i++)
-  {
-     k3[0][i] = auxPun[i].fx / M;
-     l3[0][i] = auxPun[i].vx + (DT / 2.0f) * k2[0][i];
-
-     k3[1][i] = auxPun[i].fy / M;
-     l3[1][i] = auxPun[i].vy + (DT / 2.0f) * k2[1][i];
-
-     k3[2][i] = auxPun[i].fz / M;
-     l3[2][i] = auxPun[i].vz + (DT / 2.0f) * k2[2][i];
-  }
-
-//=============================================================
-   /* Copio en los auxPun para poder estimar una fuerza media */
-  for (i = 0; i < PARTICULAS; i++)
-  {
-     auxPun[i].x  = tela[i].x  + DT * l3[0][i];
-     auxPun[i].y  = tela[i].y  + DT * l3[1][i];
-     auxPun[i].z  = tela[i].z  + DT * l3[2][i];
-
-     auxPun[i].vx = tela[i].vx + DT * k3[0][i];
-     auxPun[i].vy = tela[i].vy + DT * k3[1][i];
-     auxPun[i].vz = tela[i].vz + DT * k3[2][i];
-  }
-
-  acomulateForces(auxPun, auxRes, auxCar);
-
-  /* Calculo ponderadores de cuarto orden K4 y L4 */
-  for (i = 0; i < PARTICULAS; i++)
-  {
-     k4[0][i] = auxPun[i].fx / M;
-     l4[0][i] = auxPun[i].vx + DT * k3[0][i];
-
-     k4[1][i] = auxPun[i].fy / M;
-     l4[1][i] = auxPun[i].vy + DT * k3[1][i];
-
-     k4[2][i] = auxPun[i].fz / M;
-     l4[2][i] = auxPun[i].vz + DT * k3[2][i];
-  }
-//=======================================================================
-
-  for(i = 0; i < PARTICULAS; i++)
-  {
-     if (!tela[i].fixed)//if que checa que el punto no este fijo
-     {
-        /* Calculo los incrementos */
-        dvx = (DT/6.0f)*(k1[0][i]+2.0f*(k2[0][i]+k3[0][i])+k4[0][i]);
-        drx = (DT/6.0f)*(l1[0][i]+2.0f*(l2[0][i]+l3[0][i])+l4[0][i]);
-
-        dvy = (DT/6.0f)*(k1[1][i]+2.0f*(k2[1][i]+k3[1][i])+k4[1][i]);
-        dry = (DT/6.0f)*(l1[1][i]+2.0f*(l2[1][i]+l3[1][i])+l4[1][i]);
-
-        dvz = (DT/6.0f)*(k1[2][i]+2.0f*(k2[2][i]+k3[2][i])+k4[2][i]);
-        drz = (DT/6.0f)*(l1[2][i]+2.0f*(l2[2][i]+l3[2][i])+l4[2][i]);
-
-        /* Ahora si los tengo que mover */
-        tela[i].x  += drx;
-        tela[i].vx += dvx;
-
-        tela[i].y  += dry;
-        tela[i].vy += dvy;
-
-        tela[i].z  += drz;
-        tela[i].vz += dvz;
-     }
-     else //esta fijo velocidades y fuerzas a cero
-     {
-        tela[i].vx = 0.0f;
-        tela[i].vy = 0.0f;
-        tela[i].vz = 0.0f;
-
-        tela[i].fx = 0.0f;
-        tela[i].fy = 0.0f;
-        tela[i].fz = 0.0f;
-     }
-   }
+Para tener una idea clara de lo que que hace el código en el Listado~\ref{lst:rk4_integrate} conviene volver a ver las ecuaciones~\ref{ponderadores:RK4} y~\ref{formulas:RK4}.
+Lo largo del proceso hacen ver el Listado~\ref{lst:rk4_integrate} un poco ms complicado que lo que en realidad es.
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=478, %If you omit this two fields, the whole file is pulled
+  lastline=555
+  ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
+  \caption{El método \mintinline{cpp}{rk4_integrate} de \mintinline{cpp}{SoftBody}}
+  \label{lst:rk4_integrate}
+  \end{listing}
+\end{minipage}
+\par
 }
-\end{verbatim}
-El truco consiste en ocupar un conjunto de puntos, resortes y caras auxiliares, para con ellos calcular los ponderadores del método de RK4, después la rutina es muy parecida a la de Euler.
+El truco consiste en ocupar un conjunto de puntos, resortes y caras auxiliares, para con ellos calcular los ponderadores del método de RK4 (Por eso estan presentes en el diagra de la Figura~\ref{clases:fig}), después la rutina es muy parecida a la de Euler.
 
 \section{El manejo de las colisiones}
 Como ya se ha dicho antes, el problema de las colisiones se resuelve en dos partes, primero la detección y luego la respuesta.
@@ -526,103 +430,73 @@ La forma de responder consiste básicamente en mover los objetos que se colision
 La detección es llevada a cabo en dos funciones.
 Recordemos que nuestra tarea de detección se simplifica muchísimo por el hecho de que uno de los objetos, el objeto incidente es una esfera.
 Para saber si dicha esfera está en colisión con nuestro cuerpo flexible, lo que hacemos es probar si cualquiera de las partículas está dentro de la esfera; de ser así, empezamos a resolver la colisión entre la esfera y la partícula en cuestión. Después seguimos revisando el resto de las partículas.
+El Listado~\ref{lst:solveCollisionSphere} implementa algoritmo.
 
-El algoritmo tiene la siguiente forma:
-\begin{verbatim}
-void colisiones (void)
-{
-  int i;
-  Vector n;
-
-  for (i = 0; i < PARTICULAS; i++)
-  {
-    if (dentro(tela[i]))
-    {
-      n = detectaColision(&tela[i]);
-      respondeColision(&tela[i], n);
-    }
-  }
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=683, %If you omit this two fields, the whole file is pulled
+  lastline=696
+  ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
+  \caption{El método \mintinline{cpp}{solveCollisionSphere} de \mintinline{cpp}{SoftBody}}
+  \label{lst:solveCollisionSphere}
+  \end{listing}
+\end{minipage}
+\par
 }
-\end{verbatim}
-Recordemos que \verb|tela|, es un arreglo global que contiene todos los puntos, se hace un ciclo por todo este arreglo preguntando con la función \verb|dentro| si está adentro de la esfera; de ser así, se manda llamar la funcion que detecta la colisión, es decir calcula el vector normal y lo devuelve.
-Luego ese vector normal \verb|n| y el punto son mandados a la función que resuelve la colisión. Y así sucesivamente con todas las partículas que forman parte del cuerpo flexible.
-
-La función \verb|dentro|, sabe si hay una colisión, pues la esfera está guardada en una variable global y el punto se le pasa como parámetro, así que sólo regresa verdadero cuando la distancia del punto al centro de la esfera es menos que el radio de ésta y falso en cualquier otro caso.
 
 \subsection{La detección de la colisión}
-Esta función se encarga de calcular el vector normal al lugar de la colisión y de mover el punto fuera de la esfera.
-Mover el punto fuera de la esfera es en realidad parte de la respuesta a la colisión, pero decidí implementarlo en esta función, para que en la siguiente parte sólo se tenga que ajustar las velocidades.
-\begin{verbatim}
-Vector detectaColision(Punto *p)
-{
-  float vecV[3], distancia;
-  Vector resultado, V;
-  /* Obtenemos vector V que va del centro de la esfera al punto */
-  V.x = p->x - pelota.x;
-  V.y = p->y - pelota.y;
-  V.z = p->z - pelota.z;
-  /* Normalizamos V y lo guardamos en n, 
-     N me sirve para hacer varios caluclos */
-  distancia = sqrt((V.x * V.x) + (V.y * V.y) + (V.z * V.z));
-  resultado.x = V.x / distancia;
-  resultado.y = V.y / distancia;
-  resultado.z = V.z / distancia;
-  /* Movemos al punto fuera de la esfera, esto en realidad es parte 
-   * de la respuesta, pero lo pongo aqui, para que en la respuesta 
-   * solo ajuste las velocidades */
-  if (!p->fixed)
-  {
-    p->x = pelota.x + (pelota.radio * resultado.x);
-    p->y = pelota.y + (pelota.radio * resultado.y);
-    p->z = pelota.z + (pelota.radio * resultado.z);	
-  }
-  else
-  {
-    pelota.x = p->x - (pelota.radio * resultado.x);
-    pelota.y = p->y - (pelota.radio * resultado.y);
-    pelota.z = p->z - (pelota.radio * resultado.z);
-  }
-  return resultado;
+El método del Listado~\ref{lst:adjust_positions} en se encarga de calcular el vector normal al lugar de la colisión y de mover el punto fuera de la esfera.
+Mover el punto fuera de la esfera es en realidad parte de la respuesta a la colisión, pero decidí implementarlo en un solo método llamado \mintinline{cpp}{adjust_positions}, para que en la siguiente parte sólo se tenga que ajustar las velocidades.
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=698, %If you omit this two fields, the whole file is pulled
+  lastline=711
+  ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
+  \caption{El método \mintinline{cpp}{adjust_positions} de \mintinline{cpp}{SoftBody}}
+  \label{lst:adjust_positions}
+  \end{listing}
+\end{minipage}
+\par
 }
-\end{verbatim} 
-La función primero calcula el vector $\textbf{V}$ que va del centro de la esfera al punto, después lo normaliza.
-Luego pregunta si el punto no está fijo, en cuyo caso, mueve el punto justo afuera de la esfera, cambiándolo de posición al punto $\textbf{p} + (r\textbf{V})$, donde $\textbf{p}$ es la posición de la esfera, $r$ su radio y $\textbf{V}$ ya es unitario. Si el punto sí estuviera fijo, lo que hace es mover a la esfera fuera del punto cambiándola de posición al punto $\textbf{s} - (r\textbf{V})$, donde $\textbf{s}$ ahora representa la posición de la partícula..
+Primero calcula el vector normal que va del centro de la esfera a la partícula.
+Luego, si la partícula no está fija, la mueve justo afuera de la esfera.
+Si la partícula estuviera fija, lo que hace es mover a la esfera fuera del ella.
 
 \subsection{La respuesta de la colisión}
-La mayor parte del trabajo se hizo en la función anterior, ahora que sabemos el vector normal $\textbf{n}$ a la colisión, sólo nos resta seguir los pasos explicados en la página \pageref{alg:elasmov}.
-\begin{verbatim}
-void respondeColision (Punto *p, Vector normal)
-{
-  float r;
-  Vector U, Un, Ut, Sn, Wn;
+La mayor parte del trabajo se hizo en la función anterior, ahora que sabemos el vector normal untiario: $\vec{\textbf{n}}$ a la colisión, sólo nos resta seguir los pasos explicados en el Algoritmo~\ref{alg:elasmov}.
 
-  r = Mp / M;
-
-  U.x = pelota.Vx - p->vx;
-  U.y = pelota.Vy - p->vy;
-  U.z = pelota.Vz - p->vz;
-
-  Un = parteNormal(U, normal);
-
-  Ut.x = U.x - Un.x;
-  Ut.y = U.y - Un.y;
-  Ut.z = U.z - Un.z;
-
-  Sn.x = Un.x * ( (r - 1.0f) / (r + 1.0f) );
-  Sn.y = Un.y * ( (r - 1.0f) / (r + 1.0f) );
-  Sn.z = Un.z * ( (r - 1.0f) / (r + 1.0f) );
-
-  Wn.x = Un.x * ( (2.0f * r) / (r + 1.0f) );
-  Wn.y = Un.y * ( (2.0f * r) / (r + 1.0f) );
-  Wn.z = Un.z * ( (2.0f * r) / (r + 1.0f) );
-
-  pelota.Vx = Ut.x + Sn.x + p->vx;
-  pelota.Vy = Ut.y + Sn.y + p->vy;
-  pelota.Vz = Ut.z + Sn.z + p->vz;
-
-  p->vx = Wn.x + p->vx;
-  p->vy = Wn.y + p->vy;
-  p->vz = Wn.z + p->vz;
+{\centering
+\begin{minipage}{\linewidth}
+  \begin{listing}[H]
+  \inputminted[
+  xleftmargin=1.5cm,  %without this option line number goes wrong
+  frame=lines,
+  framesep=0.5cm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  firstline=713, %If you omit this two fields, the whole file is pulled
+  lastline=728
+  ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
+  \caption{El método \mintinline{cpp}{adjust_velocities} de \mintinline{cpp}{SoftBody}}
+  \label{lst:adjust_velocities}
+  \end{listing}
+\end{minipage}
+\par
 }
-\end{verbatim}
-En donde las constantes \verb|Mp| y \verb|M| tiene las masas de la esfera y de la partícula, respectivamente.
