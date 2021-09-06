@@ -84,10 +84,6 @@ Dado que la partículas están en un arreglo unidimensional se hace uso del mét
 La rutina que inicializa las partículas es la siguiente:
 \begin{mintedCode}
 \inputminted[
-  frame=lines,
-  framesep=0.25cm,
-  baselinestretch=1,
-  fontsize=\scriptsize,
   firstline=306, %If you omit this two fields, the whole file is pulled
   lastline=328
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
@@ -115,10 +111,6 @@ La rutina que inicializa los resortes es ejecutada después de las particulas. S
 
 \begin{mintedCode}
 \inputminted[
-  frame=lines,
-  framesep=0.25cm,
-  baselinestretch=1,
-  fontsize=\scriptsize,
   firstline=345, %If you omit this two fields, the whole file is pulled
   lastline=368
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
@@ -136,10 +128,6 @@ El algoritmo, pregunta si esta particula puede ser unida (por un resorte) con la
 La logica para formar las caras se presenta en el Listado~\ref{lst:connectFaces}: 
 \begin{mintedCode}
 \inputminted[
-  frame=lines,
-  framesep=0.25cm,
-  baselinestretch=1,
-  fontsize=\scriptsize,
   firstline=372, %If you omit this two fields, the whole file is pulled
   lastline=389
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
@@ -166,10 +154,6 @@ La constante de gravedad es un miembro de \mintinline{cpp}{SoftBody} y tiene el 
 
 \begin{mintedCode}
 \inputminted[
-  frame=lines,
-  framesep=0.25cm,
-  baselinestretch=1,
-  fontsize=\scriptsize,
   firstline=584, %If you omit this two fields, the whole file is pulled
   lastline=590
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
@@ -185,10 +169,6 @@ Solo por completez, en Listado~\ref{lst:add_forceSD} se muestra el método \mint
 
 \begin{mintedCode}
 \inputminted[
-  frame=lines,
-  framesep=0.25cm,
-  baselinestretch=1,
-  fontsize=\scriptsize,
   firstline=592, %If you omit this two fields, the whole file is pulled
   lastline=596
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
@@ -198,10 +178,6 @@ Solo por completez, en Listado~\ref{lst:add_forceSD} se muestra el método \mint
 
 \begin{mintedCode}
 \inputminted[
-  frame=lines,
-  framesep=0.25cm,
-  baselinestretch=1,
-  fontsize=\scriptsize,
   firstline=19, %If you omit this two fields, the whole file is pulled
   lastline=32
   ]{cpp}{../../../GLSamples/SoftBody/physics/SpringDamper.cpp}
@@ -217,10 +193,6 @@ Para poder calcular esta fuerza se necesitan hacer varias operaciones importante
 
 \begin{mintedCode}
 \inputminted[
-  frame=lines,
-  framesep=0.25cm,
-  baselinestretch=1,
-  fontsize=\scriptsize,
   firstline=598, %If you omit this two fields, the whole file is pulled
   lastline=606
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
@@ -237,10 +209,6 @@ El Listado~\ref{lst:calculateVolume} muestra la lógica. La función \mintinline
 
 \begin{mintedCode}
 \inputminted[
-  frame=lines,
-  framesep=0.25cm,
-  baselinestretch=1,
-  fontsize=\scriptsize,
   firstline=608, %If you omit this two fields, the whole file is pulled
   lastline=643
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
@@ -252,10 +220,6 @@ El método \mintinline{cpp}{calculateVolume} de la clase cara, suma la contribuc
 
 \begin{mintedCode}
 \inputminted[
-  frame=lines,
-  framesep=0.25cm,
-  baselinestretch=1,
-  fontsize=\scriptsize,
   firstline=65, %If you omit this two fields, the whole file is pulled
   lastline=73
   ]{cpp}{../../../GLSamples/SoftBody/physics/Face.cpp}
@@ -268,10 +232,6 @@ Y para calcular el vector normal se hace uso de la fórmula~\eqref{formulaVecNor
 
 \begin{mintedCode}
 \inputminted[
-  frame=lines,
-  framesep=0.25cm,
-  baselinestretch=1,
-  fontsize=\scriptsize,
   firstline=44, %If you omit this two fields, the whole file is pulled
   lastline=53
   ]{cpp}{../../../GLSamples/SoftBody/physics/Face.cpp}
@@ -281,10 +241,6 @@ Y para calcular el vector normal se hace uso de la fórmula~\eqref{formulaVecNor
 
 \begin{mintedCode}
 \inputminted[
-  frame=lines,
-  framesep=0.25cm,
-  baselinestretch=1,
-  fontsize=\scriptsize,
   firstline=55, %If you omit this two fields, the whole file is pulled
   lastline=63
   ]{cpp}{../../../GLSamples/SoftBody/physics/Face.cpp}
@@ -301,10 +257,6 @@ Básicamente se trata de tomar las ecuaciones~\ref{formulas:Euler} e implementar
 
 \begin{mintedCode}
 \inputminted[
-  frame=lines,
-  framesep=0.25cm,
-  baselinestretch=1,
-  fontsize=\scriptsize,
   firstline=465, %If you omit this two fields, the whole file is pulled
   lastline=476
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
@@ -321,10 +273,6 @@ Lo largo del proceso hacen ver el Listado~\ref{lst:rk4_integrate} un poco ms com
 
 \begin{mintedCode}
 \inputminted[
-  frame=lines,
-  framesep=0.25cm,
-  baselinestretch=1,
-  fontsize=\scriptsize,
   firstline=478, %If you omit this two fields, the whole file is pulled
   lastline=555
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
@@ -346,10 +294,6 @@ El Listado~\ref{lst:solveCollisionSphere} implementa algoritmo.
 
 \begin{mintedCode}
 \inputminted[
-  frame=lines,
-  framesep=0.25cm,
-  baselinestretch=1,
-  fontsize=\scriptsize,
   firstline=683, %If you omit this two fields, the whole file is pulled
   lastline=696
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
@@ -363,10 +307,6 @@ Mover el punto fuera de la esfera es en realidad parte de la respuesta a la coli
 
 \begin{mintedCode}
 \inputminted[
-  frame=lines,
-  framesep=0.25cm,
-  baselinestretch=1,
-  fontsize=\scriptsize,
   firstline=698, %If you omit this two fields, the whole file is pulled
   lastline=711
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
@@ -383,10 +323,6 @@ La mayor parte del trabajo se hizo en la función anterior, ahora que sabemos el
 
 \begin{mintedCode}
 \inputminted[
-  frame=lines,
-  framesep=0.25cm,
-  baselinestretch=1,
-  fontsize=\scriptsize,
   firstline=713, %If you omit this two fields, the whole file is pulled
   lastline=728
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}

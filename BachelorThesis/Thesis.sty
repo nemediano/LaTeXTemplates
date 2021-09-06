@@ -122,11 +122,15 @@ pdfpagelabels=true,pdfauthor={Jorge Antonio García Galicia},pdftitle={Modelado 
 % https://tex.stackexchange.com/questions/33866/algorithm-tag-and-page-break
 \DeclareCaptionFormat{mitedFormat}{%
     \textbf{#1#2}#3}
-\DeclareCaptionStyle{minetdStyle}{skip=0.25cm,width=.85\textwidth,justification=centering,font=footnotesize,singlelinecheck=off,format=mitedFormat,labelsep=space}
+\DeclareCaptionStyle{minetdStyle}{skip=0cm,width=.85\textwidth,justification=centering,
+  font=footnotesize,singlelinecheck=off,format=mitedFormat,labelsep=space}
 
 % I took iit from here
 %https://tex.stackexchange.com/questions/254044/caption-and-label-on-minted-code
 \newenvironment{mintedCode}{\captionsetup{type=listing,style=minetdStyle}}{}
 \SetupFloatingEnvironment{listing}{name=Listado}
+
+\setminted[cpp]{frame=lines,framesep=0.25cm,baselinestretch=1,fontsize=\scriptsize,breaklines}
+\setmintedinline[cpp]{fontsize=auto}
 
 \usepackage{csquotes} % Because if is not present HERE polyglossia throws a warning
