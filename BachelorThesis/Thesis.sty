@@ -38,12 +38,6 @@
 \usepackage{booktabs}
 \newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
 
-%%Puestos por mi haber si funcionan (Jorge)
-%Este es el que mas me preocupa
-\usepackage[letterpaper,margin=3cm]{geometry} %En cada pagina el margen inferior = superior = izquierdo = derecho = 3cm
-\usepackage{setspace} %El espacio de interlinea
-%Espacio de 1.5 lineas
-\onehalfspacing
 
 %%%%Pretty headers
 \usepackage{fancyhdr}
@@ -113,7 +107,7 @@ pdfpagelabels=true,pdfauthor={Jorge Antonio García Galicia},pdftitle={Modelado 
 \usepackage{amsthm}
 
 
-\usepackage{minted} %For inserting source code and embed source files
+\usepackage[newfloat=true]{minted} %For inserting source code and embed source files
 %Requieres compilation using:
 % $xelatex -shell-escape input.tex
 %In order to work this temple needs to be build like this:
@@ -124,5 +118,15 @@ pdfpagelabels=true,pdfauthor={Jorge Antonio García Galicia},pdftitle={Modelado 
 % 3 XeLaTex
 % 4 XeLateX
 % 5 ViewPDF
+
+% https://tex.stackexchange.com/questions/33866/algorithm-tag-and-page-break
+\DeclareCaptionFormat{mitedFormat}{%
+    \textbf{#1#2}#3}
+\DeclareCaptionStyle{minetdStyle}{skip=0.25cm,width=.85\textwidth,justification=centering,font=footnotesize,singlelinecheck=off,format=mitedFormat,labelsep=space}
+
+% I took iit from here
+%https://tex.stackexchange.com/questions/254044/caption-and-label-on-minted-code
+\newenvironment{mintedCode}{\captionsetup{type=listing,style=minetdStyle}}{}
+\SetupFloatingEnvironment{listing}{name=Listado}
 
 \usepackage{csquotes} % Because if is not present HERE polyglossia throws a warning

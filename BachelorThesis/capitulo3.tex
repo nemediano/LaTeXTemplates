@@ -82,92 +82,70 @@ Segunda, que, pese al arreglo cuadrado de la tela, los puntos son guardados en u
 Dado que la partículas están en un arreglo unidimensional se hace uso del método \mintinline{cpp}{simIndexes} que recibe el índice de la particula en el vector unidimensional y nos regresa los indices $(i, j)$ que la partícula tendría en un arreglo bidimensional. El metodo \mintinline{cpp}{realIndex} hace la operacion inversa.
 
 La rutina que inicializa las partículas es la siguiente:
-
-  \inputminted[
-  %xleftmargin=1.5cm,  %without this option line number goes wrong
-  %framesep=0.5cm,
-  baselinestretch=1.2,
+\begin{mintedCode}
+\inputminted[
+  frame=lines,
+  framesep=0.25cm,
+  baselinestretch=1,
   fontsize=\scriptsize,
-  %linenos,
   firstline=306, %If you omit this two fields, the whole file is pulled
   lastline=328
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
-  \caption{Este es un extracto del método \mintinline{cpp}{recreate_particles} de \mintinline{cpp}{SoftBody}}
-  \label{lst:recreate_particles}
+  \caption{Este es un extracto del método \mintinline{cpp}{recreate_particles} de \mintinline{cpp}{SoftBody}}\label{lst:recreate_particles}
+\end{mintedCode}
 
-
-% {\centering
-% \begin{minipage}{\linewidth}
-%   \begin{listing}[H]
+% \begin{listing}
 %   \inputminted[
 %   xleftmargin=1.5cm,  %without this option line number goes wrong
 %   frame=lines,
 %   framesep=0.5cm,
-%   baselinestretch=1.2,
-%   fontsize=\footnotesize,
+%   baselinestretch=1,
+%   fontsize=\scriptsize,
 %   linenos,
 %   firstline=306, %If you omit this two fields, the whole file is pulled
 %   lastline=328
 %   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
 %   \caption{Este es un extracto del método \mintinline{cpp}{recreate_particles} de \mintinline{cpp}{SoftBody}}
 %   \label{lst:recreate_particles}
-%   \end{listing}
-% \end{minipage}
-% \par
-% }
+% \end{listing}
 
 El código mostrado en el Listado~\ref{lst:recreate_particles} inicializa la velocidad, la fuerza y la masa de la partículas (la posición es inicializada con una rutina muy simple que esta fuera de la clase \mintinline{cpp}{SoftBody}). También se encarga de fijar las partículas que estan en las orillas de la tela.
 
 La rutina que inicializa los resortes es ejecutada después de las particulas. Se muestra un extracto en el Listado~\ref{lst:connectSprings}.
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
-  \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
-  %frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
+\begin{mintedCode}
+\inputminted[
+  frame=lines,
+  framesep=0.25cm,
+  baselinestretch=1,
+  fontsize=\scriptsize,
   firstline=345, %If you omit this two fields, the whole file is pulled
   lastline=368
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
-  \caption{Este es un extracto del método \mintinline{cpp}{connectSprings} de \mintinline{cpp}{SoftBody}}
-  \label{lst:connectSprings}
-  \end{listing}
-\end{minipage}
-\par
-}
+  \caption{Este es un extracto del método \mintinline{cpp}{recreate_particles} de \mintinline{cpp}{SoftBody}}\label{lst:connectSprings}
+\end{mintedCode}
 
 Por las condiciones que definimos en nuestra tela. 
-\begin{center}
+\begin{itemize}
  \item Las partículas que están en las arístas superiores e inferiores no tienen un resorte horizontal entre ellas.
  \item Las partículas que están en las arístas izquierda y derecha no tienen un resorte vertical entre ellas.
-\end{center} 
+\end{itemize} 
 
 El algoritmo, pregunta si esta particula puede ser unida (por un resorte) con la partícula a su derecha, de ser así las conecta. Después, pregunta si debe ser unida con la particula abajo de ella, de ser así tambien es conectada.
 
 La logica para formar las caras se presenta en el Listado~\ref{lst:connectFaces}: 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
-  \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
-  %frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
+\begin{mintedCode}
+\inputminted[
+  frame=lines,
+  framesep=0.25cm,
+  baselinestretch=1,
+  fontsize=\scriptsize,
   firstline=372, %If you omit this two fields, the whole file is pulled
   lastline=389
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
-  \caption{Este es un extracto del método \mintinline{cpp}{connectFaces} de \mintinline{cpp}{SoftBody}}
+  \caption{Este es un extracto del método \mintinline{cpp}{recreate_particles} de \mintinline{cpp}{SoftBody}}
   \label{lst:connectFaces}
-  \end{listing}
-\end{minipage}
-\par
-}
+\end{mintedCode}
 
 Esta rutina es muy parecida a la anterior: recorre todas las particulas, si la partícula actual, tiene un partícula a su izquierda y otra partícula abajo, entonces se pueden tomar cuatro partículas (pues debe existir otra una partícula en diagonal) para formar una cara.
 
@@ -185,25 +163,19 @@ La fuerza de gravedad se aplica a cada una de las partículas del cuerpo flexibl
 Convenientemente, tenemos un vector con dichas partículas.
 Por lo anterior y gracias a que glm sobrecarga los operadores en vectores de la manera natural, la implementación es trivial como se puede ver en el Listado~\ref{lst:addGravity}.
 La constante de gravedad es un miembro de \mintinline{cpp}{SoftBody} y tiene el signo negativo.
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
-  \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
-  %frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
+
+\begin{mintedCode}
+\inputminted[
+  frame=lines,
+  framesep=0.25cm,
+  baselinestretch=1,
+  fontsize=\scriptsize,
   firstline=584, %If you omit this two fields, the whole file is pulled
   lastline=590
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
   \caption{El método \mintinline{cpp}{addGravity} de \mintinline{cpp}{SoftBody}}
   \label{lst:addGravity}
-  \end{listing}
-\end{minipage}
-\par
-} 
+\end{mintedCode}
 
 \subsection{La fuerza de los resortes}
 
@@ -211,45 +183,31 @@ La implementacion de estos metodos tambien es trivial gracias a nuestro diseño.
 Tan solo se debe iterar por todos los resortes de \mintinline{cpp}{SoftBody} en cada resorte se debe ocupar la ecuación~\ref{fuerzaResorte}, para acumular la fuerza en los dos puntos que son unidos por ese resorte (Listado~\ref{lst:addSpringDamper}).
 Solo por completez, en Listado~\ref{lst:add_forceSD} se muestra el método \mintinline{cpp}{add_force} de \mintinline{cpp}{SpringDamper} que en escencia implementa la ecuación~\ref{fuerzaResorte}.
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
-  \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
-  %frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
+\begin{mintedCode}
+\inputminted[
+  frame=lines,
+  framesep=0.25cm,
+  baselinestretch=1,
+  fontsize=\scriptsize,
   firstline=592, %If you omit this two fields, the whole file is pulled
   lastline=596
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
   \caption{El método \mintinline{cpp}{addSpringDamper} de \mintinline{cpp}{SoftBody}}
   \label{lst:addSpringDamper}
-  \end{listing}
-\end{minipage}
-\par
-} 
+\end{mintedCode}
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
-  \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
-  %frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
+\begin{mintedCode}
+\inputminted[
+  frame=lines,
+  framesep=0.25cm,
+  baselinestretch=1,
+  fontsize=\scriptsize,
   firstline=19, %If you omit this two fields, the whole file is pulled
   lastline=32
   ]{cpp}{../../../GLSamples/SoftBody/physics/SpringDamper.cpp}
   \caption{El método \mintinline{cpp}{add_force} de \mintinline{cpp}{SpringDamper}}
   \label{lst:add_forceSD}
-  \end{listing}
-\end{minipage}
-\par
-}
+\end{mintedCode}
 
 \subsection{La fuerza del gas}
 \label{sec:fuerzaGas}
@@ -257,25 +215,18 @@ Solo por completez, en Listado~\ref{lst:add_forceSD} se muestra el método \mint
 La siguiente fuerza en ser acumulada es la fuerza debida a la presión del gas. Para esto se ocupa la ecuación~\ref{fuerzaGas}, y se debe de acumular una vez por cada cara.
 Para poder calcular esta fuerza se necesitan hacer varias operaciones importantes: calcular el volumen total del cuerpo flexible y además calcular el área y el vector normal de cada una de las caras (Listado~\ref{lst:addPreassure}).
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
-  \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
-  %frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
+\begin{mintedCode}
+\inputminted[
+  frame=lines,
+  framesep=0.25cm,
+  baselinestretch=1,
+  fontsize=\scriptsize,
   firstline=598, %If you omit this two fields, the whole file is pulled
   lastline=606
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
   \caption{El método \mintinline{cpp}{addPreassure} de \mintinline{cpp}{SoftBody}}
   \label{lst:addPreassure}
-  \end{listing}
-\end{minipage}
-\par
-} 
+\end{mintedCode}
 
 La clase \mintinline{cpp}{Face} implementa la mayoria de las operaciones.
 
@@ -284,89 +235,62 @@ Hay que recordar que el cuerpo flexible esta formado por seis caras.
 Cinco de las cuales estan fijas y otra es la tela (o tapa) que es el cuerpo flexible.
 El Listado~\ref{lst:calculateVolume} muestra la lógica. La función \mintinline{cpp}{tethVolume} implementa las ecuaciones~\eqref{eq:baricentro} y~\eqref{eq:normTriag}.
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
-  \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
+\begin{mintedCode}
+\inputminted[
   frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
+  framesep=0.25cm,
+  baselinestretch=1,
+  fontsize=\scriptsize,
   firstline=608, %If you omit this two fields, the whole file is pulled
   lastline=643
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
   \caption{El método \mintinline{cpp}{calculateVolume} de \mintinline{cpp}{SoftBody}}
   \label{lst:calculateVolume}
-  \end{listing}
-\end{minipage}
-\par
-}
+\end{mintedCode}
 
-El método \mintinline{cpp}{lst:calculateVolume} de la clase cara, suma la contribución de una cara al volumen usando la misma función \mintinline{cpp}{tethVolume} dos veces en los puntos que forman la cara (Listado~\ref{lst:get_contributed_volume})
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
-  \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
+El método \mintinline{cpp}{calculateVolume} de la clase cara, suma la contribución de una cara al volumen usando la misma función \mintinline{cpp}{tethVolume} dos veces en los puntos que forman la cara (Listado~\ref{lst:get_contributed_volume})
+
+\begin{mintedCode}
+\inputminted[
   frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
+  framesep=0.25cm,
+  baselinestretch=1,
+  fontsize=\scriptsize,
   firstline=65, %If you omit this two fields, the whole file is pulled
   lastline=73
   ]{cpp}{../../../GLSamples/SoftBody/physics/Face.cpp}
   \caption{El método \mintinline{cpp}{get_contributed_volume} de \mintinline{cpp}{Face}}
   \label{lst:get_contributed_volume}
-  \end{listing}
-\end{minipage}
-\par
-}
+\end{mintedCode}
 
 Para calcular el área de cada cara se ocupa la fórmula~\eqref{formulaArea}, como se puede ver en el Listado~\ref{lst:get_area}.
 Y para calcular el vector normal se hace uso de la fórmula~\eqref{formulaVecNormal}, en donde $n=4$, dado que cada cara está formada por cuatro puntos (Listado~\ref{lst:get_normal}).
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
-  \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
+\begin{mintedCode}
+\inputminted[
   frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
+  framesep=0.25cm,
+  baselinestretch=1,
+  fontsize=\scriptsize,
   firstline=44, %If you omit this two fields, the whole file is pulled
   lastline=53
   ]{cpp}{../../../GLSamples/SoftBody/physics/Face.cpp}
   \caption{El método \mintinline{cpp}{get_area} de \mintinline{cpp}{Face}}
   \label{lst:get_area}
-  \end{listing}
-\end{minipage}
-\par
-}
+\end{mintedCode}
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
-  \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
+\begin{mintedCode}
+\inputminted[
   frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
+  framesep=0.25cm,
+  baselinestretch=1,
+  fontsize=\scriptsize,
   firstline=55, %If you omit this two fields, the whole file is pulled
   lastline=63
   ]{cpp}{../../../GLSamples/SoftBody/physics/Face.cpp}
   \caption{El método \mintinline{cpp}{get_normal} de \mintinline{cpp}{Face}}
   \label{lst:get_normal}
-  \end{listing}
-\end{minipage}
-\par
-}
+\end{mintedCode}
 
 \section{Los métodos numéricos}
 Otra de las rutinas mas complicadas son los métodos numéricos.
@@ -375,25 +299,18 @@ Para integrar la ecuación de Newton, se requiere saber la posición y la veloci
 \subsection{El método de Euler}
 Básicamente se trata de tomar las ecuaciones~\ref{formulas:Euler} e implementarlas en el código (Listado~\ref{lst:euler_integrate}), aprovechando la gran ventaja de que el método de Euler puede integrar una partícula la vez.
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
-  \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
+\begin{mintedCode}
+\inputminted[
   frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
+  framesep=0.25cm,
+  baselinestretch=1,
+  fontsize=\scriptsize,
   firstline=465, %If you omit this two fields, the whole file is pulled
   lastline=476
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
   \caption{El método \mintinline{cpp}{euler_integrate} de \mintinline{cpp}{SoftBody}}
   \label{lst:euler_integrate}
-  \end{listing}
-\end{minipage}
-\par
-}
+\end{mintedCode}
 
 \subsection{El método de Runge-Kutta}
 Aquí se explica el que fue probablemente el método numérico mas complicado de implementar, pues no tiene la ventaja de Euler de integrar cada partícula independientemente, así que necesita integrar todas juntas.
@@ -401,25 +318,20 @@ Además, debe tener espacio para guardar los ponderadores del paso de integraci�
 
 Para tener una idea clara de lo que que hace el código en el Listado~\ref{lst:rk4_integrate} conviene volver a ver las ecuaciones~\ref{ponderadores:RK4} y~\ref{formulas:RK4}.
 Lo largo del proceso hacen ver el Listado~\ref{lst:rk4_integrate} un poco ms complicado que lo que en realidad es.
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
-  \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
+
+\begin{mintedCode}
+\inputminted[
   frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
+  framesep=0.25cm,
+  baselinestretch=1,
+  fontsize=\scriptsize,
   firstline=478, %If you omit this two fields, the whole file is pulled
   lastline=555
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
   \caption{El método \mintinline{cpp}{rk4_integrate} de \mintinline{cpp}{SoftBody}}
   \label{lst:rk4_integrate}
-  \end{listing}
-\end{minipage}
-\par
-}
+\end{mintedCode}
+
 El truco consiste en ocupar un conjunto de puntos, resortes y caras auxiliares, para con ellos calcular los ponderadores del método de RK4 (Por eso estan presentes en el diagra de la Figura~\ref{clases:fig}), después la rutina es muy parecida a la de Euler.
 
 \section{El manejo de las colisiones}
@@ -432,48 +344,36 @@ Recordemos que nuestra tarea de detección se simplifica muchísimo por el hecho
 Para saber si dicha esfera está en colisión con nuestro cuerpo flexible, lo que hacemos es probar si cualquiera de las partículas está dentro de la esfera; de ser así, empezamos a resolver la colisión entre la esfera y la partícula en cuestión. Después seguimos revisando el resto de las partículas.
 El Listado~\ref{lst:solveCollisionSphere} implementa algoritmo.
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
-  \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
+\begin{mintedCode}
+\inputminted[
   frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
+  framesep=0.25cm,
+  baselinestretch=1,
+  fontsize=\scriptsize,
   firstline=683, %If you omit this two fields, the whole file is pulled
   lastline=696
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
   \caption{El método \mintinline{cpp}{solveCollisionSphere} de \mintinline{cpp}{SoftBody}}
   \label{lst:solveCollisionSphere}
-  \end{listing}
-\end{minipage}
-\par
-}
+\end{mintedCode}
 
 \subsection{La detección de la colisión}
 El método del Listado~\ref{lst:adjust_positions} en se encarga de calcular el vector normal al lugar de la colisión y de mover el punto fuera de la esfera.
 Mover el punto fuera de la esfera es en realidad parte de la respuesta a la colisión, pero decidí implementarlo en un solo método llamado \mintinline{cpp}{adjust_positions}, para que en la siguiente parte sólo se tenga que ajustar las velocidades.
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
-  \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
+
+\begin{mintedCode}
+\inputminted[
   frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
+  framesep=0.25cm,
+  baselinestretch=1,
+  fontsize=\scriptsize,
   firstline=698, %If you omit this two fields, the whole file is pulled
   lastline=711
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
   \caption{El método \mintinline{cpp}{adjust_positions} de \mintinline{cpp}{SoftBody}}
   \label{lst:adjust_positions}
-  \end{listing}
-\end{minipage}
-\par
-}
+\end{mintedCode}
+
 Primero calcula el vector normal que va del centro de la esfera a la partícula.
 Luego, si la partícula no está fija, la mueve justo afuera de la esfera.
 Si la partícula estuviera fija, lo que hace es mover a la esfera fuera del ella.
@@ -481,22 +381,15 @@ Si la partícula estuviera fija, lo que hace es mover a la esfera fuera del ella
 \subsection{La respuesta de la colisión}
 La mayor parte del trabajo se hizo en la función anterior, ahora que sabemos el vector normal untiario: $\vec{\textbf{n}}$ a la colisión, sólo nos resta seguir los pasos explicados en el Algoritmo~\ref{alg:elasmov}.
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
-  \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
+\begin{mintedCode}
+\inputminted[
   frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
+  framesep=0.25cm,
+  baselinestretch=1,
+  fontsize=\scriptsize,
   firstline=713, %If you omit this two fields, the whole file is pulled
   lastline=728
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
   \caption{El método \mintinline{cpp}{adjust_velocities} de \mintinline{cpp}{SoftBody}}
   \label{lst:adjust_velocities}
-  \end{listing}
-\end{minipage}
-\par
-}
+\end{mintedCode}
