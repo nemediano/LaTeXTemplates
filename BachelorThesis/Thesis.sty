@@ -3,7 +3,6 @@
 %%%%Installing texlive-lang-spanish
 %%%%is mandatory.
 % Language options (we set two languages in this text)
-\usepackage{csquotes}
 \usepackage{polyglossia}
 \setmainlanguage{spanish}
 \setotherlanguage[variant=american]{english}
@@ -119,7 +118,8 @@ pdfpagelabels=true,pdfauthor={Jorge Antonio García Galicia},pdftitle={Modelado 
 % 4 XeLateX
 % 5 ViewPDF
 
-% I took them from here
+% Define a non-float enviroment for codes that span multiple pages
+% I took the hack from here
 % https://tex.stackexchange.com/questions/33866/algorithm-tag-and-page-break
 % https://tex.stackexchange.com/questions/254044/caption-and-label-on-minted-code
 \DeclareCaptionFormat{mitedFormat}{%
