@@ -28,7 +28,7 @@ Además para poder hacer varios tipos de pruebas se desea que la animación teng
 
 Esta simulación es el objetivo principal del trabajo, y el siguiente capítulo está dedicado a cómo se construyó, mientras que en este capítulo se hace énfasis en los detalles teóricos necesarios para escribir el programa.
 
-\section{El algoritmo de simulación de un cuerpo neumático}
+\section{Simulaciónes gráfica basadas en física}
 
 Lo primero que debemos de hacer es exponer las condiciones de nuestra simulación de cuerpo flexible. La situación física que deseamos modelar es la de un cuerpo flexible, hueco que contiene un gas.
 Por ejemplo imagínese un globo, un colchón de aire, la llanta de un automóvil o una burbuja.
@@ -59,7 +59,7 @@ Una vez conocida la idea, nos empezaremos a preguntar en cómo llevarlo a cabo, 
  \centering
  \includegraphics[width=10cm]{Img/02/diagrama_flujo}
  \caption[Diagrama de flujo de la simulación]{ 
- Este diagrama de flujo muestra, los detalles generales a seguir en una animación de un cuerpo flexible. Para cada paso del algoritmo se pueden tener diferentes estrategias, pero en general este esquema no debe cambiar.
+ Este diagrama de flujo muestra, los detalles generales a seguir en una simulación gráfica basada en física. Para cada paso del algoritmo se pueden tener diferentes estrategias, pero en general este esquema no debe cambiar.
  } \label{diagrama_flujo:fig}
 \end{figure}
 
@@ -98,14 +98,14 @@ Recordemos que la fuerza en general es un vector, por lo que la acumulación de 
 Los detalles de cómo acomular las fuerzas específicas que ocuparé en la simulación se darán en la siguiente sección y con más a detalle en el resto del capitulo.
 
 \subsubsection{Integrar la ecuación de Newton}
-Las fuerzas acomuladas en el paso anterior, junto con la posición y velocidad actuales de la partícula, nos proporcionan (como dice la segunda ley de Newton. Ecuación~\ref{ley:Newton}) el siguiente estado, nos dan la información suficiente para saber la nueva posición y la nueva velocidad de la partícula en cuestión. 
+Las fuerzas acomuladas en el paso anterior, junto con la posición y velocidad actuales de la partícula, nos proporcionan (como dice la segunda ley de Newton~\eqref{ley:Newton}) el siguiente estado, nos dan la información suficiente para saber la nueva posición y la nueva velocidad de la partícula en cuestión. 
 Conociendo esto para todas las partículas tendremos determinado el estado completo del modelo en el tiempo siguiente.
 
 Como ésta es una ecuación diferencial, debemos de resolverla, o mejor dicho integrarla, para conocer el siguiente estado del sistema, sin embargo como nuestra acomulación de fuerzas fue hecha a partir de muchas fuerzas, todas ellas de naturaleza distinta, no podremos integrar esta ecuación de manera analítica.
 Por esta razón debemos de recurrir a un método numérico que nos permita aproximar la solución.
 
 Por suerte hay muchísimos métodos numéricos que se ajustan a nuestras necesidades, aquí he decidido presentar a dos de ellos solamente, en la sección dedicada a integrar la ecuación de Newton explicaré a detalle cómo funcionan.
-De manera general, se puede decir que todos ellos toman como información la posición y velocidad actual de la partícula, el vector fuerza que actúa sobre ella y el instante de tiempo que pasa entre el estado actual y el nuevo estado que queremos calcular (este instante es $\Delta t$).
+De manera general, se puede decir que todos ellos toman como información la posición y velocidad actual de la partícula, el vector fuerza que actúa sobre ella y el instante de tiempo que pasa entre el estado actual y el nuevo estado que queremos calcular (ésta cantidad es $\Delta t$).
 Y después de hacer cálculos con ellos nos devuelven un nuevo estado, en forma de la nueva posición y la nueva velocidad de la partícula.
 
 \subsubsection{Detectar y resolver colisiones}
@@ -122,7 +122,7 @@ Este paso es opcional, y depende de si deseamos que la simulación tenga una for
 Para enfrentar esto se tiene que recurrir totalmente a la creatividad del programador que vaya a hacer la implementación.
 Una buena idea es por ejemplo utilizar alguna biblioteca que exista precisamente para este fin. En éste caso se decidió utilizar un par de bibliotecas que se integran bien con \emph{\foreignlanguage{english}{OpenGL}}.
 Por un lado \emph{\foreignlanguage{english}{glfw}}, que permite manejar eventos del ratón y del teclado. 
-Y por otro lado \emph{\foreignlanguage{english}{Imgui}} que permite implementar una interfaz gráfica (menú) de usuario.
+Y por otro lado \emph{\foreignlanguage{english}{Dear Imgui}} que permite implementar una interfaz gráfica (menú) de usuario.
 
 \section{El sistema de fuerzas}
 Es momento de hacernos unas preguntas:
@@ -162,7 +162,7 @@ La gravedad debe de acumularse en cada partícula.
 La fuerza del \emph{resorte amortiguador} es una fuerza interna.
 Para calcularla  necesitamos recibir dos parámetros: $k_s$ y $k_d$.
 Luego necesitamos calcular la posición y la velocidad de cada partícula, y saber por cada resorte qué partículas está uniendo.
-Cuando tengamos que acumular esta fuerza recorreremos todos los resortes y por cada resorte calcularemos una fuerza, luego la acomularemos en cada unos de los dos partículas a los que este resorte esté conectado.
+Cuando tengamos que acumular esta fuerza recorreremos todos los resortes y por cada resorte calcularemos una fuerza, luego la acomularemos en cada unos de las dos partículas a los que este resorte esté conectado.
 
 Por último, para la fuerza debida a la presión, necesitamos un parámetro externo: $k_p$.
 Y para poder calcular esta fuerza debemos conocer antes de empezar el volumen total del cuerpo $V$, luego debemos de saber qué partículas pertenecen a cada una de las caras del cuerpo.
@@ -219,7 +219,7 @@ Una técnica muy útil para calcular el volúmen de una malla triangular se pued
 
 La técnica consiste recorrer todas la caras, y en cada una calcular el \emph{volumen orientado} del tetraedro cuya base es la cara triangular y cuya punta es el origen del sistema de referencia.
 El signo del volumen (por eso dijimos que es un volumen orientada) depende de si el tetraedo apunta hacia el origen.
-Eso quere decir que habrá alguna áreas que sean negativas y otras positivas, la suma de todos los volumenes es el volumen de la malla.
+Eso quere decir que habrá algunos volúmenes que sean negativos y otros positivos, la suma de todos los volumenes es el volumen de la malla.
 
 Es importante que al usar esta formula, los triangulos apunten hacia el mismo lado de la malla.
 En otras palabras, se deben de definir un orden para los vértices de los triangulos (por ejemplo en contra de las manecillas del reloj) y se debe ser consistente en toda la malla.
@@ -244,7 +244,7 @@ En donde $\textbf{g}_i$ y $\textbf{N}_i$ son el baricentro y la normal del triá
 \end{equation}
 
 Como ya se dijo, se puede transformar cualquier malla poligonal en una malla triangular subdividiendo cada cara en triangulos.
-Por ejemplo, nuestro cuerpo flexible esta formado por caras en forma de cuadriláteros.
+Por ejemplo, nuestro cuerpo neumático esta formado por caras en forma de cuadriláteros.
 Cada cara se puede partir por su diagonal para formar dos triángulos.
 
 \subsection{Vectores normales}
@@ -309,7 +309,7 @@ En escencia estos métodos se encargan de resolver la ecuacion diferencial de la
 \end{eqnarray}
 
 Y para hacerlo toman la condición inicial~\eqref{condicion:inicial}, como el primer valor de la solución, con ella calculan un valor aproximado para la solución $\textbf{y}(t)$ en el tiempo $t = t_0 + \Delta t$.
-Ahora este nuevo punto de la solución lo llamamos $\textbf{y}_{n}$ y nos ayuda a encontrar un nuevo punto dando otro paso hacia adelante en el tiempo $t = t_0 + 2\Delta t$
+Ahora este nuevo punto de la solución lo llamamos $\textbf{y}_{n}$ y nos ayuda a encontrar un nuevo punto dando otro paso hacia adelante en el tiempo $t = t_0 + 2\Delta t$.
 Y así sucesivamente, de manera que la salida de nuestro método son una colección de parejas $(t + n \Delta t, \textbf{y}(t + n \Delta t) )$ la primera de ellas es la condición inicial, y de ahí en adelante se trata de aproximaciones de la solución.
 
 Sin embargo nosotros no queremos resolver una ecuación como ésta, deseamos resolver la ecuación~\eqref{ley:Newton}, que es una ecuación diferencial de segundo orden.
@@ -446,7 +446,7 @@ Podemos aproximar una solución usando el método de Ruge Kutta con la siguiente
 \textbf{y}_{n+1} & = & \textbf{y}_n + \frac{h(\textbf{l}_{n}^{1} + 2\textbf{l}_{n}^{2} + 2\textbf{l}_{n}^{3} + \textbf{l}_{n}^{4}))}{6} \nonumber
 \end{eqnarray}
 
-Aquí podemos apreciar que ahora tenemos que encontrar cuatro ponderadores, los $\textbf{k}_{i}^{j}$ y $\textbf{l}_{i}^{j}$ significa que tenemos mas cálculos por hacer.
+Aquí podemos apreciar que ahora tenemos que encontrar ocho ponderadores, los $\textbf{k}_{i}^{j}$ y los $\textbf{l}_{i}^{j}$ significa que tenemos mas cálculos por hacer.
 Los valores de los ponderadores se calculan con las siguientes fórmulas.
 
 \begin{eqnarray}
@@ -485,7 +485,7 @@ Y los ponderadores se pueden calcular de la siguiente manera:
 \textbf{l}_{n}^{2} & = & \textbf{v}_n + \frac{h}{2}\textbf{k}_{n}^{1} \nonumber \\
 \textbf{k}_{n}^{3} & = & \frac{1}{m}\textbf{F}(t_n + \frac{h}{2}, \, \textbf{x}_n + \frac{h}{2}\textbf{k}_{n}^{2}, \, \textbf{v}_n + \frac{h}{2}\textbf{l}_{n}^{2}) \nonumber \\
 \textbf{l}_{n}^{3} & = & \textbf{v}_n + \frac{h}{2}\textbf{k}_{n}^{2} \nonumber \\
-\textbf{k}_{n4} & = & \frac{1}{m}\textbf{F}(t_n + h, \, \textbf{x}_n +h\textbf{k}_{n}^{2}, \, \textbf{v}_n + h\textbf{l}_{n}^{2}) \nonumber \\
+\textbf{k}_{n}^{4} & = & \frac{1}{m}\textbf{F}(t_n + h, \, \textbf{x}_n +h\textbf{k}_{n}^{3}, \, \textbf{v}_n + h\textbf{l}_{n}^{3}) \nonumber \\
 \textbf{l}_{n}^{4} & = & \textbf{v}_n + h\textbf{k}_{n}^{3}
 \label{ponderadores:RK4}
 \end{eqnarray}
@@ -518,7 +518,7 @@ Desventajas
 Por colisión de los cuerpos entenderemos la manera como lidiar cuando dos cuerpos dentro de la escena quedan en contacto uno con el otro.
 Desde nuestro punto de vista esta respuesta se divide en dos pasos: la detección de la colisión y la respuesta a la colisión.
 
-La detección es totalmente un problema geométrico, consiste en que a partir de la información que tenemos de los cuerpos y de la colisión podemos determinar al punto de la colisión y un vector normal a ese punto, este problema es totalmente dependiente de la forma de los cuerpos.
+La detección es totalmente un problema geométrico, consiste en que a partir de la información que tenemos de los cuerpos y de la colisión podemos determinar el punto de la colisión y un vector normal a ese punto, este problema es totalmente dependiente de la forma de los cuerpos.
 Por el otro lado la respuesta a la colisión es un problema físico y generalmente es más sencillo debido que ya existen algoritmos bien definidos para responder a las colisiones y son independientes de la geometría, es decir son algoritmos generales.
 
 \subsection{La detección de las colisiones}
@@ -558,6 +558,35 @@ Desde luego que hay dos vectores que cumplen con esa condición, cualquiera de e
 Ya con esta información debemos ser capaces de responder con dos cosas: una nueva posición de los objetos y una nueva velocidad.
 
 En la Figura~\ref{colision:fig} se ven los diferentes pasos de la respuesta a la colisión de dos círculos.
+
+
+\subsubsection{Separar un vector en componentes normal y tangencial}
+Antes de explicar la forma en que se responden las colisiones quiero hacer énfasis en la manera como separa un vector en componentes ortogonales (Figura \ref{comVec:fig}), porque es necesario hacerlo en la respuesta a las colisiones.
+
+Para separar a un vector cualquiera $\textbf{v}$ en dos componentes: uno normal $\textbf{v}_n$, y otro tangencial $\textbf{v}_t$ respecto a un vector normal $\textbf{n}$, se hace uso de las siguientes fórmula:
+
+\begin{eqnarray}
+\textbf{v}_n & = &\frac{(\textbf{v} \cdot \textbf{n})}{|\textbf{n}|} \frac{\textbf{n}}{|\textbf{n}|} \nonumber \\
+\textbf{v}_t & = & \textbf{v} - \textbf{v}_n \nonumber
+\end{eqnarray}
+
+Como en los cálculos de detección de colisiones es común que tengamos un vector normal $\vec{\textbf{n}}$, tal que: $|\vec{\textbf{n}}| = 1$, las fórmulas anteriores se simplifican aun más siendo la forma más usada las ecuaciones~\eqref{eq:sepVector}\footnote{Las fórmulas~\eqref{eq:sepVector}, se encuentran mal escritas en~\cite{BaraffWitkin:Coursenotes}, y esta fue una de las razones que más me retrasó al momento de hacer este trabajo.}:
+
+\begin{eqnarray}
+\textbf{v}_n & = &(\textbf{v} \cdot \vec{\textbf{n}}) \vec{\textbf{n}} \nonumber \\
+\textbf{v}_t & = & \textbf{v} - \textbf{v}_n
+\label{eq:sepVector} 
+\end{eqnarray}
+
+\subsubsection{Colisiones elásticas}
+
+Una colisión elástica es aquella donde el momento y la energía de los objetos, se conservan después de la colisión; son una abstracción que nunca sucede en la vida real.
+Aun las colisiones en el espacio exterior son inelásticas aunque están muy cerca de no serlo~\cite{FisicaMatematicasVideojuegos}, pero nos sirven bastante para entender el fenómeno, y en algunos casos son suficientes.
+Por ejemplo, pensemos que estamos modelando un juego de billar en 2D una colisión elástica es suficiente.
+
+Supongamos que se tienen dos cuerpos $A$ y $B$ (Figura~\ref{fig:coliAntes}), las formas no importan, y sabemos, gracias a un algoritmo de detección de colisiones, que están en colisión (Figura~\ref{fig:coliDetecta}) y un vector normal $\vec{\textbf{n}}$ a la superficie de colisión.
+Suponemos que este vector apunta del cuerpo $A$ al cuerpo $B$ y que es también un vector unitario (Figura~\ref{fig:coliResponde}).
+
 \begin{figure}
  \centering
   \begin{subfigure}[b]{0.32\textwidth}
@@ -588,36 +617,9 @@ En la Figura~\ref{colision:fig} se ven los diferentes pasos de la respuesta a la
  \label{colision:fig}
 \end{figure}
 
-\subsubsection{Separar un vector en componentes normal y tangencial}
-Antes de explicar la forma en que se responden las colisiones quiero hacer énfasis en la manera como separa un vector en componentes ortogonales (Figura \ref{comVec:fig}), porque es necesario hacerlo en la respuesta a las colisiones.
-
-Para separar a un vector cualquiera $\textbf{v}$ en dos componentes: uno normal $\textbf{v}_n$, y otro tangencial $\textbf{v}_t$ respecto a un vector normal $\textbf{n}$, se hace uso de las siguientes fórmula:
-
-\begin{eqnarray}
-\textbf{v}_n & = &\frac{(\textbf{v} \cdot \textbf{n})}{|\textbf{n}|} \frac{\textbf{n}}{|\textbf{n}|} \nonumber \\
-\textbf{v}_t & = & \textbf{v} - \textbf{v}_n \nonumber
-\end{eqnarray}
-
-Como en los cálculos de detección de colisiones es común que tengamos un vector normal $\vec{\textbf{n}}$, tal que: $|\vec{\textbf{n}}| = 1$, las fórmulas anteriores se simplifican aun más siendo la forma más usada la siguiente\footnote{Las fórmulas~\eqref{eq:sepVector}, se encuentran mal escritas en~\cite{BaraffWitkin:Coursenotes}, y esta fue una de las razones que más me retrasó al momento de hacer este trabajo.}:
-
-\begin{eqnarray}
-\textbf{v}_n & = &(\textbf{v} \cdot \vec{\textbf{n}}) \vec{\textbf{n}} \nonumber \\
-\textbf{v}_t & = & \textbf{v} - \textbf{v}_n
-\label{eq:sepVector} 
-\end{eqnarray}
-
-\subsubsection{Colisiones elásticas}
-
-Una colisión elástica es aquella donde el momento y la energía de los objetos, se conservan después de la colisión; son una abstracción que nunca sucede en la vida real.
-Aun las colisiones en el espacio exterior son inelásticas aunque están muy cerca de no serlo~\cite{FisicaMatematicasVideojuegos}, pero nos sirven bastante para entender el fenómeno, y en algunos casos son suficientes.
-Por ejemplo, pensemos que estamos modelando un juego de billar en 2D una colisión elástica es suficiente.
-
-Supongamos que se tienen dos cuerpos $A$ y $B$, las formas no importan, y sabemos, gracias a un algoritmo de detección de colisiones, que están en colisión y un vector normal $\vec{\textbf{n}}$ a la superficie de colisión.
-Suponemos que este vector apunta del cuerpo $A$ al cuerpo $B$ y que es también un vector unitario.
-
 Suponemos también que conocemos todas las propiedades de los cuerpos, es decir su masa, su velocidad y su posición.
 
-Queremos determinar una nueva posición y una nueva velocidad para los objetos como resultado de la colisión entre ellos.
+Queremos determinar una nueva posición y una nueva velocidad para los objetos como resultado de la colisión entre ellos (Figura~\ref{fig:coliAjusta}).
 Esto se resumen el Cuadro~\ref{condiciones:Colision}.
 
 \begin{table}
@@ -647,7 +649,7 @@ Con este vector podemos dividir los demás vectores en una parte normal al plano
  \centering
  \includegraphics[width=7cm]{Img/02/vector_componente}
  \caption[Separar componente tangencial y normal de un vector]{ 
- El vector $\textbf{v}$ se separa con respecto a $\textbf{n}$ en dos vectores uno normal $\textbf{v}_n$, y uno tangencial $\textbf{v}_t$ 
+ El vector $\textbf{u}$ se separa con respecto a $\textbf{n}$ en dos vectores uno normal $\textbf{u}_n$, y uno tangencial $\textbf{u}_t$ 
  } \label{comVec:fig}
 \end{figure}
 
@@ -658,7 +660,7 @@ Con este vector podemos dividir los demás vectores en una parte normal al plano
  \textbf{w} & = & \textbf{w}_t + \textbf{w}_n \nonumber
 \end{eqnarray}
 
-Ahora veamos que es lo qué sabemos de antemano por la forma como planteamos las condiciones del problema: sabemos que: $\textbf{u}_t = \textbf{s}_t$ y $\textbf{v}_t = \textbf{w}_t = 0$, porque esperaríamos que las velocidades sólo se vieran afectadas en su componente normal y porque sabemos que el objeto $B$ estaba inicialmente en reposo.
+Ahora veamos que es lo qué sabemos de antemano por la forma como planteamos las condiciones del problema: sabemos que: $\textbf{u}_t = \textbf{s}_t$ y $\textbf{v}_t = \textbf{w}_t = \textbf{0}$, porque esperaríamos que las velocidades sólo se vieran afectadas en su componente normal y porque sabemos que el objeto $B$ estaba inicialmente en reposo.
 Así que lo único que necesitamos saber es $\textbf{s}_n$ y $\textbf{w}_n$.
 
 Se sabe también que, como la colisión es elástica, debe de obedecer la ley de la conservación de la energía~\eqref{eq:energia} y la la ley de la conservación de momento~\eqref{eq:momento}.
@@ -708,7 +710,7 @@ Con esto se tiene todo lo necesario  para resolver una colisión elástica con u
 En donde la función \verb|parteNormal|, es una función que recibe un vector $\textbf{u}$ y un vector $\textbf{n}$, devuelve la parte normal de $\textbf{u}$ con respecto a $\textbf{n}$.
 Es decir, nos sirve para partir al vector $\textbf{u}$ en una parte tangencial y una parte normal a la colisión haciendo uso de las fórmulas \eqref{eq:sepVector}.
 
-Ahora veamos el caso más general, donde $\textbf{v} \neq 0$. Aquí vamos a ocupar el principio de relatividad y le restamos a todo el sistema $\textbf{v}$, lo que lo transforma en el caso anterior. Resolvemos como lo habíamos hecho antes y luego le sumamos a todo el sistema $\textbf{v}$. El pseudocódigo es casi idéntico:
+Ahora veamos el caso más general, donde $\textbf{v} \neq \textbf{0}$. Aquí vamos a ocupar el principio de relatividad y le restamos a todo el sistema $\textbf{v}$, lo que lo transforma en el caso anterior. Resolvemos como lo habíamos hecho antes y luego le sumamos a todo el sistema $\textbf{v}$. El pseudocódigo es casi idéntico:
  
 {\centering
 \begin{minipage}{\linewidth}

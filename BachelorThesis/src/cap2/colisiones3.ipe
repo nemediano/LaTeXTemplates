@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.21">
-<info created="D:20210904192500" modified="D:20210904194548"/>
+<info created="D:20210904192500" modified="D:20210910202803"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -320,22 +320,24 @@ h
 <path matrix="1 0 0 1 -40.9558 18.8946" stroke="blue" pen="heavier">
 16 0 0 16 208 656 e
 </path>
-<path layer="vectores" matrix="0.707107 -0.707107 0.707107 0.707107 -459.945 296.338" stroke="black" pen="heavier" arrow="normal/normal">
+<path layer="vectores" matrix="0.707107 -0.707107 0.707107 0.707107 -459.945 296.338" stroke="black" pen="heavier" arrow="normal/small">
 128 704 m
 160 704 l
 </path>
-<path matrix="1 0 0 1 -40.9558 18.8946" stroke="black" pen="heavier" arrow="normal/normal">
+<path matrix="1 0 0 1 -40.9558 18.8946" stroke="black" pen="heavier" arrow="normal/small">
 208 656 m
 208 672 l
 </path>
 <text layer="etiquetas" transformations="translations" pos="128 688" stroke="black" type="label" width="6.365" height="4.428" depth="0" valign="baseline" style="math">\textbf{u}</text>
-<text matrix="1 0 0 1 42.0923 -15.0079" transformations="translations" pos="128 688" stroke="black" type="label" width="6.047" height="4.428" depth="0" valign="baseline" style="math">\textbf{v}</text>
+<text matrix="1 0 0 1 41.2918 -9.40423" transformations="translations" pos="128 688" stroke="black" type="label" width="6.047" height="4.428" depth="0" valign="baseline" style="math">\textbf{v}</text>
 <text matrix="1 0 0 1 0 32" transformations="translations" pos="128 688" stroke="black" type="label" width="8.747" height="4.289" depth="0" valign="baseline" style="math">m</text>
-<text matrix="1 0 0 1 37.5882 -23.6974" transformations="translations" pos="128 688" stroke="black" type="label" width="5.012" height="4.297" depth="1.93" valign="baseline" style="math">p</text>
+<text matrix="1 0 0 1 43.6722 -22.0964" transformations="translations" pos="128 688" stroke="black" type="label" width="5.012" height="4.297" depth="1.93" valign="baseline" style="math">p</text>
 <path layer="vectores" stroke="black" pen="heavier" arrow="normal/tiny">
 154.421 684.523 m
 162.424 679.591 l
 </path>
 <text layer="etiquetas" matrix="1 0 0 1 25.2648 -15.687" transformations="translations" pos="128 688" stroke="black" type="label" width="6.365" height="7.256" depth="0" valign="baseline" style="math">\vec{\textbf{n}}</text>
+<text matrix="1 0 0 1 6.08399 0.160105" transformations="translations" pos="96 704" stroke="black" type="label" width="7.472" height="6.808" depth="0" valign="baseline">A</text>
+<text matrix="1 0 0 1 62.5591 -41.7664" transformations="translations" pos="96 704" stroke="black" type="label" width="7.057" height="6.808" depth="0" valign="baseline">B</text>
 </page>
 </ipe>

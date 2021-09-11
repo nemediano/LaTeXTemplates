@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.21">
-<info created="D:20210904192500" modified="D:20210904193923"/>
+<info created="D:20210904192500" modified="D:20210910202527"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -313,18 +313,18 @@ h
 <layer name="objetos"/>
 <layer name="vectores"/>
 <layer name="etiquetas"/>
-<view layers="objetos vectores etiquetas" active="etiquetas"/>
+<view layers="objetos vectores etiquetas" active="vectores"/>
 <path layer="objetos" stroke="blue" pen="heavier">
 32 0 0 32 128 704 e
 </path>
 <path matrix="1 0 0 1 -48 16" stroke="blue" pen="heavier">
 16 0 0 16 208 656 e
 </path>
-<path layer="vectores" matrix="0.707107 -0.707107 0.707107 0.707107 -459.945 296.338" stroke="black" pen="heavier" arrow="normal/normal">
+<path layer="vectores" matrix="0.707107 -0.707107 0.707107 0.707107 -459.945 296.338" stroke="black" pen="heavier" arrow="normal/small">
 128 704 m
 160 704 l
 </path>
-<path matrix="1 0 0 1 -48 16" stroke="black" pen="heavier" arrow="normal/normal">
+<path matrix="1 0 0 1 -48 16" stroke="black" pen="heavier" arrow="normal/small">
 208 656 m
 208 672 l
 </path>
@@ -332,5 +332,7 @@ h
 <text matrix="1 0 0 1 35.0481 -17.9025" transformations="translations" pos="128 688" stroke="black" type="label" width="6.047" height="4.428" depth="0" valign="baseline" style="math">\textbf{v}</text>
 <text matrix="1 0 0 1 0 32" transformations="translations" pos="128 688" stroke="black" type="label" width="8.747" height="4.289" depth="0" valign="baseline" style="math">m</text>
 <text matrix="1 0 0 1 30.544 -26.592" transformations="translations" pos="128 688" stroke="black" type="label" width="5.012" height="4.297" depth="1.93" valign="baseline" style="math">p</text>
+<text matrix="1 0 0 1 -10.3999 1.03999" transformations="translations" pos="112 704" stroke="black" type="label" width="7.472" height="6.808" depth="0" valign="baseline">A</text>
+<text matrix="1 0 0 1 35.328 -36.16" transformations="translations" pos="112 704" stroke="black" type="label" width="7.057" height="6.808" depth="0" valign="baseline">B</text>
 </page>
 </ipe>

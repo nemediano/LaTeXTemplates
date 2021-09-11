@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.21">
-<info created="D:20210904192500" modified="D:20210904195000"/>
+<info created="D:20210904192500" modified="D:20210910203056"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -313,18 +313,18 @@ h
 <layer name="objetos"/>
 <layer name="vectores"/>
 <layer name="etiquetas"/>
-<view layers="objetos vectores etiquetas" active="etiquetas"/>
+<view layers="objetos vectores etiquetas" active="vectores"/>
 <path layer="objetos" stroke="blue" pen="heavier">
 32 0 0 32 128 704 e
 </path>
 <path matrix="1 0 0 1 0 32" stroke="blue" pen="heavier">
 16 0 0 16 208 656 e
 </path>
-<path layer="vectores" matrix="-0.486021 -0.873948 0.873948 -0.486021 -424.934 1157.83" stroke="black" pen="heavier" arrow="normal/normal">
+<path layer="vectores" matrix="-0.486021 -0.873948 0.873948 -0.486021 -424.934 1157.83" stroke="black" pen="heavier" arrow="normal/small">
 128 704 m
 160 704 l
 </path>
-<path matrix="0.774298 -0.632822 0.632822 0.774298 -367.839 311.621" stroke="black" pen="heavier" arrow="normal/normal">
+<path matrix="0.774298 -0.632822 0.632822 0.774298 -367.839 311.621" stroke="black" pen="heavier" arrow="normal/small">
 208 656 m
 208 672 l
 </path>
@@ -332,5 +332,7 @@ h
 <text matrix="1 0 0 1 83.0481 -1.9025" transformations="translations" pos="128 688" stroke="black" type="label" width="8.274" height="4.428" depth="0" valign="baseline" style="math">\textbf{w}</text>
 <text matrix="1 0 0 1 0 32" transformations="translations" pos="128 688" stroke="black" type="label" width="8.747" height="4.289" depth="0" valign="baseline" style="math">m</text>
 <text matrix="1 0 0 1 78.544 -10.592" transformations="translations" pos="128 688" stroke="black" type="label" width="5.012" height="4.297" depth="1.93" valign="baseline" style="math">p</text>
+<text matrix="1 0 0 1 -9.44619 0.64042" transformations="translations" pos="112 704" stroke="black" type="label" width="7.472" height="6.808" depth="0" valign="baseline">A</text>
+<text matrix="1 0 0 1 82.8819 -15.8399" transformations="translations" pos="112 704" stroke="black" type="label" width="7.057" height="6.808" depth="0" valign="baseline">B</text>
 </page>
 </ipe>
