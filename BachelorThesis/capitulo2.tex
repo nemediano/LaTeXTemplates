@@ -521,6 +521,9 @@ Desde nuestro punto de vista esta respuesta se divide en dos pasos: la detecció
 La detección es totalmente un problema geométrico, consiste en que a partir de la información que tenemos de los cuerpos y de la colisión podemos determinar el punto de la colisión y un vector normal a ese punto, este problema es totalmente dependiente de la forma de los cuerpos.
 Por el otro lado la respuesta a la colisión es un problema físico y generalmente es más sencillo debido que ya existen algoritmos bien definidos para responder a las colisiones y son independientes de la geometría, es decir son algoritmos generales.
 
+En nuestro caso el cuerpo flexible está formado por partículas.
+Para resolver las colisiones consideramos cada partícula como un cuerpo independiente y tratamos la posible colisión de cada una con la esfera por separado.
+
 \subsection{La detección de las colisiones}
 Como ya se dijo antes la detección de las colisiones es uno de los problemas más complejos que nos podemos enfrentar al hacer una animación.
 Básicamente debemos de poder hacer dos cosas aquí: uno, detectar la colisión, es decir mediante una prueba rápida saber si los cuerpos de nuestra escena entraron en contacto, y después ver si podemos determinar un vector normal al punto (o superficie en 3D) de colisión.
@@ -737,8 +740,10 @@ Ahora veamos el caso más general, donde $\textbf{v} \neq \textbf{0}$. Aquí vam
 
 Con esto podemos programar un función general que resuelva colisiones elásticas, sólo debemos asegurarnos de que la función que detecta las colisiones le informe a aquella función de tres cosas: las propiedades del objeto $A$, las propiedades del objeto $B$ y un vector normal al plano de colisión que vaya de $A$ a $B$.
 
+Vuelvo a hacer énfasis en que para nuestro caso, la colisión de cada partícula con la esfera debe resolverse de manera separada e independiente.
+
 \subsubsection{Colisiones inelásticas}
-En una colisión inelástica se tienen un pérdida de energía como respuesta al impacto.
+En una colisión inelástica se tienen una pérdida de energía como respuesta al impacto.
 En la realidad las colisiones son inelásticas, podemos apreciar parte de la pérdida de la energía, al escuchar el sonido de la colisión.
 Por ejemplo en el billar.
 

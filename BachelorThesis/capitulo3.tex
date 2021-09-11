@@ -323,3 +323,6 @@ La mayor parte del trabajo se hizo en la función anterior, ahora que sabemos el
   \caption{El método \mintinline{cpp}{adjust_velocities} de \mintinline{cpp}{SoftBody}}
   \label{lst:adjust_velocities}
 \end{listing}
+
+Es importante que la velocidad y posición de la esfera sean ajustadas de manera independiente por cada partícula con la que se haya producido una colisión.
+Es \emph{físicamente incorrecto} tratar de acumular las posiciones y velocidades de respuesta de colisión con cada partícula y luego actualizar el cuerpo rígido una sola vez con las resultantes.
