@@ -20,21 +20,22 @@ En la última sección del capítulo, se explica cómo es que se implementaron l
 
 \section{Diseño de clases}
 
-Decidí usar de la biblioteca de algebra para gráficos \href{http://github.com/g-truc/glm}{glm} por dos razones:
-Primero, por que cuenta con tipos de datos para representar vectores en 2 y 3 dimensiones e implementa las operaciones usuales entre ellos.
-Y segundo, por que esta biblioteca tiene un alto nivel de integración con OpenGL al grado de ser casi un estandar.
+Decidí usar de la biblioteca de álgebra para gráficos \href{http://github.com/g-truc/glm}{glm} por dos razones:
+Primero, porque cuenta con tipos de datos para representar vectores en 2 y 3 dimensiones e implementa las operaciones usuales entre ellos.
+Y segundo, porque esta biblioteca tiene un alto nivel de integración con OpenGL al grado de ser casi un estándar.
 
 La parte fundamental del modelo la constituyen las partículas; de cada una de éstas nos interesa saber básicamente cuatro cosas: su posición, su velocidad, la fuerza que se le está aplicando y la masa.
-Adicionalmente, por un detalle particular a nuestra implementación, se necesita saber si una partícula esta fija.
-Si una particúla esta fija, entonces se deben de ignorar las operaciones de integración.
-La clase \mintinline{cpp}{Particle} representa (abstrae) una párticula. Los métodos nos permiten editar y consultar estos cinco miembros. En este sentido la clase \mintinline{cpp}{Particle} es muy simple~\footnote{En el argot del lenguaje \href{http://www.java.com/en/}{Java} diriamos que la clase \mintinline{cpp}{Particle} es casi un \href{http://en.wikipedia.org/wiki/JavaBeans}{bean}}.
+Adicionalmente, por un detalle particular a nuestra implementación, se necesita saber si una partícula está fija.
+Si una partícula está fija, entonces se deben de ignorar las operaciones de integración.
+La clase \mintinline{cpp}{Particle} representa (abstrae) una partícula. Los métodos nos permiten editar y consultar estos cinco miembros.
+En este sentido la clase \mintinline{cpp}{Particle} es muy simple~\footnote{En el argot del lenguaje \href{http://www.java.com/en/}{Java} diriamos que la clase \mintinline{cpp}{Particle} es casi un \href{http://en.wikipedia.org/wiki/JavaBeans}{bean}}.
 
 Para representar a los resortes-amortiguadores se creó la clase \mintinline{cpp}{SpringDamper} que tiene como miembros \emph{referencias} a las dos partículas que une éste resorte.
 Hago énfasis en que usaremos referencias, pues las partículas van ser usadas para formar varios objetos y se requiere que no sea necesario actualizar en cada objeto por separado cada que una partícula sea modificada. Finalmente, se debe saber la longitud $L$ del resorte cuando está en su estado de reposo.
 
 La clase \mintinline{cpp}{SpringDamper} define los métodos para:
 \begin{itemize}
- \item Actualizar que partículas forman éste resorte.
+ \item Actualizar qué partículas forman éste resorte.
  \item Consultar y modificar $L$.
  \item Consultar las posiciones de las partículas que forman éste resorte.
  \item Acumular la fuerza del resorte en sus dos partículas dados $k_s$ y $k_d$.
@@ -51,18 +52,18 @@ Adicionalmente, la clase \mintinline{cpp}{Face} implementa los siguientes métod
  \item Un método que sirve como auxiliar en el cálculo del volumen de todo el cuerpo flexible. La lógica de este método se explica en la Sección~\ref{sec:fuerzaGas}.\footnote{Aunque ésta no es estrictamente hablando una propiedad de la cara, por razones de Ingeniería de Software (IS) era conveniente incluirlo en esta clase.}
 \end{itemize}
 
-La clase que representar el cuerpo flexible: \mintinline{cpp}{SoftBody} esta compuesta con objetos de las clases anteriores.
+La clase que representa el cuerpo flexible: \mintinline{cpp}{SoftBody} está compuesta con objetos de las clases anteriores.
 Esta clase es la más importante de la aplicación.
 Y el resto de éste capítulo está dedicado a explicar como funcionan sus métodos.
 En este momento, es relevante decir que esta clase contiene una colección de partículas, una colección de resortes y una colección de caras.
-Las caras y resortes en realidad usan referencias a las partículas (agregan), de esta manera la información de las partículas sólo está almacenada una vez.
+Las caras y resortes en realidad usan (agregan) referencias a las partículas, de esta manera la información de las partículas sólo está almacenada una vez.
 
 Por orden, esta clase también define una estructura: \mintinline{cpp}{SoftBodyParameters} que contiene todos los parámetros físicos del cuerpo flexible. 
  
 Finalmente, se necesita también una clase para representar el único cuerpo rígido en la escena.
 La clase \mintinline{cpp}{Ball} tiene como miembros una partícula, un escalar que representa el radio de la esfera y un miembro para registrar qué método numérico se usa para integrar.\footnote{De nuevo por IS, era conveniente que cada objeto en la escena llevará registro de que integrador está en uso}
 
-La relación entre estas clases esta resumida en el diagrama de clases mostrado en la Figura~\ref{clases:fig}. De nuevo hago énfasis en que la implementación de contiene de hecho mas miembros que los mostrados en dicha Figura, pues solo aparecen en el diagrama los relevantes para éste trabajo.
+La relación entre estas clases está resumida en el diagrama de clases mostrado en la Figura~\ref{clases:fig}. De nuevo hago énfasis en que la implementación de contiene de hecho más miembros que los mostrados en dicha Figura, pues solo aparecen en el diagrama los relevantes para éste trabajo.
 
 \begin{figure}
  \centering
@@ -74,12 +75,13 @@ La relación entre estas clases esta resumida en el diagrama de clases mostrado 
 
 \section{Creación del cuerpo flexible}
 
-Cómo se dijo en la sección anterior, hay tres colecciones que forman el cuerpo flexible: las particulas, los resortes y las caras. Estas colecciones estan almacenadas en vectores que forman parte de la clase \mintinline{cpp}{SoftBody}.
+Cómo se dijo en la sección anterior, hay tres colecciones que forman el cuerpo flexible: las partículas, los resortes y las caras.
+Estas colecciones están almacenadas en arreglos dinámicos\footnote{En lenguaje C++ representados por objetos de tipo \mintinline{cpp}{std::vector}, los llamo \emph{colecciones} en el texto para no confundirlos con los vectores de álgebra lineal} que forman parte de la clase \mintinline{cpp}{SoftBody}.
 
 Hay algunas cosas que decir aquí: primero, que lo que se quiere modelar es una tela cuadrada que servirá como cuerpo flexible, por lo que el número de partículas es en realidad $n^{2}$ en donde $n$ es el número de puntos en cada lado de la tela (en el código, $n$ es el miembro \mintinline{cpp}{m_side} de \mintinline{cpp}{SoftBody}), y como no hay resortes en las orillas de la tela el número de resortes totales es $2 (n - 1) (n - 2)$ y el número de caras es: $(n-1)^{2}$.
-Segunda, que pese a que geométricamente la tela es un arreglo cuadrado de puntos, las partículas son guardados en un arreglo unidimensional (lineal), dado que esto  simplifica y hace mucho más generales las rutinas de acumulación de fuerza.
+Segundo, que pese a que geométricamente la tela es un arreglo cuadrado de puntos, las partículas son guardados en un arreglo unidimensional (lineal), dado que esto  simplifica y hace mucho más generales las rutinas de acumulación de fuerza.
 
-Dado que la partículas están en un arreglo unidimensional se hace uso del método \mintinline{cpp}{simIndexes} que recibe el índice de la particula en el vector unidimensional y nos regresa los indices $(i, j)$ que la partícula tendría en un arreglo bidimensional. El metodo \mintinline{cpp}{realIndex} hace la operacion inversa.
+Dado que la partículas están en un arreglo unidimensional se hace uso del método \mintinline{cpp}{simIndexes} que recibe el índice de la partícula en el vector unidimensional y nos regresa los índices $(i, j)$ que la partícula tendría en un arreglo bidimensional. El método \mintinline{cpp}{realIndex} hace la operación inversa.
 
 \begin{listing}
 \inputminted[
@@ -98,9 +100,9 @@ Dado que la partículas están en un arreglo unidimensional se hace uso del mét
 %   \label{lst:recreate_particles}
 % \end{listing}
 
-El código mostrado en el Listado~\ref{lst:recreate_particles} inicializa la velocidad, la fuerza y la masa de la partículas (la posición es inicializada con una rutina muy simple que esta fuera de la clase \mintinline{cpp}{SoftBody}). También se encarga de fijar las partículas que estan en las orillas de la tela.
+El código mostrado en el Listado~\ref{lst:recreate_particles} inicializa la velocidad, la fuerza y la masa de la partículas (la posición es inicializada con una rutina muy simple que está fuera de la clase \mintinline{cpp}{SoftBody}). También se encarga de fijar las partículas que están en las orillas de la tela.
 
-La rutina que inicializa los resortes es ejecutada después que la de las particulas. Se muestra un extracto en el Listado~\ref{lst:connectSprings}.
+La rutina que inicializa los resortes es ejecutada después que la de las partículas. Se muestra un extracto en el Listado~\ref{lst:connectSprings}.
 
 \begin{listing}
 \inputminted[
@@ -110,26 +112,25 @@ La rutina que inicializa los resortes es ejecutada después que la de las partic
   \caption{Este es un extracto del método \mintinline{cpp}{recreate_particles} de \mintinline{cpp}{SoftBody}}\label{lst:connectSprings}
 \end{listing}
 
-Por las condiciones que definimos en nuestra tela. 
+Por las condiciones que definimos en nuestra tela.
 \begin{itemize}
- \item Las partículas que están en las arístas superiores e inferiores no tienen un resorte horizontal entre ellas.
- \item Las partículas que están en las arístas izquierda y derecha no tienen un resorte vertical entre ellas.
-\end{itemize} 
+ \item Las partículas que están en las aristas superiores e inferiores de la tela no tienen un resorte horizontal entre ellas.
+ \item Las partículas que están en las aristas izquierda y derecha de la tela no tienen un resorte vertical entre ellas.
+\end{itemize}
 
-El algoritmo, pregunta si esta particula puede ser unida (por un resorte) con la partícula a su derecha, de ser así las conecta. Después, pregunta si debe ser unida con la particula abajo de ella, de ser así tambien es conectada.
+El algoritmo, pregunta si esta partícula puede ser unida (por un resorte) con la partícula a su derecha, de ser así las conecta. Después, pregunta si debe ser unida con la partícula debajo de ella, de ser así también es conectada.
 
 \begin{listing}
 \inputminted[
-  firstline=372, %If you omit this two fields, the whole file is pulled
-  lastline=389
+  firstline=371, %If you omit this two fields, the whole file is pulled
+  lastline=390
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
-  \caption{Este es un extracto del método \mintinline{cpp}{recreate_particles} de \mintinline{cpp}{SoftBody}}
+  \caption{Este es un extracto del método \mintinline{cpp}{connectFaces} de \mintinline{cpp}{SoftBody}}
   \label{lst:connectFaces}
 \end{listing}
 
-
-La logica para formar las caras se presenta en el Listado~\ref{lst:connectFaces}.
-Esta rutina es muy parecida a la anterior: recorre todas las particulas, si la partícula actual, tiene un partícula a su izquierda y otra partícula abajo, entonces se pueden tomar cuatro partículas (pues debe existir otra una partícula en diagonal) para formar una cara.
+La lógica para formar las caras se presenta en el Listado~\ref{lst:connectFaces}.
+Esta rutina es muy parecida a la anterior: recorre todas las partículas, si la partícula actual, tiene un partícula a su izquierda y otra partícula abajo, entonces se pueden tomar cuatro partículas (pues debe existir otra una partícula en diagonal) para formar una cara.
 
 \section{La física del modelo}
 Toca el turno de ver las rutinas que tienen que ver con la acumulación de fuerzas en el modelo.
@@ -139,7 +140,7 @@ Aquí es donde empezaremos a notar el porqué de la construcción de los demás 
 
 \subsection{La fuerza de gravedad}
 La primera y más sencilla de las fuerzas que vamos a poner es la de gravedad.
-Como se dijo desde la ecuación~\eqref{fuerzaGravedad}, sólo depende de dos cosas de la masa del objeto y de la constante de gravedad\footnote{La contribución de la masa será \emph{cancelada} por el integrador}, y además sólo afecta en un componente vectorial el componente $y$, del vector fuerza.
+Como se dijo desde la ecuación~\eqref{fuerzaGravedad}, sólo depende de dos cosas de la masa del objeto y de la constante de gravedad\footnote{La contribución de la masa será \emph{cancelada} por el integrador}, y además sólo afecta el componente vertical (paralelo al eje $y$), del vector fuerza.
 
 La fuerza de gravedad se aplica a cada una de las partículas del cuerpo flexible. 
 Convenientemente, tenemos un vector con dichas partículas.
@@ -157,9 +158,9 @@ La constante de gravedad es un miembro de \mintinline{cpp}{SoftBody} y tiene el 
 
 \subsection{La fuerza de los resortes}
 
-La implementacion de estos metodos tambien es trivial gracias a nuestro diseño.
-Tan solo se debe iterar por todos los resortes de \mintinline{cpp}{SoftBody} en cada resorte se debe ocupar la ecuación~\ref{fuerzaResorte}, para acumular la fuerza en los dos puntos que son unidos por ese resorte (Listado~\ref{lst:addSpringDamper}).
-Solo por completez, en Listado~\ref{lst:add_forceSD} se muestra el método \mintinline{cpp}{add_force} de \mintinline{cpp}{SpringDamper} que en escencia implementa la ecuación~\ref{fuerzaResorte}.
+La implementación de estos métodos también es trivial gracias a nuestro diseño.
+Tan solo se debe iterar por todos los resortes de \mintinline{cpp}{SoftBody} en cada resorte se debe ocupar la ecuación~\eqref{fuerzaResorte}, para acumular la fuerza en los dos puntos que son unidos por ese resorte (Listado~\ref{lst:addSpringDamper}).
+Solo por completez, en Listado~\ref{lst:add_forceSD} se muestra el método \mintinline{cpp}{add_force} de \mintinline{cpp}{SpringDamper} que en esencia implementa la ecuación~\eqref{fuerzaResorte}.
 
 \begin{listing}
 \inputminted[
@@ -182,7 +183,7 @@ Solo por completez, en Listado~\ref{lst:add_forceSD} se muestra el método \mint
 \subsection{La fuerza del gas}
 \label{sec:fuerzaGas}
 
-La siguiente fuerza en ser acumulada es la fuerza debida a la presión del gas. Para esto se ocupa la ecuación~\ref{fuerzaGas}, y se debe de acumular en cada cara.
+La siguiente fuerza en ser acumulada es la fuerza debida a la presión del gas. Para esto se ocupa la ecuación~\eqref{fuerzaGas}, y se debe de acumular en cada cara.
 Para poder calcular esta fuerza se necesitan hacer varias operaciones importantes: calcular el volumen total del cuerpo flexible y además calcular el área y el vector normal de cada una de las caras (Listado~\ref{lst:addPreassure}).
 
 \begin{listing}
@@ -194,9 +195,10 @@ Para poder calcular esta fuerza se necesitan hacer varias operaciones importante
   \label{lst:addPreassure}
 \end{listing}
 
-Para hacer el calculo de volumen se hace uso de la ecuación~\eqref{eq:volumen}.
-Hay que recordar que el cuerpo neumático esta formado por seis caras.
-Cinco de las cuales estan fijas y otra es la tela (o tapa) que es el cuerpo flexible.
+Para hacer el cálculo de volumen se hace uso de la ecuación~\eqref{eq:volumen}.
+Hay que recordar que el cuerpo neumático está formado por seis caras.
+Cinco de las cuales están fijas y otra es la tela (o tapa) que es el cuerpo flexible.
+Cada cara es dividida en dos triángulos para calcular su contribución al volumen.
 El Listado~\ref{lst:calculateVolume} muestra la lógica. La función \mintinline{cpp}{tethVolume} implementa las ecuaciones~\eqref{eq:baricentro} y~\eqref{eq:normTriag}.
 
 \begin{listing}
@@ -241,11 +243,11 @@ Y para calcular el vector normal se hace uso de la fórmula~\eqref{formulaVecNor
 \end{listing}
 
 \section{Los métodos numéricos}
-Otra de las rutinas mas complicadas son los métodos numéricos.
+Otras de las rutinas complicadas son los métodos numéricos.
 Para integrar la ecuación de Newton, se requiere saber la posición y la velocidad actual de cada una de las partículas del modelo y tener una manera de llamar a la función que se encarga de acumular las fuerzas.
 
 \subsection{El método de Euler}
-Básicamente se trata de tomar las ecuaciones~\ref{formulas:Euler} e implementarlas en el código (Listado~\ref{lst:euler_integrate}), aprovechando la gran ventaja de que el método de Euler puede integrar una partícula la vez.
+Básicamente se trata de tomar las ecuaciones~\eqref{formulas:Euler} e implementarlas en el código (Listado~\ref{lst:euler_integrate}), aprovechando la gran ventaja de que el método de Euler puede integrar una partícula la vez.
 
 \begin{listing}
 \inputminted[
@@ -257,11 +259,11 @@ Básicamente se trata de tomar las ecuaciones~\ref{formulas:Euler} e implementar
 \end{listing}
 
 \subsection{El método de Runge-Kutta}
-Aquí se explica el que fue probablemente el método numérico mas complicado de implementar, pues no tiene la ventaja de Euler de integrar cada partícula independientemente, así que necesita integrar todas juntas.
+Aquí se explica el que fue probablemente el método numérico más complicado de implementar, pues no tiene la ventaja de Euler de integrar cada partícula independientemente, así que necesita integrar todas juntas.
 Además, debe tener espacio para guardar los ponderadores del paso de integración de cada partícula.
 
-Para tener una idea clara de lo que que hace el código en el Listado~\ref{lst:rk4_integrate} conviene volver a ver las ecuaciones~\ref{ponderadores:RK4} y~\ref{formulas:RK4}.
-Lo largo del proceso hacen ver el Listado~\ref{lst:rk4_integrate} un poco mas complicado que lo que en realidad es.
+Para tener una idea clara de lo que que hace el código en el Listado~\ref{lst:rk4_integrate} conviene volver a ver las ecuaciones~\eqref{ponderadores:RK4} y~\eqref{formulas:RK4}.
+Lo largo del proceso hacen ver el Listado~\ref{lst:rk4_integrate} un poco más complicado que lo que en realidad es.
 
 \begin{mintedCode} %El codigo es muy largo, ocupo un ambiene no flotante
 \inputminted[
@@ -272,17 +274,17 @@ Lo largo del proceso hacen ver el Listado~\ref{lst:rk4_integrate} un poco mas co
   \label{lst:rk4_integrate}
 \end{mintedCode}
 
-El truco consiste en ocupar un conjunto de puntos, resortes y caras auxiliares, para con ellos evaluar la función fuerza que es necesaria para calcular los ponderadores del método de RK4 (Por eso estan presentes en el diagrama de la Figura~\ref{clases:fig}), después la rutina es muy parecida a la de Euler.
+El truco consiste en ocupar un conjunto de puntos, resortes y caras auxiliares, para con ellos evaluar la función fuerza que es necesaria para calcular los ponderadores del método de RK4 (Por eso están presentes en el diagrama de la Figura~\ref{clases:fig}), después la rutina es muy parecida a la de Euler.
 
 \section{El manejo de las colisiones}
-Como ya se ha dicho antes, el problema de las colisiones se resuelve en dos partes, primero la detección y luego la respuesta.
+Como ya se ha dicho antes, el problema de las colisiones se resuelve en dos partes: primero la detección y luego la respuesta.
 La forma de responder consiste básicamente en mover los objetos que se colisionan a un lugar donde ya no choquen y ajustar las velocidades como respuesta.
 
 \subsection{La rutina de las colisiones}
 La detección es llevada a cabo en dos funciones.
 Recordemos que nuestra tarea de detección se simplifica muchísimo por el hecho de que uno de los objetos, el objeto incidente es una esfera.
 Para saber si dicha esfera está en colisión con nuestro cuerpo flexible, lo que hacemos es probar si cualquiera de las partículas está dentro de la esfera; de ser así, empezamos a resolver la colisión entre la esfera y la partícula en cuestión. Después seguimos revisando el resto de las partículas.
-El Listado~\ref{lst:solveCollisionSphere} implementa algoritmo.
+El Listado~\ref{lst:solveCollisionSphere} implementa el algoritmo.
 
 \begin{listing}
 \inputminted[
@@ -306,12 +308,12 @@ Mover el punto fuera de la esfera es en realidad parte de la respuesta a la coli
   \label{lst:adjust_positions}
 \end{listing}
 
-Primero calcula el vector normal que va del centro de la esfera a la partícula.
-Luego, si la partícula no está fija, la mueve justo afuera de la esfera.
-Si la partícula estuviera fija, lo que hace es mover a la esfera fuera del ella.
+El Listado~\ref{lst:adjust_positions}, primero calcula el vector normal que va del centro de la esfera a la partícula.
+Luego, si la partícula no está fija, la mueve justo fuera de la esfera.
+Si la partícula estuviera fija, lo que hace es mover a la esfera fuera de ella.
 
 \subsection{La respuesta de la colisión}
-La mayor parte del trabajo se hizo en la función anterior, ahora que sabemos el vector normal untiario: $\vec{\textbf{n}}$ a la colisión, el Listado~\ref{lst:adjust_velocities} solo se encarga de seguir los pasos explicados en el Algoritmo~\ref{alg:elasmov}.
+La mayor parte del trabajo se hizo en la función anterior, ahora que sabemos el vector normal unitario: $\vec{\textbf{n}}$ a la colisión, el Listado~\ref{lst:adjust_velocities} solo se encarga de seguir los pasos explicados en el Algoritmo~\ref{alg:elasmov}.
 
 \begin{listing}
 \inputminted[
