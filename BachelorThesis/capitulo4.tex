@@ -10,13 +10,15 @@ Y en la última parte se hicieron dos tipos de pruebas para medir el desempeño 
 En esta primera parte presento el experimento y explico qué parámetros fijé y cuáles pueden ser cambiados por el usuario.
 
 \subsection{Características del modelo}
-Tal como se explicó en la seccion \ref{descripcion:experimento}, se modela un hexaedro regular, donde cinco de sus seis caras son rígidas y la cara superior o tapa es flexible: además, asumo que este hexaedro está relleno de gas.
-A la parte superior de la caja se le deja caer una esfera rígida.
-Un ejemplo del programa terminado se muestra en la figura~\ref{programa:portada}.
+Tal como se explicó en la Seccion \ref{descripcion:experimento}, se modela un hexaedro regular, donde cinco de sus seis caras son rígidas y la cara superior o tapa es flexible: además, asumo que este hexaedro está relleno de gas.
+En este sentido, el hexaedro completo o caja es el cuerpo neumático.
+Mientras que la cara superior o tela es el cuerpo flexible.
+Se le deja caer una esfera rígida, o pelota.
+Un ejemplo del programa terminado se muestra en la Figura~\ref{programa:portada}.
 \begin{figure}
  \centering
- \includegraphics[]{Img/modeloPortada}
- \caption[Ejemplo del programa en ejecución]{Un ejemplo del modelo.}
+ \includegraphics[width=0.85\textwidth]{Img/04/modeloPortada}
+ \caption[Ejemplo del programa en ejecución]{Una imagen del programa que implementa el modelo.}
  \label{programa:portada}
 \end{figure}
 
@@ -24,30 +26,16 @@ Un ejemplo del programa terminado se muestra en la figura~\ref{programa:portada}
 En una situación como la antes descrita hay muchísimas variables del modelo, sin embargo al momento de hacer la implementación en código decidí dejar fijas algunas de ellas, es decir que la única manera de cambiarlas es modificando en el código fuente y recompilando el programa por completo.
 Aquí está la lista de estas variables y su significado.
 
-Primero las  variables del número de partículas que conforman el cuerpo flexible.
+Las variables que se decidieron dejar fijas, y que por ende se convierten en constantes en el experimento son las siguientes:
 
-\begin{description}
- \item[LADO:] Número de partículas por lado del cuerpo flexible, y es la única variable independiente.
- \item[PARTICULAS:] Número total de partículas que forman el cuerpo flexible. Utilizamos $n^{2}$, en donde $n$ es LADO.
- \item[RESORTES:]Número de resortes que conectan el cuerpo flexible, es $2n(n - 1)$.
- \item[CUADROS:]Número total de caras que forman el cuerpo flexible, es igual a $(n - 1)^{2}$
-\end{description}
+\begin{itemize}
+ \item El número de partículas por lado de la tela.
+ \item Dimensiones (alto, ancho y largo) de la caja.
+ \item La masa total de la tela. Y por lo tanto, la masa de cada partícula es ésta cantidad dividida entre el número total de partículas.
+ \item El radio y la posición de la pelota.
+ \item El tamaño del paso en el tiempo $\Delta t$ que se usa para los métods numéricos de integración.
+\end{itemize}
 
-Las variables que sirven para hacer la proyección ortogonal y poner el tope de las coordenadas del mundo son las siguientes:
-\begin{description}
- \item[MUNDO:] Es el tope de las coordenadas del mundo.
- \item[FONDO:] Es el lugar donde se sitúa sobre el eje XZ, el fondo de la caja que forma el cuerpo flexible. Además de servir para otros cálculos dentro del programa, la única restricción es que su valor absoluto sea menor que MUNDO.
-\end{description}
-
-Una variable para integrar la ecuación de Newton 
-\begin{description}
- \item[DT:] Es el tamaño del paso en el tiempo por cada vez que se integra la ecuación de Newton. Es decir es lo que en la parte de métodos numéricos llamé $\Delta t$.
-\end{description}
-
-\begin{description}
- \item[M:] Una única constante física, la masa de cada una de las partículas.
-\end{description}
- 
 Los valores de estas constantes con las que se hizo este experimento están en la tabla~\ref{valores:constantes}.
 \begin{table}
 \ra{1.2}
@@ -56,17 +44,12 @@ Los valores de estas constantes con las que se hizo este experimento están en l
 \toprule
 Constante & Valor & Comentario\\ 
 \midrule
- LADO & 26 & Para que se vea mejor el modelo, se elige un número par\\
- PARTICULAS & 676 &  \\
- RESORTES & 1300 & \\
- CUADROS & 625 & \\ 
-\midrule
- MUNDO & 100 & La proyección va de $-MUNDO$ a $MUNDO$ en cada eje\\
- FONDO & -50.0 & \\ 
-\midrule 
- DT & 0.01 & \\ 
-\midrule
- M & 0.009 & El peso total del cuerpo flexible es $M \cdot PARTICULAS$ \\
+ Número de partículas & 22 & Para que se vea mejor el modelo, se elige un número par\\
+ Dimensiones caja & $0.75 \times 1.5 \times 1.5$ & Se forma una caja de tapas cuadradas \\
+ Masa tela & 10 & La masa de cada particula es entonces $\frac{10}{22^{2}}$ \\
+ Radio pelota & 0.25 &  \\
+ Posición pelota & $(0, 1.5, 0)$& Como el cuerpo neumatico esta centrado en el origen. La pelota esta justo arriba de él en el centro\\
+ $\Delta t$ & 0.0025 & Determinado experimentalmente \\
 \bottomrule
 \end{tabular}
 \caption[Tabla con los valores de las constantes durante el experimento]{Valor de las constantes del experimento}
@@ -74,54 +57,33 @@ Constante & Valor & Comentario\\
 \end{center}
 \end{table}
 
-\subsubsection{Variables del experimento}
-La variables del experimento pueden ser modificadas en tiempo de ejecución por medio del menú que muestra en la figura~\ref{programa:menu}.
-
-La primer categoría, \emph{Esfera}, se refiere al cuerpo rígido.
-En esta caso la esfera y la única variable que se puede modificar es su masa.
-
-La categoría de \emph{Integrador}, se refiere el método numérico usado para integrar la ecuación de Newton, sólo se implementaron dos métodos el de Euler y el de Runge Kutta.
-Dado que cambiar de método a mitad de la simulación generalmente lleva a inestabilidad numérica, cada que se cambia el método, todos los objetos regresan a sus posiciones iniciales.
-
-La categoría de variables físicas se refiere a los parámetros del cuerpo flexible que es posible cambiar.
-Se dividen en tres subcategorias una por cada fuerza que se acumula.
-
-La presión del \emph{gas}, se puede prender o apagar por medio del checkbox. 
-Además, se puede modular su magnitud variando el valor de la constante $k_{g}$, por medio del control.
-
-La de la \emph{gravedad}, que al igual que la anterior se puede prender o apagar con el control y también se puede modular variando el valor de la constante $g$.
-
-Por último la debida al \emph{resorte amortiguador}.
-Esta fuerza no se puede apagar, pero se puede variar por medio de la modificación de dos parámetros $k_{s}$, que, como ya se dijo, controla la rigidez del resorte y $k_{d}$ que controla el amortiguamiento o pérdida de energía debida al resorte.
-
-\subsubsection{Opciones de visualización}
-Hay otras opciones que se pueden modificar por medio del menú, que se refieren más a cómo se ve el modelo que a la física.
-Éstas se dividen en dos, las que controlan el render y las que controlan el flujo de la animación
-
-Dentro de las del flujo de la animación, sólo hay dos controles, el de \emph{Iniciar/Pausar}, que mantiene la escena congelada cuando está marcado y el botón de \emph{Reiniciar}, que devuelve a todos los objetos a su posición original.
-
-Dentro de la categoría de render, se encuentran los siguientes controles:
-
-El \emph{wireframe}, si el checkbox está activado, sólo se pintarán las líneas del modelo, así se pueden apreciar todas las partículas que lo componen.
-
-La \emph{luz}, dado que se utiliza una proyección ortogonal.
-La única fuente de profundidad viene de la luz y las sombras, Y el modelo contiene una única fuente de luz, localizada en $(0, k, 2k)$ en donde $k = MUNDO$.
-Con este control se puede prender o apagar esta fuente de luz.
-
-La \emph{caja} que dice si se va a pintar o no las caras sólidas de la caja.
-Las caras sólidas se pintan con un cierto valor de transparencia, para que se aprecie mejor cómo se deforma la parte de abajo de la tela o cuerpo flexible.
-
-Por último un par de controles que manejan el ángulo de rotación del modelo.
-Sólo se permite rotar sobre el eje $X$ o sobre el eje $Y$.
-
-Los valores de default de estas variables (el valor que tiene al iniciar la ejecución) son los que muestra la tabla~\ref{valores:variables}.
+\subsubsection{Variables físicas del experimento}
+La variables físicas del experimento pueden ser modificadas en tiempo de ejecución por medio del menú que muestra en la Figura~\ref{programa:menu}.
 
 \begin{figure}
  \centering
- \includegraphics[]{Img/menu}
+ \includegraphics[width=0.5\textwidth]{Img/04/menu}
  \caption[Menú de usuario del programa]{Menú de usuario.}
  \label{programa:menu}
 \end{figure}
+
+Para la pelota o esfera (\emph{\textenglish{Sphere}}) que se refiere al cuerpo rígido.
+la única variable que se puede modificar es su masa.
+
+Los parámetros del cuerpo flexible que es posible modificar se dividen en tres subcategorias una por cada fuerza que se acumula.
+
+La categoria del \emph{Gas}, al que se puede prender o apagar por medio del checkbox \emph{\textenglish{Pressure}}. 
+Además, se puede modular su magnitud variando el valor de la constante $k_{g}$, por medio del control.
+
+La de la \emph{\textenglish{Gravity}}, que al igual que la anterior se puede prender o apagar con el control  y también se puede modular variando el valor de la constante $g$.
+
+Por últim subcategoria es la debida al resorte amortiguador (\emph{\textenglish{Spring-Damper}}.)
+Esta fuerza no se puede apagar, pero se puede variar modificando dos parámetros $k_{s}$, que, como ya se dijo, controla la rigidez del resorte y $k_{d}$ que controla el amortiguamiento o pérdida de energía debida al resorte.
+
+Aunque no es propiamnete una opción de la física. El menú tambien permite elegir que método numérico usar para integrar.
+Las opciones disponibles son: \emph{Euler} y \emph{Runge-Kutta}.
+
+Los valores de default de estas variables (el valor que tiene al iniciar la ejecución) son los que muestra la Tabla~\ref{valores:variables}.
 
 \begin{table}
 \ra{1.2}
@@ -132,13 +94,13 @@ Los valores de default de estas variables (el valor que tiene al iniciar la ejec
 Parametro & Valor & Comentario\\
 \midrule
  Masa & 0.08 & Masa del cuerpo rígido \\
- Integrador & Runge Kutta & Método Numérico con el que se integra. \\
+ Integrador & Euler & Método Numérico con el que se integra. \\
  Gas & Activado & El programa empieza con la fuerza del gas prendida \\
- $k_g$ & 780 & Constante de presión del gas \\
+ $k_g$ & 17 & Constante de presión del gas \\
  Gravedad & Activada & La gravedad está activada \\
  $g$ & -10.0 & La gravedad es negativa (jala hacia abajo) \\
- $k_s$ & 1.0 & La fuerza de los resortes \\
- $k_d$ & 0.4 & El valor de damping \\
+ $k_s$ & 100 & La fuerza de los resortes \\
+ $k_d$ & 5 & El valor de damping \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -146,88 +108,166 @@ Parametro & Valor & Comentario\\
 \label{valores:variables}
 \end{table}
 
+\subsubsection{Opciones de control y visualización}
+Hay otras opciones que se pueden modificar por medio del menú, que se refieren más a como controlamos la animación y a como se ve el modelo que a la física.
+
+Dentro de las del flujo de la animación, sólo hay dos controles, el de \emph{\textenglish{Pause/Play}}, que puede detener (reanudar) la animación física (se sigue pudiendo mover la cámara).
+Y el botón de \emph{\textenglish{Reset}}, que devuelve a todos los objetos a su posición original.
+
+El botón de \emph{\textenglish{Drop}}, hace que la esfera se deje caer.
+
+Dentro de la categoría de \emph{\textenglish{Render}}, se encuentran las siguientes opciones:
+
+La primera opción \emph{\textenglish{solid}}, usa el modelo de iluminación de Phong (los materiales se obtiene de texturas) para dibujar todos los objetos en la escena.
+
+Y la segunda opción \emph{\textenglish{wireframe}}. 
+Que solo cambia la manera de dibujar el cuerpo neumático.
+Dibuja con lineas azules las orillas de la caja y dibuja en una escala de color entre amarillo y rojo, los resortes (como lineas) y las particulas (como puntos) que forman el cuepor flexible.
+El color asignado depende de la magnitud de la fuerza que actua sobre ellos.
+
+Finalmente, además del menú de usuario, hay opciones que solo se pueden modificar por medio del \textenglish{mouse} y del teclado.
+
+\begin{itemize}
+ \item Arrastar el mouse con el botón izquierdo presionado, permite modificar el ángulo de la camara. Se usa el modelo de \emph{\textenglish{trackball camera}}.
+ \item La rueda del mouse, cambia el \emph{\textenglish{zoom}} de la cámara.
+ \item Presionar la tecla `\emph{s}' en el teclado toma un \emph{\textenglish{screenshot}}. Las imágenes son guardadas en el folder \mintinline{cpp}{Screenshoots} (Que debe ser creado por el usuario) en el mismo folder donde esta el ejecutable.
+ \item Presionar \emph{Escape} en el teclado termina la ejecución del programa.
+ \item Presionar la tecla `\emph{m}' muesta/oculta el menú de usuario.
+ \item Presionar \emph{F11} cambia entre el modo de pantalla completa y de ventana.
+ \item La tecla `\emph{p}' es un atajo para el boton de \emph{\textenglish{Play/Pause}} de la animación.
+ \item La tecla `\emph{r}' es un atajo para el boton de \emph{\textenglish{Reset}} de la animación.
+\end{itemize}
+
 \subsection{Características del entorno de pruebas}
 
 \subsubsection{Software}
 
-El programa fue hecho en su mayor parte en lenguaje C, el compilador elegido fue gcc por tratarse de un compilador libre y por ser el que se instala en la mayoría de las distribuciones de GNU/Linux (la gran mayoría de este trabajo fue desarrollado bajo este sistema operativo).
-
-Sin embargo, al crear el menú de usuario fue necesario utilizar la biblioteca glui, que está escrita en objetos, por lo que al final se tuvo que compilar en C++, con el compilador g++.
+El programa fue desarollado en lenguaje C++ y los shaders que sirven para hacer el render fueron escritos en GLSL.
 
 Para poder compilar el código fuente de este programa es necesario tener un entorno de programación que contemple lo siguiente:
 
 \begin{itemize}
- \item Un compilador de C++
+ \item Un compilador de C++.
  \item La biblioteca OpenGL
- \item La biblioteca glut
- \item La biblioteca glui
+ \item La biblioteca glfw
+ \item La biblioteca Dear Imgui.
+ \item La biblioteca GLM
+ \item La biblioteca GLEW
+ \item La biblioteca GLM
+ \item La biblioteca FreeImage
+ \item La biblioteca Assimp
 \end{itemize}
 
-Todas éstas tienen alternativas libres, y además todas tienen la enorme ventaja de tener equivalentes en cualquier plataforma, por lo que si las bibliotecas están correctamente instaladas, debería de compilar el programa bajo cualquier sistema operativo.
-
-Se ha hecho la prueba en los entornos GNU/Linux y Windows XP (en este último con el IDE Dev-C++, con un compilador Mingw).
+Todas éstos requerimeintos son software libre (Mas detalles de esto en el Apéndice).
+Aunque este trabajo fue desarollado en su totalidad en un sistema operativo GNU/Linux, todos los requerimeintos tienen la enorme ventaja de estar disponibles en cualquier plataforma.
+Si las bibliotecas están correctamente instaladas, el programa y debe compilar y funcionar bajo cualquier sistema operativo.
 
 \subsection{Hardware}
-La mayoría de las pruebas fueron hechas en una estación de trabajo Sun Ultra 20, con las siguientes características.
+La mayoría de las pruebas fueron hechas en una laptop personal MSI GF65, con las siguientes características.
 
 \begin{itemize}
 \label{maquina:trabajo} 
- \item Procesador: Opteron 1214 2.2GHz
- \item Memoria: 2GB DDR2
- \item Tarjeta de Video: Nvidia FX3500
- \item Acerleración gráfica: driver de nVidia
- \item Sistema Operativo: Ubuntu 7.04 64bits (kernell 2.6.20-16)
+ \item Procesador: Intel Core i7-9750H CPU @ 2.60GHz $\times$ 12.
+ \item Memoria: 32GB DDR2.
+ \item Tarjeta de Video: Nvidia GeForce GTX 1660 Ti Mobile\footnote{Aunque la laptop tiene la tarjeta de video descrita, el programa es tan simple que de hecho puede ejecutarse en la tarjeta de video integrada del procesador Intel sin problemas (Ver Figura~\ref{programa:menu})}.
+ \item Sistema Operativo: Ubuntu 20.04 64bits.
 \end{itemize}
 
 Esto no quiere decir que este sea el hardware mínimo, sólo que la \emph{mayoría} de las pruebas se realiaron en este hardware.
-Sin embargo, se ha ejecutado con éxito en equipos mucho más convencionales (las características de estos equipos así como su desempeño al ejecutar el programa se muestran más a detalle en la última sección de este capítulo).
+Sin embargo, se ha ejecutado con éxito en equipos bastante accesibles. 
+Éste trabajo es de hecho una reedición, el trabajo original se desarollo usando una laptop convencional en el año 2008.
+Actualmente, éste programa debe poder ejecutarse en cualquier computadora personal, de escritorio o equipo movil sin problemas de capacidad del \emph{\textenglish{hardware}}.
+Hoy en día la única limitante (de existir) podría acaso ser el \emph{\textenglish{software}}.
 
-\section{Ejemplos de las características físicas del modelo}
-Para poner en evidencia ciertas características del modelo, se hicieron las siguientes pruebas sugeridas, la mayoría para probar la sensibilidad del programa ante la variacion de sus parámetros físicos.
+\section{Características físicas del modelo}
+Para poner en a prueba la fidelidad del modelo, se hicieron las siguientes pruebas.
+La mayoría para probar la sensibilidad del programa ante la variacion de sus parámetros físicos.
 
 \subsection{Probando la gravedad}
 La gravedad es la única fuerza que actúa tanto en el cuerpo flexible como en en el cuerpo rígido. Para entender mejor cómo afecta se sugieren las siguientes pruebas.
 
-Partiendo de los valores de \emph{\foreignlanguage{english}{default}}, se espera a que la tela se estabilice (figura \ref{programa:portada}).
-Ahora se \emph{aumenta} la gravedad a su valor más \emph{pequeño} (recordemos que hacer la gravedad más fuerte es hacerla más negativa), es decir, $g=$-12.0, se observa ahora como la gravedad es muy fuerte como para que la presión del gas infle la tela, por lo que queda colgando un poco.
+Partiendo de los valores de \emph{\foreignlanguage{english}{default}}, se espera a que la tela se estabilice (Figura~\ref{fig:testGEstable}).
+Ahora se \emph{aumenta} la gravedad a su valor más \emph{pequeño} (recordemos que hacer la gravedad más fuerte es hacerla más negativa), es decir, $g=-20$, se observa ahora como la gravedad es muy fuerte como para que la presión del gas infle la tela, por lo que queda colgando un poco.
 Las partículas que forman el cuerpo flexible son muy pesadas (son jaladas con más fuerza hacia abajo).
-Esta situación se muestra en la figura~\ref{grav:test1}. 
-Ahora se deja caer la pelota y se espera que se estabilice de nuevo el programa, la gravedad hace que la pelota y las partículas pesen más, sin embargo la fuerza del gas que no se ha tocado compensa de alguna manera y no deja que se hunda más la pelota.
+Esta situación se muestra en la Figura~\ref{fig:testGAumenta}. 
+Ahora se deja caer la pelota y se espera que se estabilice de nuevo el programa, (Figura~\ref{fig:testGCae}) la gravedad hace que la pelota y las partículas pesen más, sin embargo la fuerza del gas que no se ha tocado compensa de alguna manera y no deja que se hunda más la pelota.
 Con la pelota estable sobre la tela, apagué la fuerza del gas.
-Al apagar la fuerza que equilibraba la gravedad todo se va hacia abajo, por la gravedad, pero como además esta fuerza es grande, la rigidez del resorte es poca para evitar un efecto de súper elongación como el que se ve en la figura~\ref{grav:test2}.
+Al apagar la fuerza que equilibraba la gravedad todo se va hacia abajo, por la gravedad, pero como además esta fuerza es grande, la rigidez del resorte es poca para evitar un efecto de súper elongación como el que se ve en la Figura~\ref{fig:testGNoPres}, donde la pelota es detenida por el piso.
 
 \begin{figure}
  \centering
- \includegraphics[]{Img/modGra1}
- \caption[Ejecución con $g=$-12.0]{La gravedad aumenta a $g=$-12.0.}
- \label{grav:test1}
-\end{figure}
-
-\begin{figure}
- \centering
- \includegraphics[]{Img/modGra2}
- \caption[Ejecución con fuerza de gravedad grande y sin presión]{La gravedad es grande y se apaga el gas.}
- \label{grav:test2}
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{Img/04/gravity1}
+    \caption{La tela se estabiliza con la gravedad y la presion.}
+    \label{fig:testGEstable}
+  \end{subfigure}
+~
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{Img/04/gravity2}
+    \caption{La gravedad aumenta a $g=-20$}
+    \label{fig:testGAumenta}
+  \end{subfigure}
+\\
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{Img/04/gravity3}
+    \caption{La pelota se deja caer.}
+    \label{fig:testGCae}
+  \end{subfigure}
+~
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{Img/04/gravity4}
+    \caption{Se apaga la fuerza de presión}
+    \label{fig:testGNoPres}
+  \end{subfigure}
+ \caption[Experimento: Fuerza de gravedad]{Probando la fuerza de gravedad} 
+ \label{fig:testGravity}
 \end{figure}
 
 Reinicie la animación y vuelva a los valores de \emph{\foreignlanguage{english}{default}}.
-De nuevo espere a que se estabilice la tela ahora disminuya la gravedad a su máximo valor posible, es decir una gravedad positiva: $g=$1.0.
-Ahora verá que la tela se va más hacia arriba, como si se inflara más el cuerpo flexible, esto se debe a que ahora la gravedad no se opone a la presión del gas, sino mas bien le favorece, por lo que el cuerpo flexible, es jalado hacia arriba aún más, como se ve en la figura~\ref{grav:test3}.
-Ahora deje caer la pelota, como la gravedad es positiva y pequeña (su valor absoluto en una décima parte del valor normal) la pelota \emph{sube lentamente}, y se aleja del cuerpo flexible.
+De nuevo espere a que se estabilice la tela ahora disminuya la gravedad a su máximo valor posible, es decir una gravedad positiva: $g=1$.
+Ahora verá que la tela se va más hacia arriba, como si se inflara más el cuerpo flexible, esto se debe a que ahora la gravedad no se opone a la presión del gas, sino mas bien le favorece, por lo que el cuerpo flexible, es jalado hacia arriba aún más, como se ve en la Figura~\ref{fig:testGpos1}.
+Ahora deje caer la pelota, como la gravedad es positiva y pequeña (su valor absoluto en una décima parte del valor normal) la pelota \emph{sube lentamente}, y se aleja del cuerpo flexible (Figura~\ref{fig:testGpos2}).
 La constante de gravedad influencía la velocidad de caída de los cuerpos.
 
 \begin{figure}
  \centering
- \includegraphics[]{Img/modGra3}
- \caption[Ejecución con la fuerza de gravedad apagada]{La gravedad es apagada.}
- \label{grav:test3}
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{Img/04/positiveGravity1}
+    \caption{La presion y la gravedad jalan la tela hacia arriba.}
+    \label{fig:testGpos1}
+  \end{subfigure}
+~
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{Img/04/positiveGravity2}
+    \caption{La pelota también es jalada hacia arriba}
+    \label{fig:testGpos2}
+  \end{subfigure}
+ \caption[Experimento: $g > 0$]{La fuerza de gravedad cambia de signo} 
+ \label{fig:positiveGravity}
 \end{figure}
 
 Por último vamos a reiniciar la animación y partiendo de los valores de \emph{\foreignlanguage{english}{default}} de los parámetros, se apaga la gravedad. 
 Este comportamiento equivale a hacer $g=0$ con la diferencia de que se hacen menos cálculos, ahora vemos cómo de nuevo la tela se mueve hacia arriba, cómo la gravedad se oponía a la fuerza del gas y ya no está, el gas empuja la tela aún más hacia arriba.
 Si en esta situación se deja caer la pelota no pasará nada, debido a que la caída de la pelota \emph{depende de la gravedad}, y al no haber, simplemente no hay caída.
 
-Si se apaga la gravedad después de dejar caer la esfera, ésta es empujada afuera del cuerpo flexible por un impulso.
+Si primero se deja caer la pelota sobre la tela, y una vez que esta se estabiliza se apaga la gravedad, la pelota es empujada afuera del cuerpo flexible por un impulso. Ver la Figura~\ref{fig:noGravity}.
+
+\begin{figure}
+ \centering
+  \begin{subfigure}[b]{0.3\textwidth}
+    \includegraphics[width=\textwidth]{Img/04/gravityOff1}
+  \end{subfigure}
+~
+  \begin{subfigure}[b]{0.3\textwidth}
+    \includegraphics[width=\textwidth]{Img/04/gravityOff2}
+  \end{subfigure}
+~
+  \begin{subfigure}[b]{0.3\textwidth}
+    \includegraphics[width=\textwidth]{Img/04/gravityOff3}
+  \end{subfigure}
+ \caption[Experimento: Apagar la fuerza de gravedad]{La fuerza de gravedad es apagada después de que la pelota descansa sobre la tela.} 
+ \label{fig:noGravity}
+\end{figure}
 
 \subsection{Probando la fuerza del gas}
 Ahora se harán pruebas sobre la fuerza del gas. La fuerza del gas, por el diseño de nuestro experimento, se opone a la fuerza de gravedad, y actúa sólo sobre el cuerpo flexible, sin embargo tiene cierto efecto sobre la velocidad de las partículas del cuerpo flexible, que a su vez tienen cierto efecto sobre el cuerpo \emph{rígido} al momento de la colisión.
