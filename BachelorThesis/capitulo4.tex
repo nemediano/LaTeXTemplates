@@ -186,7 +186,7 @@ La mayoría para probar la sensibilidad del programa ante la variacion de sus pa
 \subsection{Probando la gravedad}
 La gravedad es la única fuerza que actúa tanto en el cuerpo flexible como en en el cuerpo rígido. Para entender mejor cómo afecta se sugieren las siguientes pruebas.
 
-Partiendo de los valores de \emph{\foreignlanguage{english}{default}}, se espera a que la tela se estabilice (Figura~\ref{fig:testGEstable}).
+Partiendo de los valores de \emph{\textenglish{default}}, se espera a que la tela se estabilice (Figura~\ref{fig:testGEstable}).
 Ahora se \emph{aumenta} la gravedad a su valor más \emph{pequeño} (recordemos que hacer la gravedad más fuerte es hacerla más negativa), es decir, $g=-20$, se observa ahora como la gravedad es muy fuerte como para que la presión del gas infle la tela, por lo que queda colgando un poco.
 Las partículas que forman el cuerpo flexible son muy pesadas (son jaladas con más fuerza hacia abajo).
 Esta situación se muestra en la Figura~\ref{fig:testGAumenta}. 
@@ -223,7 +223,7 @@ Al apagar la fuerza que equilibraba la gravedad todo se va hacia abajo, por la g
  \label{fig:testGravity}
 \end{figure}
 
-Reinicie la animación y vuelva a los valores de \emph{\foreignlanguage{english}{default}}.
+Reinicie la animación y vuelva a los valores de \emph{\textenglish{default}}.
 De nuevo espere a que se estabilice la tela ahora disminuya la gravedad a su máximo valor posible, es decir una gravedad positiva: $g=1$.
 Ahora verá que la tela se va más hacia arriba, como si se inflara más el cuerpo flexible, esto se debe a que ahora la gravedad no se opone a la presión del gas, sino mas bien le favorece, por lo que el cuerpo flexible, es jalado hacia arriba aún más, como se ve en la Figura~\ref{fig:testGpos1}.
 Ahora deje caer la pelota, como la gravedad es positiva y pequeña (su valor absoluto en una décima parte del valor normal) la pelota \emph{sube lentamente}, y se aleja del cuerpo flexible (Figura~\ref{fig:testGpos2}).
@@ -246,7 +246,7 @@ La constante de gravedad influencía la velocidad de caída de los cuerpos.
  \label{fig:positiveGravity}
 \end{figure}
 
-Por último vamos a reiniciar la animación y partiendo de los valores de \emph{\foreignlanguage{english}{default}} de los parámetros, se apaga la gravedad. 
+Por último vamos a reiniciar la animación y partiendo de los valores de \emph{\textenglish{default}} de los parámetros, se apaga la gravedad. 
 Este comportamiento equivale a hacer $g=0$ con la diferencia de que se hacen menos cálculos, ahora vemos cómo de nuevo la tela se mueve hacia arriba, cómo la gravedad se oponía a la fuerza del gas y ya no está, el gas empuja la tela aún más hacia arriba.
 Si en esta situación se deja caer la pelota no pasará nada, debido a que la caída de la pelota \emph{depende de la gravedad}, y al no haber, simplemente no hay caída.
 
@@ -270,98 +270,134 @@ Si primero se deja caer la pelota sobre la tela, y una vez que esta se estabiliz
 \end{figure}
 
 \subsection{Probando la fuerza del gas}
-Ahora se harán pruebas sobre la fuerza del gas. La fuerza del gas, por el diseño de nuestro experimento, se opone a la fuerza de gravedad, y actúa sólo sobre el cuerpo flexible, sin embargo tiene cierto efecto sobre la velocidad de las partículas del cuerpo flexible, que a su vez tienen cierto efecto sobre el cuerpo \emph{rígido} al momento de la colisión.
+Ahora se harán pruebas sobre la fuerza del gas. La fuerza del gas, por el diseño de nuestro experimento, se opone a la fuerza de gravedad, y actúa sólo sobre el cuerpo flexible.
+Sin embargo, tiene cierto efecto sobre la velocidad de las partículas del cuerpo flexible, que a su vez tienen cierto efecto sobre el cuerpo \emph{rígido} cuando hay una colisión.
 
-Inicie el programa con los valores de \emph{\foreignlanguage{english}{default}}, ahora apague la fuerza del gas y espere a que se estabilice el modelo, como se ve el la figura~\ref{pres:test1}.
+Inicie el programa con los valores de \emph{\textenglish{default}}, ahora apague la fuerza del gas y espere a que se estabilice el modelo, como se ve el la Figura~\ref{pres:test1}.
 Como no hay fuerza del gas, la tela o cuerpo flexible cuelga agarrada de las orillas de la caja.
-Ahora deje caer la pelota sobre el cuerpo flexible y espere a que se estabilice la animación, justo como se ve en la figura~\ref{pres:test2}. 
-Prenda la fuerza del gas y observe como la pelota es lanzada hacia arriba súbitamente como se ve en la figura~\ref{pres:test3}.
+Ahora deje caer la pelota sobre el cuerpo flexible y espere a que se estabilice la animación, justo como se ve en la Figura~\ref{pres:test2}. 
+Prenda la fuerza del gas y observe como la pelota es lanzada hacia arriba súbitamente como se ve en las Figuras~\ref{pres:test3} y~\ref{pres:test4}.
 
 \begin{figure}
  \centering
- \includegraphics[]{Img/modPres1}
- \caption[Ejecución con la fuerza del gas apagada]{Fuerza del gas apagada.}
- \label{pres:test1}
-\end{figure}
-
-\begin{figure}
- \centering
- \includegraphics[]{Img/modPres2}
- \caption[Ejecución con la esfera cayendo en ausencia de fuerza del gas]{La pelota cae mientras está apagado el gas.}
- \label{pres:test2}
-\end{figure}
-
-\begin{figure}
- \centering
- \includegraphics[]{Img/modPres3}
- \caption[Ejecución con la esfera lanzada por la fuerza del gas]{La pelota es lanzada por la fuerza del gas.}
- \label{pres:test3}
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{Img/04/modPress1}
+    \caption{Fuerza del gas apagada}
+    \label{pres:test1}
+  \end{subfigure}
+~
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{Img/04/modPress2}
+    \caption{La pelota cae mientras está apagado el gas.}
+    \label{pres:test2}
+  \end{subfigure}
+\\
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{Img/04/modPress3}
+    \caption{La fuerza del gas es encendida.}
+    \label{pres:test3}
+  \end{subfigure}
+~
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{Img/04/modPress4}
+    \caption{La pelota es lanzada por la fuerza del gas.}
+    \label{pres:test4}
+  \end{subfigure}
+ \caption[Experimento: Fuerza del gas - cuerpo rígido]{La fuerza del gas interactua con el cuerpo rígido.} 
+ \label{pres:test}
 \end{figure}
 
 Otra prueba es ver los efectos de la variación de la constante $k_g$.
-Inicie la animación con los valores de \emph{\foreignlanguage{english}{default}} y haga la constante $k_g$ pequeña, por ejemplo $k_g =$ 350.0; verá cómo el gas no es lo suficientemente fuerte para inflar el cuerpo flexible.
+Inicie la animación con los valores de \emph{\textenglish{default}} y haga la constante $k_g$ pequeña, por ejemplo $k_g =11$; verá cómo el gas no es lo suficientemente fuerte para inflar el cuerpo flexible.
 Ahora aumente poco a poco la constante $k_g$ y observe cómo se infla cada vez más el cuerpo flexible.
-En la figura~\ref{pres:test4} se ilustran estas situaciones para diferentes valores en aumento de la constante $k_g$.
+En la Figura~\ref{pres:testVar} se ilustran estas situaciones para diferentes valores en aumento de la constante $k_g$.
 
 \begin{figure}
  \centering
- \includegraphics[]{Img/modPres4}
- \caption[Ejecución con diferentes valores de la constante de gas]{Variando la fuerza del gas: $k_g=$350.0 (arriba), $k_g=$730.0 (centro), $k_g=$970.0 (abajo)}
- \label{pres:test4}
+  \begin{subfigure}[b]{0.30\textwidth}
+    \includegraphics[width=\textwidth]{Img/04/varPress1}
+    \caption{$k_g=11$.}
+  \end{subfigure}
+~
+  \begin{subfigure}[b]{0.30\textwidth}
+    \includegraphics[width=\textwidth]{Img/04/varPress2}
+    \caption{$k_g=17$.}
+  \end{subfigure}
+~
+  \begin{subfigure}[b]{0.30\textwidth}
+    \includegraphics[width=\textwidth]{Img/04/varPress3}
+    \caption{$k_g=25$.}
+  \end{subfigure}
+ \caption[Experimento: Variar la fuerza del gas]{El parámetro $k_g$ cambia la fuerza del gas.} 
+ \label{pres:testVar}
 \end{figure}
 
 \subsection{Probando los resortes amortiguadores}
 La siguientes pruebas sirven para mostrar cómo funcionan los resortes amortiguadores.
-Primero vamos a hacer una prueba con la constante de \emph{\foreignlanguage{english}{damping}} $k_d$.
+Primero vamos a hacer una prueba con la constante de \emph{\textenglish{damping}} $k_d$.
 Como ya se dijo, el damping es una forma de perder energía del sistema y, por lo tanto, de eventualmente estabilizarse.
-Iniciemos la animación con los valores de \emph{\foreignlanguage{english}{default}} y hagamos la constante $k_d=0$, es decir quitemos todo el \emph{\foreignlanguage{english}{damping}}.
+Iniciemos la animación con los valores de \emph{\textenglish{default}} y hagamos la constante $k_d=0$, es decir quitemos todo el \emph{\textenglish{damping}}.
 Vemos que la tela empieza a oscilar rápidamente como consecuencia del gas.
 Ahora quitemos también el gas y esperemos un momento; veremos como la tela oscila sin detenerse ni estabilizarse en ningún momento, es cierto que cada vez oscila menos, pero ciertamente tardará mucho en detenerse (o nunca se detendrá).
 
-En la figura~\ref{res:test1}, podemos ver diferentes oscilaciones sin control por falta de un amortiguador.
-Como ya se había dicho, el amortiguador agrega realismo (en la total ausencia de \emph{\foreignlanguage{english}{damping}}, el cuerpo flexible se ve poco real). La contra parte es que a mayor \emph{\foreignlanguage{english}{damping}}, también hay menos estabilidad numérica, por lo que el modelo es sumamente sensible al aumento en este parámetro.
-
-Podemos ir aumentando el valor de $k_d$ poco a poco y ver cómo el modelo se vuelve inestable, podemos por ejemplo poner el máximo posible $k_d=$0.6 y reiniciar la animación, esperar a que se estabilice y apagar el gas, el modelo explota (ver figura~\ref{res:test4}).
-
-Ahora analicemos la constante de rigidez $k_s$.
-Esta constante hace a los resortes más poderosos, por lo que en general hace que las partículas que están unidas por ellos, se separen menos, es decir hace más estable el cuerpo flexible en general, además de prevenir el efecto de super elongación.
-
-Iniciamos la animación con los valores de default y pongamos la constante del resorte $k_s$ a su máximo valor.
-Ahora apaguemos el gas y vemos como la caída de la tela es menor, sin embargo al apagar y prender varias veces el gas también nos damos cuenta de que el cuerpo flexible parece oscilar más, como consecuencia de que los resortes en general jalan más fuerte, tanto hacia arriba como hacia abajo.
-
-Ahora con la constante $k_s$ en el máximo y el gas prendido, vayamos poco a poco subiendo la presión del gas, aumentando $k_g$ hasta su máximo $k_g=$2000.0. 
-Podemos ver cómo aun llegando al máximo de $k_g$, el cuerpo flexible se expande poco; esperemos a que se estabilice, como se ve en la figura~\ref{res:test5}. 
-Ahora que tenemos el modelo estable y con ambas constantes $k_s$ y $k_g$ al máximo, poco a poco vayamos haciendo $k_s$ más pequeña y podremos apreciar como el cuerpo parece inflarse más (la resistencia de la membrana que lo mantiene unido es menor), como se ve en la figura~\ref{res:test6}, hasta llegar al momento donde explota ($k_s$ = 0.0).
+En la Figura~\ref{res:test1}, podemos ver diferentes oscilaciones sin control por falta de un amortiguador.
+Como ya se había dicho, el amortiguador agrega realismo (en la total ausencia de \emph{\textenglish{damping}}, el cuerpo flexible se ve poco real). La contra parte es que a mayor \emph{\textenglish{damping}}, también hay menos estabilidad numérica, por lo que el modelo es sumamente sensible al aumento en este parámetro.
 
 \begin{figure}
  \centering
- \includegraphics[]{Img/modRes1}
- \caption[Ejecución sin fuerza de amortiguamiento]{Oscilación sin control: $k_d$=0.0}
+  \begin{subfigure}[b]{0.30\textwidth}
+    \includegraphics[width=\textwidth]{Img/04/noDamp1}
+  \end{subfigure}
+~
+  \begin{subfigure}[b]{0.30\textwidth}
+    \includegraphics[width=\textwidth]{Img/04/noDamp2}
+  \end{subfigure}
+~
+  \begin{subfigure}[b]{0.30\textwidth}
+    \includegraphics[width=\textwidth]{Img/04/noDamp3}
+  \end{subfigure}
+ \caption[Experimento: Quitar la fuerza del amortiguador]{Oscilación sin control: $k_d=0.0$} 
  \label{res:test1}
 \end{figure}
 
+Podemos ir aumentando el valor de $k_d$ poco a poco y ver cómo el modelo se vuelve inestable. 
+Si se pone el máximo posible $k_d=7$ y se reinicia la animación, el modelo explota (ver Figura~\ref{res:test4}).
+
 \begin{figure}
  \centering
- \includegraphics[]{Img/modRes4}
+ \includegraphics[width=0.85\textwidth]{Img/04/maxDamp}
  \caption[Explosión por inestabilidad numérica]{La animación explota por inestabilidad numérica}
  \label{res:test4}
 \end{figure}
 
-\begin{figure}
- \centering
- \includegraphics[]{Img/modRes5}
- \caption[Ejecución con fuerza del gas y rigidez al máximo]{El gas está al máximo $k_g=$2000.0 al igual que la rigidez de los resortes $k_s=$2.0}
- \label{res:test5}
-\end{figure}
+Ahora analicemos la constante de rigidez $k_s$.
+Esta constante hace a los resortes más poderosos, por lo que en general hace que las partículas que están unidas por ellos, se separen menos, es decir hace más estable el cuerpo flexible en general, además de prevenir el efecto de super elongación.
+
+Iniciamos la animación con los valores de default y pongamos la constante del resorte $k_s=200$ es decir a su máximo valor.
+Ahora apaguemos el gas y vemos como la caída de la tela es menor, sin embargo al apagar y prender varias veces el gas también nos damos cuenta de que el cuerpo flexible parece oscilar más, como consecuencia de que los resortes en general jalan más fuerte, tanto hacia arriba como hacia abajo.
+
+Ahora con la constante $k_g=17$, vayamos poco a poco subiendo la presión del gas. 
+Podemos ver cómo aun con $k_g=17$, si $k_s=150$ el cuerpo flexible se expande poco; esperemos a que se estabilice, como se ve en la Figura~\ref{fig:maxRes1}. 
+Ahora que tenemos el modelo estable y con $k_s$ máximo, poco a poco vayamos haciendo $k_s$ más pequeña y podremos apreciar como el cuerpo parece inflarse más (la resistencia de la membrana que lo mantiene unido es menor), como se ve en la Figura~\ref{fig:maxRes2}, hasta llegar al momento donde explota ($k_s$ = 0.0).
 
 \begin{figure}
  \centering
- \includegraphics[]{Img/modRes6}
- \caption[Ejecución con fuerza del gas y rigidez pequeña]{El cuerpo flexible se infla como consecuencia del gas la máximo y $k_s$ pequeña}
- \label{res:test6}
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{Img/04/maxRes1}
+    \caption{Rigidez del resorte al máximo $k_s=150$}
+    \label{fig:maxRes1}
+  \end{subfigure}
+~
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{Img/04/maxRes2}
+    \caption{La rigidez disminuye: $k_s=30$.}
+    \label{fig:maxRes2}
+  \end{subfigure}
+ \caption[Experimento: Fuerza del resorte]{La fuerza del gas es constante a $k_g=17$ y variamos $k_s$} 
+ \label{fig:maxRes}
 \end{figure}
 
-\section{Presentación de resultados}
+\section{Análisis del desempeño}
 
 Una manera de medir la eficiencia tanto de la implementación como del modelo es ver cuánto se tarda en hacer los cálculos el programa antes de pintar un frame. 
 Esta medida de rendimiento es calculada comúnmente en las simulaciones gráficas y por ello me decidí a implementarla.
@@ -373,7 +409,7 @@ En la segunda parte se mantienen constantes los cálculos en el programa y se ej
 
 \subsection{Desempeño del programa}
 
-La medida mas comúnmente usada es el número de cuadros que la aplicación pinta en un segundo o fps (de abreviar en inglés \emph{\foreignlanguage{english}{frames per second}}).
+La medida mas comúnmente usada es el número de cuadros que la aplicación pinta en un segundo o fps (de abreviar en inglés \emph{\textenglish{frames per second}}).
 La rutina que calcula los fps se implementó con el siguiente código dentro de la función con el registro de callback idle.
 
 \begin{verbatim}
@@ -397,13 +433,13 @@ Las variantes consideradas son las siguientes:
  \item[Hay colisiones:]la rutina de detección de colisiones siempre es ejecutada, sin embargo sólo en caso de que se detecte una colisión se llama a la rutina de respuesta de las colisiones.
  \item[Método Numérico:]el programa ejecuta uno de dos métodos numéricos para calcular el estado siguiente de la animación, puede ser por Euler o por Runge Kutta, de donde este último requiere de casi cuatro veces mas cálculos.
  \item[Fuerza del gas:]calcular la fuerza del gas requiere de hacer cálculos sobre el área y el volumen del cuerpo flexible, cuando esta fuerza está apagada, los cálculos se omiten.
- \item[Opciones de \emph{\foreignlanguage{english}{render}}:]las opciones del \emph{\foreignlanguage{english}{render}} hacen que se tengan que hacer cálculos de la iluminación y dar color a los objetos con base a dichos cálculos.
+ \item[Opciones de \emph{\textenglish{render}}:]las opciones del \emph{\textenglish{render}} hacen que se tengan que hacer cálculos de la iluminación y dar color a los objetos con base a dichos cálculos.
 \end{description}
 
 La nomenclatura de la prueba usando estas variables se especifica en el cuadro~\ref{nomenclatura:prueba}.
 
 Cada una de las variantes arriba mencionadas puede tener dos valores.
-El \emph{\foreignlanguage{english}{render}} puede tener muchos valores pero para hacer las pruebas sólo voy a considerar dos: prendido, cuando se dibujan todos los cuerpos en estado sólido con iluminación y apagado, cuando se dibuja en wireframe sin luz y no se dibuja la caja del cuerpo flexible.
+El \emph{\textenglish{render}} puede tener muchos valores pero para hacer las pruebas sólo voy a considerar dos: prendido, cuando se dibujan todos los cuerpos en estado sólido con iluminación y apagado, cuando se dibuja en wireframe sin luz y no se dibuja la caja del cuerpo flexible.
 
 \begin{table}
 \ra{1.2}
@@ -485,7 +521,7 @@ La última prueba consistió en hacer constante la ejecución del programa y ver
 Para esta  prueba se ejecutó el programa en diferentes ambientes.
 En cada ambiente se consideran importantes sólo las siguientes características: la memoria principal, el sistema operativo, el procesador, la arquitectura y si hay o no memoria de vídeo.
 
-La ejecución del programa se hizo de una manera típica, lo que haciendo una equivalencia con la prueba anterior es que esté en marcha la animación, que haya colisiones con el método de Runge Kutta, que haya fuerza del gas y que el \emph{\foreignlanguage{english}{render}} se haga completo.
+La ejecución del programa se hizo de una manera típica, lo que haciendo una equivalencia con la prueba anterior es que esté en marcha la animación, que haya colisiones con el método de Runge Kutta, que haya fuerza del gas y que el \emph{\textenglish{render}} se haga completo.
 También se hizo la ejecución con las siguientes características mínimas: método de Euler y sin fuerza de gas.
 De ambas pruebas se miden los fps.
 
