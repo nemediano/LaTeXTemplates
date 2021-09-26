@@ -62,7 +62,7 @@ La variables físicas del experimento pueden ser modificadas en tiempo de ejecuc
 
 \begin{figure}
  \centering
- \includegraphics[width=0.5\textwidth]{Img/04/menu}
+ \includegraphics[width=0.3\textwidth]{Img/04/menu}
  \caption[Menú de usuario del programa]{Menú de usuario.}
  \label{programa:menu}
 \end{figure}
@@ -94,7 +94,7 @@ Los valores de default de estas variables (el valor que tiene al iniciar la ejec
 Parametro & Valor & Comentario\\
 \midrule
  Masa & 0.08 & Masa del cuerpo rígido \\
- Integrador & Euler & Método Numérico con el que se integra. \\
+ Integrador & Runge-Kutta & Método Numérico con el que se integra. \\
  Gas & Activado & El programa empieza con la fuerza del gas prendida \\
  $k_g$ & 17 & Constante de presión del gas \\
  Gravedad & Activada & La gravedad está activada \\
@@ -169,7 +169,7 @@ La mayoría de las pruebas fueron hechas en una laptop personal MSI GF65, con la
 \label{maquina:trabajo} 
  \item Procesador: Intel Core i7-9750H CPU @ 2.60GHz $\times$ 12.
  \item Memoria: 32GB DDR2.
- \item Tarjeta de Video: Nvidia GeForce GTX 1660 Ti Mobile\footnote{Aunque la laptop tiene la tarjeta de video descrita, el programa es tan simple que de hecho puede ejecutarse en la tarjeta de video integrada del procesador Intel sin problemas (Ver Figura~\ref{programa:menu})}.
+ \item Tarjeta de Video: Nvidia GeForce GTX 1660 Ti Mobile\footnote{Aunque la laptop tiene la tarjeta de video descrita, el programa es tan simple que de hecho puede ejecutarse en la tarjeta de video integrada del procesador Intel sin problemas.}
  \item Sistema Operativo: Ubuntu 20.04 64bits.
 \end{itemize}
 
@@ -399,159 +399,96 @@ Ahora que tenemos el modelo estable y con $k_s$ máximo, poco a poco vayamos hac
 
 \section{Análisis del desempeño}
 
-Una manera de medir la eficiencia tanto de la implementación como del modelo es ver cuánto se tarda en hacer los cálculos el programa antes de pintar un frame. 
-Esta medida de rendimiento es calculada comúnmente en las simulaciones gráficas y por ello me decidí a implementarla.
-Como ya se dijo, esto es dependiente del hardware, así que aquí presento dos tipos de análisis.
+Una de las métricas mas usadas para medir el desempeño de un programa gráfico es el número de veces que se acyualiza el frame buffer en un segundo.
+Está medida es conocida como \emph{fps} que es la abreviatura en ingles de  \emph{\textenglish{frames per second}}.
+En general, es aceptado que para que una aplicación gráfica se considera en tiempo real (como en un videojuego) se debe de alcanzar al menos 60 fps.
 
-En la primera parte, se deja como constante el hardware, hago las pruebas en la misma computadora y se varían los cálculos que se hacen en la ejecución del programa.
+El programa es tan simple que aun en una tarjeta de video integrada en el CPU alcanza alrededor de 120 fps~\footnote{De hecho, cuando se ejecuta el programa usando la tarjeta de video Nvidia, el driver gráfico \emph{alenta} el programa para sincronizarse con la tasa de refresco del monitor. Es decir, al darse cuenta de que el programa produce frames mas rápido de lo que los puede mostrar el hardware; hace el programa mas lento para no desperdiciar recursos. Una tecnología conocida como \emph{\textenglish{vsync}}}
+Por los tanto, aunque esta medida es calculada (Figura~\ref{programa:menu}) en realidad nos dice muy poco del desempeño del programa.
 
-En la segunda parte se mantienen constantes los cálculos en el programa y se ejecuta en varios ambientes de pruebas (diferentes máquinas y distintos sistemas operativos).
+Por esta razon, decidí utilizar el tiempo del proceso del CPU (medido en milisegundos) para hacer el analisis siguiente.
 
 \subsection{Desempeño del programa}
 
-La medida mas comúnmente usada es el número de cuadros que la aplicación pinta en un segundo o fps (de abreviar en inglés \emph{\textenglish{frames per second}}).
-La rutina que calcula los fps se implementó con el siguiente código dentro de la función con el registro de callback idle.
+Vamos a medir el tiempo que el CPU tarda en hacer todos los calculos para producir un frame.
+Vamos tambien a cronometrar el tiempo que toma procesar varias etapas del programa.
+Tomando la primera medida como base, vamos a calcular la proporción del tiempo que es usado en cada etapa.
 
-\begin{verbatim}
-frame++;
-time = glutGet(GLUT_ELAPSED_TIME);
-if (time - timebase > 1000) {
-  fps = frame * 1000.0 / (time - timebase);
-  timebase = time;
-  frame = 0;
-}\end{verbatim}
-
-En donde la variable global \verb|frame|, ya fue inicializada la primera vez en ceros.
-Esta rutina mide los frames por segundo, que después son desplegados en la parte superior izquierda de la pantalla.
-
-Estas pruebas fueron realizadas en la máquina ya descrita antes en la sección~\ref{maquina:trabajo}.
-
-Las variantes consideradas son las siguientes:
-
+Decidí cronometrar las siguientes etapas:
 \begin{description}
- \item[Estado de la animación:]la animación puede estar en pausa o en movimiento, cuando está en pausa, se pueden cambiar la opciones de render y de la rotación de la cámara, pero el programa deja de hacer los cálculos del método numérico y por ende de la acumulación de fuerzas.
- \item[Hay colisiones:]la rutina de detección de colisiones siempre es ejecutada, sin embargo sólo en caso de que se detecte una colisión se llama a la rutina de respuesta de las colisiones.
- \item[Método Numérico:]el programa ejecuta uno de dos métodos numéricos para calcular el estado siguiente de la animación, puede ser por Euler o por Runge Kutta, de donde este último requiere de casi cuatro veces mas cálculos.
- \item[Fuerza del gas:]calcular la fuerza del gas requiere de hacer cálculos sobre el área y el volumen del cuerpo flexible, cuando esta fuerza está apagada, los cálculos se omiten.
- \item[Opciones de \emph{\textenglish{render}}:]las opciones del \emph{\textenglish{render}} hacen que se tengan que hacer cálculos de la iluminación y dar color a los objetos con base a dichos cálculos.
+ \item[Tiempo entre frames:] La medida base. Este es el intervalo  de tiempo que toma hacer una iteración del ciclo principal del programa. Es decir el ciclo mostrado en la Figura~\ref{diagrama_flujo:fig}).
+ \item[Tempor de render:] El tiempo que toma presentar al frame buffer una vez que se tienen los datos actualizados de todas las particulas y demas objetos de la escena al GPU. Es decir, el tiempo que toma la ejecución de todos los pipelines gráficos.
+ \item[Tiempo de intergación:] Es el tiempo que toma calcular la posición y velocidad de cada particula. En otras palabras el tiempo que toma ejecutar el método Runge-Kutta.
+ \item[Tiempo de manejo de colisiones:] El tiempo que toma ejecutar la detección y respuesta a las colisiones.
+ \item[Tiempo de actualización de la malla:] El tiempo que toma primero recalcular las normales y después transmitir los datos completos (posiciones y normales de cada partícula) al GPU.
 \end{description}
 
-La nomenclatura de la prueba usando estas variables se especifica en el cuadro~\ref{nomenclatura:prueba}.
+Adicionalmente, una parte del el \emph{tiempo de integración} es utilizado en evaluar la función fuerza.
+Una evaluación si se integra con Euler, o cuatro evaluaciónes si se integra con Runge-Kutta.
+Para ser mas específicos y hacer un analisis parecido al anterior, se tomaron cuatro medidas ademas de la medida base.
+Para la siguientes métricas se calcularon los tiempo totales que se pasa haciendo evaluaciones de cada parte de la función fuerza.
+Es decir, que en el caso de que se integre con Euler es una medida en al caso de que se integre con RK4 la suma de cuatro mediciones.
 
-Cada una de las variantes arriba mencionadas puede tener dos valores.
-El \emph{\textenglish{render}} puede tener muchos valores pero para hacer las pruebas sólo voy a considerar dos: prendido, cuando se dibujan todos los cuerpos en estado sólido con iluminación y apagado, cuando se dibuja en wireframe sin luz y no se dibuja la caja del cuerpo flexible.
+\begin{description}
+ \item[Tiempo de evaluación de $F$:] La medida base. Este es el tiempo total que se paso evaluando la funcion $F$ en cada frame.
+ \item[Gravedad:] El tiempo total que tomo acumular la $F_g$ a todas las partículas.
+ \item[Resortes:] El tiempo total que toma acumular $F_s$ Y $F_d$ usando todos los resortes amortiguuadores.
+ \item[Volumen:] El tiempo total que se paso calculando $V$, el volumen del cuerpo neúmatico.
+ \item[Presión:] El tiempo total que se paso acumulando $F_g$ recorriendo todas las caras. No incluye el tiempo anterior del volumen.
+\end{description}
+
+Para hacer las mediciones se fijaron las siguintes condiciones:
+Hacer render con caras solidas y texturas.
+Utilizar el método de RK4 para integrar.
+Dejar caer la pelota sobre la tela para forzar que haya colisiones en cada frame.
+Desde luego, que los tiempos anteriores son diferentes para cada frame.
+Por esta razón se decidió ejecutar el programa y registrar los tiempo de cada frame de la ejecución.
+
+Se registraron alrededor de 3200 frames.
+Como primer método de exploración de los datos se presenta el \emph{resumen de 5 números} de cada una de las categorias.
+El resumen de cinco números nos ayuda a ver que tanta dispersión hay entre los datos.
+Está formado por cinco estadisticos: El mínimo de los datos ($\min$), el primer cuartil ($Q_1$), la mediana ($\tilde{x}$), el tercer cuartil ($Q_3$) y el máximo de los datos ($\max$).
 
 \begin{table}
 \ra{1.2}
 \begin{center}
-\begin{tabular} {@{}llp{10cm}@{}}
+\begin{tabular} {@{}lrrrrr@{}}
 \toprule
- Variable & Valores & Explicación\\
+ & Render & Intregración & Colisión & Malla & Frame \\
 \midrule 
- Animación & 0 ó 1 & Se considera 1 cuando la animación esta en marcha, y 0 cuando está en pausa. \\
- Colisiones & 0 ó 1 & Se considera 1 cuando hay una colisión y se ejecuta la respuesta, 0 cuando no hay colisión y sólo se ejecuta la detección. \\
- Método Numérico & 0 ó 1 & Se considera 1 cuando se ejecuta Runge Kutta y 0 cuando se ejecuta Euler. \\
- Fuerza del gas & 0 ó 1 & Se considera 1 cuando está prendida y 0 cuando está apagada. \\
- Render & 0 ó 1 & Se considera 1 cuando se hace la mayor cantidad render, como se explicó arriba y 0 cuando se hace el mínimo posible. \\
+ $\min$      &  0.2533 &  2.2235 & 0.0257 & 0.3272 &  3.1157 \\
+ $Q_1$       &  0.9312 &  2.6941 & 0.0325 & 0.3957 &  6.3076 \\
+ $\tilde{x}$ &  2.9606 &  3.7973 & 0.0442 & 0.5198 &  7.5509 \\
+ $Q_3$       &  5.1519 &  5.1556 & 0.0572 & 0.6769 &  8.3865 \\
+ $\max$      & 26.8164 & 12.3506 & 0.1548 & 1.7716 & 30.3281 \\
 \bottomrule
 \end{tabular}
 \end{center}
-\caption[Explicación de la nomenclatura de la prueba del programa]{Nomenclatura de la prueba}
-\label{nomenclatura:prueba}
+\caption[Resumen de medidas por frame]{Resumen de cinco números de las medidas para calcular un frame.}
+\label{resumenFrame:tabla}
 \end{table}
-
-Se tienen pues cinco posibles variantes, cada una con dos valores.
-Se ejecutaron los 18 casos posibles (la animacion apagada implica que haya opciones que no tengan sentido, por eso son sólo 18 en vez de 32) y para cada caso anoté entre qué valores oscilan los fps. Los resultados se resumen en la tabla~\ref{resultado:prueba1}.
-
-La razon por la cual los fps, son un rango es que al momento de la ejecución, cada segundo varía el valor de los fps.
-Es por eso que al hacer el experimento con las condiciones de cada caso, anote tanto el valor máximo que alcanzaron lo fps, como el valor mínimo; esto es lo que llamo el rango.
-
-La columna de contribución, representa cuánto contribuye a los cálculos la prueba en cuestión con respecto a que se hacen \emph{todos} los cálculos, tomando como base el caso en que todas las variables están prendidas.
-La contribución $C$ es calculada de la siguiente manera:
-
-$$ C = \frac{FPS_{min} + FPS_{max}}{2} \div FPS_{base}$$
-
-En donde $FPS_{min}$ es el mínimo de fps en cada categoría y $FPS_{max}$ es el máximo de fps en la misma, $FPS_{base}$ es el promedio de fps de la categoría base, para este caso $FPS_{base} =$ 210.81 dado que es el promedio de los $FPS$ de la prueba que más poder requiere y se presenta en el último renglón de la tabla.
 
 \begin{table}
 \ra{1.2}
 \begin{center}
-%\begin{tabular} {|c|c|c|c|c|c|c|}
-\begin{tabular} {@{}cccccrr@{}}
+\begin{tabular} {@{}lrrrrr@{}}
 \toprule
- Anim & Coli & Método & F. Gas & Render & FPS & Contr\\
-\midrule
- 0 & n/a & n/a & n/a & 0 & 2753.08 - 2768.15 & 0.08\\
- 0 & n/a & n/a & n/a & 1 & 2754.01 - 2826.18 & 0.08\\
- 1 & 0 & 0 & 0 & 0 & 654.35 - 663.34 & 0.32\\
- 1 & 0 & 0 & 0 & 1 & 620.38 - 630.37 & 0.34\\
- 1 & 0 & 0 & 1 & 0 & 501.04 - 512.98 & 0.42\\
- 1 & 0 & 0 & 1 & 1 & 464.03 - 491.02 & 0.44\\
- 1 & 0 & 1 & 0 & 0 & 447.99 - 456.54 & 0.47\\
- 1 & 0 & 1 & 0 & 1 & 454.09 - 474.05 & 0.45\\
- 1 & 0 & 1 & 1 & 0 & 240.52 - 251.99 & 0.86\\
- 1 & 0 & 1 & 1 & 1 & 203.57 - 212.57 & 1.01\\
- 1 & 1 & 0 & 0 & 0 & 640.72 - 660.54 & 0.32\\
- 1 & 1 & 0 & 0 & 1 & 612.76 - 627.74 & 0.34\\
- 1 & 1 & 0 & 1 & 0 & 499.03 - 512.03 & 0.42\\
- 1 & 1 & 0 & 1 & 1 & 470.06 - 484.52 & 0.44\\
- 1 & 1 & 1 & 0 & 0 & 347.31 - 357.29 & 0.60\\
- 1 & 1 & 1 & 0 & 1 & 333.67 - 342.32 & 0.62\\
- 1 & 1 & 1 & 1 & 0 & 214.34 - 219.26 & 0.97\\
- 1 & 1 & 1 & 1 & 1 & 209.04 - 212.57 & 1.00\\
+ & Gravedad & Resortes & Volumen & Presión & $F$ \\
+\midrule 
+ $\min$      & 0.0383 & 0.5527 & 0.3331 & 1.3756 &  1.9747 \\
+ $Q_1$       & 0.0475 & 0.6788 & 0.4072 & 1.6615 &  2.3912 \\
+ $\tilde{x}$ & 0.0677 & 0.9531 & 0.5679 & 2.3528 &  3.3860 \\
+ $Q_3$       & 0.0950 & 1.3141 & 0.7834 & 3.2024 &  4.6050 \\
+ $\max$      & 0.2386 & 3.1087 & 1.9180 & 7.7122 & 11.0151 \\
 \bottomrule
 \end{tabular}
 \end{center}
-\caption[Resultados de la prueba del programa]{Resultados primera prueba}
-\label{resultado:prueba1}
+\caption[Resumen de medidas de evaluacion de $F$]{Resumen de cinco números de las medidad relativas a la evaluación de $F$.}
+\label{resumenFuerza:tabla}
 \end{table}
 
-Hay algunos datos interesantes con respecto a la tabla \ref{resultado:prueba1}, por ejemplo el hecho de lo poco que contribuye el render al desempeño de la animación (el .03).
-Esto se explica por que cuando el render está apagado se trazan más objetos gráficos, se dibujan cuatro lineas y cuatro puntos por cada cara, mientras que cuando el render está prendido si bien se hacen cálculos de iluminación sólo se dibuja un cuadro por cada cara.
-
-También de la tabla, puedo concluir  que lo que más contribuye al desempeño de la animación es el método numérico usado, pues como dijimos el
-método de RK4, lleva casi cuatro veces más cálculos que el método de Euler (en la tabla se ve que representa el .56 de los cálculos).
-
-El otro factor que hace considerablemente más lenta la animación es el cálculo de la fuerza del gas con el .48 del tiempo.
-
-\subsection{Desempeño del programa en diferentes ambientes}
-
-La última prueba consistió en hacer constante la ejecución del programa y ver qué desempeño tiene en diferentes tipos de hardware.
-
-Para esta  prueba se ejecutó el programa en diferentes ambientes.
-En cada ambiente se consideran importantes sólo las siguientes características: la memoria principal, el sistema operativo, el procesador, la arquitectura y si hay o no memoria de vídeo.
-
-La ejecución del programa se hizo de una manera típica, lo que haciendo una equivalencia con la prueba anterior es que esté en marcha la animación, que haya colisiones con el método de Runge Kutta, que haya fuerza del gas y que el \emph{\textenglish{render}} se haga completo.
-También se hizo la ejecución con las siguientes características mínimas: método de Euler y sin fuerza de gas.
-De ambas pruebas se miden los fps.
-
-Los resultados se listan a continuación.
-\begin{itemize}
- \item Sistema Operativo: Ubuntu 7.04
- \item Procesador: Opteron 1214 a 2.2GHz
- \item Memoria RAM: 2.0GB
- \item Memoria de Video: Tarjeta Nvidia FX3500, 256MB, driver propietario
- \item Velocidad en prueba mínima: 612.76 - 627.74fps
- \item Velocidad en prueba normal: 209.04 - 212.57fps
-\end{itemize}
-
-\begin{itemize}
- \item Sistema Operativo: Windows XP professional edition
- \item Procesador: AMD Duron a 1.2GHz
- \item Memoria RAM: 512MB
- \item Memoria de Video: Tarjeta Nvidia 64MB
- \item Velocidad en prueba mínima: 72.0 - 102.0fps
- \item Velocidad en prueba normal: 60.0 - 94.0fps
-\end{itemize}
-
-La última prueba se llevó a cabo en una máquina virtual, con el fin de evaluar los requerimientos mínimos.
-
-\begin{itemize}
- \item Sistema Operativo: Windows XP professional edition
- \item Procesador: Dual Core AMD Opteron 999Mhz
- \item Memoria RAM: 256MB
- \item Memoria de Video: Ninguna, adaptador VM-Ware SVG 2
- \item Velocidad en prueba mínima: 65.40 - 71.72fps
- \item Velocidad en prueba normal: 46.44 - 52.22 fps
-\end{itemize}
-
+Como puede verse en el Cuadro~\ref{resumenFrame:tabla} y en el Cuadro~\ref{resumenFuerza:tabla} hay algunos outliers en la parte alta de los datos.
+Ambas distribuciones estan sesgadas a la derecha.
+Esto quiere decir que hay algunos frames particularmente lentos.
+Sin embargo, en realidad los datos no estan tan dispersos pues las distancias entre los $Q_1$ y $Q_3$ es proporcinalmente pequeña en todos los casos.
+Con esto en mente, decidi tomar la media ($\bar{x}$) de cada medida para poder hacer el calculo que nos interesa.
