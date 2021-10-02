@@ -85,31 +85,23 @@ Dado que la partículas están en un arreglo unidimensional se hace uso del mét
 
 \begin{listing}
 \inputminted[
-  firstline=306, %If you omit this two fields, the whole file is pulled
-  lastline=328
+  firstline=303, %If you omit this two fields, the whole file is pulled
+  lastline=341
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
-  \caption{Este es un extracto del método \mintinline{cpp}{recreate_particles} de \mintinline{cpp}{SoftBody}}\label{lst:recreate_particles}
+  \caption{El método \mintinline{cpp}{recreate_particles} de \mintinline{cpp}{SoftBody}}\label{lst:recreate_particles}
 \end{listing}
 
-% \begin{listing}
-%   \inputminted[
-%   firstline=306, %If you omit this two fields, the whole file is pulled
-%   lastline=328
-%   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
-%   \caption{Este es un extracto del método \mintinline{cpp}{recreate_particles} de \mintinline{cpp}{SoftBody}}
-%   \label{lst:recreate_particles}
-% \end{listing}
-
-El código mostrado en el Listado~\ref{lst:recreate_particles} inicializa la velocidad, la fuerza y la masa de la partículas (la posición es inicializada con una rutina muy simple que está fuera de la clase \mintinline{cpp}{SoftBody}). También se encarga de fijar las partículas que están en las orillas de la tela.
+El código mostrado en el Listado~\ref{lst:recreate_particles} inicializa la velocidad, la fuerza y la masa de la partículas (la posición es inicializada con una rutina muy simple que está fuera de la clase \mintinline{cpp}{SoftBody}). 
+También se encarga de fijar las partículas que están en las orillas de la tela.
 
 La rutina que inicializa los resortes es ejecutada después que la de las partículas. Se muestra un extracto en el Listado~\ref{lst:connectSprings}.
 
 \begin{listing}
 \inputminted[
-  firstline=345, %If you omit this two fields, the whole file is pulled
-  lastline=368
+  firstline=343, %If you omit this two fields, the whole file is pulled
+  lastline=371
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
-  \caption{Este es un extracto del método \mintinline{cpp}{recreate_particles} de \mintinline{cpp}{SoftBody}}\label{lst:connectSprings}
+  \caption{El método \mintinline{cpp}{connectSprings} de \mintinline{cpp}{SoftBody}}\label{lst:connectSprings}
 \end{listing}
 
 Por las condiciones que definimos en nuestra tela.
@@ -122,10 +114,10 @@ El algoritmo, pregunta si esta partícula puede ser unida (por un resorte) con l
 
 \begin{listing}
 \inputminted[
-  firstline=371, %If you omit this two fields, the whole file is pulled
-  lastline=390
+  firstline=373, %If you omit this two fields, the whole file is pulled
+  lastline=392
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
-  \caption{Este es un extracto del método \mintinline{cpp}{connectFaces} de \mintinline{cpp}{SoftBody}}
+  \caption{El método \mintinline{cpp}{connectFaces} de \mintinline{cpp}{SoftBody}}
   \label{lst:connectFaces}
 \end{listing}
 
@@ -149,8 +141,8 @@ La constante de gravedad es un miembro de \mintinline{cpp}{SoftBody} y tiene el 
 
 \begin{listing}
 \inputminted[
-  firstline=584, %If you omit this two fields, the whole file is pulled
-  lastline=590
+  firstline=589, %If you omit this two fields, the whole file is pulled
+  lastline=598
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
   \caption{El método \mintinline{cpp}{addGravity} de \mintinline{cpp}{SoftBody}}
   \label{lst:addGravity}
@@ -164,8 +156,8 @@ Solo por completez, en Listado~\ref{lst:add_forceSD} se muestra el método \mint
 
 \begin{listing}
 \inputminted[
-  firstline=592, %If you omit this two fields, the whole file is pulled
-  lastline=596
+  firstline=600, %If you omit this two fields, the whole file is pulled
+  lastline=607
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
   \caption{El método \mintinline{cpp}{addSpringDamper} de \mintinline{cpp}{SoftBody}}
   \label{lst:addSpringDamper}
@@ -188,8 +180,8 @@ Para poder calcular esta fuerza se necesitan hacer varias operaciones importante
 
 \begin{listing}
 \inputminted[
-  firstline=598, %If you omit this two fields, the whole file is pulled
-  lastline=606
+  firstline=609, %If you omit this two fields, the whole file is pulled
+  lastline=623
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
   \caption{El método \mintinline{cpp}{addPreassure} de \mintinline{cpp}{SoftBody}}
   \label{lst:addPreassure}
@@ -203,8 +195,8 @@ El Listado~\ref{lst:calculateVolume} muestra la lógica. La función \mintinline
 
 \begin{listing}
 \inputminted[
-  firstline=608, %If you omit this two fields, the whole file is pulled
-  lastline=643
+  firstline=625, %If you omit this two fields, the whole file is pulled
+  lastline=660
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
   \caption{El método \mintinline{cpp}{calculateVolume} de \mintinline{cpp}{SoftBody}}
   \label{lst:calculateVolume}
@@ -251,8 +243,8 @@ Básicamente se trata de tomar las ecuaciones~\eqref{formulas:Euler} e implement
 
 \begin{listing}
 \inputminted[
-  firstline=465, %If you omit this two fields, the whole file is pulled
-  lastline=476
+  firstline=466, %If you omit this two fields, the whole file is pulled
+  lastline=477
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
   \caption{El método \mintinline{cpp}{euler_integrate} de \mintinline{cpp}{SoftBody}}
   \label{lst:euler_integrate}
@@ -267,8 +259,8 @@ Lo largo del proceso hacen ver el Listado~\ref{lst:rk4_integrate} un poco más c
 
 \begin{mintedCode} %El codigo es muy largo, ocupo un ambiene no flotante
 \inputminted[
-  firstline=478, %If you omit this two fields, the whole file is pulled
-  lastline=555
+  firstline=479, %If you omit this two fields, the whole file is pulled
+  lastline=556
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
   \caption{El método \mintinline{cpp}{rk4_integrate} de \mintinline{cpp}{SoftBody}}
   \label{lst:rk4_integrate}
@@ -288,8 +280,8 @@ El Listado~\ref{lst:solveCollisionSphere} implementa el algoritmo.
 
 \begin{listing}
 \inputminted[
-  firstline=683, %If you omit this two fields, the whole file is pulled
-  lastline=696
+  firstline=700, %If you omit this two fields, the whole file is pulled
+  lastline=713
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
   \caption{El método \mintinline{cpp}{solveCollisionSphere} de \mintinline{cpp}{SoftBody}}
   \label{lst:solveCollisionSphere}
@@ -301,8 +293,8 @@ Mover el punto fuera de la esfera es en realidad parte de la respuesta a la coli
 
 \begin{listing}
 \inputminted[
-  firstline=698, %If you omit this two fields, the whole file is pulled
-  lastline=711
+  firstline=715, %If you omit this two fields, the whole file is pulled
+  lastline=728
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
   \caption{El método \mintinline{cpp}{adjust_positions} de \mintinline{cpp}{SoftBody}}
   \label{lst:adjust_positions}
@@ -317,8 +309,8 @@ La mayor parte del trabajo se hizo en la función anterior, ahora que sabemos el
 
 \begin{listing}
 \inputminted[
-  firstline=713, %If you omit this two fields, the whole file is pulled
-  lastline=728
+  firstline=730, %If you omit this two fields, the whole file is pulled
+  lastline=745
   ]{cpp}{../../../GLSamples/SoftBody/physics/SoftBody.cpp}
   \caption{El método \mintinline{cpp}{adjust_velocities} de \mintinline{cpp}{SoftBody}}
   \label{lst:adjust_velocities}
