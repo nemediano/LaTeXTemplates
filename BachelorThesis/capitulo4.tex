@@ -130,12 +130,12 @@ Finalmente, además del menú de usuario, hay opciones que solo se pueden modifi
 \begin{itemize}
  \item Arrastrar el mouse con el botón izquierdo presionado, permite modificar el ángulo de la cámara. Se usa el modelo de \emph{\textenglish{trackball camera}}.
  \item La rueda del mouse, cambia el \emph{\textenglish{zoom}} de la cámara.
- \item Presionar la tecla `\emph{s}' en el teclado toma un \emph{\textenglish{screenshot}}. Las imágenes son guardadas en el folder \mintinline{cpp}{Screenshoots} (Que debe ser creado por el usuario) en el mismo folder donde esta el ejecutable.
- \item Presionar \emph{Escape} en el teclado termina la ejecución del programa.
- \item Presionar la tecla `\emph{m}' muestra/oculta el menú de usuario.
- \item Presionar \emph{F11} cambia entre el modo de pantalla completa y de ventana.
- \item La tecla `\emph{p}' es un atajo para el botón de \emph{\textenglish{Play/Pause}} de la animación.
- \item La tecla `\emph{r}' es un atajo para el botón de \emph{\textenglish{Reset}} de la animación.
+ \item Presionar la tecla \say{s} en el teclado toma un \emph{\textenglish{screenshot}}. Las imágenes son guardadas en el folder \mintinline{cpp}{Screenshoots} (Que debe ser creado por el usuario) en el mismo folder donde esta el ejecutable.
+ \item Presionar \say{Escape} en el teclado termina la ejecución del programa.
+ \item Presionar la tecla \say{m} muestra/oculta el menú de usuario.
+ \item Presionar \say{F11} cambia entre el modo de pantalla completa y de ventana.
+ \item La tecla \say{p} es un atajo para el botón de \emph{\textenglish{Play/Pause}} de la animación.
+ \item La tecla \say{r} es un atajo para el botón de \emph{\textenglish{Reset}} de la animación.
 \end{itemize}
 
 \subsection{Características del entorno de pruebas}
@@ -390,7 +390,7 @@ Ahora que tenemos el modelo estable y con $k_s$ máximo, poco a poco vayamos hac
 \end{figure}
 
 \section{Análisis del desempeño}
-
+\label{sec:performance}
 Una de las métricas más usadas para medir el desempeño de un programa gráfico es el número de veces que se actualiza el \emph{\textenglish{frame buffer}} en un segundo.
 Está medida es conocida como \emph{fps} que es la abreviatura en ingles de  \emph{\textenglish{frames per second}}.
 En general, es aceptado que para que una aplicación gráfica se considere en tiempo real (como debe ser un videojuego) se debe de alcanzar al menos 60 fps.
@@ -422,11 +422,11 @@ Para la siguientes métricas se calcularon los tiempos totales que se pasa hacie
 Es decir, que en el caso de que se integre con Euler es una medida, en el caso de que se integre con RK4 la suma de cuatro mediciones.
 
 \begin{description}
- \item[Tiempo de evaluación de $F$:] La medida base. Este es el tiempo total que se pasó evaluando la función $F$ en cada frame.
- \item[Gravedad:] El tiempo total que tomó acumular la $F_g$ a todas las partículas.
- \item[Resortes:] El tiempo total que tomó acumular $F_s$ Y $F_d$ usando todos los resortes amortiguadores.
- \item[Volumen:] El tiempo total que se pasó calculando $V$, el volumen del cuerpo neumático. Este tiempo está contenido en el tiempo de presión.
- \item[Presión:] El tiempo total que se pasó acumulando $F_g$ recorriendo todas las caras.
+ \item[Tiempo de evaluación de $\textbf{F}$:] La medida base. Este es el tiempo total que se pasó evaluando la función $\textbf{F}$ en cada frame.
+ \item[Gravedad:] El tiempo total que tomó acumular la $\textbf{F}_g$ a todas las partículas.
+ \item[Resortes:] El tiempo total que tomó acumular $\textbf{F}_s$ Y $\textbf{F}_d$ usando todos los resortes amortiguadores.
+ \item[Volumen:] El tiempo total que se pasó calculando $V$, el volumen del cuerpo neumático. Este tiempo está contenido en el tiempo de presión. Ver de nuevo el Listado~\ref{lst:addPreassure}.
+ \item[Presión:] El tiempo total que se pasó acumulando $\textbf{F}_p$ recorriendo todas las caras.
 \end{description}
 
 Para hacer las mediciones se fijaron las siguientes condiciones:
@@ -465,7 +465,7 @@ Está formado por cinco estadísticos: El mínimo de los datos ($\min$), el prim
 \begin{center}
 \begin{tabular} {@{}lrrrrr@{}}
 \toprule
- & Gravedad & Resortes & Volumen & Presión & $F$ \\
+ & Gravedad & Resortes & Volumen & Presión & $\textbf{F}$ \\
 \midrule 
  $\min$      & 0.0383 & 0.5527 & 0.3331 & 1.3756 &  1.9747 \\
  $Q_1$       & 0.0475 & 0.6788 & 0.4072 & 1.6615 &  2.3912 \\
@@ -475,7 +475,7 @@ Está formado por cinco estadísticos: El mínimo de los datos ($\min$), el prim
 \bottomrule
 \end{tabular}
 \end{center}
-\caption[Resumen de medidas de evaluación de $F$]{Resumen de cinco números de las medidas relativas a la evaluación de $F$.}
+\caption[Resumen de medidas de evaluación de $\textbf{F}$]{Resumen de cinco números de las medidas relativas a la evaluación de $\textbf{F}$.}
 \label{resumenFuerza:tabla}
 \end{table}
 
@@ -519,27 +519,27 @@ Por esa razón, la suma de los componentes no da el $100\%$ del tiempo para prod
 \begin{center}
 \begin{tabular} {@{}lrrrrr@{}}
 \toprule
-& Gravedad & Resortes & Volumen & Presión & $F$ \\ 
+& Gravedad & Resortes & Volumen & Presión & $\textbf{F}$ \\ 
 \midrule 
  $\bar{x}$      & 0.0803 & 1.1376 & 0.6796 & 2.7712 & 3.9920 \\
  $\%$           & 2.01 & 28.50 & 17.02 & 69.42 & \\
 \bottomrule
 \end{tabular}
 \end{center}
-\caption[Proporción de cálculos de $F$]{Proporción de tiempo de los cálculos con respecto a la evaluación de $F$.}
+\caption[Proporción de cálculos de $\textbf{F}$]{Proporción de tiempo de los cálculos con respecto a la evaluación de $\textbf{F}$.}
 \label{propFuerza:tabla}
 \end{table}
 
-Con respecto al Cuadro~\ref{propFuerza:tabla} vemos que el cálculo de la $F_g$ es el más costoso con el $70\%$ del tiempo.
-Seguido de los cálculos de $F_s$ y $F_d$ con el $28.5\%$.
-La acumulación de $G$ es casi despreciable.
+Con respecto al Cuadro~\ref{propFuerza:tabla} vemos que el cálculo de la $\textbf{F}_p$ es el más costoso con el $70\%$ del tiempo.
+Seguido de los cálculos de $\textbf{F}_s$ y $\textbf{F}_d$ con el $28.5\%$.
+La acumulación de $\textbf{F}_g$ es casi despreciable.
 Esto quiere decir, que el tiempo de cálculo es directamente proporcional al número de partículas involucradas.
-Hay \emph{una} partícula involucrada para acumular $G$, \emph{dos} para acumular $F_s$ y $F_d$ y \emph{cuatro} para acumular $F_g$.
-Sin mencionar, que para calcular $F_g$, primero debemos calcular $V$.
+Hay \emph{una} partícula involucrada para acumular $\textbf{F}_g$, \emph{dos} para acumular $\textbf{F}_s$ y $\textbf{F}_d$ y \emph{cuatro} para acumular $\textbf{F}_p$.
+Sin mencionar, que para calcular $\textbf{F}_p$, primero debemos calcular $V$.
 
-El tiempo de cálculo de $V$ forma parte del tiempo de cálculo de $F_g$.
-De hecho, del $69\%$ de tiempo que ocupamos en calcular $F_g$, el cálculo de $V$ aporta un $17\%$ (casi una cuarta parte).
-Es por esta razón que si se suman los porcentajes de gravedad, resortes y presión casi se da el total para producir $F$.
+El tiempo de cálculo de $V$ forma parte del tiempo de cálculo de $\textbf{F}_p$.
+De hecho, del $69\%$ de tiempo que ocupamos en calcular $\textbf{F}_p$, el cálculo de $V$ aporta un $17\%$ (casi una cuarta parte).
+Es por esta razón que si se suman los porcentajes de gravedad, resortes y presión casi se da el total para producir $\textbf{F}$.
 
 Por último hago énfasis en que aún cuando cada experimento con del programa arrojará datos diferentes, las proporciones reportadas en el Cuadro~\ref{propFrame:tabla} y el  Cuadro~\ref{propFuerza:tabla} tienden a ser \emph{casi} las mismas.
 Puede volverse a mirar la Figura~\ref{programa:menu} que se capturó con otra ejecución del programa y también reporta proporciones parecidas.

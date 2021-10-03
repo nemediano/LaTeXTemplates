@@ -68,7 +68,7 @@ El diagrama de flujo del algoritmo es el que se muestra en al Figura~\ref{diagra
 \subsubsection{Inicializar variables}
 Lo primero es dar valor a las variables que lo necesiten, me refiero con esto a variables globales, que afectan cómo funciona el programa por el resto de su ejecución.
 Dentro de estas variables están los parámetros externos del modelo, es decir esos que no pueden ser calculados dentro del programa y que es necesario que se proporcionen por el usuario.
-Lo parámetros necesarios son $m$ para cada partícula, $g$, $k_d$ y $k_s$ para los resortes, $L$ para cada resorte en particular, y $k_p$ para la acumulación de la fuerza debida a la presión.
+Lo parámetros necesarios son $m$ para cada partícula, $g$, $k_d$ y $k_s$ para los resortes, $L$ para cada resorte en particular, y $k_g$ para la acumulación de la fuerza debida a la presión.
 
 Otra cosa que debe hacerse en este paso del algoritmo es poner las condiciones iniciales del modelo, por ejemplo, la posición de cada partícula y la velocidad al momento de iniciar la animación.
 Y de igual manera con los cuerpos no flexibles que deseemos que interactúen con nuestro modelo, se debe de conocer su posición, si se mueven o no, y cómo van a interactuar con el modelo.
@@ -146,7 +146,7 @@ Fuerza & Símbolo &  Parámetros & Datos necesarios \\
 Gravedad & $ \textbf{F}_g $ & $g$, $m$ & Ninguno \\
 Resorte & $ \textbf{F}_s + \textbf{F}_d $ & $k_s$, $k_d$ & Partículas unidas por el resorte \\
 & & & Velocidad y posición de cada partícula que une el resorte \\
-Presión & $ \textbf{F}_p $ & $k_p$ & Partículas que forman la cara \\ 
+Presión & $ \textbf{F}_p $ & $k_g$ & Partículas que forman la cara \\ 
 & & & Volumen total del cuerpo \\ 
 & & & Area de la cara \\ 
 \bottomrule
@@ -164,7 +164,7 @@ Para calcularla  necesitamos recibir dos parámetros: $k_s$ y $k_d$.
 Luego necesitamos calcular la posición y la velocidad de cada partícula, y saber por cada resorte qué partículas está uniendo.
 Cuando tengamos que acumular esta fuerza recorreremos todos los resortes y por cada resorte calcularemos una fuerza, luego la acomularemos en cada unos de las dos partículas a los que este resorte esté conectado.
 
-Por último, para la fuerza debida a la presión, necesitamos un parámetro externo: $k_p$.
+Por último, para la fuerza debida a la presión, necesitamos un parámetro externo: $k_g$.
 Y para poder calcular esta fuerza debemos conocer antes de empezar el volumen total del cuerpo $V$, luego debemos de saber qué partículas pertenecen a cada una de las caras del cuerpo.
 Para acumular esta fuerza debemos recorrer cada una de las caras que forman el cuerpo, en cada caso calculamos el área de la cara y acumulamos la fuerza $\textbf{F}_p$ que le corresponda en cada una de las partículas que la forman.
 
@@ -218,7 +218,7 @@ Una forma mas simple es aproximando con un \emph{hexahedro regular} cuyo volumen
 Una técnica muy útil para calcular el volúmen de una malla triangular se puede ver en~\cite{Zhang:volumen}.
 
 La técnica consiste recorrer todas la caras, y en cada una calcular el \emph{volumen orientado} del tetraedro cuya base es la cara triangular y cuya punta es el origen del sistema de referencia.
-El signo del volumen (por eso dijimos que es un volumen orientada) depende de si el tetraedo apunta hacia el origen.
+El signo del volumen (por eso dijimos que es un volumen orientado) depende de si el tetraedo apunta hacia el origen.
 Eso quere decir que habrá algunos volúmenes que sean negativos y otros positivos, la suma de todos los volumenes es el volumen de la malla.
 
 Es importante que al usar esta formula, los triangulos apunten hacia el mismo lado de la malla.
@@ -268,7 +268,7 @@ Este hecho es fundamental para nuestros cálculos, tanto de la fuerza debida a l
 Una demostración se puede encontrar en \cite{GeometriaParaCAD}.
 
 \section{Integrar la ecuación de Newton}
-Desde que hay modelos físicos, ha habido interés en la solución numérica de ciertos problemas para los que se sabía de antemano que una solución existía, pero no se contaban con métodos adecuados para encontrarla.
+Desde que hay modelos físicos, ha habido interés en la solución numérica de ciertos problemas para los que se sabía de antemano que una solución existía, pero no se contaban con métodos analíticos para encontrarla.
 Es por esta razón que nace el análisis numérico, sin embrago no fue hasta que se popularizó el uso de las computadoras que este campo tomó más importancia.
 
 Dentro del análisis numérico, es de nuestro interés la solución numérica de ecuaciones diferenciales.
