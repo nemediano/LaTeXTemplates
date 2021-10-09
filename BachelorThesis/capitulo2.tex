@@ -2,11 +2,11 @@
 
 En este capítulo nos encargaremos de presentar el algoritmo propuesto por Matyka en~\cite{Matyka:Presion}, que es explicado en más detalle en~\cite{Matika:SoftBody}.
 Este modelo no es más que la unión de los modelos del capítulo anterior.
-Además definiremos el experimento que deseamos realizar para probar el funcionamieto del modelo.
+Además definiremos el experimento que deseamos realizar para probar el funcionamiento del modelo.
 
 Más adelante en este mismo capítulo, explicaremos cómo se pueden enfrentar ciertos detalles sobre el algoritmo de Matika.
 
-Primero veremos cómo se puede calcular el volumen de un cuerpo en tres dimensiones, explicaremos como se puede tener una idea general, y por qué para ciertas geometrías del cuerpo, se prestan mejor ciertos algoritmos.
+Primero veremos cómo se puede calcular el volumen de un cuerpo en tres dimensiones, explicaremos cómo se puede tener una idea general, y por qué para ciertas geometrías del cuerpo, se prestan mejor ciertos algoritmos.
 
 Luego nos enfrentaremos al problema de cómo integrar la ecuación de Newton, con métodos numéricos, analizando dos alternativas, y se presentan las que se consideran las mejores maneras de implementar el integrador en código.
 
@@ -28,10 +28,10 @@ Además para poder hacer varios tipos de pruebas se desea que la animación teng
 
 Esta simulación es el objetivo principal del trabajo, y el siguiente capítulo está dedicado a cómo se construyó, mientras que en este capítulo se hace énfasis en los detalles teóricos necesarios para escribir el programa.
 
-\section{Simulaciónes gráfica basadas en física}
+\section{Simulaciones gráficas basadas en física}
 
 Lo primero que debemos de hacer es exponer las condiciones de nuestra simulación de cuerpo flexible. La situación física que deseamos modelar es la de un cuerpo flexible, hueco que contiene un gas.
-Por ejemplo imagínese un globo, un colchón de aire, la llanta de un automóvil o una burbuja.
+Por ejemplo, imagínese un globo, un colchón de aire, la llanta de un automóvil o una burbuja.
 El comportamiento en el que estamos interesados es en un comportamiento cualitativamente parecido al del fenómeno, es decir que al momento de graficarlo y hacer una animación debe verse \emph{parecido} al sistema real.
 
 El valor de poder graficar de manera realista un modelo como éste, radica en el hecho de que hay muchas cosas que se comportan de manera parecida, y al momento de animar una escena donde hay varios de estos objetos, un modelo físicamente más realista sería muy costoso en tiempo de ejecución.
@@ -68,21 +68,21 @@ El diagrama de flujo del algoritmo es el que se muestra en al Figura~\ref{diagra
 \subsubsection{Inicializar variables}
 Lo primero es dar valor a las variables que lo necesiten, me refiero con esto a variables globales, que afectan cómo funciona el programa por el resto de su ejecución.
 Dentro de estas variables están los parámetros externos del modelo, es decir esos que no pueden ser calculados dentro del programa y que es necesario que se proporcionen por el usuario.
-Lo parámetros necesarios son $m$ para cada partícula, $g$, $k_d$ y $k_s$ para los resortes, $L$ para cada resorte en particular, y $k_g$ para la acumulación de la fuerza debida a la presión.
+Los parámetros necesarios son $m$ para cada partícula, $g$, $k_d$ y $k_s$ para los resortes, $L$ para cada resorte en particular, y $k_g$ para la acumulación de la fuerza debida a la presión.
 
 Otra cosa que debe hacerse en este paso del algoritmo es poner las condiciones iniciales del modelo, por ejemplo, la posición de cada partícula y la velocidad al momento de iniciar la animación.
 Y de igual manera con los cuerpos no flexibles que deseemos que interactúen con nuestro modelo, se debe de conocer su posición, si se mueven o no, y cómo van a interactuar con el modelo.
 
-Por último las opciones globales, que afecten a la animación también se deben de obtener aquí, por ejemplo el tamaño del paso $\Delta t$ para mover el modelo, las opciones de los gráficos (si se hará \emph{\foreignlanguage{english}{render}}, o se tratará sólo con el \emph{\foreignlanguage{english}{wireframe}}~\footnote{Cuando sólo se dibujan los bordes de las figuras, como si éstas estuvieran hechas de una malla de alambre se le llama wireframe, cuando dibujamos el área de las figuras y les damos color y efectos de iluminación se dice que se les dio \emph{render}.}) y qué tipo de integrador se ocupará en el modelo.
+Por último las opciones globales, que afecten a la animación también se deben de obtener aquí, por ejemplo el tamaño del paso $\Delta t$ para mover el modelo, las opciones de los gráficos (si se hará \emph{\textenglish{render}}, o se tratará sólo con el \emph{\textenglish{wireframe}}~\footnote{Cuando sólo se dibujan los bordes de las figuras, como si éstas estuvieran hechas de una malla de alambre se le llama wireframe, cuando dibujamos el área de las figuras y les damos color y efectos de iluminación se dice que se les dio \emph{render}.}) y qué tipo de integrador se ocupará en el modelo.
 Alguien me podría decir que estos también son parámetros.
-Y en efecto lo son, quise sin embargo hacer la distinción y llamarlos variables globales, por el hecho de que no se deben al modelo en si, sino más bien a la implementación que cada quien haga del mismo, es decir se deben al programa.
+Y en efecto lo son, quise sin embargo hacer la distinción y llamarlos variables globales, por el hecho de que no se deben al modelo en sí, sino más bien a la implementación que cada quien haga del mismo, es decir se deben al programa.
 
 \subsubsection{Dibujar escena}
 Esta parte del algoritmo debe ser la encargada de dibujar en la pantalla toda la escena.
 Para hacer esto debe contar con la información de donde se encuentran cada punto y donde se encuentra cada cosa que queramos dibujar.
 
-Aunque no hay mucho que decir aquí, esta parte es delicada, depende de nuestro conocimiento de las herramientas que vamos a usar para hacer el programa.
-Con la ayuda de una biblioteca gráfica, en este caso \emph{\foreignlanguage{english}{OpenGL}}, y los datos necesarios guardados de una manera ordenada, como en una estructura de datos, debemos de ser capaces de implementar esta función.
+Aunque no hay mucho que decir aquí, ésta parte es delicada, depende de nuestro conocimiento de las herramientas que vamos a usar para hacer el programa.
+Con la ayuda de una biblioteca gráfica, en este caso \emph{\textenglish{OpenGL}}, y los datos necesarios guardados de una manera ordenada, como en una estructura de datos, debemos de ser capaces de implementar esta función.
 
 El detalle de la implementación depende del modelo en cuestión, veré a detalle la que yo use.
 Esto puede ser útil para que alguien que deseé implementar una simulación, se de algunas ideas, pero como ya dije, esta parte depende del fenómeno a modelar, por lo que en cada implementación se debe de hacer un análisis.
@@ -92,16 +92,16 @@ Las fuerzas que actúan sobre cada partícula del modelo, se pueden identificar 
 Ejemplos de fuerzas externas son la gravedad, la viscosidad del medio, la resistencia del aire, por mencionar algunas.
 Ejemplos de las fuerzas internas son por otra parte: los \emph{resortes amortiguadores} y la debida a la presión del gas.
 
-Cualquiera que sea el caso, en este paso debemos de calcular todas las fuerzas, que intervengan en nuestro modelo, y debemos de acumulársela a cada uno de las partículas que lo conforman, es decir, cada partícula debe tener asociada la suma de todas las fuerzas que actúan sobre ella.
+Cualquiera que sea el caso, en este paso debemos de calcular todas las fuerzas que intervienen en nuestro modelo, y debemos de acumulársela a cada uno de las partículas que lo conforman, es decir, cada partícula debe tener asociada la suma de todas las fuerzas que actúan sobre ella.
 Recordemos que la fuerza en general es un vector, por lo que la acumulación de la que hablo es una suma vectorial de cada una de las fuerzas.
 
-Los detalles de cómo acomular las fuerzas específicas que ocuparé en la simulación se darán en la siguiente sección y con más a detalle en el resto del capitulo.
+Los detalles de cómo acomular las fuerzas específicas que ocuparé en la simulación se darán en la siguiente sección y con más a detalle en el resto del capítulo.
 
 \subsubsection{Integrar la ecuación de Newton}
 Las fuerzas acomuladas en el paso anterior, junto con la posición y velocidad actuales de la partícula, nos proporcionan (como dice la segunda ley de Newton~\eqref{ley:Newton}) el siguiente estado, nos dan la información suficiente para saber la nueva posición y la nueva velocidad de la partícula en cuestión. 
 Conociendo esto para todas las partículas tendremos determinado el estado completo del modelo en el tiempo siguiente.
 
-Como ésta es una ecuación diferencial, debemos de resolverla, o mejor dicho integrarla, para conocer el siguiente estado del sistema, sin embargo como nuestra acomulación de fuerzas fue hecha a partir de muchas fuerzas, todas ellas de naturaleza distinta, no podremos integrar esta ecuación de manera analítica.
+Como ésta es una ecuación diferencial, debemos de resolverla, o mejor dicho integrarla, para conocer el siguiente estado del sistema, sin embargo como nuestra acumulación de fuerzas fue hecha a partir de muchas fuerzas, todas ellas de naturaleza distinta, no podremos integrar esta ecuación de manera analítica.
 Por esta razón debemos de recurrir a un método numérico que nos permita aproximar la solución.
 
 Por suerte hay muchísimos métodos numéricos que se ajustan a nuestras necesidades, aquí he decidido presentar a dos de ellos solamente, en la sección dedicada a integrar la ecuación de Newton explicaré a detalle cómo funcionan.
@@ -114,15 +114,15 @@ Estos otros objetos pueden ser cuerpos rígidos como el piso o flexibles como ot
 
 El segundo paso es la respuesta a esta colisión.
 Este problema es también delicado, pero en general, se va a encargar de ver la partícula que chocó, moverla como respuesta al choque y modificar su estado, es decir su posición y su velocidad.
-En una sección posterior de este capítulo hablaré con mas detalle y también daré algunas ideas generales.
+En una sección posterior de este capítulo hablaré con más detalle y también daré algunas ideas generales.
 
 \subsubsection{Interacción del usuario}
 Este paso es opcional, y depende de si deseamos que la simulación tenga una forma de ejecutarse independiente del usuario o si se desea que éste pueda cambiar la simulación en tiempo de ejecución, por ejemplo modificando algún parámetro de la simulación.
 
 Para enfrentar esto se tiene que recurrir totalmente a la creatividad del programador que vaya a hacer la implementación.
-Una buena idea es por ejemplo utilizar alguna biblioteca que exista precisamente para este fin. En éste caso se decidió utilizar un par de bibliotecas que se integran bien con \emph{\foreignlanguage{english}{OpenGL}}.
-Por un lado \emph{\foreignlanguage{english}{glfw}}, que permite manejar eventos del ratón y del teclado. 
-Y por otro lado \emph{\foreignlanguage{english}{Dear Imgui}} que permite implementar una interfaz gráfica (menú) de usuario.
+Una buena idea es por ejemplo utilizar alguna biblioteca que exista precisamente para este fin. En éste caso se decidió utilizar un par de bibliotecas que se integran bien con \emph{\textenglish{OpenGL}}.
+Por un lado \emph{\textenglish{glfw}}, que permite manejar eventos del ratón y del teclado. 
+Y por otro lado \emph{\textenglish{Dear Imgui}} que permite implementar una interfaz gráfica (menú) de usuario.
 
 \section{El sistema de fuerzas}
 Es momento de hacernos unas preguntas:
@@ -133,7 +133,7 @@ Resumiendo, nuestro cuerpo es un conjunto de caras, que a su vez son un conjunto
 ¡Nuestro cuerpo está formado por puntos (partículas)!
 La respuesta de la segunda interrogante está ligada a la primera, necesitamos saber todo lo que sea necesario para poder acumular fuerza a las partículas, es decir que para cada una debemos de poder ocupar las ecuaciones~\eqref{fuerzaGravedad}, ~\eqref{fuerzaResorte} y \eqref{fuerzaGas}.
 
-Ciertamente cada una de estas fuerzas es de naturaleza distinta, la fuerza de gravedad es externa y se puede calcular para cada partícula por separado, la de los resortes depende de la posición de cada partícula y de sus vecinos a los cuales está conectado por un \emph{resorte-amortiguador} y por último la de presión depende de la cara en la que esté la partícula y del volumen total del cuerpo.
+Ciertamente cada una de estas fuerzas es de naturaleza distinta, la fuerza de gravedad es externa y se puede calcular para cada partícula por separado, la de los resortes depende de la posición de cada partícula y de sus vecinos a los cuales está conectado por un \emph{resorte-amortiguador} y por último la de la presión depende de la cara en la que esté la partícula y del volumen total del cuerpo.
 Podemos resumirlo en el Cuadro~\ref{ejemplo:fuerzas}.
 
 \begin{table}
@@ -152,7 +152,7 @@ Presión & $ \textbf{F}_p $ & $k_g$ & Partículas que forman la cara \\
 \bottomrule
 \end{tabular}
 \end{center}
-\caption[Resumen de las fuerzas que actúan sobre cada partícula]{Fuerzas a calcular para cada partícula y que se necesita saber para hacer los calculos}
+\caption[Resumen de las fuerzas que actúan sobre cada partícula]{Fuerzas a calcular para cada partícula y que se necesita saber para hacer los cálculos}
 \label{ejemplo:fuerzas}
 \end{table}
 
