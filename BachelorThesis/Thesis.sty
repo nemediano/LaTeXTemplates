@@ -33,11 +33,13 @@
 %%%%Several math symbols, like \bigstar and \smallsetminus.
 \usepackage{amssymb}
 
+\usepackage{textcomp} %Space after special symbols
+
 %Profesionall looking tables
 \usepackage{booktabs}
 \newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
 
-%Este es el que mas me preocupa
+%Set page space before everything else
 \usepackage[letterpaper,margin=3cm]{geometry}
 
 %%%%Pretty headers
@@ -107,6 +109,7 @@ pdfpagelabels=true,pdfauthor={Jorge Antonio García Galicia},pdftitle={Modelado 
 \usepackage{dirtytalk} %For using qutation marks (ro comillas in spanish)
 
 \usepackage{epigraph} %To add epighaphs
+\setlength{\epigraphwidth}{0.6\textwidth} %If not space for epigharp is to short
 
 \usepackage[newfloat=true]{minted} %For inserting source code and embed source files
 %Requieres compilation using:
