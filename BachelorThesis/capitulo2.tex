@@ -177,14 +177,14 @@ El propósito de esta sección es precisamente el de explicar esas técnicas gen
 Para calcular el área de un cuerpo geométrico generalmente se calcula el área de cada una de sus caras y después se suman.
 Empezando por el caso más simple, supongamos que tenemos un triángulo formado por tres puntos, sabemos las coordenadas de cada uno de los puntos, y queremos su área.
 Supongamos que los puntos son denotados por $\textbf{P}$, $\textbf{Q}$ y $\textbf{R}$.
-Podemos calcular dos de las aristas del tríangulo si calculamos los vectores que van de $\textbf{P}$ a $\textbf{Q}$ y de $\textbf{P}$ a $\textbf{R}$.
-Luego podríamos calcular el producto cruz de los dos vectores que acabamos de encontrar y obtener su norma, finalmente la mitad de la norma sería el área del tríangulo que estamos buscando.
+Podemos calcular dos de las aristas del triángulo si calculamos los vectores que van de $\textbf{P}$ a $\textbf{Q}$ y de $\textbf{P}$ a $\textbf{R}$.
+Luego podríamos calcular el producto cruz de los dos vectores que acabamos de encontrar y obtener su norma, finalmente la mitad de la norma sería el área del triángulo que estamos buscando.
 
 $$\overrightarrow{\textbf{PQ}} = \textbf{Q} - \textbf{P}$$
 $$\overrightarrow{\textbf{PR}} = \textbf{R} - \textbf{P}$$
 $$ A = \frac{1}{2} \vert \overrightarrow{\textbf{PQ}} \times \overrightarrow{\textbf{PR}} \vert$$
 
-Si queremos calcular el área de un cuadrilátero podemos usar la idea anterior y \emph{triangular}, el cuadrilátero en dos partes, supongamos que queremos calcular el área del cuadrilátero formado por los puntos $\textbf{P}$, $\textbf{Q}$, $\textbf{R}$ y $\textbf{S}$, podríamos calcular el área del tríangulo $\triangle \textbf{PQR}$ y luego sumar el área del tríangulo $\triangle \textbf{SRQ}$.
+Si queremos calcular el área de un cuadrilátero podemos usar la idea anterior y \emph{triangular}, el cuadrilátero en dos partes, supongamos que queremos calcular el área del cuadrilátero formado por los puntos $\textbf{P}$, $\textbf{Q}$, $\textbf{R}$ y $\textbf{S}$, podríamos calcular el área del triángulo $\triangle \textbf{PQR}$ y luego sumar el área del triángulo $\triangle \textbf{SRQ}$.
 Dicho de otra manera:
 
 \begin{eqnarray} 
@@ -194,7 +194,7 @@ A_{T} & = & \frac{1}{2} \vert \overrightarrow{\textbf{PQ}} \times \overrightarro
 A_{T} & = & \frac{1}{2} \left( \vert \overrightarrow{\textbf{PQ}} \times \overrightarrow{\textbf{PR}} \vert + \vert \overrightarrow{\textbf{SQ}} \times \overrightarrow{\textbf{SR}} \vert \right)
 \end{eqnarray}
 
-Este resultado de hecho, puede ampliarse aun más con el enunciado siguiente:
+Este resultado de hecho, puede ampliarse aún más con el enunciado siguiente:
 
 Sea $P$ un polígono simple, sin agujeros, dado por la secuencia ordenada de vértices $\textbf{P}_i = (x_i, y_i)$, $i = 1,\ldots,n$, (por ejemplo en el sentido contrario a las agujas del reloj), entonces el área de $P$ es:
 $$A(P) = \frac{1}{2}\sum^{n-1}_{i = 1} \det (\textbf{P}_i, \textbf{P}_{i + 1}) + \frac{1}{2} \det (\textbf{P}_n, \textbf{P}_1)$$
@@ -204,34 +204,36 @@ Con la adecuada combinación de estas técnicas es sencillo ingeniárselas para 
 
 \subsection{Cálculo de volúmenes}
 Calcular volúmenes es usualmente más complejo que calcular áreas, y por ende casi siempre es computacionalmente costoso, de ahí que además de maneras geométricas de calcular un volumen siempre está la alternativa de aproximar un volumen.
-De nuevo hay que pensar que queremos lograr con la simulación si rapidez en la ejecución, o apego a la realidad física.
+De nuevo hay que pensar qué queremos lograr con la simulación si rapidez en la ejecución, o apego a la realidad física.
 
 No hay que olvidar también que para todo modelo y sus respectivos parámetros, siempre hay diferentes grados de sensibilidad, por ejemplo en el caso de nuestro modelo el volumen sólo es utilizado para poder determinar la fuerza escalar de la presión, por lo que es un modelo \emph{poco sensible} al cálculo del volumen.
-Es decir, es válido aproximar en este rubro, sin perder mucha realidad en el modelo.
+Es decir, es válido aproximarse en este rubro en este rubro, sin perder mucha realidad en el modelo.
 
 \subsubsection{Volúmenes aproximados}
-Hay varias formas de aproximar el volumen de un cuerpo, una de ellas es con cajas envolventes o \emph{\foreignlanguage{english}{bounding boxes}}, la idea es muy simple se trata de aproximar el volumen de un cuerpo complejo mediante el volumen de un cuerpo simple que lo contenga.
+Hay varias formas de aproximar el volumen de un cuerpo, una de ellas es con cajas envolventes o \emph{\textenglish{bounding boxes}}, la idea es muy simple se trata de aproximar el volumen de un cuerpo complejo mediante el volumen de un cuerpo simple que lo contenga.
 Es decir, se aproxima el volumen por medio de poliedros regulares ya sean inscritos o circunscritos, tales que den una buena aproximación del cuerpo cuyo volúmen estamos calculando.
 
-Una forma mas simple es aproximando con un \emph{hexahedro regular} cuyo volumen es $ l \cdot w \cdot h $, o largo por alto por ancho; otra forma geométrica que se usa de manera muy común es el \emph{elipsoide}, cuyo volumen es $ \frac{4\pi}{3} a \cdot   b \cdot  c $, donde $a$, $b$ y $c$, son los largos de sus ejes principales.
+Una forma más simple es aproximando con un \emph{hexaedro regular} cuyo volumen es $ l \cdot w \cdot h $, o largo por alto por ancho; otra forma geométrica que se usa de manera muy común es el \emph{elipsoide}, cuyo volumen es $ \frac{4\pi}{3} a \cdot   b \cdot  c $, donde $a$, $b$ y $c$, son los largos de sus ejes principales.
+
 \subsubsection{Volúmenes Exactos}
 Una técnica muy útil para calcular el volúmen de una malla triangular se puede ver en~\cite{Zhang:volumen}.
 
 La técnica consiste recorrer todas la caras, y en cada una calcular el \emph{volumen orientado} del tetraedro cuya base es la cara triangular y cuya punta es el origen del sistema de referencia.
-El signo del volumen (por eso dijimos que es un volumen orientado) depende de si el tetraedo apunta hacia el origen.
-Eso quere decir que habrá algunos volúmenes que sean negativos y otros positivos, la suma de todos los volumenes es el volumen de la malla.
+El signo del volumen (por eso dijimos que es un volumen orientado) depende de si el tetraedro apunta hacia el origen.
+Eso quiere decir que habrá algunos volúmenes que sean negativos y otros positivos, la suma de todos los volúmenes es el volumen de la malla.
 
-Es importante que al usar esta formula, los triangulos apunten hacia el mismo lado de la malla.
-En otras palabras, se deben de definir un orden para los vértices de los triangulos (por ejemplo en contra de las manecillas del reloj) y se debe ser consistente en toda la malla.
-En efecto, esta técnica usa una normal a la cara del triángulo para orientar, pero dicha normal esta implicita por el orden de los vértices.
+Es importante que al usar esta fórmula, los triángulos apunten hacia el mismo lado de la malla.
+En otras palabras, se deben de definir un orden para los vértices de los triángulos (por ejemplo en contra de las manecillas del reloj) y se debe ser consistente en toda la malla.
+En efecto, esta técnica usa una normal a la cara del triángulo para orientar, pero dicha normal está implícita por el orden de los vértices.
 
-En resumen el volumen del la malla formada por $n$ caras traingulares esta dado por:
+En resumen el volumen del la malla formada por $n$ caras triangulares está dado por:
+
 \begin{equation}
 V = \frac{1}{6} \sum_{i=1}^{n} \textbf{g}_i \cdot \textbf{N}_i
 \label{eq:volumen}
 \end{equation}
 
-En donde $\textbf{g}_i$ y $\textbf{N}_i$ son el baricentro y la normal del triángulo $i$. Y asumiendo que dicho triangulo tiene vértices en el orden $\textbf{v}_{i}^{1}$, $\textbf{v}_{i}^{2}$ y $\textbf{v}_{i}^{3}$ se pueden calcular de la siguiente manera:
+En donde $\textbf{g}_i$ y $\textbf{N}_i$ son el baricentro y la normal del triángulo $i$. Y asumiendo que dicho triángulo tiene vértices en el orden $\textbf{v}_{i}^{1}$, $\textbf{v}_{i}^{2}$ y $\textbf{v}_{i}^{3}$ se pueden calcular de la siguiente manera:
 
 \begin{equation}
 \textbf{g}_{i} = \frac{(\textbf{v}_{i}^{1} + \textbf{v}_{i}^{2} + \textbf{v}_{i}^{3})}{3}
@@ -243,14 +245,14 @@ En donde $\textbf{g}_i$ y $\textbf{N}_i$ son el baricentro y la normal del triá
 \label{eq:normTriag}
 \end{equation}
 
-Como ya se dijo, se puede transformar cualquier malla poligonal en una malla triangular subdividiendo cada cara en triangulos.
-Por ejemplo, nuestro cuerpo neumático esta formado por caras en forma de cuadriláteros.
+Como ya se dijo, se puede transformar cualquier malla poligonal en una malla triangular subdividiendo cada cara en triángulos.
+Por ejemplo, nuestro cuerpo neumático está formado por caras en forma de cuadriláteros.
 Cada cara se puede partir por su diagonal para formar dos triángulos.
 
 \subsection{Vectores normales}
-Dado un plano podemos encontrar un vector que le sea normal, sólo necesitamos dos vectores linealmente independientes que se encuentren en el plano y calculando su producto cruz obtenemos un vector normal, es decir en términos mas simples, si conocemos tres puntos del plano y no son colineales, podemos calcular el vector perpendicular a ese plano.
+Dado un plano podemos encontrar un vector que le sea normal, sólo necesitamos dos vectores linealmente independientes que se encuentren en el plano y calculando su producto cruz obtenemos un vector normal, es decir en términos más simples, si conocemos tres puntos del plano y no son colineales, podemos calcular el vector perpendicular a ese plano.
 
-Matemáticemente: dado el triángulo formado por los puntos $\textbf{A}_1 = (x_1, y_1, z_1)$, $\textbf{A}_2 = (x_2, y_2, z_2)$ y $\textbf{A}_3 = (x_3, y_3, z_3)$, un vector normal a este plano, es el vector $\textbf{n}$ que se calcula:
+Matemáticamente: dado el triángulo formado por los puntos $\textbf{A}_1 = (x_1, y_1, z_1)$, $\textbf{A}_2 = (x_2, y_2, z_2)$ y $\textbf{A}_3 = (x_3, y_3, z_3)$, un vector normal a este plano, es el vector $\textbf{n}$ que se calcula:
 
 $$ \textbf{n} = \overrightarrow{\textbf{A}_1 \textbf{A}_2} \times \overrightarrow{\textbf{A}_1 \textbf{A}_3}$$
 
@@ -269,13 +271,13 @@ Una demostración se puede encontrar en \cite{GeometriaParaCAD}.
 
 \section{Integrar la ecuación de Newton}
 Desde que hay modelos físicos, ha habido interés en la solución numérica de ciertos problemas para los que se sabía de antemano que una solución existía, pero no se contaban con métodos analíticos para encontrarla.
-Es por esta razón que nace el análisis numérico, sin embrago no fue hasta que se popularizó el uso de las computadoras que este campo tomó más importancia.
+Es por esta razón que nace el análisis numérico, sin embargo no fue hasta que se popularizó el uso de las computadoras que este campo tomó más importancia.
 
 Dentro del análisis numérico, es de nuestro interés la solución numérica de ecuaciones diferenciales.
 El problema comienza con una ecuación de primer orden con condición inicial y que cumple las condiciones de existencia y unicidad.
 
 Actualmente, hay muchas maneras de atacar estos problemas, es decir muchas familias de métodos.
-Por familia quiero decir cuando alguien propone un método y llega otra persona más y le hace correcciones, ahora hay dos métodos pero en escencia funcionan con la misma idea, por eso son dos métodos de la misma familia.
+Por familia quiero decir que cuando alguien propone un método y llega otra persona más y le hace correcciones, ahora hay dos métodos pero en esencia funcionan con la misma idea, por eso son dos métodos de la misma familia.
 
 El primer método para obtener una aproximación numérica de la solución de una ecuación diferencial es el método de Euler, y desde entonces se han propuesto muchísimos métodos e ideas más.
 El Cuadro~\ref{historia:metodos} es una línea del tiempo que tiene algunos de los acontecimientos más importantes del desarrollo de esta disciplina.
@@ -289,7 +291,7 @@ Año & Evento \\
 \midrule
 1768 & Leonhard Euler publica su método, el primero en la historia \\
 1824 & Agustin Cauchy demuestra la convergencia del método de Euler, emplea el método de Euler implícito \\
-1855 & En una carta escrita por John F. Bashforth, se mencionan por primera vez los metodos de pasos multiples de Couch Adams \\
+1855 & En una carta escrita por John F. Bashforth, se mencionan por primera vez los métodos de pasos múltiples de Couch Adams \\
 1895 & Carl Runge publica el primer método de Runge Kutta \\ 
 1905 & Martin Kutta describe el popular método de Runge Kutta de orden cuatro \\ 
 1910 & Lewis Fry Richardson anuncia su método de extrapolación. \\
@@ -298,11 +300,11 @@ Año & Evento \\
 \bottomrule
 \end{tabular}
 \end{center}
-\caption[Evolución histórica de los métodos numéricos]{Una línea de tiempo que muestra algunos de los acontecimientos mas importantes para la solución numérica de ecuaciones diferenciales}
+\caption[Evolución histórica de los métodos numéricos]{Una línea de tiempo que muestra algunos de los acontecimientos más importantes para la solución numérica de ecuaciones diferenciales}
 \label{historia:metodos}
 \end{table}
 
-En escencia estos métodos se encargan de resolver la ecuacion diferencial de la forma:
+En esencia estos métodos se encargan de resolver la ecuación diferencial de la forma:
 \begin{eqnarray}
  \frac{d\textbf{y}}{dt} & = &\textbf{F}(t,\textbf{y}) \nonumber \\
  \textbf{y}(t_0) & = & \textbf{y}_0 \label{condicion:inicial}
@@ -401,7 +403,7 @@ De aquí en adelante cuando me refiera al error de un método numérico siempre 
 
 \subsubsection{Ventajas y desventajas del método de Euler}
 
-Como todo algortimo este método presenta ventajas y desventajas, éstas se deben tanto al método como a su implementacion en este modelo.
+Como todo algoritmo este método presenta ventajas y desventajas, éstas se deben tanto al método como a su implementación en este modelo.
 Aquí listaré algunas de ellas.
 
 Ventajas:
@@ -439,14 +441,14 @@ Al igual que en el método de Euler, existe una generalización del método de R
 En casi cualquier libro de ecuaciones se pueden ver estas fórmulas (por ejemplo en~\cite{Blanchard:Ecuaciones}); aquí solo pongo el caso $n=2$ porque es el que voy a ocupar en el modelo.
 
 Supongamos que tenemos de nuevo el sistema~\eqref{sistema:general}, sujeto a~\eqref{condiciones:general}.
-Podemos aproximar una solución usando el método de Ruge Kutta con la siguiente fórmula de recurrencia, suponiendo que queremos ir de $t_n$ a $t_{n+1}$.
+Podemos aproximar una solución usando el método de Runge Kutta con la siguiente fórmula de recurrencia, suponiendo que queremos ir de $t_n$ a $t_{n+1}$.
 
 \begin{eqnarray}
 \textbf{x}_{n+1} & = & \textbf{x}_n + \frac{h(\textbf{k}_{n}^{1} + 2\textbf{k}_{n}^{2} + 2\textbf{k}_{n}^{3} + \textbf{k}_{n}^{4})}{6} \nonumber \\
 \textbf{y}_{n+1} & = & \textbf{y}_n + \frac{h(\textbf{l}_{n}^{1} + 2\textbf{l}_{n}^{2} + 2\textbf{l}_{n}^{3} + \textbf{l}_{n}^{4}))}{6} \nonumber
 \end{eqnarray}
 
-Aquí podemos apreciar que ahora tenemos que encontrar ocho ponderadores, los $\textbf{k}_{i}^{j}$ y los $\textbf{l}_{i}^{j}$ significa que tenemos mas cálculos por hacer.
+Aquí podemos apreciar que ahora tenemos que encontrar ocho ponderadores, los $\textbf{k}_{i}^{j}$ y los $\textbf{l}_{i}^{j}$ significa que tenemos más cálculos por hacer.
 Los valores de los ponderadores se calculan con las siguientes fórmulas.
 
 \begin{eqnarray}
@@ -468,7 +470,7 @@ y
 
 El método de Runge Kutta, es mucho más exacto que el método de Euler, de hecho se puede apreciar que el método de Euler, aproxima el siguiente paso con el valor de una pendiente, en cambio el método de Runge Kutta aproxima el siguiente paso con el valor de cuatro pendientes ponderadas, cada una calculada con la aproximación de la anterior.
 
-Supongamos que se tiene de nuevo~\eqref{sistema:particular} sujeto a las condiciones~\eqref{condiciones:particular}, entonces el metodo de Runge Kutta toma la siguiente forma:
+Supongamos que se tiene de nuevo~\eqref{sistema:particular} sujeto a las condiciones~\eqref{condiciones:particular}, entonces el método de Runge Kutta toma la siguiente forma:
 
 \begin{eqnarray}
 \textbf{v}_{n+1} & = & \textbf{v}_n + \frac{h}{6}(\textbf{k}_{n}^{1} + 2\textbf{k}_{n}^{2} + 2\textbf{k}_{n}^{3} + \textbf{k}_{n}^{4}) \nonumber \\
@@ -490,11 +492,11 @@ Y los ponderadores se pueden calcular de la siguiente manera:
 \label{ponderadores:RK4}
 \end{eqnarray}
 
-\subsubsection{El error del método de Rungue Kutta}
+\subsubsection{El error del método de Runge Kutta}
 Se puede demostrar por medios algebraicos y de la misma manera que se empleó con el método de Euler que el método de Runge Kutta tiene un error del orden de $\textbf{O}(h^5)$.
 Es decir si partimos el intervalo $h$ por la mitad, y damos el doble de pasos el error por truncamiento disminuye en un orden de 16 veces (es decir $\left( \frac{h}{2} \right)^4$, como el error es del orden de $O(h^5)$ se hace $h^4$ veces más exacto).
 
-\subsubsection{Ventajas y desventajas del metodo de Runge Kutta}
+\subsubsection{Ventajas y desventajas del método de Runge Kutta}
 Como se puede leer en la bibliografía, el método de Euler y el método de Runge Kutta dependen del tamaño del paso $h$, y se hacen más exactos mientras el paso es más pequeño, pero también se hacen más cálculos, por lo que aumenta la fuente del otro tipo de error, el error por redondeo.
 Se acepta de manera general, que de este tipo de métodos, aquel que optimiza esta situación es el método de Runge Kutta de cuarto orden, el método que acabamos de presentar.
 
@@ -515,11 +517,11 @@ Desventajas
 \end{itemize}
 
 \section{Cómo enfrentar la colisión de los cuerpos}
-Por colisión de los cuerpos entenderemos la manera como lidiar cuando dos cuerpos dentro de la escena quedan en contacto uno con el otro.
+Por colisión de los cuerpos entenderemos la manera cómo lidiar cuando dos cuerpos dentro de la escena quedan en contacto uno con el otro.
 Desde nuestro punto de vista esta respuesta se divide en dos pasos: la detección de la colisión y la respuesta a la colisión.
 
 La detección es totalmente un problema geométrico, consiste en que a partir de la información que tenemos de los cuerpos y de la colisión podemos determinar el punto de la colisión y un vector normal a ese punto, este problema es totalmente dependiente de la forma de los cuerpos.
-Por el otro lado la respuesta a la colisión es un problema físico y generalmente es más sencillo debido que ya existen algoritmos bien definidos para responder a las colisiones y son independientes de la geometría, es decir son algoritmos generales.
+Por otro lado, la respuesta a la colisión es un problema físico y generalmente es más sencillo debido a que ya existen algoritmos bien definidos para responder a las colisiones y son independientes de la geometría, es decir son algoritmos generales.
 
 En nuestro caso el cuerpo flexible está formado por partículas.
 Para resolver las colisiones consideramos cada partícula como un cuerpo independiente y tratamos la posible colisión de cada una con la esfera por separado.
@@ -528,22 +530,23 @@ Para resolver las colisiones consideramos cada partícula como un cuerpo indepen
 Como ya se dijo antes la detección de las colisiones es uno de los problemas más complejos que nos podemos enfrentar al hacer una animación.
 Básicamente debemos de poder hacer dos cosas aquí: uno, detectar la colisión, es decir mediante una prueba rápida saber si los cuerpos de nuestra escena entraron en contacto, y después ver si podemos determinar un vector normal al punto (o superficie en 3D) de colisión.
 
-Hay básicamente dos tipos de estrategias para resolver este problema, una es por medio de un \foreignlanguage{english}{\emph{bounding volume}}, que se trata de darle la vuelta al problema con una aproximación y otra es por medios estrictamente geométricos es decir tratar de dividir tus cuerpos en figuras de formas elementales, como esferas o paralelepípedos para los cuales las detección es un poco más sencilla.
+Hay básicamente dos tipos de estrategias para resolver este problema, una es por medio de un \emph{\textenglish{bounding volume}}, que se trata de darle la vuelta al problema con una aproximación y otra es por medios estrictamente geométricos es decir tratar de dividir tus cuerpos en figuras de formas elementales, como esferas o paralelepípedos para los cuales las detección es un poco más sencilla.
 
-\subsubsection{Un \foreignlanguage{english}{\emph{bounding volume}}}
+\subsubsection{Un \emph{\textenglish{bounding volume}}}
 Básicamente se trata de imaginar que hay un envolvente de nuestro objeto y este envolvente tiene una forma más sencilla, entonces al probar por la colisión se prueba con el envolvente no con el objeto.
-Esto tiene la enorme desventaja de ser una aproximación, por lo que la animación se vera un poco saltada, sin embargo una cuidadosa elección del objeto envolvente hará que este efecto sea mínimo.
+Esto tiene la enorme desventaja de ser una aproximación, por lo que la animación se verá un poco saltada, sin embargo una cuidadosa elección del objeto envolvente hará que este efecto sea mínimo.
 
-Objetos como las elipses, los paralelepípedos y los cilindros son buenos objetos para ser un \foreignlanguage{english}{\emph{bounding volume}}, porque la detección de la colisión es sencilla.
+Objetos como las elipses, los paralelepípedos y los cilindros son buenos objetos para ser un \emph{\textenglish{bounding volume}}, porque la detección de la colisión es sencilla.
 
 Por ejemplo, en una esfera podemos determinar si un punto esta dentro de ella con tan sólo comparar el cuadrado de su distancia con respecto al centro de la esfera, con el cuadrado del radio. 
 
 Un cilindro con el eje vertical alineado con el eje de la escena es también muy usado.
 Si queremos saber si dos objetos contenidos en un cilindro, por ejemplo en un videojuego dos personajes caminando, chocan, sólo debemos ver si la proyección de los ejes principales de los cilindros sobre el eje de la escena (líneas rectas) se interceptan y además las proyecciones de los dos cilindros con el plano $XZ$ (dos círculos) también se intersecan.
 
-Un paralelepípedo o rectángulo, o \foreignlanguage{english}{\emph{bounding box}}, también se usa mucho, por ejemplo cuando la geometría de los objetos hace a la esfera una mala elección, por ejemplo al ver si dos coches chocan en un juego de carreras el rectángulo es una elección mas sabia.
+Un paralelepípedo o rectángulo, o \emph{\textenglish{bounding box}}, también se usa mucho, por ejemplo cuando la geometría de los objetos hace a la esfera una mala elección, por ejemplo al ver si dos coches chocan en un juego de carreras el rectángulo es una elección mas sabia.
 
-Un rectángulo usado como \foreignlanguage{english}{\emph{bounding box}} generalmente se alinea con las coordenadas del mundo, para así hacer las pruebas de detección triviales, si  por el contrario el rectángulo es alineado con las coordenadas del objeto y este tiene la capacidad de rotar, cada vez que lo haga se necesita volver a calcular el  \foreignlanguage{english}{\emph{bounding box}}.
+Un rectángulo usado como \emph{\textenglish{bounding box}} generalmente se alinea con las coordenadas del mundo, para así hacer las pruebas de detección triviales, si  por el contrario el rectángulo es alineado con las coordenadas del objeto y este tiene la capacidad de rotar, cada vez que lo haga se necesita volver a calcular el \emph{\textenglish{bounding box}}.
+
 \subsubsection{Uniendo diferentes geometrías}
 Una manera más exacta de predecir si dos objetos de una escena están en colisión, es descomponer la forma completa de un objeto en varios objetos pequeños, y luego probar contra todos los objetos que componen el cuerpo si es que existió la colisión.
 Por ejemplo, en el caso de la simulación del cuerpo flexible se podría pensar como que cada partícula que forma el cuerpo es un objeto y luego probar la colisión contra todas las partículas que forman el cuerpo flexible.
@@ -556,24 +559,24 @@ Como ya habíamos dicho, el trabajo difícil y dependiente de la animación est�
 Para empezar las colisiones se dividen en dos: elásticas e inelásticas.
 La implementación de ambas no se diferencia mucho, aunque sí son diferentes en concepto.
 
-Básicamente en un algoritmo de respuesta de colisiones, se suministran las posiciones y las velocidades de los dos objetos que coliden, más un vector normal unitario al punto de colisión de los dos objetos, o plano normal en el caso de tres dimensiones.
-Desde luego que hay dos vectores que cumplen con esa condición, cualquiera de ellos nos servirá siempre y cuando sepamos cual de ellos es el que tenemos.
+Básicamente en un algoritmo de respuesta de colisiones, se suministran las posiciones y las velocidades de los dos objetos que colisionan, más un vector normal unitario al punto de colisión de los dos objetos, o plano normal en el caso de tres dimensiones.
+Desde luego que hay dos vectores que cumplen con esa condición, cualquiera de ellos nos servirá siempre y cuando sepamos cuál de ellos es el que tenemos.
 Ya con esta información debemos ser capaces de responder con dos cosas: una nueva posición de los objetos y una nueva velocidad.
 
 En la Figura~\ref{colision:fig} se ven los diferentes pasos de la respuesta a la colisión de dos círculos.
 
-
 \subsubsection{Separar un vector en componentes normal y tangencial}
-Antes de explicar la forma en que se responden las colisiones quiero hacer énfasis en la manera como separa un vector en componentes ortogonales (Figura \ref{comVec:fig}), porque es necesario hacerlo en la respuesta a las colisiones.
 
-Para separar a un vector cualquiera $\textbf{v}$ en dos componentes: uno normal $\textbf{v}_n$, y otro tangencial $\textbf{v}_t$ respecto a un vector normal $\textbf{n}$, se hace uso de las siguientes fórmula:
+Antes de explicar la forma en que se responden las colisiones quiero hacer énfasis en la manera cómo separar un vector en componentes ortogonales (Figura \ref{comVec:fig}), porqué es necesario hacerlo en la respuesta a las colisiones.
+
+Para separar a un vector cualquiera $\textbf{v}$ en dos componentes: uno normal $\textbf{v}_n$, y otro tangencial $\textbf{v}_t$ respecto a un vector normal $\textbf{n}$, se hace uso de las siguientes fórmulas:
 
 \begin{eqnarray}
 \textbf{v}_n & = &\frac{(\textbf{v} \cdot \textbf{n})}{|\textbf{n}|} \frac{\textbf{n}}{|\textbf{n}|} \nonumber \\
 \textbf{v}_t & = & \textbf{v} - \textbf{v}_n \nonumber
 \end{eqnarray}
 
-Como en los cálculos de detección de colisiones es común que tengamos un vector normal $\vec{\textbf{n}}$, tal que: $|\vec{\textbf{n}}| = 1$, las fórmulas anteriores se simplifican aun más siendo la forma más usada las ecuaciones~\eqref{eq:sepVector}\footnote{Las fórmulas~\eqref{eq:sepVector}, se encuentran mal escritas en~\cite{BaraffWitkin:Coursenotes}, y esta fue una de las razones que más me retrasó al momento de hacer este trabajo.}:
+Como en los cálculos de detección de colisiones es común que tengamos un vector normal $\vec{\textbf{n}}$, tal que: $|\vec{\textbf{n}}| = 1$, las fórmulas anteriores se simplifican aún más siendo la forma más usada las ecuaciones~\eqref{eq:sepVector}\footnote{Las fórmulas~\eqref{eq:sepVector}, se encuentran mal escritas en~\cite{BaraffWitkin:Coursenotes}, y esta fue una de las razones que más me retrasó al momento de hacer este trabajo.}:
 
 \begin{eqnarray}
 \textbf{v}_n & = &(\textbf{v} \cdot \vec{\textbf{n}}) \vec{\textbf{n}} \nonumber \\
@@ -623,7 +626,7 @@ Suponemos que este vector apunta del cuerpo $A$ al cuerpo $B$ y que es también 
 Suponemos también que conocemos todas las propiedades de los cuerpos, es decir su masa, su velocidad y su posición.
 
 Queremos determinar una nueva posición y una nueva velocidad para los objetos como resultado de la colisión entre ellos (Figura~\ref{fig:coliAjusta}).
-Esto se resumen el Cuadro~\ref{condiciones:Colision}.
+Esto se resume en el Cuadro~\ref{condiciones:Colision}.
 
 \begin{table}
 \ra{1.2}
@@ -663,7 +666,7 @@ Con este vector podemos dividir los demás vectores en una parte normal al plano
  \textbf{w} & = & \textbf{w}_t + \textbf{w}_n \nonumber
 \end{eqnarray}
 
-Ahora veamos que es lo qué sabemos de antemano por la forma como planteamos las condiciones del problema: sabemos que: $\textbf{u}_t = \textbf{s}_t$ y $\textbf{v}_t = \textbf{w}_t = \textbf{0}$, porque esperaríamos que las velocidades sólo se vieran afectadas en su componente normal y porque sabemos que el objeto $B$ estaba inicialmente en reposo.
+Ahora veamos qué es lo qué sabemos de antemano por la forma como planteamos las condiciones del problema: sabemos que: $\textbf{u}_t = \textbf{s}_t$ y $\textbf{v}_t = \textbf{w}_t = \textbf{0}$, porque esperaríamos que las velocidades sólo se vieran afectadas en su componente normal y porque sabemos que el objeto $B$ estaba inicialmente en reposo.
 Así que lo único que necesitamos saber es $\textbf{s}_n$ y $\textbf{w}_n$.
 
 Se sabe también que, como la colisión es elástica, debe de obedecer la ley de la conservación de la energía~\eqref{eq:energia} y la la ley de la conservación de momento~\eqref{eq:momento}.
@@ -710,7 +713,7 @@ Con esto se tiene todo lo necesario  para resolver una colisión elástica con u
 \par
 }
 
-En donde la función \verb|parteNormal|, es una función que recibe un vector $\textbf{u}$ y un vector $\textbf{n}$, devuelve la parte normal de $\textbf{u}$ con respecto a $\textbf{n}$.
+En donde la función \mintinline{cpp}{parteNormal}, es una función que recibe un vector $\textbf{u}$ y un vector $\textbf{n}$, devuelve la parte normal de $\textbf{u}$ con respecto a $\textbf{n}$.
 Es decir, nos sirve para partir al vector $\textbf{u}$ en una parte tangencial y una parte normal a la colisión haciendo uso de las fórmulas \eqref{eq:sepVector}.
 
 Ahora veamos el caso más general, donde $\textbf{v} \neq \textbf{0}$. Aquí vamos a ocupar el principio de relatividad y le restamos a todo el sistema $\textbf{v}$, lo que lo transforma en el caso anterior. Resolvemos como lo habíamos hecho antes y luego le sumamos a todo el sistema $\textbf{v}$. El pseudocódigo es casi idéntico:
@@ -718,7 +721,7 @@ Ahora veamos el caso más general, donde $\textbf{v} \neq \textbf{0}$. Aquí vam
 {\centering
 \begin{minipage}{\linewidth}
   \begin{algorithm}[H]
-    \caption{Respuesta a una colisión elástica con ambos cuerpos en movimeinto}
+    \caption{Respuesta a una colisión elástica con ambos cuerpos en movimiento}
     \label{alg:elasmov}
     \begin{algorithmic}[1] % The number tells where the line numbering should start 0 for no number
 \Procedure{RespuestaColisionElastica}{$\textbf{u}, \textbf{v}, \textbf{n}, m, p$}
@@ -743,14 +746,14 @@ Con esto podemos programar un función general que resuelva colisiones elástica
 Vuelvo a hacer énfasis en que para nuestro caso, la colisión de cada partícula con la esfera debe resolverse de manera separada e independiente.
 
 \subsubsection{Colisiones inelásticas}
-En una colisión inelástica se tienen una pérdida de energía como respuesta al impacto.
+En una colisión inelástica se tiene una pérdida de energía como respuesta al impacto.
 En la realidad las colisiones son inelásticas, podemos apreciar parte de la pérdida de la energía, al escuchar el sonido de la colisión.
 Por ejemplo en el billar.
 
-Para simular un colisión inelástica, vamos también a hacer una suposición: que los objetos tiene una cierta eficiencia, y que ésta se mantiene fija para todas las colisiones que involucren ese objeto.
+Para simular una colisión inelástica, vamos también a hacer una suposición: que los objetos tienen una cierta eficiencia, y que ésta se mantiene fija para todas las colisiones que involucran ese objeto.
 Es una gran simplificación porque en la realidad la eficiencia de una colisión depende de muchos factores, como el medio ambiente, o la velocidad de los objetos al momento de la colisión.
 
-Si dos objetos chocan y uno de ellos tiene \emph{coeficiente de restitución} de 0.9 y el otro un coeficiente de restitución de 0.85, la energía total después de la colisión seria: $\left( \text{0.9} \cdot \text{0.85} \right) \left(  E_b + E_a \right)$.
+Si dos objetos chocan y uno de ellos tiene \emph{coeficiente de restitución} de 0.9 y el otro un coeficiente de restitución de 0.85, la energía total después de la colisión sería: $\left( \text{0.9} \cdot \text{0.85} \right) \left(  E_b + E_a \right)$.
 Donde $E_a$ y $E_b$ es la energía de cada objeto antes de la colisión.
 Como se puede ver, el coeficiente de restitución es una manera de medir la \emph{eficiencia} y significa que el primer objeto después de una colisión transmite por ejemplo el 95 por ciento de su energía.
 
@@ -760,7 +763,7 @@ Para resolver una colisión inelástica se usa el mismo procedimiento que en la 
  \label{eq:energiaIne} 
 \end{equation} 
 
-Donde $e$ es el producto de los coeficientes de restitución de ambos objetos. Y se procede de la misma manera que en el caso anterior a calcular los valores de $\textbf{w}_n$ y $\textbf{s}_n$. Resolviendo el sistema formado por las ecuaciónes~\eqref{eq:momento} y~\eqref{eq:energiaIne}.
+Donde $e$ es el producto de los coeficientes de restitución de ambos objetos. Y se procede de la misma manera que en el caso anterior a calcular los valores de $\textbf{w}_n$ y $\textbf{s}_n$. Resolviendo el sistema formado por las ecuaciones~\eqref{eq:momento} y~\eqref{eq:energiaIne}.
 
 Las nuevas soluciones son: 
 \begin{eqnarray}
