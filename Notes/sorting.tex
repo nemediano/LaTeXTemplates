@@ -1,0 +1,129 @@
+\section{Sorting algorithms}
+
+In this section I will revisit the four sorting algorithms that are must-know for coding interviews.
+I will start with some basic considerations on what to look for on a sorting algorithm and why there is not a \emph{perfect} sorting algorithm.
+After that, I visit the four most commonly used in coding interviews.
+For each of them, I will show the general algorithm in pseudocode and then two implementations:
+\begin{enumerate}
+ \item An implementation using arrays since this is the easiest to understand.
+ \item An implementation using the \href{https://en.wikibooks.org/wiki/More_C\%2B\%2B_Idioms/Iterator_Pair}{iterator idiom} in C++. Since this is the trickiest, and therefore asked in many interview questions.
+\end{enumerate}
+
+\subsection{Desired properties for sorting algorithms}
+
+The sorting problem states that: Given a \emph{collection} (very likely and array) of $n$ \emph{elements} (usually assumed to be numbers, without loss of generality) and an \emph{order} defined on the elements (a way of telling for each two of them who is the lesser or if they are equal), we are interested in an algorithms that is able to return a permutation $(e_1, e_2, \ldots, e_n)$ of the elements in the collection such that $e_i \leq e_{i + 1}$, for $i \in [1, n-1]$
+
+It is shown in any Computer Science class on Algorithms that theoretically the best running time we can achieve for a sorting algorithm is $O(n \cdot \lg n)$.
+
+This is true only when we have \emph{certain} considerations for the computation model and the input. The most important are:
+
+\begin{itemize}
+ \item That we do not impose any restrictions on the input data. Particularly, we do not assume that the input entries are in any specific range. Nor that they are arriving at a certain time.
+ \item That the algorithm is based on comparisons. In other words: the computer is only able to take \emph{two} elements at a time, from the input to compare them.
+\end{itemize}
+
+Assuming, that we have the two condition above, we are interested on an algorithm that is able to to sort the input data. 
+The algorithms can have many desired properties, but the ones that we are usually interested are:
+
+\begin{description}
+ \item[Optimal] The algoritm runs in $O(n \cdot \lg n)$, for all valid inputs.
+ \item[In place] The algorithm only requieres a constant $O(1)$ amount of extra space to operate.
+ \item[Stable] If some elements of the input are equall, in the output those elements appear on the same order as they were in the input.
+\end{description}
+
+There has not been discover a \emph{simple} algorithm that has all these properties\footnote{Algorithms that have all these properites indeed exist. See for example \href{https://en.wikipedia.org/wiki/Block_sort}{block sort}. But they are very complex and no one will be expected to know them in a normal coding interiview}.
+However, we have in particular four algorithms that have some of this properites, we can see a summary in Table~\ref{tab:sorting}.
+
+\begin{table}[htb]
+  \begin{center}
+    \begin{tabular}{l | r r r | l}
+      Algorithm & Optimal & In place & Stable & Comment\\
+      \midrule
+      Selection sort & No & Yes & No & Always runs in $O(n^2)$, but it's very easy to implement\\
+      Quicksort & No & Yes & Yes & On average runs in $O(n \cdot \lg n)$. The worst case it's $O(n^2)$ \\
+      Mergesort & Yes & No & Yes & It requieres $O(n)$ extra memory\\
+      Heapsort & Yes & Yes & No & \\
+    \end{tabular}
+  \end{center}
+\caption{Summary of the properities of the exposed algorithms}
+\label{tab:sorting}
+\end{table}
+
+\subsection{Selection sort}
+
+This is one of the simplest algorithms for sorting that exist.
+If a novice programmer that has never taken a class on algorithms is asked to create a sorting algorithm, chances are that it will come up with selection sort.
+The value for a coding interview is like some sort of \emph{panic sort}.
+
+If you are tasked to create an algorithm that at some point requires sorting; and your interviewer asks you to implement to the smallest detail (which is very unlikely to happen).
+You can always default back to insertion sort if you do not want to spend precious time thinking on the sorting part.
+That is after saying to your interviewer that you know this is a bad algorithm, and you are using it \emph{only} because you do not have more time.
+
+Having said that, if you face a problem where sorting is an essential part of the answer, using selection sort is a \emph{very bad} solution.
+
+In essence, selection sort uses one simple fact:
+
+The best way to find the minimum (or maximum for that matters) element of an array, takes $O(n)$ and it is the following:
+\begin{enumerate}
+ \item Assume that the minimum is the first element of the array.
+ \item Compare the next element to the minimum. If that element is smaller, mark it as the new minimum.
+ \item Continue doing the previous step until you reach the end of the array.
+\end{enumerate}
+
+Now that we know this simple fact, selection sort is very simple.
+
+\begin{enumerate}
+ \item Find the minimum element of the array.
+ \item If the minimum is not at the beginning of the array, swap the minimum with the first element of the array.
+ \item Assume that you have now a smaller array consisting of the second element of the array until the end.
+ \item Repeat from step 1 until you don't have any more elements.
+\end{enumerate}
+
+Indeed selection sort have this name because at each step you \emph{select} the minimun element to place it at his corresponding place.
+
+The Algorithm~\ref{alg:selectionsort} shows the formal details to implement selection sort.
+To make the pseudocode easier I assume a zero based indexing.
+In other words the first element of the array $V$ is $v_0$ and the last element is $v_{n-1}$
+
+\begin{algorithm}[H]
+\caption{Selection sort}
+\label{alg:selectionsort}
+\begin{algorithmic}[1] % El número le dice al entorno desde que número empezar a contar. Si le pones 0 omite los números
+\Require $V = \{ v_0, v_1, \ldots, v_{n-1} \} $ \Comment{An array $V$ of size $n$}
+\Ensure $V\text{ such that } v_i \leq v_{i + 1}, \forall i \in [0, n-2]$ \Comment{The array $V$ with his elements sorted}
+\Procedure{InsertionSort}{$V$}
+\For{$j \gets 1 \textbf{ to } n-1 \textbf{ step } 1$}
+    \State $\text{min} \gets j$ \Comment{Assume the minimum is at the start}
+    \For{$i \gets j+1 \textbf{ to } n-1 \textbf{ step } 1$} \Comment{Search for the actual minimum in the remainder of the interval}
+        \If {$v_i < v_{\text{min}}$}
+            \State $\text{min} \gets i$
+        \EndIf
+    \EndFor
+    \If {$\text{min} \neq j$} \Comment{If the minimum it's not at the start}
+        \State $\text{min} \leftrightarrow j$ \Comment{swap the two elements}
+    \EndIf
+\EndFor
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+The Listing~\ref{lst:selectionsort} shows the implementation on actual C++ code using arrays. Or \mintinline{cpp}{std::vector}s to be more precise.
+To be complete the Listing~\ref{lst:selectionsort} also shows an implementation of   insertion sort in C++ using iterators.
+
+\begin{listing}
+\inputminted[
+  firstline=7, %If you omit this two fields, the whole file is pulled
+  lastline=23
+  ]{cpp}{src/sortAlgorithms.cpp}
+  \caption{An implementation of insertion sort in C++ using a vector}\label{lst:selectionsort}
+\end{listing}
+
+\begin{listing}
+\inputminted[
+  firstline=42, %If you omit this two fields, the whole file is pulled
+  lastline=59
+  ]{cpp}{src/sortAlgorithms.h}
+  \caption{An implementation of insertion sort in C++ using iterators}\label{lst:selectionsortiter}
+\end{listing}
+ 
+
