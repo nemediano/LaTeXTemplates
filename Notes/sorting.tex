@@ -1,11 +1,11 @@
 \section{Sorting algorithms}
 
-In this section I will revisit the four sorting algorithms that are must-know for coding interviews.
+In this section I will revisit the four sorting algorithms that are a must-know for coding interviews.
 I will start with some basic considerations on what to look for on a sorting algorithm and why there is not a \emph{perfect} sorting algorithm.
 After that, I visit the four most commonly used in coding interviews.
 For each of them, I will show the general algorithm in pseudocode and then two implementations:
 \begin{enumerate}
- \item An implementation using arrays since this is the easiest to understand.
+ \item An implementation using arrays of integers since this is the easiest to understand.
  \item An implementation using the \href{https://en.wikibooks.org/wiki/More_C\%2B\%2B_Idioms/Iterator_Pair}{iterator idiom} in C++. Since this is the trickiest, and therefore asked in many interview questions.
 \end{enumerate}
 
@@ -92,7 +92,7 @@ In other words the first element of the array $V$ is $v_0$ and the last element 
 \Require $V = \{ v_0, v_1, \ldots, v_{n-1} \} $ \Comment{An array $V$ of size $n$}
 \Ensure $V\text{ such that } v_i \leq v_{i + 1}, \forall i \in [0, n-2]$ \Comment{The array $V$ with his elements sorted}
 \Procedure{InsertionSort}{$V$}
-\For{$j \gets 1 \textbf{ to } n-1 \textbf{ step } 1$}
+\For{$j \gets 0 \textbf{ to } n-1 \textbf{ step } 1$}
     \State $\text{min} \gets j$ \Comment{Assume the minimum is at the start}
     \For{$i \gets j+1 \textbf{ to } n-1 \textbf{ step } 1$} \Comment{Search for the actual minimum in the remainder of the interval}
         \If {$v_i < v_{\text{min}}$}
@@ -164,7 +164,7 @@ Since this is a recursive algorithm the first call to sort the whole array will 
 \Require $V = \{ v_0, v_1, \ldots, v_{n-1} \} $ and $[b,e)$ \Comment{An array $V$ of size $n$, and an inerval $[b,e)$ with $0 \leq b \leq e \leq n$}
 \Ensure $V\text{ such that } v_i \leq v_{i + 1}, \forall i \in [0, n-2]$ \Comment{The array $V$ with his elements sorted}
 \Procedure{QuickSort}{$V$, $b$, $e$} \Comment{$b$ stands for \emph{begin} and $e$ for \emph{end}}
-    \If {$e - b > 1$} \Comment{If the interval contains more than one element}
+    \If {$(e - b) > 1$} \Comment{If the interval contains more than one element}
         \State $p \gets$ \Call{Partition}{$V$, $b$, $e$} \label{endPartition} \Comment{Make a partition of $V$ and get the partition point $p$}
         \State \Call{QuickSort}{$V$, $b$, $p$} \Comment{Order one half}
         \State \Call{QuickSort}{$V$, $p + 1$, $e$} \Comment{Order one other half}
@@ -254,7 +254,7 @@ The pseudocode for Mergesort is shown in the Algorithm~\ref{alg:mergesort}.
 \Require $V = \{ v_0, v_1, \ldots, v_{n-1} \} $ and $[b,e)$ \Comment{An array $V$ of size $n$, and an interval $[b,e)$ with $0 \leq b \leq e \leq n$}
 \Ensure $V\text{ such that } v_i \leq v_{i + 1}, \forall i \in [0, n-2]$ \Comment{The array $V$ with his elements sorted}
 \Procedure{MergeSort}{$V$, $b$, $e$} \Comment{$b$ stands for \emph{begin} and $e$ for \emph{end}}
-    \If {$e - b > 1$} \Comment{If the interval contains more than one element}
+    \If {$(e - b) > 1$} \Comment{If the interval contains more than one element}
         \State $m \gets \frac{(e + b)}{2}$ \Comment{Calculate the middle point of the array}
         \State \Call{MergeSort}{$V$, $b$, $m$} \Comment{Order one half}
         \State \Call{MergeSort}{$V$, $m$, $e$} \Comment{Order one other half}
