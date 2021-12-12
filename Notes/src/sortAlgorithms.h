@@ -65,14 +65,12 @@ void merge(const Iterator begin, const Iterator middle, const Iterator end) {
 	Iterator lowHalfIt = begin; // index of the lower (left) half
 	Iterator highHalfIt = middle; // index of the upper (right) half
 	//Create a temporary merge buffer
-	std::vector<typename Iterator::value_type> buffer(
-			std::distance(begin, end));
+	std::vector<typename Iterator::value_type> buffer(std::distance(begin, end));
 	// Merge the two halves into the buffer
 	for (auto it = buffer.begin(); it != buffer.end(); ++it) {
 		// If the lower half list is not over and (the second list is over OR the minimum)
 		// Look for the minimum element of both list current indices
-		if (lowHalfIt != middle
-				&& (highHalfIt == end || *lowHalfIt <= *highHalfIt)) {
+		if (lowHalfIt != middle	&& (highHalfIt == end || *lowHalfIt <= *highHalfIt)) {
 			// Take the one from the lower half
 			*it = *lowHalfIt;
 			lowHalfIt++;
@@ -110,8 +108,7 @@ void merge_sort(const Iterator begin, const Iterator end) {
 // following helper functions.
 // Return an iterator to the the left child or end if it does not exist
 template<typename Iterator>
-inline Iterator left_child(const Iterator &parentIter, const Iterator &begin,
-		const Iterator &end) {
+inline Iterator left_child(const Iterator &parentIter, const Iterator &begin, const Iterator &end) {
 	Iterator result = parentIter;
 	// Maximum valid advance of the current iterator
 	size_t max_move = std::distance(parentIter, end);

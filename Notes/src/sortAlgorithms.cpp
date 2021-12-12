@@ -85,9 +85,7 @@ void merge(vector<int> &input, size_t begin, size_t middle, size_t end) {
 	for (size_t i = 0; i < buffer.size(); ++i) {
 		// If the lower half list is not over and (the second list is over OR the minimum)
 		// Look for the minimum element of both list current indices
-		if (lowHalfIndex < middle
-				&& (highHalfIndex >= end
-						|| input[lowHalfIndex] <= input[highHalfIndex])) {
+		if (lowHalfIndex < middle && (highHalfIndex >= end || input[lowHalfIndex] <= input[highHalfIndex])) {
 			// Take the one from the lower half
 			buffer[i] = input[lowHalfIndex];
 			lowHalfIndex++;

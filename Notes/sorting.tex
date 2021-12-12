@@ -138,7 +138,8 @@ The two most dominant schemes of partition are Lobuto and Ohare.
 Since we are studying for an interview, we are going to be using Lobuto, since the code is cleaner.
 That being said, Ohare's scheme is considered a more efficient algorithm.
 
-First we present the basic idea behind all quicksort families.
+First we present the basic idea behind all quicksort families. 
+These are divide and conquer algorithms, so they subdivide the problem and call themselves recursivelly.
 
 \begin{enumerate}
  \item If the array to be sorted has less than 2 elements, it is already sorted; you do not need to do anything just return.
@@ -229,4 +230,114 @@ Listing~\ref{lst:quicksortIterator} shows the implementation of the main functio
   lastline=25
   ]{cpp}{src/sortAlgorithms.h}
   \caption{Lobuto's partition using iterators}\label{lst:partitionIterator}
+\end{listing}
+
+\subsection{Mergesort}
+
+This is another divide and conquer algorithm.
+This is also an optimal algorithm, it always runs in $O(n \cdot \lg n)$.
+Mergesort is also a stable algorithm and it's somehow easy to implement.
+The only drawback is that it requires an extra $O(n)$ of space to operate.
+In other words this is \emph{not} an in place algorithm.
+
+The idea behind merge sort is \emph{similar} to quicksort in the sense that first divides the input in two and then sorts recursively the resulting parts.
+Therefore, it will also require to keep track of the interval $[b,e)$ that is currently sorting.
+
+The array is first divided in halves and then each half is sorted.
+Then, both (already ordered) halves are \emph{merge} into a complete sorted array.
+The pseudocode for Mergesort is shown in the Algorithm~\ref{alg:mergesort}.
+
+\begin{algorithm}[H]
+\caption{Merge sort}
+\label{alg:mergesort}
+\begin{algorithmic}[1] % El número le dice al entorno desde que número empezar a contar. Si le pones 0 omite los números
+\Require $V = \{ v_0, v_1, \ldots, v_{n-1} \} $ and $[b,e)$ \Comment{An array $V$ of size $n$, and an inerval $[b,e)$ with $0 \leq b \leq e \leq n$}
+\Ensure $V\text{ such that } v_i \leq v_{i + 1}, \forall i \in [0, n-2]$ \Comment{The array $V$ with his elements sorted}
+\Procedure{MergeSort}{$V$, $b$, $e$} \Comment{$b$ stands for \emph{begin} and $e$ for \emph{end}}
+    \If {$e - b > 1$} \Comment{If the interval contains more than one element}
+        \State $m \gets \frac{(e + b)}{2}$ \Comment{Calculate the middle point of the array}
+        \State \Call{MergeSort}{$V$, $b$, $m$} \Comment{Order one half}
+        \State \Call{MergeSort}{$V$, $m$, $e$} \Comment{Order one other half}
+        \State \Call{Merge}{$V$, $b$, $m$, $e$} \Comment{Merge the sorted halves to create a complete sorted array}
+    \EndIf
+\EndProcedure
+\Procedure{Merge}{$V$, $b$, $m$, $e$} \Comment{$b$ stands for \emph{begin}, $m$ for \emph{middle} and $e$ for \emph{end}}
+\State $l \gets b$  \Comment{$l$ stores the current index of the \emph{low} half}
+\State $h \gets m$ \Comment{$h$ stores the current index of the \emph{high} half}
+\For{$i \gets b \textbf{ to } e-1 \textbf{ step } 1$} \label{merge:loop} \Comment{Merge the two halves in a temporal buffer $B$}
+    \If {$l < m \textbf{ and }(V_{l} \leq V_{h} \textbf{ or } h \geq e )$} \label{merge:condition}\Comment{See explanation below}
+        \State $B_i \gets V_l$ \Comment{Take the one from the lower half}
+        \State $l \gets l + 1$
+    \Else
+        \State $B_i \gets V_h$ \Comment{Take the one from the higher half}
+        \State $h \gets h + 1$
+    \EndIf
+\EndFor
+\State $j \gets 0$ \Comment{A varible to keep track of the place in $B$}
+\For{$i \gets b \textbf{ to } e-1 \textbf{ step } 1$} \label{merge:copy}\Comment{Copy the contents of $B$ back to $V$}
+    \State $V_i \gets B_j$
+    \State $j \gets j + 1$
+\EndFor
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+The interesting part to explain is the \emph{merge} operation.
+At this point we know that both halves are ordered and that the partition point is $m$.
+We need to create a temporal buffer $B$ to store the result of the merge.
+Then we need to start filling the buffer $B$ with contents from the two halves (This is the loop on line~\ref{merge:loop}).
+The indices $l$ and $h$ track which is the element at the front of each half.
+At each step of the loop, we need to choose the next element from the two at the front ($V_l$ or $V_h$) of the halves.
+
+As a general rule we want to take the \emph{minimum} between the two elements $V_{l}$ or $V_{h}$.
+However, we need to make an extra check before taking such an element.
+Since it's very likely that one of the halves runs out of elements before the other.
+We need to check that the half still has elements to take.
+This is what we check in the condition at line~\ref{merge:condition} which is the most difficult part to understand in this implementation.
+
+The condition its as follows: we take an element $V_l$ from the lower half if the following two conditions fulfills:
+\begin{enumerate}
+ \item We still have elements in the lower half: $l < m$.
+ \item The element $V_{l}$ is the minimum (i.e $V_{l} \leq V_{h}$) \emph{or} the higher half has run out of elements $h \geq e$
+\end{enumerate}
+If these two conditions are not met, then we need to take an element $V_h$ from the higher half.
+Note that the range in the loop of line~\ref{merge:loop} ensures that at least one of the halves still has elements to take.
+
+Finally, since we have the ordered result in the temporat buffer $B$, wee need to copy it back to the original array $V$.
+This is done in the loop at line~\ref{merge:copy}.
+
+The Listing~\ref{lst:mergesortArray} shows the main function of the algorithm and Listing~\ref{lst:mergeArray} shows the merge operation both using arrays.
+
+\begin{listing}
+\inputminted[
+  firstline=105, %If you omit this two fields, the whole file is pulled
+  lastline=117
+  ]{cpp}{src/sortAlgorithms.cpp}
+  \caption{An implementation of mergesort in C++ using an array}\label{lst:mergesortArray}
+\end{listing}
+
+\begin{listing}
+\inputminted[
+  firstline=77, %If you omit this two fields, the whole file is pulled
+  lastline=103
+  ]{cpp}{src/sortAlgorithms.cpp}
+  \caption{The merge operation using arrays}\label{lst:mergeArray}
+\end{listing}
+
+To be complete the Listing~\ref{lst:mergesortIterator} shows the main function and Listing~\ref{lst:mergeIterator} shows the merge operation this time using iterators.
+
+\begin{listing}
+\inputminted[
+  firstline=91, %If you omit this two fields, the whole file is pulled
+  lastline=105
+  ]{cpp}{src/sortAlgorithms.h}
+  \caption{An implementation of \emph{mergesort} in C++ using iterators}\label{lst:mergesortIterator}
+\end{listing}
+
+\begin{listing}
+\inputminted[
+  firstline=61, %If you omit this two fields, the whole file is pulled
+  lastline=89
+  ]{cpp}{src/sortAlgorithms.h}
+  \caption{The merge operation using iterators}\label{lst:mergeIterator}
 \end{listing}
