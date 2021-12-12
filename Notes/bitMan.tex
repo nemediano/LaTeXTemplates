@@ -17,25 +17,14 @@ const size_t BITS_PER_BYTE = 8U;
 Let me introduce, in Listing~\ref{lst:binHelpers}; two helper functions to debug and visulize such variables.
 The first one: \mintinline{cpp}{bitSize} returns the size in bits of the variable and the second one: \mintinline{cpp}{bitStr} returns a string with the binary representation of a variable.
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
+\begin{listing}[H]
   \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
-  %frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
-  firstline=76, %If you omit this two fields, the whole file is pulled
-  lastline=86
+    firstline=76, %If you omit this two fields, the whole file is pulled
+    lastline=86
   ]{cpp}{src/bitOperations.cpp}
   \caption{Helper functions to debug bit manipulations}
   \label{lst:binHelpers}
-  \end{listing}
-\end{minipage}
-\par
-}
+\end{listing}
 
 Another important feature in C++ is that we can use binary (since standar C++14) and heaxadecimal literals:
 \begin{minted}{cpp}
@@ -82,25 +71,14 @@ However, they operate bitwise; that is why they are different than the logical o
 
 The code snippet in Listing~\ref{lst:bitShifting} shows a valid C++ sample of these operations:
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
+\begin{listing}[H]
   \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
-  %frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
-  firstline=36, %If you omit this two fields, the whole file is pulled
-  lastline=47
+    firstline=36, %If you omit this two fields, the whole file is pulled
+    lastline=47
   ]{cpp}{src/bitOperations.cpp}
   \caption{Sample of bit shiting}
   \label{lst:bitShifting}
-  \end{listing}
-\end{minipage}
-\par
-}
+\end{listing}
 
 Produces the following output:
 
@@ -120,28 +98,16 @@ In the above sample $2^3 = 8$.
 Therfore: $c = 42 / 8 = 5$ (remember it's an integer division).
 And $b = 42 \cdot 8 = 336$, but it resulted in an overflow, since the maximun value for an $8$ bit variable is $2^8 = 256$.
 
-
 Listing~\ref{lst:bitwiseOp} present a sample usage of the bitwise logical operations:
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
+\begin{listing}[H]
   \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
-  %frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
   firstline=50, %If you omit this two fields, the whole file is pulled
   lastline=71
   ]{cpp}{src/bitOperations.cpp}
   \caption{Bitwise operations sample}
   \label{lst:bitwiseOp}
-  \end{listing}
-\end{minipage}
-\par
-}
+\end{listing}
 
 And produces the following result:
 
@@ -238,25 +204,15 @@ r: 00101110
 The rest of the bit manipulations can be perfomed in a similar way by combining the bitwise operations and the mask.
 The long code sample in Listing~\ref{lst:bitManip} shows explicitlly how to archive the bit manipulations.
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
+
+\begin{listing}[H]
   \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
-  %frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
-  firstline=26, %If you omit this two fields, the whole file is pulled
-  lastline=59
+    firstline=26, %If you omit this two fields, the whole file is pulled
+    lastline=59
   ]{cpp}{src/bitManipulation.cpp}
   \caption{Bit manipulation presented in a long explicit way}
   \label{lst:bitManip}
-  \end{listing}
-\end{minipage}
-\par
-}
+\end{listing}
 
 The output of the code in Listing~\ref{lst:bitManip} is:
 \begin{verbatim}
@@ -288,25 +244,15 @@ Indeed, the most common (and compact) way to perform bit manipulations does not 
 And operates in place: using the same variable as operand and output.
 The Listing~\ref{lst:bitManip2} shows a sample of the most common usage.
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
+
+\begin{listing}[H]
   \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
-  %frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
-  firstline=24, %If you omit this two fields, the whole file is pulled
-  lastline=51
+    firstline=24, %If you omit this two fields, the whole file is pulled
+    lastline=51
   ]{cpp}{src/bitManipulation2.cpp}
   \caption{Most common way of making bit manipulations}
   \label{lst:bitManip2}
-  \end{listing}
-\end{minipage}
-\par
-}
+\end{listing}
 
 Which produces the following output:
 \begin{verbatim}

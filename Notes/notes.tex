@@ -73,9 +73,23 @@
 \setlength{\parindent}{1em}
 \setlength{\parskip}{1em}
 
-\usepackage{minted} %For inserting source code and embed source files
+\usepackage[newfloat=true]{minted} %For inserting source code and embed source files
 %Requieres compilation using:
 % $xelatex -shell-escape input.tex
+
+% Configuración del entorno minted para poner código fuente
+\DeclareCaptionFormat{mitedFormat}{%
+    \textbf{#1#2}#3}
+\DeclareCaptionStyle{minetdStyle}{skip=0cm,width=.85\textwidth,justification=centering,
+  font=footnotesize,singlelinecheck=off,format=mitedFormat,labelsep=space}
+\newenvironment{mintedCode}{\captionsetup{type=listing,style=minetdStyle}}{}
+
+\usepackage{dirtytalk} % Para usar comillas
+
+% Opciones de minted para el lenguaje C++
+\setminted[cpp]{frame=lines,framesep=0.25cm,baselinestretch=1,fontsize=\scriptsize,breaklines}
+% Cuando lo hagas dentro de un párrafo el tamaño de fuente debe ser normal
+\setmintedinline[cpp]{fontsize=auto}
 
 %In order to work this temple needs to be build like this:
 % 1 XeLaTeX

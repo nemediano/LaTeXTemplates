@@ -9,26 +9,15 @@ Having said that, sometimes allocations for such constructs can become dificult 
 Specially, in C++.
 Lets see an example:
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
+\begin{listing}[H]
   \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
-  %frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
-  firstline=15, %If you omit this two fields, the whole file is pulled
-  lastline=21
+    firstline=15, %If you omit this two fields, the whole file is pulled
+    lastline=21
   ]{cpp}{src/ArrayDimensions.cpp}
   \caption{One dimensioal array (by means of \mintinline{cpp}{std::vector} class) used}
   \label{lst:1Dexample}
-  \end{listing}
-\end{minipage}
-\par
-}
-\vspace{0.5cm}
+\end{listing}
+
 So far, everything looks good, the sintax is clear, braket operator is helping us.
 Conceptually, we have a series of variables with the same type that live in a contiguos space in memory.
 See Figure~\ref{fig:1D}.
@@ -77,26 +66,15 @@ Now, remember this is just an abstraction; provided by our programming language:
 Usually, the C++ way of modeling this is creating an array, such that each element of it, is also an array.
 See the code in Listing~\ref{lst:2dexample}
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
+\begin{listing}[H]
   \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
-  %frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
-  firstline=23, %If you omit this two fields, the whole file is pulled
-  lastline=38
+    firstline=23, %If you omit this two fields, the whole file is pulled
+    lastline=38
   ]{cpp}{src/ArrayDimensions.cpp}
   \caption{Two dimensioal array example}
   \label{lst:2dexample}
-  \end{listing}
-\end{minipage}
-\par
-}
-\vspace{0.5cm}
+\end{listing}
+
 Now, there is three main points to highlight in the sample:
 \begin{enumerate}
 
@@ -157,49 +135,25 @@ We can see that the transformations are actually very simple.
 In fact, one of them is the integer division and the other one is the modulo.
 Also note, that as long as we check for the boundaries of the values for both indices, only one of the sizes in this case \emph{witdh} is used in the actual calculation of the indices.
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
+\begin{listing}[H]
   \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
-  %frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  %fontsize=\footnotesize,
-  linenos,
-  firstline=88, %If you omit this two fields, the whole file is pulled
-  lastline=105
+    firstline=88, %If you omit this two fields, the whole file is pulled
+    lastline=105
   ]{cpp}{src/FlatMemmory.cpp}
   \caption{Function $g$ to map real index into simulated 2D indices}
   \label{lst:functions2D}
-  \end{listing}
-\end{minipage}
-\par
-}
-\vspace{0.5cm}
+\end{listing}
 
 For completeness, we also show Listing~\ref{lst:functions2D2} that defines the inverse function $h$, to retrive the index in the one dimensional array from the two simulated indices in 2D.
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
+\begin{listing}[H]
   \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
-  %frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  %fontsize=\footnotesize,
-  linenos,
   firstline=107, %If you omit this two fields, the whole file is pulled
   lastline=121
   ]{cpp}{src/FlatMemmory.cpp}
   \caption{Function $h$ to map simulated 2D indices into the real index, this is the inverse of $g$}
   \label{lst:functions2D2}
-  \end{listing}
-\end{minipage}
-\par
-}
-\vspace{0.5cm}
+\end{listing}
 
 \subsection{Three dimensional data}
 
@@ -229,73 +183,38 @@ In the normal mutidimensional array synatx of C++, this will become, an array of
 See Listing~\ref{lst:3dexample}.
 We transvers it using three nested loops, where the most outer one is the one indexed by the new dimension.
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
+\begin{listing}[H]
   \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
-  %frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
-  firstline=40, %If you omit this two fields, the whole file is pulled
-  lastline=64
+    firstline=40, %If you omit this two fields, the whole file is pulled
+    lastline=64
   ]{cpp}{src/ArrayDimensions.cpp}
   \caption{Three dimensional array example in C++}
   \label{lst:3dexample}
-  \end{listing}
-\end{minipage}
-\par
-}
-\vspace{0.5cm}
+\end{listing}
 
 For memory flatening, we will need a new version of functions $g$ and $h$, that depends in a new extra parameter: \mintinline{cpp}{DEPTH}.
 In Listing~\ref{lst:functions3D}, we can see the new function $g$.
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
+\begin{listing}[H]
   \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
-  %frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
-  firstline=123, %If you omit this two fields, the whole file is pulled
-  lastline=143
+    firstline=123, %If you omit this two fields, the whole file is pulled
+    lastline=143
   ]{cpp}{src/FlatMemmory.cpp}
   \caption{New function $g$ to map real index into simulated 3D indices}
   \label{lst:functions3D}
-  \end{listing}
-\end{minipage}
-\par
-}
-\vspace{0.5cm}
+\end{listing}
 
 I will talk about the form of the function for the second result (the $y$ that represents the \mintinline{cpp}{j} index) in Section~\ref{sec:moreDim}.
 Finally, for completenees; the new function $h$ is presented in Listing~\ref{lst:functions3D2}
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
+\begin{listing}[H]
   \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
-  %frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
-  firstline=145, %If you omit this two fields, the whole file is pulled
-  lastline=163
+    firstline=145, %If you omit this two fields, the whole file is pulled
+    lastline=163
   ]{cpp}{src/FlatMemmory.cpp}
   \caption{A new function $h$ to map simulated 3D indices into the real index, this is the inverse of $g$}
   \label{lst:functions3D2}
-  \end{listing}
-\end{minipage}
-\par
-}
+\end{listing}
 
 \subsubsection{Generalizing to more dimensions}
 \label{sec:moreDim}
@@ -313,26 +232,14 @@ Indeed, the correct transformation to get the simulated index of a given dimensi
 
 Let me present in Listing~\ref{lst:functions3D3} an alternative to the function $g$ showed in Listing~\ref{lst:functions3D} using the general appproach.
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
+\begin{listing}[H]
   \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
-  %frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
-  firstline=187, %If you omit this two fields, the whole file is pulled
-  lastline=205
+    firstline=187, %If you omit this two fields, the whole file is pulled
+    lastline=205
   ]{cpp}{src/FlatMemmory.cpp}
   \caption{Alternative $g$ function for 3D. Using the general form of the algorithm}
   \label{lst:functions3D3}
-  \end{listing}
-\end{minipage}
-\par
-}
-\vspace{0.5cm}
+\end{listing}
 
 Now, it becomes clear why in Listing~\ref{lst:functions3D} we did not need the full forms.
 For the $x$ variable the previous dimension has size one, and we do not need to divide by one.
@@ -348,22 +255,11 @@ Now that the the logic of the function $g$ is clear; we can also come up with a 
 
 See Listing~\ref{lst:functions3D4} for the \emph{general rule} implementation.
 
-{\centering
-\begin{minipage}{\linewidth}
-  \begin{listing}[H]
+\begin{listing}[H]
   \inputminted[
-  xleftmargin=1.5cm,  %without this option line number goes wrong
-  %frame=lines,
-  framesep=0.5cm,
-  baselinestretch=1.2,
-  fontsize=\footnotesize,
-  linenos,
-  firstline=166, %If you omit this two fields, the whole file is pulled
-  lastline=185
+    firstline=166, %If you omit this two fields, the whole file is pulled
+    lastline=185
   ]{cpp}{src/FlatMemmory.cpp}
   \caption{Alternative to function $h$ using the general rule}
   \label{lst:functions3D4}
-  \end{listing}
-\end{minipage}
-\par
-}
+\end{listing}
