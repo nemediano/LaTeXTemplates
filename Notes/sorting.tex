@@ -343,3 +343,50 @@ To be complete the Listing~\ref{lst:mergesortIterator} shows the main function a
 \end{listing}
 
 \subsection{Heapsort}
+
+The last algorithm to review is heapsort.
+This algorithm along with quicksort are the most implemented in practice.
+It is an in place, optimal algorithm for sorting.
+His only drawback is that it is not a stable sort.
+
+In addition to that, this is not a recursive algorithm.
+This algorithm rather relies on an underlying data structure: the \emph{heap}.
+A heap is a --very clever-- kind of binary tree, which is extremely important in CS in his own right.
+
+Because of that I decided to present the heap on the first two sections and explain heap sort at the last section.
+This might give the false sense that heap sort is a very complicated algorithm.
+However, --in my opinion-- once you  understand the heap first; heapsort is no more complicated than the other algorithms already presented.
+
+\subsubsection{Heaps basics}
+
+A \emph{binary} tree is a tree in which each node has \emph{at most} two childs.
+
+A \emph{balanced} binary tree, is a binary tree in which the height\footnote{In a tree, the \emph{height} it's the distance between the deepest leaf and the root} of the left and right subtrees at any node differ at most by one.
+
+A binary tree is said to be \emph{complete} when each of the levels are completely filled; except maybe for the last one, which can be partially filled from left to right.
+
+The Figure shows...
+
+A \emph{heap} is a data structure.
+More specifically is a special kind of \emph{binary tree}, that is \emph{balanced} and \emph{complete}.
+In addition, a heap has the following properties:
+\begin{enumerate}
+ \item The node at the root is \emph{greater} than all the other nodes in the tree\footnote{This is actually a \emph{max heap}. You can define analogously a \emph{min heap}, where the node at the root is \emph{smaller} than all the other nodes and so on.}.
+ \item The previous property is also true for all the subtrees in the heap.
+\end{enumerate}
+
+Since we are comparing nodes, in a heap the nodes contain numeric values. The Figure shows an example of a heap.
+
+\subsubsection{Heap implementation}
+
+Thanks to be a complete and balanced binary three. It is possible to represent a heap using an array.
+
+Given an array of numbers that represent a heap we are interested in three operations\footnote{These are not the only operations, but rather the only ones we need to implement heapsort in the last section}:
+
+\begin{description}
+ \item[sift down]
+ \item[heapify]
+\end{description}
+
+
+\subsubsection{Sorting using a heap}
