@@ -251,7 +251,7 @@ The pseudocode for Mergesort is shown in the Algorithm~\ref{alg:mergesort}.
 \caption{Merge sort}
 \label{alg:mergesort}
 \begin{algorithmic}[1] % El número le dice al entorno desde que número empezar a contar. Si le pones 0 omite los números
-\Require $V = \{ v_0, v_1, \ldots, v_{n-1} \} $ and $[b,e)$ \Comment{An array $V$ of size $n$, and an inerval $[b,e)$ with $0 \leq b \leq e \leq n$}
+\Require $V = \{ v_0, v_1, \ldots, v_{n-1} \} $ and $[b,e)$ \Comment{An array $V$ of size $n$, and an interval $[b,e)$ with $0 \leq b \leq e \leq n$}
 \Ensure $V\text{ such that } v_i \leq v_{i + 1}, \forall i \in [0, n-2]$ \Comment{The array $V$ with his elements sorted}
 \Procedure{MergeSort}{$V$, $b$, $e$} \Comment{$b$ stands for \emph{begin} and $e$ for \emph{end}}
     \If {$e - b > 1$} \Comment{If the interval contains more than one element}
@@ -273,7 +273,7 @@ The pseudocode for Mergesort is shown in the Algorithm~\ref{alg:mergesort}.
         \State $h \gets h + 1$
     \EndIf
 \EndFor
-\State $j \gets 0$ \Comment{A varible to keep track of the place in $B$}
+\State $j \gets 0$ \Comment{A variable to keep track of the place in $B$}
 \For{$i \gets b \textbf{ to } e-1 \textbf{ step } 1$} \label{merge:copy}\Comment{Copy the contents of $B$ back to $V$}
     \State $V_i \gets B_j$
     \State $j \gets j + 1$
@@ -303,7 +303,7 @@ The condition its as follows: we take an element $V_l$ from the lower half if th
 If these two conditions are not met, then we need to take an element $V_h$ from the higher half.
 Note that the range in the loop of line~\ref{merge:loop} ensures that at least one of the halves still has elements to take.
 
-Finally, since we have the ordered result in the temporat buffer $B$, wee need to copy it back to the original array $V$.
+Finally, since we have the ordered result in the temporary buffer $B$, we need to copy it back to the original array $V$.
 This is done in the loop at line~\ref{merge:copy}.
 
 The Listing~\ref{lst:mergesortArray} shows the main function of the algorithm and Listing~\ref{lst:mergeArray} shows the merge operation both using arrays.
@@ -341,3 +341,5 @@ To be complete the Listing~\ref{lst:mergesortIterator} shows the main function a
   ]{cpp}{src/sortAlgorithms.h}
   \caption{The merge operation using iterators}\label{lst:mergeIterator}
 \end{listing}
+
+\subsection{Heapsort}
