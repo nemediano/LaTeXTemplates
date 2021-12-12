@@ -40,7 +40,7 @@ However, we have in particular four algorithms that have some of this properites
       Algorithm & Optimal & In place & Stable & Comment\\
       \midrule
       Selection sort & No & Yes & No & Always runs in $O(n^2)$, but it's very easy to implement\\
-      Quicksort & No & Yes & Yes & On average runs in $O(n \cdot \lg n)$. The worst case it's $O(n^2)$ \\
+      Quicksort & No & Yes & No & On average runs in $O(n \cdot \lg n)$. The worst case it's $O(n^2)$ \\
       Mergesort & Yes & No & Yes & It requieres $O(n)$ extra memory\\
       Heapsort & Yes & Yes & No & \\
     \end{tabular}
@@ -126,4 +126,107 @@ To be complete the Listing~\ref{lst:selectionsort} also shows an implementation 
   \caption{An implementation of insertion sort in C++ using iterators}\label{lst:selectionsortiter}
 \end{listing}
  
+\subsection{Quicksort}
 
+This algorithm is one of the most used algorithms in the world.
+To be more precise \emph{quicksort} is a family of algorithms.
+The base idea remains the same in all of them.
+However, the way different algorithms of the family made the so-called \emph{partition} changes.
+Such change in the partition has implications on the running time.
+
+The two most dominant schemes of partition are Lobuto and Ohare.
+Since we are studying for an interview, we are going to be using Lobuto, since the code is cleaner.
+That being said, Ohare's scheme is considered a more efficient algorithm.
+
+First we present the basic idea behind all quicksort families.
+
+\begin{enumerate}
+ \item If the array to be sorted has less than 2 elements, it is already sorted; you do not need to do anything just return.
+ \item Partition the array into two parts and a pivot. The first part contains all the elements smaller than the pivot, the second part contains all the elements greater than the pivot (elements equal to the pivot can go in either part)
+ \item Then you can recursively use quicksort to order the two remaing parts.
+\end{enumerate}
+
+In this pseudocode I will use a zero based indexing again, that is the first element of the array $V$ is $v_0$ and the last element is $v_{n-1}$.
+Also we will use indices to keep track of the interval of the original array we are sorting.
+Those intervals are defined by two indices in the original array.
+
+For defining the intervals, I use the begin and end convention.
+On this convention the first index is the \emph{first} element of the interval, the second element is \emph{one pass the last} element of the interval.
+For example the indices $i$, $j$, where $i \leq j$, define the interval $[i, j)$ whose first element is $v_i$ and last element is $v_{j-1}$
+
+Since this is a recursive algorithm the first call to sort the whole array will need to be called with indices $0$ and $n$ for an array $V$ of $n$ elements
+
+\begin{algorithm}[H]
+\caption{Quicksort}
+\label{alg:quicksort}
+\begin{algorithmic}[1] % El número le dice al entorno desde que número empezar a contar. Si le pones 0 omite los números
+\Require $V = \{ v_0, v_1, \ldots, v_{n-1} \} $ and $[b,e)$ \Comment{An array $V$ of size $n$, and an inerval $[b,e)$ with $0 \leq b \leq e \leq n$}
+\Ensure $V\text{ such that } v_i \leq v_{i + 1}, \forall i \in [0, n-2]$ \Comment{The array $V$ with his elements sorted}
+\Procedure{QuickSort}{$V$, $b$, $e$} \Comment{$b$ stands for \emph{begin} and $e$ for \emph{end}}
+    \If {$e - b > 1$} \Comment{If the interval contains more than one element}
+        \State $p \gets$ \Call{Partition}{$V$, $b$, $e$} \label{endPartition} \Comment{Make a partition of $V$ and get the partition point $p$}
+        \State \Call{QuickSort}{$V$, $b$, $p$} \Comment{Order one half}
+        \State \Call{QuickSort}{$V$, $p + 1$, $e$} \Comment{Order one other half}
+    \EndIf
+\EndProcedure
+\Procedure{Partition}{$V$, $l$, $r$} \Comment{$l$ stands for \emph{left} and $r$ for \emph{right}}
+\State $j \gets r - 1$ \label{pivotPlace} \Comment{$j$ stores the index of the pivot}
+\State $p \gets l$ \Comment{$p$ stores the \emph{partition point}}
+\For{$i \gets l \textbf{ to } j-1 \textbf{ step } 1$} \Comment{We traverse the interval minus the pivot (which it's at the end)}
+    \If {$v_i \leq v_j$} \Comment{If this element is smaller than the pivot}
+        \State $v_p \leftrightarrow v_i$ \Comment{swap it with the one at the partition point}
+        \State $p \gets p + 1$ \Comment{Move the partition point}
+    \EndIf
+\EndFor
+\State $v_p \leftrightarrow v_j$ \Comment{Put the pivot in his corresponding place}
+\State \Return $p$ \Comment{return the partition point}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+A couple of remarks to clarify the above pseudocode.
+\begin{itemize}
+ \item After the call to \emph{partition} in line~\ref{endPartition}, the only element we can guarantee to be at his corresponding place (in the ordered array) is the pivot.
+ \item In Loboto's partition scheme, we choose the last element of the interval to be the \emph{pivot} element.
+ \item The variable $j$ on line~\ref{pivotPlace} it's not really needed. It just makes the code easier to read by marking the initial place of the pivot.
+ \item The variable $p$ is the \emph{partition point}: the place at which the pivot will be at the end of the partition procedure.
+ \item The way the scheme works is \emph{assuming} that all the elements less than the pivot are to the left of $p$. If we found some element that it is not, then we change his place and move $p$ (Since now we have another element that should be at his left).
+\end{itemize}
+
+The code using an array is strightfoward to implement and is shown in two parts: The Listing~\ref{lst:quicksortArray} shows the main quicksort function and the Listing~\ref{lst:partitionArray} shows the partition scheme (Lobuto).
+
+\begin{listing}
+\inputminted[
+  firstline=52, %If you omit this two fields, the whole file is pulled
+  lastline=69
+  ]{cpp}{src/sortAlgorithms.cpp}
+  \caption{An implementation of quicksort in C++ using an array}\label{lst:quicksortArray}
+\end{listing}
+
+\begin{listing}
+\inputminted[
+  firstline=25, %If you omit this two fields, the whole file is pulled
+  lastline=51
+  ]{cpp}{src/sortAlgorithms.cpp}
+  \caption{The partition (Lobuto) used by quicksort in C++}\label{lst:partitionArray}
+\end{listing}
+
+Since we already have the range defined in a very similar way to that of an iterator. 
+The code to implement both functions using C++ iterators it's very similar.
+Listing~\ref{lst:quicksortIterator} shows the implementation of the main function and Listing~\ref{lst:partitionIterator} the partition scheme.
+
+\begin{listing}
+\inputminted[
+  firstline=27, %If you omit this two fields, the whole file is pulled
+  lastline=40
+  ]{cpp}{src/sortAlgorithms.h}
+  \caption{An implementation of quicksort in C++ using iterators}\label{lst:quicksortIterator}
+\end{listing}
+
+\begin{listing}
+\inputminted[
+  firstline=3, %If you omit this two fields, the whole file is pulled
+  lastline=25
+  ]{cpp}{src/sortAlgorithms.h}
+  \caption{Lobuto's partition using iterators}\label{lst:partitionIterator}
+\end{listing}
