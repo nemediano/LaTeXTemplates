@@ -365,7 +365,33 @@ A \emph{balanced} binary tree, is a binary tree in which the height\footnote{In 
 
 A binary tree is said to be \emph{complete} when each of the levels are completely filled; except maybe for the last one, which can be partially filled from left to right.
 
-The Figure shows...
+The Figure~\ref{fig:tree} shows the different kinds of binary trees that exhibit these properties.
+The tree at Figure~\ref{fig:bintree} it's just a binary tree.
+The tree at Figure~\ref{fig:balancetree} it's a balanced binary tree.
+While Figure~\ref{fig:completetree} shows a complete binary tree (which happens to be also balanced).
+
+\begin{figure}[htp]
+ \centering
+ \begin{subfigure}[b]{0.3\textwidth}
+   \includegraphics[height=4cm]{img/binTree}
+   \caption{Binary tree}
+ \label{fig:bintree}
+ \end{subfigure}
+~
+ \begin{subfigure}[b]{0.3\textwidth}
+   \includegraphics[height=4cm]{img/balanceTree}
+   \caption{Balanced binary tree.}
+   \label{fig:balancetree}
+ \end{subfigure}
+~
+ \begin{subfigure}[b]{0.3\textwidth}
+   \includegraphics[height=4cm]{img/completeTree}
+   \caption{Complete binary tree.}
+   \label{fig:completetree}
+ \end{subfigure}
+  \caption{Properties of binary trees.}
+  \label{fig:tree}
+\end{figure}
 
 A \emph{heap} is a data structure.
 More specifically is a special kind of \emph{binary tree}, that is \emph{balanced} and \emph{complete}.
@@ -375,18 +401,74 @@ In addition, a heap has the following properties:
  \item The previous property is also true for all the subtrees in the heap.
 \end{enumerate}
 
-Since we are comparing nodes, in a heap the nodes contain numeric values. The Figure shows an example of a heap.
+Since we are comparing nodes, in a heap the nodes contain numeric values. The Figure~\ref{fig:heap} shows an example of a heap.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.45\textwidth]{img/heapTree}
+  \caption{A heap represented as a tree}
+  \label{fig:heap}
+\end{figure}
 
 \subsubsection{Heap implementation}
 
-Thanks to be a complete and balanced binary three. It is possible to represent a heap using an array.
+Thanks to the fact of being a complete and balanced binary tree it's possible to represent a heap using an array.
 
-Given an array of numbers that represent a heap we are interested in three operations\footnote{These are not the only operations, but rather the only ones we need to implement heapsort in the last section}:
+In a complete and balanced binary tree, we can define an order first per level and second inside each level from left to right.
+Then we can use this order to store the values of all the nodes in a linear fashion (array) and think of them as if they were on the complete and balanced binary tree using the narural order of the array.
+
+In order to do that we will need to define operations that enable us to locate a given node on the tree by only using his indices of the array.
+The following functions works for that purpose:
+
+\begin{align*}
+P(i) & = \dfrac{(i - 1)}{2} \\
+L_c(i) & = 2 \cdot i + 1 \\
+R_c(i) & = 2 \cdot i + 2
+\end{align*}
+
+Where $P(i)$ returns the index of the parent, for the node whose index is $i$.
+And $L_c$ and $R_c$ return the index of the left(right) child of the node whose index is $i$.
+
+The Figure~\ref{fig:heaptree} shows the same heap of Figure~\ref{fig:heap} and Figure~\ref{fig:heaparray} shows his representation as an array.
+
+\begin{figure}[htp]
+\centering
+ \begin{subfigure}[b]{0.3\textwidth}
+   \includegraphics[width=\textwidth]{img/heapTree}
+   \caption{Tree}
+ \label{fig:heaptree}
+ \end{subfigure}
+~~
+ \begin{subfigure}[b]{0.5\textwidth}
+   \includegraphics[width=\textwidth]{img/heapArray}
+   \caption{Array.}
+   \label{fig:heaparray}
+ \end{subfigure}
+\caption{Equivalent representations for a heap.}
+\label{fig:heapRep} 
+\end{figure}
+
+Given an array of numbers that represents a heap we are interested in the following two operations\footnote{These are not the only operations defined for a heap, but rather the only ones we need to implement heapsort in the last section}:
 
 \begin{description}
- \item[sift down]
- \item[heapify]
+ \item[heapify] Given an array of elements we can compare (numbers), this operation will reorder the array, so it represents a heap. This operation in a well done implementation takes $O(n \cdot \lg n)$ and uses $O(1)$ extra memory.
+ \item[sift down] If we \emph{change} the value of a given node of a heap, --and hence the heap property is ruined--. This operation will recompose the tree to be a valid heap again. This operation in a well done implementation takes $O(\lg n)$ for a heap with $n$ elements.
 \end{description}
 
+First, we well explaing how to perform the \emph{sift down} operation.
+This operation is also named by some authors as \emph{percolate} down.
+Since each subtree of a heap it's also a heap, we can assume without lossing generality that the node we just changed is the root.
+
+\begin{algorithm}[H]
+\caption{Sift down}
+\label{alg:siftdown}
+\begin{algorithmic}[1] % El número le dice al entorno desde que número empezar a contar. Si le pones 0 omite los números
+\Require $H = \{ h_0, h_1, \ldots, h_{n-1} \} $, $h_b$ and $h_e$ \Comment{A heap $H$, the subheap $(h_b, h_e)$ whose root changed}
+\Ensure $H$ as a valid heap
+\Procedure{SiftDown}{$H$, $h_b$, $h_e$} \Comment{$b$ stands for \emph{begin} and $e$ for \emph{end}}
+
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
 \subsubsection{Sorting using a heap}
