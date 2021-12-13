@@ -452,23 +452,144 @@ Given an array of numbers that represents a heap we are interested in the follow
 
 \begin{description}
  \item[heapify] Given an array of elements we can compare (numbers), this operation will reorder the array, so it represents a heap. This operation in a well done implementation takes $O(n \cdot \lg n)$ and uses $O(1)$ extra memory.
- \item[sift down] If we \emph{change} the value of a given node of a heap, --and hence the heap property is ruined--. This operation will recompose the tree to be a valid heap again. This operation in a well done implementation takes $O(\lg n)$ for a heap with $n$ elements.
+ \item[sift down]\footnote{Some authors name this operation \emph{percolate} down.} If we \emph{change} the value of a given node of a heap, --and hence the heap property is ruined--. Then, this operation recomposes the tree to be a valid heap again. In a well done implementation, this operation takes $O(\lg n)$ for a heap with $n$ elements.
 \end{description}
 
-First, we well explaing how to perform the \emph{sift down} operation.
-This operation is also named by some authors as \emph{percolate} down.
-Since each subtree of a heap it's also a heap, we can assume without lossing generality that the node we just changed is the root.
+First, we will explain how to perform the \emph{sift down} operation.
+Since each subtree of a heap it's also a heap, we can assume without losing generality that the node we just changed is the root.
+The pseudocode in Algorithm~\ref{alg:siftdown} shows how to implement this operation.
 
 \begin{algorithm}[H]
 \caption{Sift down}
 \label{alg:siftdown}
 \begin{algorithmic}[1] % El número le dice al entorno desde que número empezar a contar. Si le pones 0 omite los números
-\Require $H = \{ h_0, h_1, \ldots, h_{n-1} \} $, $h_b$ and $h_e$ \Comment{A heap $H$, the subheap $(h_b, h_e)$ whose root changed}
+\Require $H$, $b$ and $e$ \Comment{A heap $H$, the indices $(h_b, h_e)$ that represents the subheap whose root changed}
 \Ensure $H$ as a valid heap
-\Procedure{SiftDown}{$H$, $h_b$, $h_e$} \Comment{$b$ stands for \emph{begin} and $e$ for \emph{end}}
-
+\Procedure{SiftDown}{$H$, $b$, $e$} \Comment{$b$ stands for \emph{begin} and $e$ for \emph{end}}
+\State $r \gets b$ \Comment{$r$ is the index of the \emph{current} root}
+\While{$L_c(r) < e$} \Comment{while the root has at least one child}
+    \State $s \gets r$ \Comment{$s$ is the index of the best candidate for swap ($r$ for now)}
+    \State $l_c \gets L_c(r)$ \Comment{index of the left child}
+    \If{$H(r) < H(l_c)$} \Comment{If you are smaller than left child}
+        \State $s \gets l_c$ \Comment{left child is a better candidate to swap}
+    \EndIf
+    \State $r_c \gets R_c(r)$ \Comment{index of the right child}
+    \If{$r_c < e$\textbf{ and }$H(r) < H(r_c)$} \Comment{If the right child exists and you are smaller than him}
+        \State $s \gets r_c$ \Comment{right child is a better candidate to swap}
+    \EndIf
+    \If{$s = r$} \Comment{If the best candidate to swap is still $r$}
+        \State \Return \Comment{then, there are no more possible swaps: we are done}
+    \Else
+        \State $H(r) \leftrightarrow H(s)$ \Comment{perform a swap}
+        \State $r \gets s$ \Comment{move to the next subheap}
+    \EndIf
+\EndWhile
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
 
+In the algorthm for sift down (Algorithm~\ref{alg:siftdown}) we try to swap the node at the root with one of his childs until we are greater than both of them.
+At each step: first, we try to swap with our left child first.
+If this is not possible due the left child being smaller, then we try to swap with the right child.
+This way we are moving down the new node until the heap property is restored.
+
+Now, that we understand how to perform the sift down operation, we can present the second operation: \emph{heapify}.
+This operation takes an array $V$ of size $n$ and reorder it so it represent a heap after the procedure.
+The Algorithm~\ref{alg:heapify} shows how to implement this operation.
+
+\begin{algorithm}[H]
+\caption{Heapify}
+\label{alg:heapify}
+\begin{algorithmic}[1] % El número le dice al entorno desde que número empezar a contar. Si le pones 0 omite los números
+\Require $V = \{ v_0, v_1, \ldots, v_{n-1} \} $ \Comment{An array $V$ of size $n$}
+\Ensure $V$ represents a valid heap
+\Procedure{heapify}{$V$} 
+\State $c \gets P(v_{n-1})$ \Comment{$c$ is for current node. For now is the parent of the last element}
+\While{$c \geq 0$} \Comment{while current node it not the root}
+    \State \Call{SiftDown}{$V$, $c$, $n$} \Comment{fix the heap to the right of the current node}
+    \State $c \gets c - 1$ \Comment{go to the next parent node}
+\EndWhile
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+The idea is to build the heap from bottom to top.
+Therefore, we start with the parent of the last node and perform \emph{sift down} on it.
+Then we move to the node of the left of the current one in the array, since in the heap this represents the next root.
+We continue doing this until we reach the root of the whole tree.
+
+The code in Listing~\ref{lst:siftAndHeapify} shows the operations using arrays and the Listing~\ref{lst:siftAndHeapifyIter} shows the same implementation using iterators.
+
+\begin{listing}
+\inputminted[
+  firstline=126, %If you omit this two fields, the whole file is pulled
+  lastline=179
+  ]{cpp}{src/sortAlgorithms.cpp}
+  \caption{The \emph{sift down} and \emph{heapify} operations using arrays}\label{lst:siftAndHeapify}
+\end{listing}
+
+\begin{listing}
+\inputminted[
+  firstline=109, %If you omit this two fields, the whole file is pulled
+  lastline=189
+  ]{cpp}{src/sortAlgorithms.h}
+  \caption{The \emph{sift down} and \emph{heapify} operations using iterators}\label{lst:siftAndHeapifyIter}
+\end{listing}
+
+This last implementation (Listing~\ref{lst:siftAndHeapifyIter}) looks complicated because iterators are not always able to move backwards.
+When using indices on vectors it is easy to verify if a child or a parent exist just by checking if the returned index by the function it's in the bounds of the array.
+However, with iterators we take the usual convention of returning the \mintinline{cpp}{end} iterator to indicate that such an element does not exist.
+
 \subsubsection{Sorting using a heap}
+
+The most difficult part was done in the previous sections.
+The idea behind merge sort is somewhat similar to insertion sort.
+First, we find the maximum element of the array, then we swap it with the last element of the array and we \say{shrink} the array by one element.
+We continue doing this until we have an array of one element.
+
+The algorithm can be described as follows:
+\begin{enumerate}
+ \item Transform the array into a heap.
+ \item Put a mark to the last element of the array.
+ \item Now that we have a heap, we know that the maximum element is at the root (at index $0$). So, we swap it with the last element.
+ \item The swap from the last step  has just ruined the heap from the root. Therefore, we fix it by calling \mintinline{cpp}{sift_down}
+ \item Since the maximum element it's now at the end, we can \say{shrink} the array by moving the \say{end mark} to the left.
+ \item We repeat from step 3 until we have an array of one element.
+\end{enumerate}
+
+To be complete, we present heapsort in a formal way in Algorithm~\ref{alg:heapsort}.
+Listing~\ref{lst:heapsortArray} shows the implementation using arrays and Listing~\ref{lst:heapsortIter} shows the implementation using iterators.
+
+\begin{algorithm}[H]
+\caption{Heapsort}
+\label{alg:heapsort}
+\begin{algorithmic}[1] % El número le dice al entorno desde que número empezar a contar. Si le pones 0 omite los números
+\Require $V = \{ v_0, v_1, \ldots, v_{n-1} \} $ \Comment{An array $V$ of size $n$}
+\Ensure $V\text{ such that } v_i \leq v_{i + 1}, \forall i \in [0, n-2]$
+\Procedure{HeapSort}{$V$}
+\State \Call{Heapify}{$V$}  \Comment{start by creating a valid in place heap of the array}
+\State $l \gets n - 1$ \Comment{$l$ is the index the \emph{last} element}
+\While{$l > 0$} \Comment{while the last node it's not the root}
+    \State $v_0 \leftrightarrow v_l$ \Comment{the first element is the largest put it in his place}
+    \State \Call{SiftDown}{$V$, $0$, $l$} \Comment{the swap ruined the heap, restore it}
+    \State $l \gets l - 1$ \Comment{the heap size is reduced by one}
+\EndWhile
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\begin{listing}
+\inputminted[
+  firstline=181, %If you omit this two fields, the whole file is pulled
+  lastline=194
+  ]{cpp}{src/sortAlgorithms.cpp}
+  \caption{An implementation of \emph{heapsort} using arrays}\label{lst:heapsortArray}
+\end{listing}
+
+\begin{listing}
+\inputminted[
+  firstline=191, %If you omit this two fields, the whole file is pulled
+  lastline=207
+  ]{cpp}{src/sortAlgorithms.h}
+  \caption{An implementation of \emph{heapsort} using iterators}\label{lst:heapsortIter}
+\end{listing}

@@ -172,7 +172,6 @@ void sift_down(const Iterator &currentRoot, const Iterator &begin,
 		}
 	}
 }
-
 // Transform the input collection into a max heap
 template<typename Iterator>
 void heapify(const Iterator &begin, const Iterator &end) {

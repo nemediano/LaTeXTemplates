@@ -163,7 +163,6 @@ void sift_down(vector<int> &v, const size_t begin, const size_t end) {
 		}
 	}
 }
-
 // Transform the input array into a max heap
 void heapify(vector<int> &v) {
 	// Find the index of the parent of the last element in the array
