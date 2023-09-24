@@ -44,9 +44,15 @@
 \newcommand{\tab}[1]{\hspace{.2667\textwidth}\rlap{#1}}
 \newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
 \name{Jorge Antonio Garc\'{i}a Galicia} % Your name
-\address{1154 Morse Ave. Depto 108 \\ Sunnyvale, CA 94089} % Your address
-\address{\href{http://www.linkedin.com/in/jorgegarciagalicia}{http://www.linkedin.com/in/jorgegarciagalicia}} % Your secondary addess (optional)
-\address{(765) 543-9834 \\ \href{mailto:jorgeantonio49@gmail.com}{jorgeantonio49@gmail.com}} % Your phone number and email
+
+%\address{1154 Morse Ave. Depto 108 \\ Sunnyvale, CA 94089} % Your address
+%\address{\href{http://www.linkedin.com/in/jorgegarciagalicia}{http://www.linkedin.com/in/jorgegarciagalicia}} % Your secondary addess (optional)
+%\address{(765) 543-9834 \\ \href{mailto:jorgeantonio49@gmail.com}{jorgeantonio49@gmail.com}} % Your phone number and email
+
+% A little bit more private for the abou.me page
+\address{Sunnyvale, CA 94089 \\ \href{mailto:jorgeantonio49@gmail.com}{jorgeantonio49@gmail.com}} 
+\address{\href{http://www.linkedin.com/in/jorgegarciagalicia}{http://www.linkedin.com/in/jorgegarciagalicia}}
+
 
 \usepackage{fancyhdr}
 \showboxdepth=5
@@ -91,9 +97,9 @@
 
 \begin{tabular}{ @{} >{\bfseries}l @{\hspace{2ex}} l }
 Lenguajes de programación &  \textbf{Avan:} C/C++, GLSL. \textbf{Med:} Matlab, JavaScript. \textbf{Prin:} Python, R\\
-APIs / Frameworks & OpenGL, Qt, ASP.NET MVC, CUDA\\
+APIs / Frameworks & OpenGL, Vulkan, Qt, CUDA\\
 Herramientas de desarrollo &  SVN, Git, \LaTeX, bash, phpESP, Wordpress\\
-Paquetería & Visual Studio, Eclipse, Gimp, Inkscape
+Paquetería & Visual Studio, Eclipse, Gimp, Inkscape, Unity
 \end{tabular}
 
 \end{rSection}
@@ -104,8 +110,9 @@ Paquetería & Visual Studio, Eclipse, Gimp, Inkscape
 
 \begin{rSection}{Experiencia en la industria}
 
-\begin{rSubsection}{\href{http://about.google/}{Google LLC}}{Mountain View, California, EUA}{Technical Solutions Engineer, Equipo de Stadia}{Marzo 2021 - presente}
-\item Miembro del equipo de tecnología avanzada en \href{http://stadia.google.com/}{Stadia}.
+\begin{rSubsection}{\href{http://about.google/}{Google LLC}}{Mountain View, California, EUA}{Ingeniero de Software, Plataformas y Ecosistemas (prev Ingeniero de Soluciones, Stadia)}{Mar 2021 - pres}
+\item Dar forma a la \href{https://arvr.google.com/}{vision} de realidad virtual y aumentada. Unity y desarrollo en Android.
+\item Apoyé a los estudios y desarrolladores a traer sus juegos a la plataforma de \href{http://stadia.google.com/}{Stadia}. DX11, DX12 y Vulkan
 \end{rSubsection}
 
 \begin{rSubsection}{\href{http://www.nvidia.com}{Nvidia Corporation}}{Santa Clara, California, EUA}{Senior Software Engineer, Equipo 3D para dispositivos móviles (antes navegadores web)}{Agos 2017 - Feb 2021}
@@ -119,13 +126,10 @@ Paquetería & Visual Studio, Eclipse, Gimp, Inkscape
 \item Implementé varios algoritmos: \emph{shadow mapping}, \emph{global ambient occlusion} y \emph{PBR shading}, usando GLSL shaders
 \end{rSubsection}
 
-\begin{rSubsection}{\href{http://www.nvidia.com}{Nvidia Corporation}}{Santa Clara, California, EUA}{Becario en desarrollo de Software, Equipo del driver de OpenGL}{Mayo 2015 - Agosto 2015}
+\begin{rSubsection}{\href{http://www.nvidia.com}{Nvidia Corporation}}{Santa Clara, California, EUA}{Becario en desarrollo de Software, drivers de DirectX y OpenGL}{May - Ago 2014, May 2015 - Ago 2015}
 \item Porté extensiones de OpenGL para exponerlas en el API público.
 %\item Repare varios bugs en el driver, descubiertos por aplicaciones de terceros
-\item Entable comunicación con ingenieros de diversas partes del mundo para detallar reportes de bugs
-\end{rSubsection}
-
-\begin{rSubsection}{Nvidia Corporation}{Santa Clara, California, EUA}{Becario en desarrollo de Software, Equipo del driver de DirectX}{Mayo 2014 - Agosto 2014}
+\item Entablé comunicación con ingenieros de diversas partes del mundo para detallar reportes de bugs
 \item Cree un conversor de formato de imágenes digitales, usando el lenguaje ensamblador propietario de Nvidia
 \item Escribí varios shaders en HLSL para un conversor de formatos de vídeo
 %\item Developed C functions to test algorithms inside the driver
